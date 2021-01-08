@@ -68,6 +68,7 @@ private:
 
     std::vector<std::string> images;
     std::unordered_map<ulong64, std::string> hashes;
+    std::unordered_map<std::string, std::vector<std::string>> sameImagePirs;
     QReadWriteLock lock;
     QThread *pool;
 };

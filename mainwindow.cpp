@@ -4,7 +4,6 @@
 #include <QString>
 #include <QDebug>
 
-#include <algorithm>
 #include <cctype>
 #include <iostream>
 #include <filesystem>
@@ -33,6 +32,9 @@ MainWindow::MainWindow(QWidget *parent)
     connect(pathEdit, &QLineEdit::returnPressed, this, &MainWindow::setImages);
     connect(startBtn, &QPushButton::clicked, [this]() {
         freezeLineLayout();
+        if (sameImagePirs.size() != 0) {
+            sameImagePirs.clear();
+        }
         bar->show();
         bar->setValue(0);
 
@@ -45,6 +47,12 @@ MainWindow::MainWindow(QWidget *parent)
             connect(worker, &HashWorker::doneAllWork, pool + id, &QThread::quit);
             connect(pool + id, &QThread::started, worker, &HashWorker::doWork);
             connect(worker, &HashWorker::doneOneImg, this, &MainWindow::onProgress);
+            connect(worker, &HashWorker::sameImg, [this](const std::string &origin, const std::string &same){
+                sameImagePirs[origin].emplace_back(same);
+                auto info = qInfo();
+                info.setAutoInsertSpaces(true);
+                info << QString::fromStdString(origin) << "same with:" << QString::fromStdString(same);
+            });
             (pool + id)->start();
         }
     });
