@@ -30,6 +30,7 @@ MainWindow::MainWindow(QWidget *parent)
         }
     });
     connect(loadImgBtn, &QPushButton::clicked, this, &MainWindow::setImages);
+    connect(pathEdit, &QLineEdit::returnPressed, this, &MainWindow::setImages);
     connect(startBtn, &QPushButton::clicked, [this]() {
         freezeLineLayout();
         bar->show();
