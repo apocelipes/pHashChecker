@@ -24,7 +24,7 @@ void HashWorker::doWork()
         _lock.unlock();
         if (!flag) {
             _lock.lockForWrite();
-            _hashes.insert(std::make_pair(hash, _images[index]));
+            _hashes.emplace(std::make_pair(hash, _images[index]));
             _lock.unlock();
         }
         Q_EMIT doneOneImg();

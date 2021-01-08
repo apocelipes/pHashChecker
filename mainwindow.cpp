@@ -32,9 +32,9 @@ MainWindow::MainWindow(QWidget *parent)
     connect(pathEdit, &QLineEdit::returnPressed, this, &MainWindow::setImages);
     connect(startBtn, &QPushButton::clicked, [this]() {
         freezeLineLayout();
-        if (sameImagePirs.size() != 0) {
-            sameImagePirs.clear();
-        }
+        sameImagePirs.clear();
+        hashes.clear();
+        hashes.reserve(images.size());
         bar->show();
         bar->setValue(0);
 
@@ -93,6 +93,7 @@ void MainWindow::onProgress()
     if (value == bar->maximum() - 1) {
         freezeLineLayout(false);
         quitPool();
+        bar->hide();
     }
 }
 
@@ -103,7 +104,7 @@ void MainWindow::setImages()
         startBtn->setEnabled(false);
         return;
     }
-    std::filesystem::recursive_directory_iterator dir{path};
+    std::filesystem::directory_iterator dir{path, std::filesystem::directory_options::skip_permission_denied};
     if (images.size() != 0) {
         images.clear();
     }
