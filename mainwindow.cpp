@@ -4,6 +4,8 @@
 #include <QString>
 #include <QDebug>
 
+#include <algorithm>
+#include <cctype>
 #include <iostream>
 #include <filesystem>
 
@@ -101,7 +103,10 @@ void MainWindow::setImages()
             continue;
         }
 
-        auto ext = p.path().extension();
+        auto ext = p.path().extension().generic_u8string();
+        std::transform(ext.begin(), ext.end(), ext.begin(), [](unsigned char c) {
+            return std::tolower(c);
+        });
         if (ext == ".jpg" || ext == ".jpeg" || ext == ".png") {
             images.emplace_back(p.path().string());
         }
