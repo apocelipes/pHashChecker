@@ -27,7 +27,7 @@ public:
     void doWork();
 
 signals:
-    void sameImg(std::string, std::string);
+    void sameImg(const std::string&, const std::string&);
     void doneOneImg();
     void doneAllWork();
 
