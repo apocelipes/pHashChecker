@@ -71,5 +71,14 @@ private:
     std::unordered_map<std::string, std::vector<std::string>> sameImagePirs;
     QReadWriteLock lock;
     QThread *pool;
+
+    // supported image formats
+    inline static std::vector<std::string> imgExts {
+        ".jpg",
+        ".jpeg",
+        ".png",
+        ".webp",
+        ".bmp"
+    };
 };
 #endif // MAINWINDOW_H

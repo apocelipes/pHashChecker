@@ -117,7 +117,7 @@ void MainWindow::setImages()
         std::transform(ext.begin(), ext.end(), ext.begin(), [](unsigned char c) {
             return std::tolower(c);
         });
-        if (ext == ".jpg" || ext == ".jpeg" || ext == ".png") {
+        if (std::find(imgExts.cbegin(), imgExts.cend(), ext) != imgExts.cend()) {
             images.emplace_back(p.path().string());
         }
     }
