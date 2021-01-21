@@ -6,12 +6,14 @@
 #include <QPixmap>
 #include <QString>
 
+#include <filesystem>
+
 class EditableImage : public QLabel
 {
     Q_OBJECT
     Q_PROPERTY(QString imagePath READ getImagePath WRITE setImagePath NOTIFY pathChanged);
 public:
-    EditableImage(const QString &imgPath, QWidget *parent = nullptr);
+    explicit EditableImage(const QString &imgPath, QWidget *parent = nullptr);
 
     QString getImagePath()
     {
@@ -20,6 +22,9 @@ public:
 
     void setImagePath(const QString &path)
     {
+        if (!std::filesystem::exists(path.toStdString())) {
+            return;
+        }
         QPixmap newImg{path};
         setPixmap(newImg);
         m_path = path;
