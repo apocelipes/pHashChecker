@@ -58,19 +58,19 @@ private:
         }
     }
 
-    QHBoxLayout *lineLayout;
-    QLineEdit *pathEdit;
-    QPushButton *loadImgBtn;
-    QPushButton *startBtn;
-    QProgressBar *bar;
-    QPushButton *fileDialogBtn;
-    QFileDialog *dialog;
+    QHBoxLayout *lineLayout = nullptr;
+    QLineEdit *pathEdit = nullptr;
+    QPushButton *loadImgBtn = nullptr;
+    QPushButton *startBtn = nullptr;
+    QProgressBar *bar = nullptr;
+    QPushButton *fileDialogBtn = nullptr;
+    QFileDialog *dialog = nullptr;
 
     std::vector<std::string> images;
     std::unordered_map<ulong64, std::string> hashes;
     std::unordered_map<std::string, std::vector<std::string>> sameImagePirs;
     QReadWriteLock lock;
-    QThread *pool;
+    QThread *pool = nullptr;
 
     // supported image formats
     inline static std::vector<std::string> imgExts {
