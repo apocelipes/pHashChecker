@@ -30,30 +30,31 @@ void EditableImage::showContextMenu(const QPoint &pos)
     auto menu = new QMenu(this);
     connect(menu, &QMenu::aboutToHide, menu, &QObject::deleteLater);
 
-    auto openAction = new QAction(style()->standardIcon(QStyle::SP_FileDialogContentsView), tr("open"), this);
+    auto openAction = new QAction(style()->standardIcon(QStyle::SP_FileDialogContentsView), tr("open"), menu);
     connect(openAction, &QAction::triggered, [this](){
         QDesktopServices::openUrl(QUrl(getImagePath()));
     });
     menu->addAction(openAction);
-    auto copyAction = new QAction(style()->standardIcon(QStyle::SP_FileDialogListView), tr("copy data"), this);
+    auto copyAction = new QAction(style()->standardIcon(QStyle::SP_FileDialogListView), tr("copy data"), menu);
     connect(copyAction, &QAction::triggered, [this](){
-        QGuiApplication::clipboard()->setPixmap(pixmap(Qt::ReturnByValue));
-        Q_EMIT dataCopied(pixmap(Qt::ReturnByValue));
+        const auto &data = pixmap(Qt::ReturnByValue);
+        QGuiApplication::clipboard()->setPixmap(data);
+        Q_EMIT dataCopied(data);
     });
     menu->addAction(copyAction);
-    auto copyPathAction = new QAction(style()->standardIcon(QStyle::SP_FileDialogListView), tr("copy path"), this);
+    auto copyPathAction = new QAction(style()->standardIcon(QStyle::SP_FileDialogListView), tr("copy path"), menu);
     connect(copyPathAction, &QAction::triggered, [this](){
         QGuiApplication::clipboard()->setText(getImagePath());
         Q_EMIT pathCopied(getImagePath());
     });
     menu->addAction(copyPathAction);
-    auto moveToTrashAction = new QAction(style()->standardIcon(QStyle::SP_TrashIcon), tr("move to trash"), this);
+    auto moveToTrashAction = new QAction(style()->standardIcon(QStyle::SP_TrashIcon), tr("move to trash"), menu);
     connect(moveToTrashAction, &QAction::triggered, [this](){
         QFile::moveToTrash(getImagePath());
         Q_EMIT TrashMoved();
     });
     menu->addAction(moveToTrashAction);
-    auto deleteAction = new QAction(style()->standardIcon(QStyle::SP_DialogDiscardButton), tr("delete"), this);
+    auto deleteAction = new QAction(style()->standardIcon(QStyle::SP_DialogDiscardButton), tr("delete"), menu);
     connect(deleteAction, &QAction::triggered, [this](){
         auto isDelete = QMessageBox::warning(this,
                                              tr("delete this image"),
@@ -66,5 +67,9 @@ void EditableImage::showContextMenu(const QPoint &pos)
     });
     menu->addAction(deleteAction);
 
+    auto actions = menu->actions();
+    for (auto action = actions.begin(); action != actions.end(); ++action) {
+        (*action)->setEnabled(!isEmpty());
+    }
     menu->popup(mapToGlobal(pos));
 }

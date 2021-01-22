@@ -20,14 +20,21 @@ public:
         return m_path;
     }
 
+    bool isEmpty()
+    {
+        return getImagePath() == "";
+    }
+
     void setImagePath(const QString &path)
     {
         if (!std::filesystem::exists(path.toStdString())) {
+            setToolTip(isEmpty() ? tr("There's no image here") : getImagePath());
             return;
         }
         QPixmap newImg{path};
         setPixmap(newImg);
         m_path = path;
+        setToolTip(path);
         Q_EMIT pathChanged(path);
     }
 
