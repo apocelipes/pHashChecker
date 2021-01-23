@@ -37,6 +37,8 @@ set(PROJECT_SOURCES
         editableimage.cpp
         thumbnail.h
         thumbnail.cpp
+        imageviewer.h
+        imageviewer.cpp
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
