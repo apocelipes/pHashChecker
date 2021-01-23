@@ -32,7 +32,8 @@ MainWindow::MainWindow(QWidget *parent)
     connect(pathEdit, &QLineEdit::returnPressed, this, &MainWindow::setImages);
     connect(startBtn, &QPushButton::clicked, [this]() {
         freezeLineLayout();
-        sameImagePirs.clear();
+        sameImageIndex.clear();
+        sameImageLists.clear();
         hashes.clear();
         hashes.reserve(images.size());
         bar->show();
@@ -48,7 +49,12 @@ MainWindow::MainWindow(QWidget *parent)
             connect(pool + id, &QThread::started, worker, &HashWorker::doWork);
             connect(worker, &HashWorker::doneOneImg, this, &MainWindow::onProgress);
             connect(worker, &HashWorker::sameImg, [this](const std::string &origin, const std::string &same){
-                sameImagePirs[origin].emplace_back(same);
+                if (sameImageIndex.find(origin) == sameImageIndex.end()) {
+                    sameImageIndex[origin] = sameImageLists.size();
+                    // construct vectors directly with a string
+                    sameImageLists.emplace_back(std::vector<string>{origin});
+                }
+                sameImageLists[sameImageIndex[origin]].emplace_back(same);
                 auto info = qInfo();
                 info.setAutoInsertSpaces(true);
                 info << QString::fromStdString(origin) << "same with:" << QString::fromStdString(same);
