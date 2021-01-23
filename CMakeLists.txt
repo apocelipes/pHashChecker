@@ -35,6 +35,8 @@ set(PROJECT_SOURCES
         hashworker.cpp
         editableimage.h
         editableimage.cpp
+        thumbnail.h
+        thumbnail.cpp
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
