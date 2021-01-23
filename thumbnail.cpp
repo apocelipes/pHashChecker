@@ -5,14 +5,14 @@
 #include <filesystem>
 
 Thumbnail::Thumbnail(const QString &path, QWidget *parent)
-    : QWidget(parent)
+    : QWidget(parent), imgPath{path}
 {
-    setMaximumSize(100, 100);
+    setFixedSize(100, 100);
     image = new QLabel(this);
     image->setScaledContents(true);
     image->setGeometry(geometry());
-    if (std::filesystem::exists(path.toStdString())) {
-        QPixmap data{path};
+    if (std::filesystem::exists(imgPath.toStdString())) {
+        QPixmap data{imgPath};
         image->setPixmap(data);
     }
 

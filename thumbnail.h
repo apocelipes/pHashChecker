@@ -4,6 +4,7 @@
 #include <QWidget>
 #include <QString>
 #include <QLabel>
+#include <QMouseEvent>
 #include <QGraphicsOpacityEffect>
 
 constexpr qreal DEFAULT_OPACITY = 0.8;
@@ -45,11 +46,24 @@ public:
         Q_EMIT opacityChanged(opacity);
     }
 
+    QString getImagePath()
+    {
+        return imgPath;
+    }
+
+    void mouseReleaseEvent(QMouseEvent *event) override
+    {
+        Q_EMIT clicked();
+        event->accept();
+    }
+
 signals:
+    void clicked();
     void opacityChanged(qreal opacity);
 private:
     QWidget *shadow = nullptr;
     QLabel *image = nullptr;
+    QString imgPath;
 };
 
 #endif // THUMBNAIL_H
