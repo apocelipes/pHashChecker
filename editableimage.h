@@ -27,6 +27,9 @@ public:
 
     void setImagePath(const QString &path)
     {
+        if (path == m_path) {
+            return;
+        }
         if (!std::filesystem::exists(path.toStdString())) {
             setToolTip(isEmpty() ? tr("There's no image here") : getImagePath());
             return;
