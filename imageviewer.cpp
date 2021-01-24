@@ -47,14 +47,8 @@ ImageViewer::ImageViewer(const std::vector<std::string> &images, QWidget *parent
     auto prevButton = createSideControlButton(QStyle::SP_ArrowLeft);
     contentLayout->addWidget(prevButton, 0, Qt::AlignLeft);
     connect(prevButton, &QPushButton::clicked, [this](){
-        if (currentIndex == 0u) {
-            Q_EMIT currentIndexChanged(thumbs.size()-1, currentIndex);
-            currentIndex = thumbs.size() - 1;
-            return;
-        }
-
-        Q_EMIT currentIndexChanged(currentIndex - 1, currentIndex);
-        --currentIndex;
+        auto prevIndex = decrCurrentIndex();
+        Q_EMIT currentIndexChanged(currentIndex, prevIndex);
     });
     contentLayout->addWidget(imageContent, 0, Qt::AlignCenter);
     auto nextButton = createSideControlButton(QStyle::SP_ArrowRight);

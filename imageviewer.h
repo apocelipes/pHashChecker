@@ -23,15 +23,22 @@ signals:
     void currentIndexChanged(unsigned int current, unsigned int previous);
 
 private:
-    QWidget *imageThumbnailList;
+    QWidget *imageThumbnailList = nullptr;
     std::vector<Thumbnail*> thumbs;
-    EditableImage *imageContent;
+    EditableImage *imageContent = nullptr;
     unsigned int currentIndex{};
-    QFocusFrame *thumbnailFocusBorder;
+    QFocusFrame *thumbnailFocusBorder = nullptr;
 
     void setDefaultSelection();
     void initThumbnailFocusBorder();
     QPushButton *createSideControlButton(QStyle::StandardPixmap pixmap, QWidget *parent = nullptr);
+
+    unsigned int decrCurrentIndex()
+    {
+        auto oldIndex = currentIndex;
+        currentIndex = currentIndex == 0u ? thumbs.size() - 1 : currentIndex - 1;
+        return oldIndex;
+    }
 };
 
 #endif // IMAGEVIEWER_H
