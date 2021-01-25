@@ -14,16 +14,15 @@ ImageViewer::ImageViewer(const std::vector<std::string> &images, QWidget *parent
     initThumbnailFocusBorder();
 
     thumbs.reserve(images.size());
-    unsigned int index = 0u;
     for (const auto &img : images) {
         auto thumbnail = new Thumbnail{QString::fromStdString(img), this};
         thumbnail->showShadow();
-        connect(thumbnail, &Thumbnail::clicked, [this, index]() {
+        connect(thumbnail, &Thumbnail::clicked, [this, thumbnail]() {
+            unsigned int index = indexOfThumbnail(thumbnail);
             Q_EMIT currentIndexChanged(index, currentIndex);
             currentIndex = index;
         });
         thumbs.emplace_back(thumbnail);
-        ++index;
     }
     setDefaultSelection();
 
@@ -34,6 +33,8 @@ ImageViewer::ImageViewer(const std::vector<std::string> &images, QWidget *parent
         thumbs[current]->hideShadow();
         imageContent->setImagePath(thumbs[current]->getImagePath());
     });
+    connect(imageContent, &EditableImage::trashMoved, this, &ImageViewer::removeCurrentImage);
+    connect(imageContent, &EditableImage::deleted, this, &ImageViewer::removeCurrentImage);
 
     imageThumbnailList = new QWidget{this};
     auto listLayout = new QHBoxLayout;
@@ -47,6 +48,9 @@ ImageViewer::ImageViewer(const std::vector<std::string> &images, QWidget *parent
     auto prevButton = createSideControlButton(QStyle::SP_ArrowLeft);
     contentLayout->addWidget(prevButton, 0, Qt::AlignLeft);
     connect(prevButton, &QPushButton::clicked, [this](){
+        if (thumbs.empty()) {
+            return;
+        }
         auto prevIndex = decrCurrentIndex();
         Q_EMIT currentIndexChanged(currentIndex, prevIndex);
     });
@@ -54,6 +58,9 @@ ImageViewer::ImageViewer(const std::vector<std::string> &images, QWidget *parent
     auto nextButton = createSideControlButton(QStyle::SP_ArrowRight);
     contentLayout->addWidget(nextButton, 0, Qt::AlignRight);
     connect(nextButton, &QPushButton::clicked, [this](){
+        if (thumbs.empty()) {
+            return;
+        }
         Q_EMIT currentIndexChanged((currentIndex+1)%thumbs.size(), currentIndex);
         currentIndex = (currentIndex+1)%thumbs.size();
     });
@@ -85,4 +92,23 @@ void ImageViewer::initThumbnailFocusBorder()
     thumbnailFocusBorder = new QFocusFrame{this};
     thumbnailFocusBorder->setAutoFillBackground(true);
     thumbnailFocusBorder->setStyleSheet("color:#30d5c8;");
+}
+
+void ImageViewer::removeCurrentImage()
+{
+    auto rmWidget = thumbs[currentIndex];
+    imageThumbnailList->layout()->removeWidget(rmWidget);
+    thumbs.erase(thumbs.begin() + currentIndex);
+    rmWidget->deleteLater();
+    if (thumbs.empty()) {
+        imageContent->setImagePath("");
+        Q_EMIT emptied();
+        return;
+    }
+    if (currentIndex >= thumbs.size()) {
+        currentIndex = thumbs.size() - 1;
+    }
+    thumbs[currentIndex]->hideShadow();
+    imageContent->setImagePath(thumbs[currentIndex]->getImagePath());
+    thumbnailFocusBorder->setWidget(thumbs[currentIndex]);
 }

@@ -31,6 +31,7 @@ public:
             return;
         }
         if (!std::filesystem::exists(path.toStdString())) {
+            clear();
             setToolTip(isEmpty() ? tr("There's no image here") : getImagePath());
             return;
         }
@@ -49,7 +50,7 @@ public:
 signals:
     void doubleClicked();
     void deleted();
-    void TrashMoved();
+    void trashMoved();
     void dataCopied(const QPixmap &img);
     void pathCopied(const QString &imgPath);
     void pathChanged(const QString &imgPath);

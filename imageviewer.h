@@ -6,6 +6,7 @@
 
 #include <string>
 #include <vector>
+#include <algorithm>
 
 #include "editableimage.h"
 
@@ -21,6 +22,7 @@ public:
 
 signals:
     void currentIndexChanged(unsigned int current, unsigned int previous);
+    void emptied();
 
 private:
     QWidget *imageThumbnailList = nullptr;
@@ -39,6 +41,16 @@ private:
         currentIndex = currentIndex == 0u ? thumbs.size() - 1 : currentIndex - 1;
         return oldIndex;
     }
+
+    unsigned int indexOfThumbnail(Thumbnail *elem)
+    {
+        auto iter = std::find(thumbs.begin(), thumbs.end(), elem);
+        // 不存在元素找不到的情况故不做检查
+        return iter - thumbs.begin();
+    }
+
+private slots:
+    void removeCurrentImage();
 };
 
 #endif // IMAGEVIEWER_H

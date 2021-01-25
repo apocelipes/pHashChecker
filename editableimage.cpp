@@ -51,7 +51,7 @@ void EditableImage::showContextMenu(const QPoint &pos)
     auto moveToTrashAction = new QAction(style()->standardIcon(QStyle::SP_TrashIcon), tr("move to trash"), menu);
     connect(moveToTrashAction, &QAction::triggered, [this](){
         QFile::moveToTrash(getImagePath());
-        Q_EMIT TrashMoved();
+        Q_EMIT trashMoved();
     });
     menu->addAction(moveToTrashAction);
     auto deleteAction = new QAction(style()->standardIcon(QStyle::SP_DialogDiscardButton), tr("delete"), menu);
