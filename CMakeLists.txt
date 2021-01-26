@@ -39,6 +39,8 @@ set(PROJECT_SOURCES
         thumbnail.cpp
         imageviewer.h
         imageviewer.cpp
+        imageviewerdialog.h
+        imageviewerdialog.cpp
         utils.h
 )
 

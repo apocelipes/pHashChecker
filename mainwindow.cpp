@@ -9,6 +9,7 @@
 #include <filesystem>
 
 #include "hashworker.h"
+#include "imageviewerdialog.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QWidget(parent)
@@ -16,10 +17,12 @@ MainWindow::MainWindow(QWidget *parent)
     pool = new QThread[QThread::idealThreadCount()];
     images.reserve(1000);
     pathEdit = new QLineEdit;
-    loadImgBtn = new QPushButton(tr("load"));
+    loadImgBtn = new QPushButton{tr("load")};
     loadImgBtn->setEnabled(false);
-    startBtn = new QPushButton(tr("start"));
+    startBtn = new QPushButton{tr("start")};
     startBtn->setEnabled(false);
+    dialogBtn = new QPushButton{tr("show result")};
+    dialogBtn->hide();
     connect(pathEdit, &QLineEdit::textChanged, [this](){
         if (pathEdit->text() == "") {
             loadImgBtn->setEnabled(false);
@@ -31,6 +34,8 @@ MainWindow::MainWindow(QWidget *parent)
     connect(loadImgBtn, &QPushButton::clicked, this, &MainWindow::setImages);
     connect(pathEdit, &QLineEdit::returnPressed, this, &MainWindow::setImages);
     connect(startBtn, &QPushButton::clicked, [this]() {
+        dialogBtn->hide();
+        releaseResultDialog();
         freezeLineLayout();
         sameImageIndex.clear();
         sameImageLists.clear();
@@ -62,17 +67,25 @@ MainWindow::MainWindow(QWidget *parent)
             (pool + id)->start();
         }
     });
+    connect(dialogBtn, &QPushButton::clicked, [this](){
+        initResultDialog();
+        imageDialog->exec();
+    });
+    connect(this, &MainWindow::completed, [this](){
+        initResultDialog();
+        imageDialog->exec();
+    });
     bar = new QProgressBar;
     bar->hide();
 
-    dialog = new QFileDialog;
-    dialog->setOption(QFileDialog::ShowDirsOnly, true);
-    dialog->setOption(QFileDialog::ReadOnly, true);
-    dialog->setDirectory(QDir::homePath());
-    dialog->setModal(true);
+    fileDialog = new QFileDialog;
+    fileDialog->setOption(QFileDialog::ShowDirsOnly, true);
+    fileDialog->setOption(QFileDialog::ReadOnly, true);
+    fileDialog->setDirectory(QDir::homePath());
+    fileDialog->setModal(true);
     fileDialogBtn = new QPushButton(tr("select a directory"));
-    connect(fileDialogBtn, &QPushButton::clicked, dialog, &QFileDialog::exec);
-    connect(dialog, &QFileDialog::fileSelected, [this](const QString &dirName) {
+    connect(fileDialogBtn, &QPushButton::clicked, fileDialog, &QFileDialog::exec);
+    connect(fileDialog, &QFileDialog::fileSelected, [this](const QString &dirName) {
         if (dirName == "" || !std::filesystem::exists(dirName.toStdString())) {
             return;
         }
@@ -83,6 +96,7 @@ MainWindow::MainWindow(QWidget *parent)
     lineLayout = new QHBoxLayout;
     lineLayout->addWidget(loadImgBtn);
     lineLayout->addWidget(startBtn);
+    lineLayout->addWidget(dialogBtn);
     lineLayout->addWidget(pathEdit);
     lineLayout->addWidget(fileDialogBtn);
 
@@ -98,13 +112,18 @@ void MainWindow::onProgress()
     bar->setValue(value + 1);
     if (value == bar->maximum() - 1) {
         freezeLineLayout(false);
+        // should click load button first
+        startBtn->setEnabled(false);
         quitPool();
         bar->hide();
+        dialogBtn->show();
+        Q_EMIT completed();
     }
 }
 
 void MainWindow::setImages()
 {
+    dialogBtn->hide();
     std::string path = pathEdit->text().toStdString();
     if (!std::filesystem::exists(path)) {
         startBtn->setEnabled(false);
@@ -131,6 +150,21 @@ void MainWindow::setImages()
     bar->setValue(0);
     bar->setMaximum(images.size());
     qInfo() << QString::fromStdString(path) << ": " << images.size();
+}
+
+void MainWindow::initResultDialog()
+{
+    if (imageDialog != nullptr) {
+        return;
+    }
+    imageDialog = new ImageViewerDialog{sameImageLists};
+    imageDialog->setModal(true);
+}
+
+void MainWindow::releaseResultDialog()
+{
+    delete imageDialog;
+    imageDialog = nullptr;
 }
 
 MainWindow::~MainWindow()

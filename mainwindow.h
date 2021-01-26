@@ -17,6 +17,8 @@
 
 #include <pHash.h>
 
+class ImageViewerDialog;
+
 class MainWindow : public QWidget
 {
     Q_OBJECT
@@ -37,10 +39,15 @@ public:
         }
         return oldLimit+images.size()/getThreadNumber();
     }
+signals:
+    void completed();
 public slots:
     void setImages();
     void onProgress();
 private:
+    void initResultDialog();
+    void releaseResultDialog();
+
     void quitPool(bool cancelAllThread = false) {
         for (int i = 0; i < QThread::idealThreadCount(); ++i) {
             if (cancelAllThread) {
@@ -64,7 +71,9 @@ private:
     QPushButton *startBtn = nullptr;
     QProgressBar *bar = nullptr;
     QPushButton *fileDialogBtn = nullptr;
-    QFileDialog *dialog = nullptr;
+    QFileDialog *fileDialog = nullptr;
+    QPushButton *dialogBtn = nullptr;
+    ImageViewerDialog *imageDialog = nullptr;
 
     std::vector<std::string> images;
     std::unordered_map<ulong64, std::string> hashes;
