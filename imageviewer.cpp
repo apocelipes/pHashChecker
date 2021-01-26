@@ -7,6 +7,7 @@
 #include <QVBoxLayout>
 
 #include "thumbnail.h"
+#include "utils.h"
 
 ImageViewer::ImageViewer(const std::vector<std::string> &images, QWidget *parent)
     : QWidget(parent)
@@ -18,7 +19,7 @@ ImageViewer::ImageViewer(const std::vector<std::string> &images, QWidget *parent
         auto thumbnail = new Thumbnail{QString::fromStdString(img), this};
         thumbnail->showShadow();
         connect(thumbnail, &Thumbnail::clicked, [this, thumbnail]() {
-            unsigned int index = indexOfThumbnail(thumbnail);
+            unsigned int index = indexOf(thumbs.cbegin(), thumbs.cend(), thumbnail);
             Q_EMIT currentIndexChanged(index, currentIndex);
             currentIndex = index;
         });

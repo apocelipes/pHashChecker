@@ -39,6 +39,7 @@ set(PROJECT_SOURCES
         thumbnail.cpp
         imageviewer.h
         imageviewer.cpp
+        utils.h
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)

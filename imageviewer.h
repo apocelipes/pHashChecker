@@ -6,7 +6,6 @@
 
 #include <string>
 #include <vector>
-#include <algorithm>
 
 #include "editableimage.h"
 
@@ -40,13 +39,6 @@ private:
         auto oldIndex = currentIndex;
         currentIndex = currentIndex == 0u ? thumbs.size() - 1 : currentIndex - 1;
         return oldIndex;
-    }
-
-    unsigned int indexOfThumbnail(Thumbnail *elem)
-    {
-        auto iter = std::find(thumbs.begin(), thumbs.end(), elem);
-        // 不存在元素找不到的情况故不做检查
-        return iter - thumbs.begin();
     }
 
 private slots:
