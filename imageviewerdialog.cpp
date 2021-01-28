@@ -6,6 +6,7 @@
 #include <QStackedWidget>
 #include <QtGlobal>
 #include <QVBoxLayout>
+#include <QPushButton>
 
 #include "imageviewer.h"
 #include "utils.h"
@@ -30,9 +31,41 @@ ImageViewerDialog::ImageViewerDialog(const std::vector<std::vector<std::string>>
         });
         QCoreApplication::processEvents();
     }
-    connect(combox, qOverload<int>(&QComboBox::currentIndexChanged), stackview, &QStackedWidget::setCurrentIndex);
-    auto buttons = new QDialogButtonBox{QDialogButtonBox::Ok, this};
+
+    auto buttons = new QDialogButtonBox{this};
+    auto prevBtn = new QPushButton{style()->standardIcon(QStyle::SP_ArrowLeft), tr("prev")};
+    connect(prevBtn, &QPushButton::clicked, [combox](){
+        auto index = combox->currentIndex();
+        combox->setCurrentIndex(index - 1);
+    });
+    buttons->addButton(prevBtn, QDialogButtonBox::ActionRole);
+
+    auto ignoreBtn = new QPushButton{style()->standardIcon(QStyle::SP_BrowserStop), tr("ignore this")};
+    connect(ignoreBtn, &QPushButton::clicked, [this, combox, stackview](){
+        auto widget = stackview->currentWidget();
+        auto index = combox->currentIndex();
+        viewers.erase(viewers.begin() + index);
+        combox->removeItem(index);
+        stackview->removeWidget(widget);
+        widget->deleteLater();
+    });
+    buttons->addButton(ignoreBtn, QDialogButtonBox::ActionRole);
+
+    auto nextBtn = new QPushButton{style()->standardIcon(QStyle::SP_ArrowRight), tr("next")};
+    connect(nextBtn, &QPushButton::clicked, [combox](){
+        auto index = combox->currentIndex();
+        combox->setCurrentIndex(index + 1);
+    });
+    buttons->addButton(nextBtn, QDialogButtonBox::ActionRole);
+    buttons->addButton(QDialogButtonBox::Ok);
+
+    connect(combox, qOverload<int>(&QComboBox::currentIndexChanged), [this, stackview, prevBtn, nextBtn](int index){
+        prevBtn->setEnabled(index != 0);
+        nextBtn->setEnabled(static_cast<unsigned int>(index) != (viewers.size() - 1));
+        stackview->setCurrentIndex(index);
+    });
     connect(buttons, &QDialogButtonBox::accepted, this, &QDialog::accept);
+    connect(buttons, &QDialogButtonBox::rejected, this, &QDialog::reject);
 
     auto mainLayout = new QVBoxLayout;
     mainLayout->addWidget(combox, 0, Qt::AlignLeft);
