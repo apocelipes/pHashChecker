@@ -17,6 +17,7 @@ MainWindow::MainWindow(QWidget *parent)
     pool = new QThread[QThread::idealThreadCount()];
     images.reserve(1000);
     pathEdit = new QLineEdit;
+    pathEdit->setMinimumWidth(pathEdit->fontMetrics().averageCharWidth() * MIN_EDIT_WIDTH);
     loadImgBtn = new QPushButton{tr("load")};
     loadImgBtn->setEnabled(false);
     startBtn = new QPushButton{tr("start")};

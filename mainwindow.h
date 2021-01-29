@@ -19,6 +19,8 @@
 
 class ImageViewerDialog;
 
+constexpr int MIN_EDIT_WIDTH = 30;
+
 class MainWindow : public QWidget
 {
     Q_OBJECT
