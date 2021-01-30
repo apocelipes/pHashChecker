@@ -21,7 +21,7 @@ EditableImage::EditableImage(const QString &imgPath, QWidget *parent)
     setContextMenuPolicy(Qt::CustomContextMenu);
     connect(this, &QWidget::customContextMenuRequested, this, &EditableImage::showContextMenu);
     connect(this, &EditableImage::doubleClicked, [this](){
-        QDesktopServices::openUrl(QUrl(getImagePath()));
+        QDesktopServices::openUrl(QUrl::fromLocalFile(getImagePath()));
     });
 }
 
@@ -32,7 +32,7 @@ void EditableImage::showContextMenu(const QPoint &pos)
 
     auto openAction = new QAction(style()->standardIcon(QStyle::SP_FileDialogContentsView), tr("open"), menu);
     connect(openAction, &QAction::triggered, [this](){
-        QDesktopServices::openUrl(QUrl(getImagePath()));
+        QDesktopServices::openUrl(QUrl::fromLocalFile(getImagePath()));
     });
     menu->addAction(openAction);
     auto copyAction = new QAction(style()->standardIcon(QStyle::SP_FileDialogListView), tr("copy data"), menu);
