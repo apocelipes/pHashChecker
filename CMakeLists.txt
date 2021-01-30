@@ -24,23 +24,34 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 #    endif()
 #endif()
 
-find_package(QT NAMES Qt6 Qt5 COMPONENTS Widgets REQUIRED)
-find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets REQUIRED)
+find_package(QT NAMES Qt6 Qt5 COMPONENTS Widgets LinguistTools REQUIRED)
+find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets LinguistTools REQUIRED)
+
+set(TS_FILES src/lang/zh_CN.ts src/lang/ja_JP.ts)
 
 aux_source_directory(src PROJECT_SOURCES)
 
+set(PROJECT_SOURCES ${PROJECT_SOURCES} ${TS_FILES} ${CMAKE_CURRENT_BINARY_DIR}/translations.qrc)
+
+configure_file(translations.qrc ${CMAKE_CURRENT_BINARY_DIR} COPYONLY)
+
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
+    qt_create_translation(QM_FILES ${CMAKE_CURRENT_SOURCE_DIR} ${TS_FILES})
     qt_add_executable(pHashChecker
         ${PROJECT_SOURCES}
+        ${QM_FILES}
     )
 else()
+    qt5_create_translation(QM_FILES ${CMAKE_CURRENT_SOURCE_DIR} ${TS_FILES})
     if(ANDROID)
         add_library(pHashChecker SHARED
             ${PROJECT_SOURCES}
+            ${QM_FILES}
         )
     else()
         add_executable(pHashChecker
             ${PROJECT_SOURCES}
+            ${QM_FILES}
         )
     endif()
 endif()
