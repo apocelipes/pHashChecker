@@ -27,22 +27,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 find_package(QT NAMES Qt6 Qt5 COMPONENTS Widgets REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets REQUIRED)
 
-set(PROJECT_SOURCES
-        main.cpp
-        mainwindow.cpp
-        mainwindow.h
-        hashworker.h
-        hashworker.cpp
-        editableimage.h
-        editableimage.cpp
-        thumbnail.h
-        thumbnail.cpp
-        imageviewer.h
-        imageviewer.cpp
-        imageviewerdialog.h
-        imageviewerdialog.cpp
-        utils.h
-)
+aux_source_directory(src PROJECT_SOURCES)
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     qt_add_executable(pHashChecker
