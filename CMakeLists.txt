@@ -39,19 +39,16 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     qt_create_translation(QM_FILES ${CMAKE_CURRENT_SOURCE_DIR} ${TS_FILES})
     qt_add_executable(pHashChecker
         ${PROJECT_SOURCES}
-        ${QM_FILES}
     )
 else()
     qt5_create_translation(QM_FILES ${CMAKE_CURRENT_SOURCE_DIR} ${TS_FILES})
     if(ANDROID)
         add_library(pHashChecker SHARED
             ${PROJECT_SOURCES}
-            ${QM_FILES}
         )
     else()
         add_executable(pHashChecker
             ${PROJECT_SOURCES}
-            ${QM_FILES}
         )
     endif()
 endif()
