@@ -22,17 +22,17 @@ aux_source_directory(src PROJECT_SOURCES)
 
 set(PROJECT_SOURCES ${PROJECT_SOURCES} ${CMAKE_CURRENT_BINARY_DIR}/translations.qrc)
 
-add_custom_target(create_all_ts_files ALL)
+add_custom_target(update_all_ts_files ALL)
 add_custom_target(create_all_qm_files ALL)
 find_file(LUPDATE_PATH lupdate)
 find_file(LRELEASE_PATH lrelease)
 foreach(TS_FILE ${TS_FILES})
     get_filename_component(I18N_NAME ${TS_FILE} NAME_WE)
-    set(TS_TARGET_NAME "create_i18n_${I18N_NAME}")
+    set(TS_TARGET_NAME "update_ts_file_${I18N_NAME}")
     add_custom_target(${TS_TARGET_NAME}
             COMMAND ${LUPDATE_PATH} ${CMAKE_CURRENT_SOURCE_DIR} -ts ${TS_FILE}
             VERBATIM)
-    add_dependencies(create_all_ts_files ${TS_TARGET_NAME})
+    add_dependencies(update_all_ts_files ${TS_TARGET_NAME})
     set(QM_TARGET_NAME "create_qm_file_${I18N_NAME}")
     set(QM_FILE "${CMAKE_CURRENT_BINARY_DIR}/${I18N_NAME}.qm")
     add_custom_target(${QM_TARGET_NAME}
