@@ -59,13 +59,22 @@ ImageViewerDialog::ImageViewerDialog(const std::vector<std::vector<std::string>>
     buttons->addButton(nextBtn, QDialogButtonBox::ActionRole);
     buttons->addButton(QDialogButtonBox::Ok);
 
-    connect(combox, qOverload<int>(&QComboBox::currentIndexChanged), [this, stackview, prevBtn, nextBtn](int index){
-        prevBtn->setEnabled(index != 0);
-        nextBtn->setEnabled(static_cast<unsigned int>(index) != (viewers.size() - 1));
+    auto buttonsSetEnable = [this, stackview, prevBtn, nextBtn, ignoreBtn](){
+        auto index = stackview->currentIndex();
+        // 因为有空白组件做default，不能靠currentIndex == -1判断
+        auto hasViewer = !viewers.empty();
+        prevBtn->setEnabled(hasViewer && index != 0);
+        nextBtn->setEnabled(hasViewer
+                            && static_cast<unsigned int>(index) != (viewers.size() - 1));
+        ignoreBtn->setEnabled(hasViewer);
+    };
+    connect(combox, qOverload<int>(&QComboBox::currentIndexChanged), [stackview, buttonsSetEnable](int index){
         stackview->setCurrentIndex(index);
+        buttonsSetEnable();
     });
     connect(buttons, &QDialogButtonBox::accepted, this, &QDialog::accept);
     connect(buttons, &QDialogButtonBox::rejected, this, &QDialog::reject);
+    buttonsSetEnable();
 
     auto mainLayout = new QVBoxLayout;
     mainLayout->addWidget(combox, 0, Qt::AlignLeft);
