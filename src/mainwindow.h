@@ -65,6 +65,11 @@ private:
         for (int i = 0; i < lineLayout->count(); ++i) {
             lineLayout->itemAt(i)->widget()->setEnabled(!flag);
         }
+        if (flag) {
+            setCursor(Qt::WaitCursor);
+        } else {
+            unsetCursor();
+        }
     }
 
     QHBoxLayout *lineLayout = nullptr;
