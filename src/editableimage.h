@@ -15,12 +15,12 @@ class EditableImage : public QLabel
 public:
     explicit EditableImage(const QString &imgPath, QWidget *parent = nullptr);
 
-    QString getImagePath()
+    QString getImagePath() noexcept
     {
         return m_path;
     }
 
-    bool isEmpty()
+    bool isEmpty() noexcept
     {
         return getImagePath() == "";
     }

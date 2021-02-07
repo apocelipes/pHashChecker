@@ -34,7 +34,7 @@ private:
     void initThumbnailFocusBorder();
     QPushButton *createSideControlButton(QStyle::StandardPixmap pixmap, QWidget *parent = nullptr);
 
-    unsigned int decrCurrentIndex()
+    unsigned int decrCurrentIndex() noexcept
     {
         auto oldIndex = currentIndex;
         currentIndex = currentIndex == 0u ? thumbs.size() - 1 : currentIndex - 1;

@@ -46,7 +46,7 @@ public:
         Q_EMIT opacityChanged(opacity);
     }
 
-    QString getImagePath()
+    QString getImagePath() noexcept
     {
         return imgPath;
     }

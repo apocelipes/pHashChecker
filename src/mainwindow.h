@@ -29,12 +29,12 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
-    unsigned int getThreadNumber()
+    unsigned int getThreadNumber() noexcept
     {
         return std::min(static_cast<unsigned int>(images.size()), static_cast<unsigned int>(QThread::idealThreadCount()));
     }
 
-    unsigned long getNextLimit(const unsigned long oldLimit, const unsigned long threadID)
+    unsigned long getNextLimit(const unsigned long oldLimit, const unsigned long threadID) noexcept
     {
         if (threadID + 1 == getThreadNumber()) {
             return images.size();
