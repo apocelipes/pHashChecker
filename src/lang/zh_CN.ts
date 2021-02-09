@@ -4,44 +4,57 @@
 <context>
     <name>EditableImage</name>
     <message>
-        <location filename="../editableimage.cpp" line="33"/>
+        <location filename="../editableimage.cpp" line="34"/>
         <source>open</source>
         <translation>打开</translation>
     </message>
     <message>
-        <location filename="../editableimage.cpp" line="38"/>
+        <location filename="../editableimage.cpp" line="40"/>
         <source>copy data</source>
         <translation>复制图片</translation>
     </message>
     <message>
-        <location filename="../editableimage.cpp" line="45"/>
+        <location filename="../editableimage.cpp" line="48"/>
         <source>copy path</source>
         <translation>复制图片路径</translation>
     </message>
     <message>
-        <location filename="../editableimage.cpp" line="51"/>
+        <location filename="../editableimage.cpp" line="55"/>
         <source>move to trash</source>
         <translation>移动到回收站</translation>
     </message>
     <message>
-        <location filename="../editableimage.cpp" line="57"/>
+        <location filename="../editableimage.cpp" line="62"/>
         <source>delete</source>
         <translation>删除</translation>
     </message>
     <message>
-        <location filename="../editableimage.cpp" line="60"/>
+        <location filename="../editableimage.cpp" line="65"/>
         <source>delete this image</source>
         <translation>删除图片</translation>
     </message>
     <message>
-        <location filename="../editableimage.cpp" line="61"/>
+        <location filename="../editableimage.cpp" line="66"/>
         <source>do you want to delete it?</source>
         <translation>你确定删除这张图片吗？</translation>
+    </message>
+    <message>
+        <location filename="../editableimage.cpp" line="75"/>
+        <source>hash</source>
+        <translation>计算hash</translation>
     </message>
     <message>
         <location filename="../editableimage.h" line="35"/>
         <source>There&apos;s no image here</source>
         <translation>无图片</translation>
+    </message>
+</context>
+<context>
+    <name>HashDialog</name>
+    <message>
+        <location filename="../hashdialog.cpp" line="42"/>
+        <source>File Name:</source>
+        <translation>文件名:</translation>
     </message>
 </context>
 <context>

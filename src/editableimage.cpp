@@ -1,4 +1,5 @@
 #include "editableimage.h"
+#include "hashdialog.h"
 
 #include <QAction>
 #include <QClipboard>
@@ -35,6 +36,7 @@ void EditableImage::showContextMenu(const QPoint &pos)
         QDesktopServices::openUrl(QUrl::fromLocalFile(getImagePath()));
     });
     menu->addAction(openAction);
+
     auto copyAction = new QAction(style()->standardIcon(QStyle::SP_FileDialogListView), tr("copy data"), menu);
     connect(copyAction, &QAction::triggered, [this](){
         const auto &data = pixmap(Qt::ReturnByValue);
@@ -42,18 +44,21 @@ void EditableImage::showContextMenu(const QPoint &pos)
         Q_EMIT dataCopied(data);
     });
     menu->addAction(copyAction);
+
     auto copyPathAction = new QAction(style()->standardIcon(QStyle::SP_FileDialogListView), tr("copy path"), menu);
     connect(copyPathAction, &QAction::triggered, [this](){
         QGuiApplication::clipboard()->setText(getImagePath());
         Q_EMIT pathCopied(getImagePath());
     });
     menu->addAction(copyPathAction);
+
     auto moveToTrashAction = new QAction(style()->standardIcon(QStyle::SP_TrashIcon), tr("move to trash"), menu);
     connect(moveToTrashAction, &QAction::triggered, [this](){
         QFile::moveToTrash(getImagePath());
         Q_EMIT trashMoved();
     });
     menu->addAction(moveToTrashAction);
+
     auto deleteAction = new QAction(style()->standardIcon(QStyle::SP_DialogDiscardButton), tr("delete"), menu);
     connect(deleteAction, &QAction::triggered, [this](){
         auto isDelete = QMessageBox::warning(this,
@@ -66,6 +71,13 @@ void EditableImage::showContextMenu(const QPoint &pos)
         }
     });
     menu->addAction(deleteAction);
+
+    auto hashAction = new QAction{style()->standardIcon(QStyle::SP_MessageBoxInformation), tr("hash")};
+    connect(hashAction, &QAction::triggered, [this](){
+        HashDialog dialog{getImagePath(), this};
+        dialog.exec();
+    });
+    menu->addAction(hashAction);
 
     auto actions = menu->actions();
     for (auto action = actions.begin(); action != actions.end(); ++action) {
