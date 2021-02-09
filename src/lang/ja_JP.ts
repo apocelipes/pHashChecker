@@ -14,32 +14,32 @@
         <translation>画像をコピー</translation>
     </message>
     <message>
-        <location filename="../editableimage.cpp" line="48"/>
+        <location filename="../editableimage.cpp" line="52"/>
         <source>copy path</source>
         <translation>画像のパスをコピー</translation>
     </message>
     <message>
-        <location filename="../editableimage.cpp" line="55"/>
+        <location filename="../editableimage.cpp" line="60"/>
         <source>move to trash</source>
         <translation>ゴミ箱に移動</translation>
     </message>
     <message>
-        <location filename="../editableimage.cpp" line="62"/>
+        <location filename="../editableimage.cpp" line="68"/>
         <source>delete</source>
         <translation>削除</translation>
     </message>
     <message>
-        <location filename="../editableimage.cpp" line="65"/>
+        <location filename="../editableimage.cpp" line="71"/>
         <source>delete this image</source>
         <translation>画像を削除</translation>
     </message>
     <message>
-        <location filename="../editableimage.cpp" line="66"/>
+        <location filename="../editableimage.cpp" line="72"/>
         <source>do you want to delete it?</source>
         <translation>画像を削除しますか？</translation>
     </message>
     <message>
-        <location filename="../editableimage.cpp" line="75"/>
+        <location filename="../editableimage.cpp" line="81"/>
         <source>hash</source>
         <translation>ハッシュ</translation>
     </message>
@@ -98,7 +98,7 @@
         <translation>結果を表示</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="88"/>
+        <location filename="../mainwindow.cpp" line="89"/>
         <source>select a directory</source>
         <translation>フォルダを選択</translation>
     </message>

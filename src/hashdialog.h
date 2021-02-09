@@ -7,7 +7,7 @@
 class HashDialog: public QDialog {
     Q_OBJECT
 public:
-    HashDialog(const QString &path, QWidget *parent = nullptr);
+    explicit HashDialog(const QString &path, QWidget *parent = nullptr);
 };
 
 

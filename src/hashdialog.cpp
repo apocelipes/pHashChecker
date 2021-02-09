@@ -5,7 +5,6 @@
 #include <QFile>
 #include <QHeaderView>
 #include <QTableWidget>
-#include <QTableWidgetItem>
 #include <QVBoxLayout>
 
 HashDialog::HashDialog(const QString &path, QWidget *parent)

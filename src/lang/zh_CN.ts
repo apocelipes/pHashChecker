@@ -14,32 +14,32 @@
         <translation>复制图片</translation>
     </message>
     <message>
-        <location filename="../editableimage.cpp" line="48"/>
+        <location filename="../editableimage.cpp" line="52"/>
         <source>copy path</source>
         <translation>复制图片路径</translation>
     </message>
     <message>
-        <location filename="../editableimage.cpp" line="55"/>
+        <location filename="../editableimage.cpp" line="60"/>
         <source>move to trash</source>
         <translation>移动到回收站</translation>
     </message>
     <message>
-        <location filename="../editableimage.cpp" line="62"/>
+        <location filename="../editableimage.cpp" line="68"/>
         <source>delete</source>
         <translation>删除</translation>
     </message>
     <message>
-        <location filename="../editableimage.cpp" line="65"/>
+        <location filename="../editableimage.cpp" line="71"/>
         <source>delete this image</source>
         <translation>删除图片</translation>
     </message>
     <message>
-        <location filename="../editableimage.cpp" line="66"/>
+        <location filename="../editableimage.cpp" line="72"/>
         <source>do you want to delete it?</source>
         <translation>你确定删除这张图片吗？</translation>
     </message>
     <message>
-        <location filename="../editableimage.cpp" line="75"/>
+        <location filename="../editableimage.cpp" line="81"/>
         <source>hash</source>
         <translation>计算hash</translation>
     </message>
@@ -98,7 +98,7 @@
         <translation>显示结果</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="88"/>
+        <location filename="../mainwindow.cpp" line="89"/>
         <source>select a directory</source>
         <translation>选择图片目录</translation>
     </message>

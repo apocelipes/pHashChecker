@@ -83,6 +83,7 @@ MainWindow::MainWindow(QWidget *parent)
     fileDialog = new QFileDialog;
     fileDialog->setOption(QFileDialog::ShowDirsOnly, true);
     fileDialog->setOption(QFileDialog::ReadOnly, true);
+    fileDialog->setFileMode(QFileDialog::Directory);
     fileDialog->setDirectory(QDir::homePath());
     fileDialog->setModal(true);
     fileDialogBtn = new QPushButton(tr("select a directory"));
@@ -127,12 +128,13 @@ void MainWindow::setImages()
 {
     dialogBtn->hide();
     std::string path = pathEdit->text().toStdString();
-    if (!std::filesystem::exists(path)) {
+    if (!std::filesystem::exists(path) || !std::filesystem::is_directory(path)) {
         startBtn->setEnabled(false);
+        qWarning() << "path does not exist or is not a directory: " << QString::fromStdString(path);
         return;
     }
     std::filesystem::directory_iterator dir{path, std::filesystem::directory_options::skip_permission_denied};
-    if (images.size() != 0) {
+    if (images.empty()) {
         images.clear();
     }
     for (const auto &p : dir) {
@@ -148,9 +150,11 @@ void MainWindow::setImages()
             images.emplace_back(p.path().string());
         }
     }
-    startBtn->setEnabled(true);
-    bar->setValue(0);
-    bar->setMaximum(images.size());
+    if (images.empty()) {
+        startBtn->setEnabled(true);
+        bar->setValue(0);
+        bar->setMaximum(images.size());
+    }
     qInfo() << QString::fromStdString(path) << ": " << images.size();
 }
 

@@ -1,9 +1,9 @@
 #include "editableimage.h"
 #include "hashdialog.h"
 
+#include <QtGlobal>
 #include <QAction>
 #include <QClipboard>
-#include <QColor>
 #include <QDesktopServices>
 #include <QFile>
 #include <QGuiApplication>
@@ -39,7 +39,11 @@ void EditableImage::showContextMenu(const QPoint &pos)
 
     auto copyAction = new QAction(style()->standardIcon(QStyle::SP_FileDialogListView), tr("copy data"), menu);
     connect(copyAction, &QAction::triggered, [this](){
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 15, 0))
         const auto &data = pixmap(Qt::ReturnByValue);
+#else
+        const auto &data = *pixmap();
+#endif
         QGuiApplication::clipboard()->setPixmap(data);
         Q_EMIT dataCopied(data);
     });
@@ -52,12 +56,14 @@ void EditableImage::showContextMenu(const QPoint &pos)
     });
     menu->addAction(copyPathAction);
 
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 15, 0))
     auto moveToTrashAction = new QAction(style()->standardIcon(QStyle::SP_TrashIcon), tr("move to trash"), menu);
     connect(moveToTrashAction, &QAction::triggered, [this](){
         QFile::moveToTrash(getImagePath());
         Q_EMIT trashMoved();
     });
     menu->addAction(moveToTrashAction);
+#endif
 
     auto deleteAction = new QAction(style()->standardIcon(QStyle::SP_DialogDiscardButton), tr("delete"), menu);
     connect(deleteAction, &QAction::triggered, [this](){

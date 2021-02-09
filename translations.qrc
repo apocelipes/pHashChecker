@@ -1,4 +1,4 @@
-<RCC>
+<!DOCTYPE RCC><RCC version="1.0">
     <qresource>
         <file>zh_CN.qm</file>
         <file>ja_JP.qm</file>
