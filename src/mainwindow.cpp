@@ -134,7 +134,7 @@ void MainWindow::setImages()
         return;
     }
     std::filesystem::directory_iterator dir{path, std::filesystem::directory_options::skip_permission_denied};
-    if (images.empty()) {
+    if (!images.empty()) {
         images.clear();
     }
     for (const auto &p : dir) {
@@ -150,7 +150,7 @@ void MainWindow::setImages()
             images.emplace_back(p.path().string());
         }
     }
-    if (images.empty()) {
+    if (!images.empty()) {
         startBtn->setEnabled(true);
         bar->setValue(0);
         bar->setMaximum(images.size());
