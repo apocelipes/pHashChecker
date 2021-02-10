@@ -8,6 +8,8 @@
 
 #include <filesystem>
 
+class QMenu;
+
 class EditableImage : public QLabel
 {
     Q_OBJECT
@@ -58,6 +60,9 @@ private slots:
     void showContextMenu(const QPoint &pos);
 private:
     QString m_path;
+    QMenu *contextMenu = nullptr;
+
+    void initContextMenu();
 };
 
 #endif // EDITABLEIMAGE_H
