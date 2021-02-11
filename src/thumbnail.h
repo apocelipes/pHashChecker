@@ -3,11 +3,15 @@
 
 #include <QWidget>
 #include <QString>
-#include <QLabel>
 #include <QMouseEvent>
 #include <QGraphicsOpacityEffect>
+#include <QParallelAnimationGroup>
+
+class QLabel;
+class QGraphicsBlurEffect;
 
 constexpr qreal DEFAULT_OPACITY = 0.8;
+constexpr qreal DEFAULT_BLUR_RADIUS = 5.0;
 
 class Thumbnail : public QWidget
 {
@@ -18,17 +22,17 @@ public:
     void showShadow()
     {
         shadow->show();
+        showAnimation->start();
     }
 
     void hideShadow()
     {
-        shadow->hide();
+        hideAnimation->start();
     }
 
     qreal getOpacity()
     {
-        auto effect = qobject_cast<QGraphicsOpacityEffect*>(shadow->graphicsEffect());
-        return effect->opacity();
+        return opacityEffect->opacity();
     }
 
     void setOpacity(const qreal opacity)
@@ -37,12 +41,7 @@ public:
             return;
         }
 
-        auto effect = qobject_cast<QGraphicsOpacityEffect*>(shadow->graphicsEffect());
-        if (effect == nullptr) {
-            effect = new QGraphicsOpacityEffect(shadow);
-            shadow->setGraphicsEffect(effect);
-        }
-        effect->setOpacity(opacity);
+        opacityEffect->setOpacity(opacity);
         Q_EMIT opacityChanged(opacity);
     }
 
@@ -61,9 +60,15 @@ signals:
     void clicked();
     void opacityChanged(qreal opacity);
 private:
+    QString imgPath;
     QWidget *shadow = nullptr;
     QLabel *image = nullptr;
-    QString imgPath;
+    QGraphicsBlurEffect *blurEffect = nullptr;
+    QGraphicsOpacityEffect *opacityEffect = nullptr;
+    QParallelAnimationGroup *showAnimation = nullptr;
+    QParallelAnimationGroup *hideAnimation = nullptr;
+
+    void initAnimations();
 };
 
 #endif // THUMBNAIL_H

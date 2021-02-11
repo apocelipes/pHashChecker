@@ -20,6 +20,9 @@ ImageViewer::ImageViewer(const std::vector<std::string> &images, QWidget *parent
         thumbnail->showShadow();
         connect(thumbnail, &Thumbnail::clicked, [this, thumbnail]() {
             unsigned int index = indexOf(thumbs.cbegin(), thumbs.cend(), thumbnail);
+            if (index == currentIndex) {
+                return;
+            }
             Q_EMIT currentIndexChanged(index, currentIndex);
             currentIndex = index;
         });
