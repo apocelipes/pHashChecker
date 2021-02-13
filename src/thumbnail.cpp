@@ -38,11 +38,11 @@ Thumbnail::Thumbnail(const QString &path, QWidget *parent)
 void Thumbnail::initAnimations()
 {
     auto blurShowAnimation = new QPropertyAnimation{blurEffect, "blurRadius", this};
-    blurShowAnimation->setDuration(500);
+    blurShowAnimation->setDuration(DEFAULT_ANIME_DURATION);
     blurShowAnimation->setStartValue(0.0);
     blurShowAnimation->setEndValue(DEFAULT_BLUR_RADIUS);
     auto shadowShowAnimation = new QPropertyAnimation{opacityEffect, "opacity", this};
-    shadowShowAnimation->setDuration(500);
+    shadowShowAnimation->setDuration(DEFAULT_ANIME_DURATION);
     shadowShowAnimation->setStartValue(0.0);
     shadowShowAnimation->setEndValue(DEFAULT_OPACITY);
     showAnimation = new QParallelAnimationGroup{this};
@@ -50,11 +50,11 @@ void Thumbnail::initAnimations()
     showAnimation->addAnimation(shadowShowAnimation);
 
     auto blurHideAnimation = new QPropertyAnimation{blurEffect, "blurRadius", this};
-    blurHideAnimation->setDuration(500);
+    blurHideAnimation->setDuration(DEFAULT_ANIME_DURATION);
     blurHideAnimation->setStartValue(DEFAULT_BLUR_RADIUS);
     blurHideAnimation->setEndValue(0.0);
     auto shadowHideAnimation = new QPropertyAnimation{opacityEffect, "opacity", this};
-    shadowHideAnimation->setDuration(500);
+    shadowHideAnimation->setDuration(DEFAULT_ANIME_DURATION);
     shadowHideAnimation->setStartValue(DEFAULT_OPACITY);
     shadowHideAnimation->setEndValue(0.0);
     hideAnimation = new QParallelAnimationGroup{this};

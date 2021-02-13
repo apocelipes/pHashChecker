@@ -12,6 +12,7 @@ class QGraphicsBlurEffect;
 
 constexpr qreal DEFAULT_OPACITY = 0.8;
 constexpr qreal DEFAULT_BLUR_RADIUS = 5.0;
+constexpr int DEFAULT_ANIME_DURATION = 300; // ms
 
 class Thumbnail : public QWidget
 {
