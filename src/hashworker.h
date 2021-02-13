@@ -19,7 +19,6 @@ public:
     using ContainerType = const std::vector<std::string>;
     using HashContainerType = std::unordered_map<ulong64, std::string>;
 
-    HashWorker() = delete;
     HashWorker(unsigned long start, unsigned long limit, ContainerType &c, HashContainerType &hashes, QReadWriteLock &lock, QObject *parent = nullptr)
         : QObject(parent), _start{start}, _limit{limit}, _images{c}, _hashes{hashes}, _lock{lock}
     {}

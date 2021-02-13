@@ -36,12 +36,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(loadImgBtn, &QPushButton::clicked, this, &MainWindow::setImages);
     connect(pathEdit, &QLineEdit::returnPressed, this, &MainWindow::setImages);
     connect(startBtn, &QPushButton::clicked, [this]() {
-        dialogBtn->hide();
-        releaseResultDialog();
         freezeLineLayout();
-        sameImageIndex.clear();
-        sameImageLists.clear();
-        hashes.clear();
         hashes.reserve(images.size());
         bar->show();
         bar->setValue(0);
@@ -80,7 +75,7 @@ MainWindow::MainWindow(QWidget *parent)
     bar = new QProgressBar;
     bar->hide();
 
-    fileDialog = new QFileDialog;
+    fileDialog = new QFileDialog{this};
     fileDialog->setOption(QFileDialog::ShowDirsOnly, true);
     fileDialog->setOption(QFileDialog::ReadOnly, true);
     fileDialog->setFileMode(QFileDialog::Directory);
@@ -127,6 +122,12 @@ void MainWindow::onProgress()
 void MainWindow::setImages()
 {
     dialogBtn->hide();
+    releaseResultDialog();
+    sameImageIndex.clear();
+    sameImageLists.clear();
+    hashes.clear();
+    images.clear();
+
     std::string path = pathEdit->text().toStdString();
     if (!std::filesystem::exists(path) || !std::filesystem::is_directory(path)) {
         startBtn->setEnabled(false);
@@ -134,9 +135,6 @@ void MainWindow::setImages()
         return;
     }
     std::filesystem::directory_iterator dir{path, std::filesystem::directory_options::skip_permission_denied};
-    if (!images.empty()) {
-        images.clear();
-    }
     for (const auto &p : dir) {
         if (!p.is_regular_file()) {
             continue;
@@ -163,14 +161,18 @@ void MainWindow::initResultDialog()
     if (imageDialog != nullptr) {
         return;
     }
+    dialogBtn->setEnabled(false);
     imageDialog = new ImageViewerDialog{sameImageLists};
     imageDialog->setModal(true);
+    dialogBtn->setEnabled(true);
 }
 
 void MainWindow::releaseResultDialog()
 {
-    delete imageDialog;
-    imageDialog = nullptr;
+    if (imageDialog != nullptr) {
+        imageDialog->deleteLater();
+        imageDialog = nullptr;
+    }
 }
 
 MainWindow::~MainWindow()

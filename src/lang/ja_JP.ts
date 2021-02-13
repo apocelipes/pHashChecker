@@ -98,7 +98,7 @@
         <translation>結果を表示</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="89"/>
+        <location filename="../mainwindow.cpp" line="84"/>
         <source>select a directory</source>
         <translation>フォルダを選択</translation>
     </message>

@@ -24,6 +24,7 @@ HashDialog::HashDialog(const QString &path, QWidget *parent)
     table->horizontalHeader()->setSectionResizeMode(0, QHeaderView::ResizeToContents);
     table->setColumnWidth(1, fontMetrics().averageCharWidth() * 80);
     table->setSizeAdjustPolicy(QAbstractScrollArea::AdjustToContents);
+    table->setEditTriggers(QAbstractItemView::NoEditTriggers);
 
     QCryptographicHash::Algorithm hashAlgorithms[] = {
             QCryptographicHash::Md5,
