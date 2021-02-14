@@ -18,7 +18,7 @@ class Thumbnail : public QWidget
 {
     Q_OBJECT
 public:
-    explicit Thumbnail(const QString &path, QWidget *parent = nullptr);
+    explicit Thumbnail(QString path, QWidget *parent = nullptr);
 
     void showShadow()
     {

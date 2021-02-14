@@ -6,9 +6,10 @@
 #include <QPropertyAnimation>
 
 #include <filesystem>
+#include <utility>
 
-Thumbnail::Thumbnail(const QString &path, QWidget *parent)
-    : QWidget(parent), imgPath{path}
+Thumbnail::Thumbnail(QString path, QWidget *parent)
+    : QWidget(parent), imgPath{std::move(path)}
 {
     setFixedSize(100, 100);
     image = new QLabel(this);
