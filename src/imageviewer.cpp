@@ -17,7 +17,6 @@ ImageViewer::ImageViewer(const std::vector<std::string> &images, QWidget *parent
     thumbs.reserve(images.size());
     for (const auto &img : images) {
         auto thumbnail = new Thumbnail{QString::fromStdString(img), this};
-        thumbnail->showShadow();
         connect(thumbnail, &Thumbnail::clicked, [this, thumbnail]() {
             unsigned int index = indexOf(thumbs.cbegin(), thumbs.cend(), thumbnail);
             if (index == currentIndex) {

@@ -3,10 +3,15 @@
 #include <QLabel>
 #include <QPixmap>
 #include <QGraphicsBlurEffect>
+#include <QGraphicsOpacityEffect>
 #include <QPropertyAnimation>
 
 #include <filesystem>
 #include <utility>
+
+constexpr qreal DEFAULT_OPACITY = 0.8;
+constexpr qreal DEFAULT_BLUR_RADIUS = 5.0;
+constexpr int DEFAULT_ANIME_DURATION = 300; // ms
 
 Thumbnail::Thumbnail(QString path, QWidget *parent)
     : QWidget(parent), imgPath{std::move(path)}
@@ -30,13 +35,11 @@ Thumbnail::Thumbnail(QString path, QWidget *parent)
     shadow->setStyleSheet("background:rgb(255,255,255);");
     shadow->setGeometry(geometry());
     opacityEffect = new QGraphicsOpacityEffect{this};
+    opacityEffect->setOpacity(DEFAULT_OPACITY);
     shadow->setGraphicsEffect(opacityEffect);
-    setOpacity(DEFAULT_OPACITY);
-    shadow->hide();
-    initAnimations();
 }
 
-void Thumbnail::initAnimations()
+void Thumbnail::initShowShadowAnimation()
 {
     auto blurShowAnimation = new QPropertyAnimation{blurEffect, "blurRadius", this};
     blurShowAnimation->setDuration(DEFAULT_ANIME_DURATION);
@@ -49,7 +52,10 @@ void Thumbnail::initAnimations()
     showAnimation = new QParallelAnimationGroup{this};
     showAnimation->addAnimation(blurShowAnimation);
     showAnimation->addAnimation(shadowShowAnimation);
+}
 
+void Thumbnail::initHideShadowAnimation()
+{
     auto blurHideAnimation = new QPropertyAnimation{blurEffect, "blurRadius", this};
     blurHideAnimation->setDuration(DEFAULT_ANIME_DURATION);
     blurHideAnimation->setStartValue(DEFAULT_BLUR_RADIUS);

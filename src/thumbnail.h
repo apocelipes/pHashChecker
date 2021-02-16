@@ -4,15 +4,11 @@
 #include <QWidget>
 #include <QString>
 #include <QMouseEvent>
-#include <QGraphicsOpacityEffect>
 #include <QParallelAnimationGroup>
 
 class QLabel;
 class QGraphicsBlurEffect;
-
-constexpr qreal DEFAULT_OPACITY = 0.8;
-constexpr qreal DEFAULT_BLUR_RADIUS = 5.0;
-constexpr int DEFAULT_ANIME_DURATION = 300; // ms
+class QGraphicsOpacityEffect;
 
 class Thumbnail : public QWidget
 {
@@ -22,28 +18,19 @@ public:
 
     void showShadow()
     {
+        if (showAnimation == nullptr) {
+            initShowShadowAnimation();
+        }
         shadow->show();
         showAnimation->start();
     }
 
     void hideShadow()
     {
-        hideAnimation->start();
-    }
-
-    qreal getOpacity()
-    {
-        return opacityEffect->opacity();
-    }
-
-    void setOpacity(const qreal opacity)
-    {
-        if (opacity < 0.0 || opacity > 1.0) {
-            return;
+        if (hideAnimation == nullptr) {
+            initHideShadowAnimation();
         }
-
-        opacityEffect->setOpacity(opacity);
-        Q_EMIT opacityChanged(opacity);
+        hideAnimation->start();
     }
 
     QString getImagePath() noexcept
@@ -59,7 +46,6 @@ public:
 
 signals:
     void clicked();
-    void opacityChanged(qreal opacity);
 private:
     QString imgPath;
     QWidget *shadow = nullptr;
@@ -69,7 +55,8 @@ private:
     QParallelAnimationGroup *showAnimation = nullptr;
     QParallelAnimationGroup *hideAnimation = nullptr;
 
-    void initAnimations();
+    void initShowShadowAnimation();
+    void initHideShadowAnimation();
 };
 
 #endif // THUMBNAIL_H
