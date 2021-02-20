@@ -56,6 +56,11 @@
         <source>File Name:</source>
         <translation>文件名:</translation>
     </message>
+    <message>
+        <location filename="../hashdialog.cpp" line="59"/>
+        <source>Image Hash Dialog</source>
+        <translation>查看图片哈希值</translation>
+    </message>
 </context>
 <context>
     <name>ImageViewerDialog</name>
@@ -73,6 +78,11 @@
         <location filename="../imageviewerdialog.cpp" line="54"/>
         <source>next</source>
         <translation>下一个</translation>
+    </message>
+    <message>
+        <location filename="../imageviewerdialog.cpp" line="84"/>
+        <source>Check Images</source>
+        <translation>查看图片</translation>
     </message>
 </context>
 <context>
@@ -101,6 +111,14 @@
         <location filename="../mainwindow.cpp" line="84"/>
         <source>select a directory</source>
         <translation>选择图片目录</translation>
+    </message>
+</context>
+<context>
+    <name>QObject</name>
+    <message>
+        <location filename="../main.cpp" line="18"/>
+        <source>pHashChecker</source>
+        <translation>pHashChecker</translation>
     </message>
 </context>
 </TS>

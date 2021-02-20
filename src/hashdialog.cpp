@@ -56,4 +56,5 @@ HashDialog::HashDialog(const QString &path, QWidget *parent)
     mainLayout->addWidget(table);
     mainLayout->addWidget(buttons);
     setLayout(mainLayout);
+    setWindowTitle(tr("Image Hash Dialog"));
 }

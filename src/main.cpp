@@ -15,6 +15,7 @@ int main(int argc, char *argv[])
         QCoreApplication::installTranslator(&translator);
     }
     MainWindow w;
+    w.setWindowTitle(QObject::tr("pHashChecker"));
     w.show();
     return QApplication::exec();
 }

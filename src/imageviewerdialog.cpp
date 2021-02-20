@@ -81,4 +81,5 @@ ImageViewerDialog::ImageViewerDialog(const std::vector<std::vector<std::string>>
     mainLayout->addWidget(stackView);
     mainLayout->addWidget(buttons);
     setLayout(mainLayout);
+    setWindowTitle(tr("Check Images"));
 }
