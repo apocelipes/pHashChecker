@@ -7,6 +7,7 @@
 #include <QLineEdit>
 #include <QFileDialog>
 #include <QHBoxLayout>
+#include <QMutex>
 #include <QReadWriteLock>
 #include <QThread>
 
@@ -86,7 +87,9 @@ private:
     std::unordered_map<ulong64, std::string> hashes;
     std::unordered_map<std::string, std::size_t> sameImageIndex;
     std::vector<std::vector<std::string>> sameImageLists;
-    QReadWriteLock lock;
+    std::vector<ulong64> insertHistory;
+    QReadWriteLock hashesLock;
+    QMutex insertHistoryLock;
     QThread *pool = nullptr;
 
     // supported image formats

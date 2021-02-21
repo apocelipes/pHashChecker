@@ -108,7 +108,7 @@
         <translation>显示结果</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="84"/>
+        <location filename="../mainwindow.cpp" line="85"/>
         <source>select a directory</source>
         <translation>选择图片目录</translation>
     </message>

@@ -2,7 +2,6 @@
 #define HASHWORKER_H
 
 #include <QObject>
-#include <QReadWriteLock>
 
 #include <string>
 #include <vector>
@@ -10,7 +9,8 @@
 
 #include <pHash.h>
 
-constexpr int SMALLER_DISTANCE = 10;
+class QMutex;
+class QReadWriteLock;
 
 class HashWorker : public QObject
 {
@@ -19,8 +19,22 @@ public:
     using ContainerType = const std::vector<std::string>;
     using HashContainerType = std::unordered_map<ulong64, std::string>;
 
-    HashWorker(unsigned long start, unsigned long limit, ContainerType &c, HashContainerType &hashes, QReadWriteLock &lock, QObject *parent = nullptr)
-        : QObject(parent), _start{start}, _limit{limit}, _images{c}, _hashes{hashes}, _lock{lock}
+    HashWorker(unsigned long start,
+               unsigned long limit,
+               ContainerType &c,
+               HashContainerType &hashes,
+               std::vector<ulong64> &insertHistory,
+               QReadWriteLock &lock,
+               QMutex &insertHistoryLock,
+               QObject *parent = nullptr)
+        : QObject(parent),
+          _start{start},
+          _limit{limit},
+          _images{c},
+          _hashes{hashes},
+          _insertHistory{insertHistory},
+          _hashesLock{lock},
+          _insertHistoryLock{insertHistoryLock}
     {}
 
     void doWork();
@@ -35,7 +49,9 @@ private:
     unsigned long _limit{};
     ContainerType &_images;
     HashContainerType &_hashes;
-    QReadWriteLock &_lock;
+    std::vector<ulong64> &_insertHistory;
+    QReadWriteLock &_hashesLock;
+    QMutex &_insertHistoryLock;
 };
 
 #endif // HASHWORKER_H

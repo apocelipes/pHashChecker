@@ -38,13 +38,14 @@ MainWindow::MainWindow(QWidget *parent)
     connect(startBtn, &QPushButton::clicked, [this]() {
         freezeLineLayout();
         hashes.reserve(images.size());
+        insertHistory.reserve(images.size());
         bar->show();
         bar->setValue(0);
 
         for (unsigned long id = 0, start = 0, limit = getNextLimit(0, 0);
              id < getThreadNumber();
              ++id, start = limit, limit = getNextLimit(limit, id)) {
-            auto worker = new HashWorker(start, limit, images, hashes, lock);
+            auto worker = new HashWorker(start, limit, images, hashes, insertHistory, hashesLock, insertHistoryLock);
             worker->moveToThread(pool + id);
             connect(pool + id, &QThread::finished, worker, &QObject::deleteLater);
             connect(worker, &HashWorker::doneAllWork, pool + id, &QThread::quit);
@@ -57,7 +58,7 @@ MainWindow::MainWindow(QWidget *parent)
                     sameImageLists.emplace_back(std::vector<string>{origin});
                 }
                 sameImageLists[sameImageIndex[origin]].emplace_back(same);
-                auto info = qInfo();
+                auto info = qDebug();
                 info.setAutoInsertSpaces(true);
                 info << QString::fromStdString(origin) << "same with:" << QString::fromStdString(same);
             });
@@ -127,6 +128,7 @@ void MainWindow::setImages()
     sameImageLists.clear();
     hashes.clear();
     images.clear();
+    insertHistory.clear();
 
     std::string path = pathEdit->text().toStdString();
     if (!std::filesystem::exists(path) || !std::filesystem::is_directory(path)) {
@@ -153,7 +155,7 @@ void MainWindow::setImages()
         bar->setValue(0);
         bar->setMaximum(images.size());
     }
-    qInfo() << QString::fromStdString(path) << ": " << images.size();
+    qDebug() << QString::fromStdString(path) << ": " << images.size();
 }
 
 void MainWindow::initResultDialog()
