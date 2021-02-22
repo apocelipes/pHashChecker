@@ -7,6 +7,17 @@
 
 constexpr int SMALLER_DISTANCE = 10;
 
+namespace {
+    inline bool checkSameImage(ulong64 a, ulong64 b, bool &flag) {
+        if (ph_hamming_distance(a, b) <= SMALLER_DISTANCE) {
+            flag = true;
+            return true;
+        }
+
+        return false;
+    }
+}
+
 void HashWorker::doWork()
 {
     for (unsigned long index = _start; index < _limit; ++index) {
@@ -20,13 +31,10 @@ void HashWorker::doWork()
         _insertHistoryLock.unlock();
         ulong64 hash = 0;
         bool isSameInHashes = false;
-        auto checkSameImage = [] (ulong64 a, ulong64 b) {
-            return ph_hamming_distance(a, b) <= SMALLER_DISTANCE;
-        };
         ph_dct_imagehash(_images[index].c_str(), hash);
         _hashesLock.lockForRead();
         for (const auto &[key, val]: _hashes) {
-            if (checkSameImage(hash, key)) {
+            if (checkSameImage(hash, key, isSameInHashes)) {
                 isSameInHashes = true;
                 Q_EMIT sameImg(_images[index], val);
                 break;
@@ -43,7 +51,7 @@ void HashWorker::doWork()
         _insertHistoryLock.lock();
         _hashesLock.lockForWrite();
         for (auto i = lastInsertIndex; i < _insertHistory.size(); ++i) {
-            if (checkSameImage(hash, _insertHistory[i])) {
+            if (checkSameImage(hash, _insertHistory[i], isSameInNewInsert)) {
                 isSameInNewInsert = true;
                 Q_EMIT sameImg(_images[index], _hashes[_insertHistory[i]]);
                 break;
