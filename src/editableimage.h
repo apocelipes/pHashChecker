@@ -49,15 +49,18 @@ public:
         Q_EMIT doubleClicked();
         event->accept();
     }
-signals:
+
+Q_SIGNALS:
     void doubleClicked();
     void deleted();
     void trashMoved();
     void dataCopied(const QPixmap &img);
     void pathCopied(const QString &imgPath);
     void pathChanged(const QString &imgPath);
-private slots:
+
+private Q_SLOTS:
     void showContextMenu(const QPoint &pos);
+
 private:
     QString m_path;
     QMenu *contextMenu = nullptr;

@@ -25,7 +25,6 @@ constexpr int MIN_EDIT_WIDTH = 30;
 class MainWindow : public QWidget
 {
     Q_OBJECT
-
 public:
     explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow() override;
@@ -42,11 +41,14 @@ public:
         }
         return oldLimit+images.size()/getThreadNumber();
     }
-signals:
+
+Q_SIGNALS:
     void completed();
-public slots:
+
+public Q_SLOTS:
     void setImages();
     void onProgress();
+
 private:
     void initResultDialog();
     void releaseResultDialog();

@@ -44,8 +44,9 @@ public:
         event->accept();
     }
 
-signals:
+Q_SIGNALS:
     void clicked();
+
 private:
     QString imgPath;
     QWidget *shadow = nullptr;

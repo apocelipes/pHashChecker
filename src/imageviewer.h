@@ -19,9 +19,12 @@ class ImageViewer : public QWidget
 public:
     explicit ImageViewer(const std::vector<std::string> &images, QWidget *parent = nullptr);
 
-signals:
+Q_SIGNALS:
     void currentIndexChanged(unsigned int current, unsigned int previous);
     void emptied();
+
+private Q_SLOTS:
+    void removeCurrentImage();
 
 private:
     QWidget *imageThumbnailList = nullptr;
@@ -40,9 +43,6 @@ private:
         currentIndex = currentIndex == 0u ? thumbs.size() - 1 : currentIndex - 1;
         return oldIndex;
     }
-
-private slots:
-    void removeCurrentImage();
 };
 
 #endif // IMAGEVIEWER_H

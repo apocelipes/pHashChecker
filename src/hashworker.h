@@ -39,7 +39,7 @@ public:
 
     void doWork();
 
-signals:
+Q_SIGNALS:
     void sameImg(const std::string&, const std::string&);
     void doneOneImg();
     void doneAllWork();
