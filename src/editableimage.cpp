@@ -90,9 +90,9 @@ void EditableImage::showContextMenu(const QPoint &pos)
         initContextMenu();
     }
 
-    auto actions = contextMenu->actions();
-    for (auto action = actions.begin(); action != actions.end(); ++action) {
-        (*action)->setEnabled(!isEmpty());
+    const auto &actions = contextMenu->actions();
+    for (auto action : actions) {
+        action->setEnabled(!isEmpty());
     }
     contextMenu->popup(mapToGlobal(pos));
 }
