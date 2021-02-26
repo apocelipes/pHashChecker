@@ -4,47 +4,47 @@
 <context>
     <name>EditableImage</name>
     <message>
-        <location filename="../editableimage.cpp" line="32"/>
+        <location filename="../editableimage.cpp" line="31"/>
         <source>open</source>
         <translation>アプリケーションで開く</translation>
     </message>
     <message>
-        <location filename="../editableimage.cpp" line="38"/>
+        <location filename="../editableimage.cpp" line="37"/>
         <source>copy data</source>
         <translation>画像をコピー</translation>
     </message>
     <message>
-        <location filename="../editableimage.cpp" line="50"/>
+        <location filename="../editableimage.cpp" line="49"/>
         <source>copy path</source>
         <translation>画像のパスをコピー</translation>
     </message>
     <message>
-        <location filename="../editableimage.cpp" line="58"/>
+        <location filename="../editableimage.cpp" line="57"/>
         <source>move to trash</source>
         <translation>ゴミ箱に移動</translation>
     </message>
     <message>
-        <location filename="../editableimage.cpp" line="66"/>
+        <location filename="../editableimage.cpp" line="65"/>
         <source>delete</source>
         <translation>削除</translation>
     </message>
     <message>
-        <location filename="../editableimage.cpp" line="69"/>
+        <location filename="../editableimage.cpp" line="68"/>
         <source>delete this image</source>
         <translation>画像を削除</translation>
     </message>
     <message>
-        <location filename="../editableimage.cpp" line="70"/>
+        <location filename="../editableimage.cpp" line="69"/>
         <source>do you want to delete it?</source>
         <translation>画像を削除しますか？</translation>
     </message>
     <message>
-        <location filename="../editableimage.cpp" line="79"/>
+        <location filename="../editableimage.cpp" line="78"/>
         <source>hash</source>
         <translation>ハッシュ</translation>
     </message>
     <message>
-        <location filename="../editableimage.h" line="37"/>
+        <location filename="../editableimage.h" line="40"/>
         <source>There&apos;s no image here</source>
         <translation>画像なし</translation>
     </message>

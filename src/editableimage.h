@@ -8,6 +8,9 @@
 
 #include <filesystem>
 
+constexpr int EditableImageFiexdWidth = 800;
+constexpr int EditableImageFiexdHeight = 600;
+
 class QMenu;
 
 class EditableImage : public QLabel
@@ -38,7 +41,7 @@ public:
             return;
         }
         QPixmap newImg{path};
-        setPixmap(newImg);
+        setPixmap(newImg.scaled(EditableImageFiexdWidth, EditableImageFiexdHeight));
         m_path = path;
         setToolTip(path);
         Q_EMIT pathChanged(path);

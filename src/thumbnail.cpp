@@ -9,6 +9,7 @@
 #include <filesystem>
 #include <utility>
 
+constexpr int ThumbnailWidth = 100, ThumbnailHeight = 100;
 constexpr qreal DEFAULT_OPACITY = 0.8;
 constexpr qreal DEFAULT_BLUR_RADIUS = 5.0;
 constexpr int DEFAULT_ANIME_DURATION = 300; // ms
@@ -16,13 +17,12 @@ constexpr int DEFAULT_ANIME_DURATION = 300; // ms
 Thumbnail::Thumbnail(QString path, QWidget *parent)
     : QWidget(parent), imgPath{std::move(path)}
 {
-    setFixedSize(100, 100);
+    setFixedSize(ThumbnailWidth, ThumbnailHeight);
     image = new QLabel(this);
-    image->setScaledContents(true);
     image->setGeometry(geometry());
     if (std::filesystem::exists(imgPath.toStdString())) {
         QPixmap data{imgPath};
-        image->setPixmap(data);
+        image->setPixmap(data.scaled(ThumbnailWidth, ThumbnailHeight));
     }
     blurEffect = new QGraphicsBlurEffect{this};
     blurEffect->setBlurRadius(DEFAULT_BLUR_RADIUS);
