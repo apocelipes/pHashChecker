@@ -36,7 +36,8 @@ void HashWorker::doWork()
         for (const auto &[key, val]: _hashes) {
             if (checkSameImage(hash, key, isSameInHashes)) {
                 isSameInHashes = true;
-                Q_EMIT sameImg(_images[index], val);
+                // origin必须为已经存在于hashes里的图片
+                Q_EMIT sameImg(val, _images[index]);
                 break;
             }
         }
@@ -53,7 +54,7 @@ void HashWorker::doWork()
         for (auto i = lastInsertIndex; i < _insertHistory.size(); ++i) {
             if (checkSameImage(hash, _insertHistory[i], isSameInNewInsert)) {
                 isSameInNewInsert = true;
-                Q_EMIT sameImg(_images[index], _hashes[_insertHistory[i]]);
+                Q_EMIT sameImg(_hashes[_insertHistory[i]], _images[index]);
                 break;
             }
         }
