@@ -10,7 +10,7 @@
 
 #include "hashworker.h"
 #include "imageviewerdialog.h"
-#include "NotificationBar.h"
+#include "notificationbar.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QWidget(parent)

@@ -1,4 +1,4 @@
-#include "NotificationBar.h"
+#include "notificationbar.h"
 
 #include <QGraphicsOpacityEffect>
 #include <QHBoxLayout>
