@@ -10,6 +10,7 @@
 
 #include "hashworker.h"
 #include "imageviewerdialog.h"
+#include "NotificationBar.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QWidget(parent)
@@ -58,9 +59,9 @@ MainWindow::MainWindow(QWidget *parent)
                     sameImageLists.emplace_back(std::vector<string>{origin});
                 }
                 sameImageLists[sameImageIndex[origin]].emplace_back(same);
-                auto info = qDebug();
-                info.setAutoInsertSpaces(true);
-                info << QString::fromStdString(origin) << "same with:" << QString::fromStdString(same);
+                auto output = qDebug();
+                output.setAutoInsertSpaces(true);
+                output << QString::fromStdString(origin) << "same with:" << QString::fromStdString(same);
             });
             (pool + id)->start();
         }
@@ -92,6 +93,9 @@ MainWindow::MainWindow(QWidget *parent)
         pathEdit->setText(dirName);
     });
 
+    info = NotificationBar::createErrorBar(this);
+    info->setCloseButtonVisible(true);
+
     lineLayout = new QHBoxLayout;
     lineLayout->addWidget(loadImgBtn);
     lineLayout->addWidget(startBtn);
@@ -100,6 +104,7 @@ MainWindow::MainWindow(QWidget *parent)
     lineLayout->addWidget(fileDialogBtn);
 
     auto mainLayout = new QVBoxLayout;
+    mainLayout->addWidget(info);
     mainLayout->addLayout(lineLayout);
     mainLayout->addWidget(bar);
     setLayout(mainLayout);
@@ -133,9 +138,11 @@ void MainWindow::setImages()
     std::string path = pathEdit->text().toStdString();
     if (!std::filesystem::exists(path) || !std::filesystem::is_directory(path)) {
         startBtn->setEnabled(false);
-        qWarning() << "path does not exist or is not a directory: " << QString::fromStdString(path);
+        info->setText(QString::fromStdString(path) + tr(" does not exist"));
+        info->animatedShow();
         return;
     }
+    info->animatedHide();
     std::filesystem::directory_iterator dir{path, std::filesystem::directory_options::skip_permission_denied};
     for (const auto &p : dir) {
         if (!p.is_regular_file()) {
@@ -154,8 +161,10 @@ void MainWindow::setImages()
         startBtn->setEnabled(true);
         bar->setValue(0);
         bar->setMaximum(images.size());
+    } else {
+        info->setText(tr("no image here"));
+        info->animatedShow();
     }
-    qDebug() << QString::fromStdString(path) << ": " << images.size();
 }
 
 void MainWindow::initResultDialog()

@@ -19,6 +19,7 @@
 #include <pHash.h>
 
 class ImageViewerDialog;
+class NotificationBar;
 
 constexpr int MIN_EDIT_WIDTH = 30;
 
@@ -84,6 +85,7 @@ private:
     QFileDialog *fileDialog = nullptr;
     QPushButton *dialogBtn = nullptr;
     ImageViewerDialog *imageDialog = nullptr;
+    NotificationBar *info = nullptr;
 
     std::vector<std::string> images;
     std::unordered_map<ulong64, std::string> hashes;

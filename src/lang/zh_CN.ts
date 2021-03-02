@@ -88,29 +88,47 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../mainwindow.cpp" line="20"/>
+        <location filename="../mainwindow.cpp" line="21"/>
         <source>entry a directory</source>
         <translation>输入目录</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="22"/>
+        <location filename="../mainwindow.cpp" line="23"/>
         <source>load</source>
         <translation>加载</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="24"/>
+        <location filename="../mainwindow.cpp" line="25"/>
         <source>start</source>
         <translation>开始计算</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="26"/>
+        <location filename="../mainwindow.cpp" line="27"/>
         <source>show result</source>
         <translation>显示结果</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="85"/>
+        <location filename="../mainwindow.cpp" line="86"/>
         <source>select a directory</source>
         <translation>选择图片目录</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="141"/>
+        <source> does not exist</source>
+        <translation> 路径不存在</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="165"/>
+        <source>no image here</source>
+        <translation>目录中没有图片</translation>
+    </message>
+</context>
+<context>
+    <name>NotificationBar</name>
+    <message>
+        <location filename="../NotificationBar.cpp" line="32"/>
+        <source>close this notification</source>
+        <translation>关闭消息</translation>
     </message>
 </context>
 <context>
