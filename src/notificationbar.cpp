@@ -100,13 +100,13 @@ void NotificationBar::animatedHide()
     hideAnimation->start(QAbstractAnimation::DeleteWhenStopped);
 }
 
-void NotificationBar::showAndHide()
+void NotificationBar::showAndHide(int remainMsecs)
 {
     auto showAnimation = createShowAnimation(effect, "opacity", this);
     auto hideAnimation = createHideAnimation(effect, "opacity", this);
     auto group = new QSequentialAnimationGroup{this};
     group->addAnimation(showAnimation);
-    group->addPause(5000);
+    group->addPause(remainMsecs);
     group->addAnimation(hideAnimation);
     connect(group, &QAbstractAnimation::finished, this, &QWidget::hide);
     show();

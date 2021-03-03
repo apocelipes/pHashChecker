@@ -44,7 +44,7 @@ public Q_SLOTS:
 
     void animatedShow();
     void animatedHide();
-    void showAndHide();
+    void showAndHide(int remainMsecs = 5000);
 
     static NotificationBar *createInformationBar(QWidget *parent = nullptr);
     static NotificationBar *createErrorBar(QWidget *parent = nullptr);
