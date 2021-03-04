@@ -52,17 +52,22 @@
 <context>
     <name>HashDialog</name>
     <message>
-        <location filename="../hashdialog.cpp" line="47"/>
+        <location filename="../hashdialog.cpp" line="48"/>
         <source>File Name:</source>
         <translation>ファイル名:</translation>
     </message>
     <message>
-        <location filename="../hashdialog.cpp" line="67"/>
+        <location filename="../hashdialog.cpp" line="50"/>
+        <source>File Size:</source>
+        <translation>サイズ:</translation>
+    </message>
+    <message>
+        <location filename="../hashdialog.cpp" line="71"/>
         <source>%1 has been copied</source>
         <translation>%1 コピーされました</translation>
     </message>
     <message>
-        <location filename="../hashdialog.cpp" line="76"/>
+        <location filename="../hashdialog.cpp" line="80"/>
         <source>Image Hash Dialog</source>
         <translation>Image Hash Dialog</translation>
     </message>

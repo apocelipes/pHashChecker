@@ -19,17 +19,7 @@ HashDialog::HashDialog(const QString &path, QWidget *parent)
     img.open(QIODevice::ReadOnly);
     auto data = img.readAll();
 
-    auto table = new QTableWidget;
-    table->setColumnCount(2);
-    table->setRowCount(5);
-    table->verticalHeader()->setVisible(false);
-    table->horizontalHeader()->setVisible(false);
-    table->setShowGrid(false);
-    table->horizontalHeader()->setSectionResizeMode(0, QHeaderView::ResizeToContents);
-    table->setColumnWidth(1, fontMetrics().averageCharWidth() * 80);
-    table->setSizeAdjustPolicy(QAbstractScrollArea::AdjustToContents);
-    table->setEditTriggers(QAbstractItemView::NoEditTriggers);
-
+    constexpr int hashStartIndex = 2;
     QCryptographicHash::Algorithm hashAlgorithms[] = {
             QCryptographicHash::Md5,
             QCryptographicHash::Sha1,
@@ -44,11 +34,25 @@ HashDialog::HashDialog(const QString &path, QWidget *parent)
             "SHA-512",
     };
 
+    auto table = new QTableWidget;
+    table->setColumnCount(2);
+    table->setRowCount(hashStartIndex + std::size(hashAlgorithms));
+    table->verticalHeader()->setVisible(false);
+    table->horizontalHeader()->setVisible(false);
+    table->setShowGrid(false);
+    table->horizontalHeader()->setSectionResizeMode(0, QHeaderView::ResizeToContents);
+    table->setColumnWidth(1, fontMetrics().averageCharWidth() * 80);
+    table->setSizeAdjustPolicy(QAbstractScrollArea::AdjustToContents);
+    table->setEditTriggers(QAbstractItemView::NoEditTriggers);
+
     table->setItem(0, 0, new QTableWidgetItem{tr("File Name:")});
     table->setItem(0, 1, new QTableWidgetItem{path});
-    for (int i = 1; i < table->rowCount(); ++i) {
-        table->setItem(i, 0, new QTableWidgetItem{algorithmNames[i-1] + ":"});
-        const auto hashText = QCryptographicHash::hash(data, hashAlgorithms[i-1]).toHex();
+    table->setItem(1, 0, new QTableWidgetItem{tr("File Size:")});
+    //TODO: format to human-readable size info
+    table->setItem(1, 1, new QTableWidgetItem{QString::number(img.size())});
+    for (int i = hashStartIndex; i < table->rowCount(); ++i) {
+        table->setItem(i, 0, new QTableWidgetItem{algorithmNames[i-hashStartIndex] + ":"});
+        const auto hashText = QCryptographicHash::hash(data, hashAlgorithms[i-hashStartIndex]).toHex();
         table->setItem(i, 1, new QTableWidgetItem{QString{hashText}});
     }
 
@@ -58,7 +62,7 @@ HashDialog::HashDialog(const QString &path, QWidget *parent)
 
     auto infoBar = NotificationBar::createInformationBar(this);
     connect(table, &QTableWidget::cellDoubleClicked, [table, infoBar](int row, int column) {
-        if (row < 1 || column != 1) {
+        if (row < hashStartIndex || column != 1) {
             return;
         }
 
