@@ -10,15 +10,9 @@
 #include <QVBoxLayout>
 
 #include "notificationbar.h"
+#include "sizeformat.h"
 
-HashDialog::HashDialog(const QString &path, QWidget *parent)
-    : QDialog(parent)
-{
-    setModal(true);
-    QFile img{path};
-    img.open(QIODevice::ReadOnly);
-    auto data = img.readAll();
-
+namespace {
     constexpr int hashStartIndex = 2;
     QCryptographicHash::Algorithm hashAlgorithms[] = {
             QCryptographicHash::Md5,
@@ -27,12 +21,21 @@ HashDialog::HashDialog(const QString &path, QWidget *parent)
             QCryptographicHash::Sha512,
     };
 
-    const QString algorithmNames[] = {
+    const char *algorithmNames[] = {
             "MD5",
             "SHA-1",
             "SHA-256",
             "SHA-512",
     };
+}
+
+HashDialog::HashDialog(const QString &path, QWidget *parent)
+    : QDialog(parent)
+{
+    setModal(true);
+    QFile img{path};
+    img.open(QIODevice::ReadOnly);
+    auto data = img.readAll();
 
     auto table = new QTableWidget;
     table->setColumnCount(2);
@@ -48,10 +51,11 @@ HashDialog::HashDialog(const QString &path, QWidget *parent)
     table->setItem(0, 0, new QTableWidgetItem{tr("File Name:")});
     table->setItem(0, 1, new QTableWidgetItem{path});
     table->setItem(1, 0, new QTableWidgetItem{tr("File Size:")});
-    //TODO: format to human-readable size info
-    table->setItem(1, 1, new QTableWidgetItem{QString::number(img.size())});
+
+    const auto fileSize = img.size();
+    table->setItem(1, 1, new QTableWidgetItem{Utils::sizeFormat(fileSize) + QString::asprintf(" (%lld)", fileSize)});
     for (int i = hashStartIndex; i < table->rowCount(); ++i) {
-        table->setItem(i, 0, new QTableWidgetItem{algorithmNames[i-hashStartIndex] + ":"});
+        table->setItem(i, 0, new QTableWidgetItem{algorithmNames[i-hashStartIndex] + QString{":"}});
         const auto hashText = QCryptographicHash::hash(data, hashAlgorithms[i-hashStartIndex]).toHex();
         table->setItem(i, 1, new QTableWidgetItem{QString{hashText}});
     }

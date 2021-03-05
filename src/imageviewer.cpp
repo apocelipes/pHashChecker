@@ -18,7 +18,7 @@ ImageViewer::ImageViewer(const std::vector<std::string> &images, QWidget *parent
     for (const auto &img : images) {
         auto thumbnail = new Thumbnail{QString::fromStdString(img), this};
         connect(thumbnail, &Thumbnail::clicked, [this, thumbnail]() {
-            unsigned int index = indexOf(thumbs.cbegin(), thumbs.cend(), thumbnail);
+            unsigned int index = Utils::indexOf(thumbs.cbegin(), thumbs.cend(), thumbnail);
             if (index == currentIndex) {
                 return;
             }

@@ -24,7 +24,7 @@ ImageViewerDialog::ImageViewerDialog(const std::vector<std::vector<std::string>>
         comboBox->addItem(QString::asprintf("Group %u", index++));
         connect(imageView, &ImageViewer::emptied, [this, imageView, stackView, comboBox](){
             stackView->removeWidget(imageView);
-            auto targetIndex = indexOf(viewers.cbegin(), viewers.cend(), imageView);
+            auto targetIndex = Utils::indexOf(viewers.cbegin(), viewers.cend(), imageView);
             viewers.erase(viewers.begin() + targetIndex);
             comboBox->removeItem(targetIndex);
             imageView->deleteLater();
