@@ -12,9 +12,13 @@
 ImageViewer::ImageViewer(const std::vector<std::string> &images, QWidget *parent)
     : QWidget(parent)
 {
+    if (images.size() < 1) {
+        return;
+    }
+    thumbs.reserve(images.size());
+
     initThumbnailFocusBorder();
 
-    thumbs.reserve(images.size());
     for (const auto &img : images) {
         auto thumbnail = new Thumbnail{QString::fromStdString(img), this};
         connect(thumbnail, &Thumbnail::clicked, [this, thumbnail]() {
