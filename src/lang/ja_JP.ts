@@ -75,22 +75,27 @@
 <context>
     <name>ImageViewerDialog</name>
     <message>
-        <location filename="../imageviewerdialog.cpp" line="36"/>
+        <location filename="../imageviewerdialog.cpp" line="34"/>
+        <source>No data here!</source>
+        <translation>コンテンツはありません！</translation>
+    </message>
+    <message>
+        <location filename="../imageviewerdialog.cpp" line="40"/>
         <source>prev</source>
         <translation>前へ</translation>
     </message>
     <message>
-        <location filename="../imageviewerdialog.cpp" line="43"/>
+        <location filename="../imageviewerdialog.cpp" line="47"/>
         <source>ignore this</source>
         <translation>無視</translation>
     </message>
     <message>
-        <location filename="../imageviewerdialog.cpp" line="54"/>
+        <location filename="../imageviewerdialog.cpp" line="58"/>
         <source>next</source>
         <translation>次へ</translation>
     </message>
     <message>
-        <location filename="../imageviewerdialog.cpp" line="84"/>
+        <location filename="../imageviewerdialog.cpp" line="88"/>
         <source>Check Images</source>
         <translation>ギャラリー</translation>
     </message>

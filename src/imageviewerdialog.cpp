@@ -31,6 +31,10 @@ ImageViewerDialog::ImageViewerDialog(const std::vector<std::vector<std::string>>
         });
         QCoreApplication::processEvents();
     }
+    auto emptyWidget = new QLabel{tr("No data here!"), this};
+    emptyWidget->setMinimumSize(850, 650);
+    emptyWidget->setAlignment(Qt::AlignCenter);
+    stackView->addWidget(emptyWidget);
 
     auto buttons = new QDialogButtonBox{this};
     auto prevBtn = new QPushButton{style()->standardIcon(QStyle::SP_ArrowLeft), tr("prev")};

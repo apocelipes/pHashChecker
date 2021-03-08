@@ -75,22 +75,27 @@
 <context>
     <name>ImageViewerDialog</name>
     <message>
-        <location filename="../imageviewerdialog.cpp" line="36"/>
+        <location filename="../imageviewerdialog.cpp" line="34"/>
+        <source>No data here!</source>
+        <translation>无内容！</translation>
+    </message>
+    <message>
+        <location filename="../imageviewerdialog.cpp" line="40"/>
         <source>prev</source>
         <translation>上一个</translation>
     </message>
     <message>
-        <location filename="../imageviewerdialog.cpp" line="43"/>
+        <location filename="../imageviewerdialog.cpp" line="47"/>
         <source>ignore this</source>
         <translation>忽略</translation>
     </message>
     <message>
-        <location filename="../imageviewerdialog.cpp" line="54"/>
+        <location filename="../imageviewerdialog.cpp" line="58"/>
         <source>next</source>
         <translation>下一个</translation>
     </message>
     <message>
-        <location filename="../imageviewerdialog.cpp" line="84"/>
+        <location filename="../imageviewerdialog.cpp" line="88"/>
         <source>Check Images</source>
         <translation>查看图片</translation>
     </message>
