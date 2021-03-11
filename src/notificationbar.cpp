@@ -25,6 +25,7 @@ NotificationBar::NotificationBar(const QColor &borderColor, const QColor &bgColo
     iconLabel->setSizePolicy(policy);
     iconLabel->hide();
     textLabel = new QLabel{this};
+    textLabel->setTextInteractionFlags(Qt::TextBrowserInteraction);
     closeBtn = new QPushButton{style()->standardPixmap(QStyle::SP_DialogCloseButton), "", this};
     connect(closeBtn, &QPushButton::clicked, this, &NotificationBar::animatedHide);
     closeBtn->setAttribute(Qt::WA_StyledBackground);
