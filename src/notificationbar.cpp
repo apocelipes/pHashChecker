@@ -96,8 +96,13 @@ void NotificationBar::animatedShow()
 
 void NotificationBar::animatedHide()
 {
+    // 防止动画期间多次触发关闭按钮
+    closeBtn->hide();
     auto hideAnimation = createHideAnimation(effect, "opacity", this);
-    connect(hideAnimation, &QAbstractAnimation::finished, this, &QWidget::hide);
+    connect(hideAnimation, &QAbstractAnimation::finished, [this]{
+        closeBtn->show();
+        hide();
+    });
     hideAnimation->start(QAbstractAnimation::DeleteWhenStopped);
 }
 
