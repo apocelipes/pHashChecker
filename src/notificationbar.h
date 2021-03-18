@@ -54,6 +54,7 @@ private:
     QLabel *textLabel = nullptr;
     QPushButton *closeBtn = nullptr;
     QGraphicsOpacityEffect *effect = nullptr;
+    bool isClosing = false;
 };
 
 #endif //PHASHCHECKER_NOTIFICATIONBAR_H

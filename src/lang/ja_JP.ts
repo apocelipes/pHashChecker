@@ -141,7 +141,7 @@
 <context>
     <name>NotificationBar</name>
     <message>
-        <location filename="../notificationbar.cpp" line="33"/>
+        <location filename="../notificationbar.cpp" line="39"/>
         <source>close this notification</source>
         <translation>閉じる</translation>
     </message>

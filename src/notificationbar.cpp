@@ -27,7 +27,13 @@ NotificationBar::NotificationBar(const QColor &borderColor, const QColor &bgColo
     textLabel = new QLabel{this};
     textLabel->setTextInteractionFlags(Qt::TextBrowserInteraction);
     closeBtn = new QPushButton{style()->standardPixmap(QStyle::SP_DialogCloseButton), "", this};
-    connect(closeBtn, &QPushButton::clicked, this, &NotificationBar::animatedHide);
+    connect(closeBtn, &QPushButton::clicked, [this](){
+        if (isClosing) {
+            return;
+        }
+
+        animatedHide();
+    });
     closeBtn->setAttribute(Qt::WA_StyledBackground);
     closeBtn->setStyleSheet(".QPushButton{background:rgba(0,0,0,0);border:0;}");
     closeBtn->setToolTip(tr("close this notification"));
@@ -96,11 +102,10 @@ void NotificationBar::animatedShow()
 
 void NotificationBar::animatedHide()
 {
-    // 防止动画期间多次触发关闭按钮
-    closeBtn->hide();
+    isClosing = true;
     auto hideAnimation = createHideAnimation(effect, "opacity", this);
     connect(hideAnimation, &QAbstractAnimation::finished, [this]{
-        closeBtn->show();
+        isClosing = false;
         hide();
     });
     hideAnimation->start(QAbstractAnimation::DeleteWhenStopped);
