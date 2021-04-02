@@ -53,8 +53,8 @@ MainWindow::MainWindow(QWidget *parent)
             connect(pool + id, &QThread::started, worker, &HashWorker::doWork);
             connect(worker, &HashWorker::doneOneImg, this, &MainWindow::onProgress);
             connect(worker, &HashWorker::sameImg, [this](const std::string &origin, const std::string &same){
-                if (sameImageIndex.find(origin) == sameImageIndex.end()) {
-                    sameImageIndex[origin] = sameImageLists.size();
+                if (sameImageIndex.count(origin) == 0) {
+                    sameImageIndex.emplace(origin, sameImageLists.size());
                     // construct vectors directly with a string
                     sameImageLists.emplace_back(std::vector<std::string>{origin});
                 }
