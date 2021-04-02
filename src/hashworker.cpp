@@ -26,13 +26,13 @@ void HashWorker::doWork()
             break;
         }
 
-        _insertHistoryLock.lock();
-        auto lastInsertIndex = _insertHistory.size();
-        _insertHistoryLock.unlock();
         ulong64 hash = 0;
         bool isSameInHashes = false;
         ph_dct_imagehash(_images[index].c_str(), hash);
         _hashesLock.lockForRead();
+        // 获得读锁后即为最新的size
+        // 在获取读锁之前取得size，size可能会在读锁阻塞期间被更新，导致已经进入hashes的数据被重复比较
+        auto lastInsertIndex = _insertHistory.size();
         for (const auto &[key, val]: _hashes) {
             if (checkSameImage(hash, key, isSameInHashes)) {
                 isSameInHashes = true;
@@ -49,7 +49,6 @@ void HashWorker::doWork()
         }
 
         auto isSameInNewInsert = false;
-        _insertHistoryLock.lock();
         _hashesLock.lockForWrite();
         for (auto i = lastInsertIndex; i < _insertHistory.size(); ++i) {
             if (checkSameImage(hash, _insertHistory[i], isSameInNewInsert)) {
@@ -63,7 +62,6 @@ void HashWorker::doWork()
             _insertHistory.emplace_back(hash);
         }
         _hashesLock.unlock();
-        _insertHistoryLock.unlock();
         Q_EMIT doneOneImg();
     }
 

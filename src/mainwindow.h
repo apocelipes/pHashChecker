@@ -7,7 +7,6 @@
 #include <QLineEdit>
 #include <QFileDialog>
 #include <QHBoxLayout>
-#include <QMutex>
 #include <QReadWriteLock>
 #include <QThread>
 
@@ -93,7 +92,6 @@ private:
     std::vector<std::vector<std::string>> sameImageLists;
     std::vector<ulong64> insertHistory;
     QReadWriteLock hashesLock;
-    QMutex insertHistoryLock;
     QThread *pool = nullptr;
 
     // supported image formats
@@ -105,4 +103,5 @@ private:
         ".bmp"
     };
 };
+
 #endif // MAINWINDOW_H

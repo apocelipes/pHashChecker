@@ -18,7 +18,7 @@ Thumbnail::Thumbnail(QString path, QWidget *parent)
     : QWidget(parent), imgPath{std::move(path)}
 {
     setFixedSize(ThumbnailWidth, ThumbnailHeight);
-    image = new QLabel(this);
+    image = new QLabel{this};
     image->setGeometry(geometry());
     if (std::filesystem::exists(imgPath.toStdString())) {
         QPixmap data{imgPath};
@@ -29,7 +29,7 @@ Thumbnail::Thumbnail(QString path, QWidget *parent)
     blurEffect->setBlurHints(QGraphicsBlurEffect::AnimationHint);
     image->setGraphicsEffect(blurEffect);
 
-    shadow = new QWidget(this);
+    shadow = new QWidget{this};
     shadow->setWindowFlag(Qt::FramelessWindowHint);
     shadow->setAttribute(Qt::WA_StyledBackground);
     shadow->setStyleSheet("background:rgb(255,255,255);");

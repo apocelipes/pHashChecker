@@ -9,7 +9,6 @@
 
 #include <pHash.h>
 
-class QMutex;
 class QReadWriteLock;
 
 class HashWorker : public QObject
@@ -25,7 +24,6 @@ public:
                HashContainerType &hashes,
                std::vector<ulong64> &insertHistory,
                QReadWriteLock &lock,
-               QMutex &insertHistoryLock,
                QObject *parent = nullptr)
         : QObject(parent),
           _start{start},
@@ -33,8 +31,7 @@ public:
           _images{c},
           _hashes{hashes},
           _insertHistory{insertHistory},
-          _hashesLock{lock},
-          _insertHistoryLock{insertHistoryLock}
+          _hashesLock{lock}
     {}
 
     void doWork();
@@ -51,7 +48,6 @@ private:
     HashContainerType &_hashes;
     std::vector<ulong64> &_insertHistory;
     QReadWriteLock &_hashesLock;
-    QMutex &_insertHistoryLock;
 };
 
 #endif // HASHWORKER_H
