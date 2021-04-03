@@ -139,19 +139,16 @@
     </message>
 </context>
 <context>
-    <name>NotificationBar</name>
-    <message>
-        <location filename="../notificationbar.cpp" line="39"/>
-        <source>close this notification</source>
-        <translation>閉じる</translation>
-    </message>
-</context>
-<context>
     <name>QObject</name>
     <message>
         <location filename="../main.cpp" line="18"/>
         <source>pHashChecker</source>
         <translation>pHashChecker</translation>
+    </message>
+    <message>
+        <location filename="../notificationbar.cpp" line="48"/>
+        <source>close this notification</source>
+        <translation>閉じる</translation>
     </message>
 </context>
 </TS>

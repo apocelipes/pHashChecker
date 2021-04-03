@@ -5,6 +5,8 @@
 #include <QColor>
 #include <QString>
 
+#include <memory>
+
 class QLabel;
 class QPushButton;
 class QGraphicsOpacityEffect;
@@ -14,29 +16,10 @@ class NotificationBar: public QFrame {
     Q_OBJECT
 public:
     NotificationBar(const QColor &borderColor, const QColor &bgColor, QWidget *parent = nullptr);
+    ~NotificationBar() noexcept override;
 
 public Q_SLOTS:
-    void setColor(const QColor &borColor, const QColor &bgColor)
-    {
-        if (!borColor.isValid() || !bgColor.isValid()) {
-            return;
-        }
-
-        auto borderColorStyle = QString::asprintf("rgba(%d,%d,%d,%d)",
-                                                  borColor.red(),
-                                                  borColor.green(),
-                                                  borColor.blue(),
-                                                  borColor.alpha());
-        auto bgColorStyle = QString::asprintf("rgba(%d,%d,%d,%d)",
-                                              bgColor.red(),
-                                              bgColor.green(),
-                                              bgColor.blue(),
-                                              bgColor.alpha());
-        setStyleSheet(".NotificationBar{border: 1px solid " +
-                      borderColorStyle +
-                      "; background-color: " +
-                      bgColorStyle + ";}");
-    }
+    void setColor(const QColor &borColor, const QColor &bgColor);
 
     void setCloseButtonVisible(bool visible);
     void setIcon(const QIcon &notifyIcon);
@@ -50,11 +33,8 @@ public Q_SLOTS:
     static NotificationBar *createErrorBar(QWidget *parent = nullptr);
 
 private:
-    QLabel *iconLabel = nullptr;
-    QLabel *textLabel = nullptr;
-    QPushButton *closeBtn = nullptr;
-    QGraphicsOpacityEffect *effect = nullptr;
-    bool isClosing = false;
+    friend struct NotificationBarPrivate;
+    std::unique_ptr<struct NotificationBarPrivate> d;
 };
 
 #endif //PHASHCHECKER_NOTIFICATIONBAR_H

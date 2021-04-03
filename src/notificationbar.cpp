@@ -8,69 +8,113 @@
 #include <QPropertyAnimation>
 #include <QSequentialAnimationGroup>
 
-NotificationBar::NotificationBar(const QColor &borderColor, const QColor &bgColor, QWidget *parent)
-    : QFrame(parent)
-{
-    setAttribute(Qt::WA_StyledBackground);
-    setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Fixed);
-    setColor(borderColor, bgColor);
-    effect = new QGraphicsOpacityEffect{this};
-    effect->setOpacity(0);
-    setGraphicsEffect(effect);
+struct NotificationBarPrivate {
+    NotificationBar *q = nullptr;
+    QLabel *iconLabel = nullptr;
+    QLabel *textLabel = nullptr;
+    QPushButton *closeBtn = nullptr;
+    QGraphicsOpacityEffect *effect = nullptr;
+    bool isClosing = false;
 
-    iconLabel = new QLabel{this};
+    void init(NotificationBar *q_ptr);
+};
+
+void NotificationBarPrivate::init(NotificationBar *q_ptr)
+{
+    q = q_ptr;
+
+    effect = new QGraphicsOpacityEffect{q};
+    effect->setOpacity(0);
+    q->setGraphicsEffect(effect);
+
+    iconLabel = new QLabel{q};
     iconLabel->setAlignment(Qt::AlignRight|Qt::AlignVCenter);
     auto policy = iconLabel->sizePolicy();
     policy.setHeightForWidth(true);
     iconLabel->setSizePolicy(policy);
     iconLabel->hide();
-    textLabel = new QLabel{this};
+    textLabel = new QLabel{q};
     textLabel->setTextInteractionFlags(Qt::TextBrowserInteraction);
-    closeBtn = new QPushButton{style()->standardPixmap(QStyle::SP_DialogCloseButton), "", this};
-    connect(closeBtn, &QPushButton::clicked, [this](){
+    closeBtn = new QPushButton{q->style()->standardPixmap(QStyle::SP_DialogCloseButton), "", q};
+    QObject::connect(closeBtn, &QPushButton::clicked, [this](){
         if (isClosing) {
             return;
         }
 
-        animatedHide();
+        q->animatedHide();
     });
     closeBtn->setAttribute(Qt::WA_StyledBackground);
     closeBtn->setStyleSheet(".QPushButton{background:rgba(0,0,0,0);border:0;}");
-    closeBtn->setToolTip(tr("close this notification"));
+    closeBtn->setToolTip(QObject::tr("close this notification"));
     closeBtn->hide();
+
     auto mainLayout = new QHBoxLayout;
     mainLayout->addWidget(iconLabel);
     mainLayout->addWidget(textLabel);
     mainLayout->addStretch();
     mainLayout->addWidget(closeBtn);
-    setLayout(mainLayout);
+    q->setLayout(mainLayout);
+}
+
+NotificationBar::NotificationBar(const QColor &borderColor, const QColor &bgColor, QWidget *parent)
+    : QFrame{parent}, d{new NotificationBarPrivate}
+{
+    setAttribute(Qt::WA_StyledBackground);
+    setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Fixed);
+    setColor(borderColor, bgColor);
+    d->init(this);
     hide();
+}
+
+NotificationBar::~NotificationBar() noexcept = default;
+
+inline void NotificationBar::setColor(const QColor &borColor, const QColor &bgColor)
+{
+    if (!borColor.isValid() || !bgColor.isValid()) {
+        return;
+    }
+
+    auto borderColorStyle = QString::asprintf("rgba(%d,%d,%d,%d)",
+                                              borColor.red(),
+                                              borColor.green(),
+                                              borColor.blue(),
+                                              borColor.alpha());
+    auto bgColorStyle = QString::asprintf("rgba(%d,%d,%d,%d)",
+                                          bgColor.red(),
+                                          bgColor.green(),
+                                          bgColor.blue(),
+                                          bgColor.alpha());
+    setStyleSheet(".NotificationBar{border: 1px solid " +
+                  borderColorStyle +
+                  "; background-color: " +
+                  bgColorStyle + ";}");
 }
 
 void NotificationBar::setCloseButtonVisible(bool visible)
 {
     if (visible) {
-        closeBtn->show();
+        d->closeBtn->show();
         return;
     }
-    closeBtn->hide();
+    d->closeBtn->hide();
 }
 
 void NotificationBar::setIcon(const QIcon &notifyIcon)
 {
     if (notifyIcon.isNull()) {
-        iconLabel->hide();
+        d->iconLabel->hide();
         return;
     }
 
     const int size = style()->pixelMetric(QStyle::PM_ToolBarIconSize);
-    iconLabel->setPixmap(notifyIcon.pixmap(size, size));
-    iconLabel->show();
+    d->iconLabel->setPixmap(notifyIcon.pixmap(size, size));
+    d->iconLabel->show();
 }
 
 void NotificationBar::setText(const QString &text)
 {
-    textLabel->setText(text);
+    d->textLabel->setText(text);
+    updateGeometry();
 }
 
 namespace {
@@ -95,17 +139,17 @@ namespace {
 
 void NotificationBar::animatedShow()
 {
-    auto showAnimation = createShowAnimation(effect, "opacity", this);
+    auto showAnimation = createShowAnimation(d->effect, "opacity", this);
     show();
     showAnimation->start(QAbstractAnimation::DeleteWhenStopped);
 }
 
 void NotificationBar::animatedHide()
 {
-    isClosing = true;
-    auto hideAnimation = createHideAnimation(effect, "opacity", this);
+    d->isClosing = true;
+    auto hideAnimation = createHideAnimation(d->effect, "opacity", this);
     connect(hideAnimation, &QAbstractAnimation::finished, [this]{
-        isClosing = false;
+        d->isClosing = false;
         hide();
     });
     hideAnimation->start(QAbstractAnimation::DeleteWhenStopped);
@@ -113,8 +157,8 @@ void NotificationBar::animatedHide()
 
 void NotificationBar::showAndHide(int remainMsecs)
 {
-    auto showAnimation = createShowAnimation(effect, "opacity", this);
-    auto hideAnimation = createHideAnimation(effect, "opacity", this);
+    auto showAnimation = createShowAnimation(d->effect, "opacity", this);
+    auto hideAnimation = createHideAnimation(d->effect, "opacity", this);
     auto group = new QSequentialAnimationGroup{this};
     group->addAnimation(showAnimation);
     group->addPause(remainMsecs);
