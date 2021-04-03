@@ -6,6 +6,8 @@
 #include <QMouseEvent>
 #include <QParallelAnimationGroup>
 
+#include <memory>
+
 class QLabel;
 class QGraphicsBlurEffect;
 class QGraphicsOpacityEffect;
@@ -15,49 +17,20 @@ class Thumbnail : public QWidget
     Q_OBJECT
 public:
     explicit Thumbnail(QString path, QWidget *parent = nullptr);
+    ~Thumbnail() override;
 
-    void showShadow()
-    {
-        if (showAnimation == nullptr) {
-            initShowShadowAnimation();
-        }
-        shadow->show();
-        showAnimation->start();
-    }
+    void showShadow();
+    void hideShadow();
+    QString getImagePath() noexcept;
 
-    void hideShadow()
-    {
-        if (hideAnimation == nullptr) {
-            initHideShadowAnimation();
-        }
-        hideAnimation->start();
-    }
-
-    QString getImagePath() noexcept
-    {
-        return imgPath;
-    }
-
-    void mouseReleaseEvent(QMouseEvent *event) override
-    {
-        Q_EMIT clicked();
-        event->accept();
-    }
+    void mouseReleaseEvent(QMouseEvent *event) override;
 
 Q_SIGNALS:
     void clicked();
 
 private:
-    QString imgPath;
-    QWidget *shadow = nullptr;
-    QLabel *image = nullptr;
-    QGraphicsBlurEffect *blurEffect = nullptr;
-    QGraphicsOpacityEffect *opacityEffect = nullptr;
-    QParallelAnimationGroup *showAnimation = nullptr;
-    QParallelAnimationGroup *hideAnimation = nullptr;
-
-    void initShowShadowAnimation();
-    void initHideShadowAnimation();
+    friend struct ThumbnailPrivate;
+    std::unique_ptr<struct ThumbnailPrivate> d;
 };
 
 #endif // THUMBNAIL_H
