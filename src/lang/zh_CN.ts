@@ -4,47 +4,47 @@
 <context>
     <name>EditableImage</name>
     <message>
-        <location filename="../editableimage.cpp" line="31"/>
+        <location filename="../editableimage.cpp" line="38"/>
         <source>open</source>
         <translation>打开</translation>
     </message>
     <message>
-        <location filename="../editableimage.cpp" line="37"/>
+        <location filename="../editableimage.cpp" line="44"/>
         <source>copy data</source>
         <translation>复制图片</translation>
     </message>
     <message>
-        <location filename="../editableimage.cpp" line="49"/>
+        <location filename="../editableimage.cpp" line="56"/>
         <source>copy path</source>
         <translation>复制图片路径</translation>
     </message>
     <message>
-        <location filename="../editableimage.cpp" line="57"/>
+        <location filename="../editableimage.cpp" line="64"/>
         <source>move to trash</source>
         <translation>移动到回收站</translation>
     </message>
     <message>
-        <location filename="../editableimage.cpp" line="65"/>
+        <location filename="../editableimage.cpp" line="72"/>
         <source>delete</source>
         <translation>删除</translation>
     </message>
     <message>
-        <location filename="../editableimage.cpp" line="68"/>
+        <location filename="../editableimage.cpp" line="75"/>
         <source>delete this image</source>
         <translation>删除图片</translation>
     </message>
     <message>
-        <location filename="../editableimage.cpp" line="69"/>
+        <location filename="../editableimage.cpp" line="76"/>
         <source>do you want to delete it?</source>
         <translation>你确定删除这张图片吗？</translation>
     </message>
     <message>
-        <location filename="../editableimage.cpp" line="78"/>
+        <location filename="../editableimage.cpp" line="85"/>
         <source>hash</source>
         <translation>计算hash</translation>
     </message>
     <message>
-        <location filename="../editableimage.h" line="40"/>
+        <location filename="../editableimage.cpp" line="118"/>
         <source>There&apos;s no image here</source>
         <translation>无图片</translation>
     </message>

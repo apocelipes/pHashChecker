@@ -12,7 +12,7 @@
 ImageViewer::ImageViewer(const std::vector<std::string> &images, QWidget *parent)
     : QWidget(parent)
 {
-    if (images.size() < 1) {
+    if (images.empty()) {
         return;
     }
     thumbs.reserve(images.size());

@@ -7,6 +7,7 @@
 #include <QString>
 
 #include <filesystem>
+#include <memory>
 
 constexpr int EditableImageFixedWidth = 800;
 constexpr int EditableImageFixedHeight = 600;
@@ -18,40 +19,14 @@ class EditableImage : public QLabel
     Q_OBJECT
     Q_PROPERTY(QString imagePath READ getImagePath WRITE setImagePath NOTIFY pathChanged);
 public:
-    explicit EditableImage(const QString &imgPath, QWidget *parent = nullptr);
+    explicit EditableImage(const QString& imgPath, QWidget *parent = nullptr);
+    ~EditableImage() noexcept override;
 
-    QString getImagePath() noexcept
-    {
-        return m_path;
-    }
+    [[nodiscard]] QString getImagePath() const noexcept;
+    void setImagePath(const QString &path);
+    [[nodiscard]] bool isEmpty() const noexcept;
 
-    bool isEmpty() noexcept
-    {
-        return getImagePath() == "";
-    }
-
-    void setImagePath(const QString &path)
-    {
-        if (path == m_path) {
-            return;
-        }
-        if (!std::filesystem::exists(path.toStdString())) {
-            clear();
-            setToolTip(isEmpty() ? tr("There's no image here") : getImagePath());
-            return;
-        }
-        QPixmap newImg{path};
-        setPixmap(newImg.scaled(EditableImageFixedWidth, EditableImageFixedHeight));
-        m_path = path;
-        setToolTip(path);
-        Q_EMIT pathChanged(path);
-    }
-
-    void mouseDoubleClickEvent(QMouseEvent* event) override
-    {
-        Q_EMIT doubleClicked();
-        event->accept();
-    }
+    void mouseDoubleClickEvent(QMouseEvent* event) override;
 
 Q_SIGNALS:
     void doubleClicked();
@@ -65,8 +40,8 @@ private Q_SLOTS:
     void showContextMenu(const QPoint &pos);
 
 private:
-    QString m_path;
-    QMenu *contextMenu = nullptr;
+    friend struct EditableImagePrivate;
+    std::unique_ptr<struct EditableImagePrivate> d;
 
     void initContextMenu();
 };
