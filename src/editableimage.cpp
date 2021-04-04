@@ -17,7 +17,7 @@ EditableImage::EditableImage(const QString &imgPath, QWidget *parent)
     : QLabel(parent)
 {
     setImagePath(imgPath);
-    setFixedSize(EditableImageFiexdWidth, EditableImageFiexdHeight);
+    setFixedSize(EditableImageFixedWidth, EditableImageFixedHeight);
     setContextMenuPolicy(Qt::CustomContextMenu);
     connect(this, &QWidget::customContextMenuRequested, this, &EditableImage::showContextMenu);
     connect(this, &EditableImage::doubleClicked, [this](){

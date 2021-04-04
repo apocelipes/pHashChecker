@@ -8,8 +8,8 @@
 
 #include <filesystem>
 
-constexpr int EditableImageFiexdWidth = 800;
-constexpr int EditableImageFiexdHeight = 600;
+constexpr int EditableImageFixedWidth = 800;
+constexpr int EditableImageFixedHeight = 600;
 
 class QMenu;
 
@@ -41,7 +41,7 @@ public:
             return;
         }
         QPixmap newImg{path};
-        setPixmap(newImg.scaled(EditableImageFiexdWidth, EditableImageFiexdHeight));
+        setPixmap(newImg.scaled(EditableImageFixedWidth, EditableImageFixedHeight));
         m_path = path;
         setToolTip(path);
         Q_EMIT pathChanged(path);
