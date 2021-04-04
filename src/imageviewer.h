@@ -18,6 +18,7 @@ class ImageViewer : public QWidget
     Q_OBJECT
 public:
     explicit ImageViewer(const std::vector<std::string> &images, QWidget *parent = nullptr);
+    ~ImageViewer() noexcept override;
 
 Q_SIGNALS:
     void currentIndexChanged(unsigned int current, unsigned int previous);
@@ -27,22 +28,8 @@ private Q_SLOTS:
     void removeCurrentImage();
 
 private:
-    QWidget *imageThumbnailList = nullptr;
-    std::vector<Thumbnail*> thumbs;
-    EditableImage *imageContent = nullptr;
-    unsigned int currentIndex{};
-    QFocusFrame *thumbnailFocusBorder = nullptr;
-
-    void setDefaultSelection();
-    void initThumbnailFocusBorder();
-    QPushButton *createSideControlButton(QStyle::StandardPixmap pixmap, QWidget *parent = nullptr);
-
-    unsigned int decrCurrentIndex() noexcept
-    {
-        auto oldIndex = currentIndex;
-        currentIndex = currentIndex == 0u ? thumbs.size() - 1 : currentIndex - 1;
-        return oldIndex;
-    }
+    friend struct ImageViewerPrivate;
+    std::unique_ptr<struct ImageViewerPrivate> d;
 };
 
 #endif // IMAGEVIEWER_H

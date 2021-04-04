@@ -9,9 +9,68 @@
 #include "thumbnail.h"
 #include "utils.h"
 
-ImageViewer::ImageViewer(const std::vector<std::string> &images, QWidget *parent)
-    : QWidget(parent)
+struct ImageViewerPrivate {
+    ImageViewer *q = nullptr;
+    QWidget *imageThumbnailList = nullptr;
+    std::vector<Thumbnail*> thumbs;
+    EditableImage *imageContent = nullptr;
+    unsigned int currentIndex{};
+    QFocusFrame *thumbnailFocusBorder = nullptr;
+
+    void init(const std::vector<std::string> &images, ImageViewer *q_ptr);
+    void initThumbnailFocusBorder()
+    {
+        thumbnailFocusBorder = new QFocusFrame{q};
+        thumbnailFocusBorder->setAutoFillBackground(true);
+        thumbnailFocusBorder->setStyleSheet("color:#30d5c8;");
+    }
+
+    unsigned int decrCurrentIndex() noexcept
+    {
+        const auto oldIndex = currentIndex;
+        currentIndex = currentIndex == 0u ? thumbs.size() - 1 : currentIndex - 1;
+        return oldIndex;
+    }
+
+    void setDefaultSelection()
+    {
+        thumbs[0]->hideShadow();
+        thumbnailFocusBorder->setWidget(thumbs[0]);
+    }
+
+    QPushButton *createSideControlButton(QStyle::StandardPixmap pixmap, QWidget *btnParent) const
+    {
+        auto btn = new QPushButton(btnParent);
+        btn->setIcon(q->style()->standardIcon(pixmap));
+        btn->setAttribute(Qt::WA_StyledBackground);
+        btn->setIconSize(QSize{50, 50});
+        btn->setStyleSheet("background:rgba(0,0,0,0);border:0;");
+        return btn;
+    }
+
+    void removeCurrentImage()
+    {
+        auto rmWidget = thumbs[currentIndex];
+        imageThumbnailList->layout()->removeWidget(rmWidget);
+        thumbs.erase(thumbs.begin() + currentIndex);
+        rmWidget->deleteLater();
+        if (thumbs.empty()) {
+            imageContent->setImagePath("");
+            Q_EMIT q->emptied();
+            return;
+        }
+        if (currentIndex >= thumbs.size()) {
+            currentIndex = thumbs.size() - 1;
+        }
+        thumbs[currentIndex]->hideShadow();
+        imageContent->setImagePath(thumbs[currentIndex]->getImagePath());
+        thumbnailFocusBorder->setWidget(thumbs[currentIndex]);
+    }
+};
+
+inline void ImageViewerPrivate::init(const std::vector<std::string> &images, ImageViewer *q_ptr)
 {
+    q = q_ptr;
     if (images.empty()) {
         return;
     }
@@ -20,30 +79,30 @@ ImageViewer::ImageViewer(const std::vector<std::string> &images, QWidget *parent
     initThumbnailFocusBorder();
 
     for (const auto &img : images) {
-        auto thumbnail = new Thumbnail{QString::fromStdString(img), this};
-        connect(thumbnail, &Thumbnail::clicked, [this, thumbnail]() {
+        auto thumbnail = new Thumbnail{QString::fromStdString(img), q};
+        QObject::connect(thumbnail, &Thumbnail::clicked, [this, thumbnail]() {
             unsigned int index = Utils::indexOf(thumbs.cbegin(), thumbs.cend(), thumbnail);
             if (index == currentIndex) {
                 return;
             }
-            Q_EMIT currentIndexChanged(index, currentIndex);
+            Q_EMIT q->currentIndexChanged(index, currentIndex);
             currentIndex = index;
         });
         thumbs.emplace_back(thumbnail);
     }
     setDefaultSelection();
 
-    imageContent = new EditableImage{thumbs[0]->getImagePath(), this};
-    connect(this, &ImageViewer::currentIndexChanged, [this](unsigned int current, unsigned int prev) {
+    imageContent = new EditableImage{thumbs[0]->getImagePath(), q};
+    QObject::connect(q, &ImageViewer::currentIndexChanged, [this](unsigned int current, unsigned int prev) {
         thumbnailFocusBorder->setWidget(thumbs[current]);
         thumbs[prev]->showShadow();
         thumbs[current]->hideShadow();
         imageContent->setImagePath(thumbs[current]->getImagePath());
     });
-    connect(imageContent, &EditableImage::trashMoved, this, &ImageViewer::removeCurrentImage);
-    connect(imageContent, &EditableImage::deleted, this, &ImageViewer::removeCurrentImage);
+    QObject::connect(imageContent, &EditableImage::trashMoved, q, &ImageViewer::removeCurrentImage);
+    QObject::connect(imageContent, &EditableImage::deleted, q, &ImageViewer::removeCurrentImage);
 
-    imageThumbnailList = new QWidget{this};
+    imageThumbnailList = new QWidget{q};
     auto listLayout = new QHBoxLayout;
     listLayout->setSpacing(6);
     for (auto thumbnail : thumbs) {
@@ -52,70 +111,42 @@ ImageViewer::ImageViewer(const std::vector<std::string> &images, QWidget *parent
     imageThumbnailList->setLayout(listLayout);
 
     auto contentLayout = new QHBoxLayout;
-    auto prevButton = createSideControlButton(QStyle::SP_ArrowLeft);
+    auto prevButton = createSideControlButton(QStyle::SP_ArrowLeft, q);
     contentLayout->addWidget(prevButton, 0, Qt::AlignLeft);
-    connect(prevButton, &QPushButton::clicked, [this](){
+    QObject::connect(prevButton, &QPushButton::clicked, [this](){
         if (thumbs.empty()) {
             return;
         }
         auto prevIndex = decrCurrentIndex();
-        Q_EMIT currentIndexChanged(currentIndex, prevIndex);
+        Q_EMIT q->currentIndexChanged(currentIndex, prevIndex);
     });
     contentLayout->addWidget(imageContent, 0, Qt::AlignCenter);
-    auto nextButton = createSideControlButton(QStyle::SP_ArrowRight);
+    auto nextButton = createSideControlButton(QStyle::SP_ArrowRight, q);
     contentLayout->addWidget(nextButton, 0, Qt::AlignRight);
-    connect(nextButton, &QPushButton::clicked, [this](){
+    QObject::connect(nextButton, &QPushButton::clicked, [this](){
         if (thumbs.empty()) {
             return;
         }
-        Q_EMIT currentIndexChanged((currentIndex+1)%thumbs.size(), currentIndex);
-        currentIndex = (currentIndex+1)%thumbs.size();
+        const auto newIndex = (currentIndex+1)%thumbs.size();
+        Q_EMIT q->currentIndexChanged(newIndex, currentIndex);
+        currentIndex = newIndex;
     });
 
     auto mainLayout = new QVBoxLayout;
     mainLayout->addLayout(contentLayout, 2);
     mainLayout->addWidget(imageThumbnailList, 1, Qt::AlignCenter);
-    setLayout(mainLayout);
+    q->setLayout(mainLayout);
 }
 
-QPushButton *ImageViewer::createSideControlButton(QStyle::StandardPixmap pixmap, QWidget *btnParent)
+ImageViewer::ImageViewer(const std::vector<std::string> &images, QWidget *parent)
+    : QWidget(parent), d{new ImageViewerPrivate}
 {
-    auto btn = new QPushButton(btnParent);
-    btn->setIcon(style()->standardIcon(pixmap));
-    btn->setAttribute(Qt::WA_StyledBackground);
-    btn->setIconSize(QSize{50, 50});
-    btn->setStyleSheet("background:rgba(0,0,0,0);border:0;");
-    return btn;
+    d->init(images, this);
 }
 
-void ImageViewer::setDefaultSelection()
-{
-    thumbs[0]->hideShadow();
-    thumbnailFocusBorder->setWidget(thumbs[0]);
-}
-
-void ImageViewer::initThumbnailFocusBorder()
-{
-    thumbnailFocusBorder = new QFocusFrame{this};
-    thumbnailFocusBorder->setAutoFillBackground(true);
-    thumbnailFocusBorder->setStyleSheet("color:#30d5c8;");
-}
+ImageViewer::~ImageViewer() noexcept = default;
 
 void ImageViewer::removeCurrentImage()
 {
-    auto rmWidget = thumbs[currentIndex];
-    imageThumbnailList->layout()->removeWidget(rmWidget);
-    thumbs.erase(thumbs.begin() + currentIndex);
-    rmWidget->deleteLater();
-    if (thumbs.empty()) {
-        imageContent->setImagePath("");
-        Q_EMIT emptied();
-        return;
-    }
-    if (currentIndex >= thumbs.size()) {
-        currentIndex = thumbs.size() - 1;
-    }
-    thumbs[currentIndex]->hideShadow();
-    imageContent->setImagePath(thumbs[currentIndex]->getImagePath());
-    thumbnailFocusBorder->setWidget(thumbs[currentIndex]);
+    d->removeCurrentImage();
 }
