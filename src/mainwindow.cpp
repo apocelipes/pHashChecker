@@ -27,7 +27,7 @@ MainWindow::MainWindow(QWidget *parent)
     dialogBtn = new QPushButton{tr("show result")};
     dialogBtn->hide();
     connect(pathEdit, &QLineEdit::textChanged, [this](){
-        if (pathEdit->text() == "") {
+        if (pathEdit->text().isEmpty()) {
             loadImgBtn->setEnabled(false);
             startBtn->setEnabled(false);
         } else {

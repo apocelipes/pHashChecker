@@ -127,7 +127,7 @@ void EditableImage::setImagePath(const QString &path)
 
 bool EditableImage::isEmpty() const noexcept
 {
-    return getImagePath() == "";
+    return d->m_path.isEmpty();
 }
 
 void EditableImage::mouseDoubleClickEvent(QMouseEvent* event)
