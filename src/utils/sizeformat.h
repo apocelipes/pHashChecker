@@ -14,7 +14,7 @@ namespace Utils {
         PebiByte = Byte << 50
     };
 
-    inline const BinaryPrefix prefixes[] = {
+    constexpr BinaryPrefix prefixes[] = {
             BinaryPrefix::Byte,
             BinaryPrefix::KibiByte,
             BinaryPrefix::MibiByte,
@@ -22,7 +22,7 @@ namespace Utils {
             BinaryPrefix::TebiByte,
             BinaryPrefix::PebiByte
     };
-    inline const char *prefixNames[] = {
+    constexpr const char *prefixNames[] = {
             "B",
             "KiB",
             "MiB",
@@ -38,7 +38,7 @@ namespace Utils {
             ++power;
         }
         power = power >= static_cast<int>(std::size(prefixes)) ? static_cast<int>(std::size(prefixes)) - 1 : power;
-        return QString::asprintf("%.1lf", fileSize / static_cast<double>(prefixes[power])) + prefixNames[power];
+        return QString::asprintf("%.1lf", static_cast<double>(fileSize) / static_cast<double>(prefixes[power])) + prefixNames[power];
     }
 }
 

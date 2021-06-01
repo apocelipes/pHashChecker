@@ -1,11 +1,9 @@
-#include "imageviewer.h"
-
 #include <QFocusFrame>
+#include <QHBoxLayout>
 #include <QPushButton>
 #include <QSize>
-#include <QHBoxLayout>
-#include <QVBoxLayout>
 
+#include "imageviewer.h"
 #include "thumbnail.h"
 #include "utils.h"
 

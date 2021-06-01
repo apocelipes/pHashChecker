@@ -3,7 +3,6 @@
 #include <QThread>
 #include <QDebug>
 #include <QReadWriteLock>
-#include <QMutex>
 
 constexpr int SMALLER_DISTANCE = 10;
 
