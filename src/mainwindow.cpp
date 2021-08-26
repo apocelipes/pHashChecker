@@ -135,6 +135,7 @@ void MainWindow::setImages()
     images.clear();
     insertHistory.clear();
 
+    info->hide(); //FIXME: animatedHide的动画是异步执行的，不等待动画结束就进行下面的操作会导致animatedShow提前执行，导致动画被中断，从而无法更新isClosing标志
     std::string path = pathEdit->text().toStdString();
     if (!std::filesystem::exists(path) || !std::filesystem::is_directory(path)) {
         startBtn->setEnabled(false);
@@ -142,7 +143,7 @@ void MainWindow::setImages()
         info->animatedShow();
         return;
     }
-    info->animatedHide();
+
     std::filesystem::directory_iterator dir{path, std::filesystem::directory_options::skip_permission_denied};
     for (const auto &p : dir) {
         if (!p.is_regular_file()) {
