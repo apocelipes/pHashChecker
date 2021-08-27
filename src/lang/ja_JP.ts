@@ -103,37 +103,37 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../mainwindow.cpp" line="21"/>
+        <location filename="../mainwindow.cpp" line="23"/>
         <source>entry a directory</source>
         <translation>フォルダのパスを入力</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="23"/>
+        <location filename="../mainwindow.cpp" line="25"/>
         <source>load</source>
         <translation>ロード</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="25"/>
+        <location filename="../mainwindow.cpp" line="27"/>
         <source>start</source>
         <translation>スタート</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="27"/>
+        <location filename="../mainwindow.cpp" line="29"/>
         <source>show result</source>
         <translation>結果を表示</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="86"/>
+        <location filename="../mainwindow.cpp" line="88"/>
         <source>select a directory</source>
         <translation>フォルダを選択</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="142"/>
+        <location filename="../mainwindow.cpp" line="148"/>
         <source> does not exist</source>
         <translation> そのようなファイルやディレクトリはありません</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="166"/>
+        <location filename="../mainwindow.cpp" line="172"/>
         <source>no image here</source>
         <translation>画像はありません</translation>
     </message>
@@ -149,6 +149,31 @@
         <location filename="../notificationbar.cpp" line="48"/>
         <source>close this notification</source>
         <translation>閉じる</translation>
+    </message>
+    <message>
+        <location filename="../settingpanel.cpp" line="36"/>
+        <source>matching accuracy: </source>
+        <translation>マッチングの精密性: </translation>
+    </message>
+    <message>
+        <location filename="../settingpanel.cpp" line="23"/>
+        <source>fuzzy</source>
+        <translation>低い</translation>
+    </message>
+    <message>
+        <location filename="../settingpanel.cpp" line="24"/>
+        <source>default</source>
+        <translation>デフォルト</translation>
+    </message>
+    <message>
+        <location filename="../settingpanel.cpp" line="25"/>
+        <source>precise</source>
+        <translation>精確</translation>
+    </message>
+    <message>
+        <location filename="../settingpanel.cpp" line="26"/>
+        <source>strict</source>
+        <translation>シビア</translation>
     </message>
 </context>
 </TS>

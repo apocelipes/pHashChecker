@@ -103,37 +103,37 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../mainwindow.cpp" line="21"/>
+        <location filename="../mainwindow.cpp" line="23"/>
         <source>entry a directory</source>
         <translation>输入目录</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="23"/>
+        <location filename="../mainwindow.cpp" line="25"/>
         <source>load</source>
         <translation>加载</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="25"/>
+        <location filename="../mainwindow.cpp" line="27"/>
         <source>start</source>
         <translation>开始计算</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="27"/>
+        <location filename="../mainwindow.cpp" line="29"/>
         <source>show result</source>
         <translation>显示结果</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="86"/>
+        <location filename="../mainwindow.cpp" line="88"/>
         <source>select a directory</source>
         <translation>选择图片目录</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="142"/>
+        <location filename="../mainwindow.cpp" line="148"/>
         <source> does not exist</source>
         <translation> 路径不存在</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="166"/>
+        <location filename="../mainwindow.cpp" line="172"/>
         <source>no image here</source>
         <translation>目录中没有图片</translation>
     </message>
@@ -149,6 +149,31 @@
         <location filename="../notificationbar.cpp" line="48"/>
         <source>close this notification</source>
         <translation>关闭消息</translation>
+    </message>
+    <message>
+        <location filename="../settingpanel.cpp" line="36"/>
+        <source>matching accuracy: </source>
+        <translation>匹配精度: </translation>
+    </message>
+    <message>
+        <location filename="../settingpanel.cpp" line="23"/>
+        <source>fuzzy</source>
+        <translation>较低</translation>
+    </message>
+    <message>
+        <location filename="../settingpanel.cpp" line="24"/>
+        <source>default</source>
+        <translation>默认</translation>
+    </message>
+    <message>
+        <location filename="../settingpanel.cpp" line="25"/>
+        <source>precise</source>
+        <translation>较高</translation>
+    </message>
+    <message>
+        <location filename="../settingpanel.cpp" line="26"/>
+        <source>strict</source>
+        <translation>高</translation>
     </message>
 </context>
 </TS>

@@ -11,6 +11,15 @@
 
 class QReadWriteLock;
 
+
+enum class PHashDistance: int
+{
+    STRICT  = 1,
+    PRECISE = 5,
+    DEFAULT = 8,
+    FUZZY   = 10,
+};
+
 class HashWorker : public QObject
 {
     Q_OBJECT
@@ -36,6 +45,8 @@ public:
 
     void doWork();
 
+    static PHashDistance similar_distance;
+
 Q_SIGNALS:
     void sameImg(const std::string&, const std::string&);
     void doneOneImg();
@@ -48,6 +59,15 @@ private:
     HashContainerType &_hashes;
     std::vector<ulong64> &_insertHistory;
     QReadWriteLock &_hashesLock;
+
+    bool checkSameImage(ulong64 a, ulong64 b, bool &flag) {
+        if (ph_hamming_distance(a, b) <= static_cast<int>(similar_distance)) {
+            flag = true;
+            return true;
+        }
+
+        return false;
+    }
 };
 
 #endif // HASHWORKER_H

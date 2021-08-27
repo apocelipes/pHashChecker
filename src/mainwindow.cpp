@@ -1,6 +1,8 @@
 #include "mainwindow.h"
 #include <QVBoxLayout>
 #include <QDir>
+#include <QSlider>
+#include <QLabel>
 #include <QString>
 #include <QDebug>
 
@@ -96,6 +98,9 @@ MainWindow::MainWindow(QWidget *parent)
     info = NotificationBar::createErrorBar(this);
     info->setCloseButtonVisible(true);
 
+    settings = new SettingPanel{this};
+    //TODO: add cancel button
+
     lineLayout = new QHBoxLayout;
     lineLayout->addWidget(loadImgBtn);
     lineLayout->addWidget(startBtn);
@@ -106,6 +111,7 @@ MainWindow::MainWindow(QWidget *parent)
     auto mainLayout = new QVBoxLayout;
     mainLayout->addWidget(info);
     mainLayout->addLayout(lineLayout);
+    mainLayout->addWidget(settings);
     mainLayout->addWidget(bar);
     setLayout(mainLayout);
 }

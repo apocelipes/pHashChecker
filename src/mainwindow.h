@@ -10,12 +10,15 @@
 #include <QReadWriteLock>
 #include <QThread>
 
+#include <array>
 #include <string>
 #include <vector>
 #include <unordered_map>
 #include <algorithm>
 
 #include <pHash.h>
+
+#include "settingpanel.h"
 
 class ImageViewerDialog;
 class NotificationBar;
@@ -68,6 +71,7 @@ private:
         for (int i = 0; i < lineLayout->count(); ++i) {
             lineLayout->itemAt(i)->widget()->setEnabled(!flag);
         }
+        settings->setEnabled(!flag);
         if (flag) {
             setCursor(Qt::WaitCursor);
         } else {
@@ -85,6 +89,7 @@ private:
     QPushButton *dialogBtn = nullptr;
     ImageViewerDialog *imageDialog = nullptr;
     NotificationBar *info = nullptr;
+    SettingPanel *settings = nullptr;
 
     std::vector<std::string> images;
     std::unordered_map<ulong64, std::string> hashes;
@@ -95,7 +100,7 @@ private:
     QThread *pool = nullptr;
 
     // supported image formats
-    inline static std::vector<std::string> imgExts {
+    inline static std::array<std::string, 5> imgExts {
         ".jpg",
         ".jpeg",
         ".png",

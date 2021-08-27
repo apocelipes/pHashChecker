@@ -4,18 +4,7 @@
 #include <QDebug>
 #include <QReadWriteLock>
 
-constexpr int SMALLER_DISTANCE = 10;
-
-namespace {
-    inline bool checkSameImage(ulong64 a, ulong64 b, bool &flag) {
-        if (ph_hamming_distance(a, b) <= SMALLER_DISTANCE) {
-            flag = true;
-            return true;
-        }
-
-        return false;
-    }
-}
+PHashDistance HashWorker::similar_distance = PHashDistance::FUZZY;
 
 void HashWorker::doWork()
 {
