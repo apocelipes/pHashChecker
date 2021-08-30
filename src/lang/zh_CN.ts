@@ -133,12 +133,12 @@
         <translation>选择图片目录</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="167"/>
+        <location filename="../mainwindow.cpp" line="168"/>
         <source> does not exist</source>
         <translation> 路径不存在</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="191"/>
+        <location filename="../mainwindow.cpp" line="193"/>
         <source>no image here</source>
         <translation>目录中没有图片</translation>
     </message>

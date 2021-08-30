@@ -107,6 +107,7 @@ MainWindow::MainWindow(QWidget *parent)
         }
 
         pathEdit->setText(dirName);
+        startBtn->setEnabled(false);
     });
 
     info = NotificationBar::createErrorBar(this);
@@ -188,6 +189,7 @@ void MainWindow::setImages()
         bar->setValue(0);
         bar->setMaximum(images.size());
     } else {
+        startBtn->setEnabled(false);
         info->setText(tr("no image here"));
         info->animatedShow();
     }
