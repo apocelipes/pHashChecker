@@ -84,6 +84,7 @@ private:
     QPushButton *loadImgBtn = nullptr;
     QPushButton *startBtn = nullptr;
     QProgressBar *bar = nullptr;
+    QPushButton *cancelButton = nullptr;
     QPushButton *fileDialogBtn = nullptr;
     QFileDialog *fileDialog = nullptr;
     QPushButton *dialogBtn = nullptr;

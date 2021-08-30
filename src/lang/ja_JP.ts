@@ -123,17 +123,22 @@
         <translation>結果を表示</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="88"/>
+        <location filename="../mainwindow.cpp" line="84"/>
+        <source>cancel</source>
+        <translation>キャンセル</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="102"/>
         <source>select a directory</source>
         <translation>フォルダを選択</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="148"/>
+        <location filename="../mainwindow.cpp" line="167"/>
         <source> does not exist</source>
         <translation> そのようなファイルやディレクトリはありません</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="172"/>
+        <location filename="../mainwindow.cpp" line="191"/>
         <source>no image here</source>
         <translation>画像はありません</translation>
     </message>

@@ -42,8 +42,11 @@ MainWindow::MainWindow(QWidget *parent)
         freezeLineLayout();
         hashes.reserve(images.size());
         insertHistory.reserve(images.size());
+        bar->setEnabled(true);
         bar->show();
         bar->setValue(0);
+        cancelButton->setEnabled(true);
+        cancelButton->show();
 
         for (unsigned long id = 0, start = 0, limit = getNextLimit(0, 0);
              id < getThreadNumber();
@@ -78,6 +81,17 @@ MainWindow::MainWindow(QWidget *parent)
     });
     bar = new QProgressBar;
     bar->hide();
+    cancelButton = new QPushButton{tr("cancel")};
+    cancelButton->setCursor(Qt::PointingHandCursor);
+    cancelButton->hide();
+    connect(cancelButton, &QPushButton::clicked, [this](){
+        cancelButton->setEnabled(false); // quitPool在取消线程时较耗时，防止反复触发
+        bar->setEnabled(false);
+        quitPool(true);
+        freezeLineLayout(false);
+        bar->hide();
+        cancelButton->hide();
+    });
 
     fileDialog = new QFileDialog{this};
     fileDialog->setOption(QFileDialog::ShowDirsOnly, true);
@@ -112,8 +126,12 @@ MainWindow::MainWindow(QWidget *parent)
     mainLayout->addWidget(info);
     mainLayout->addLayout(lineLayout);
     mainLayout->addWidget(settings);
-    mainLayout->addWidget(bar);
+    auto progressLayout = new QHBoxLayout;
+    progressLayout->addWidget(bar);
+    progressLayout->addWidget(cancelButton);
+    mainLayout->addLayout(progressLayout);
     setLayout(mainLayout);
+    pathEdit->setFocus();
 }
 
 void MainWindow::onProgress()
@@ -126,6 +144,7 @@ void MainWindow::onProgress()
         startBtn->setEnabled(false);
         quitPool();
         bar->hide();
+        cancelButton->hide();
         dialogBtn->show();
         Q_EMIT completed();
     }
