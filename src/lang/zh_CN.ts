@@ -156,27 +156,27 @@
         <translation>关闭消息</translation>
     </message>
     <message>
-        <location filename="../settingpanel.cpp" line="36"/>
+        <location filename="../settingpanel.cpp" line="37"/>
         <source>matching accuracy: </source>
         <translation>匹配精度: </translation>
     </message>
     <message>
-        <location filename="../settingpanel.cpp" line="23"/>
+        <location filename="../settingpanel.cpp" line="24"/>
         <source>fuzzy</source>
         <translation>较低</translation>
     </message>
     <message>
-        <location filename="../settingpanel.cpp" line="24"/>
+        <location filename="../settingpanel.cpp" line="25"/>
         <source>default</source>
         <translation>默认</translation>
     </message>
     <message>
-        <location filename="../settingpanel.cpp" line="25"/>
+        <location filename="../settingpanel.cpp" line="26"/>
         <source>precise</source>
         <translation>较高</translation>
     </message>
     <message>
-        <location filename="../settingpanel.cpp" line="26"/>
+        <location filename="../settingpanel.cpp" line="27"/>
         <source>strict</source>
         <translation>高</translation>
     </message>

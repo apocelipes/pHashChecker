@@ -60,7 +60,8 @@ private:
     std::vector<ulong64> &_insertHistory;
     QReadWriteLock &_hashesLock;
 
-    bool checkSameImage(ulong64 a, ulong64 b, bool &flag) {
+    bool checkSameImage(ulong64 a, ulong64 b, bool &flag) noexcept
+    {
         if (ph_hamming_distance(a, b) <= static_cast<int>(similar_distance)) {
             flag = true;
             return true;

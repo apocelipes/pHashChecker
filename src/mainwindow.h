@@ -56,7 +56,8 @@ private:
     void initResultDialog();
     void releaseResultDialog();
 
-    void quitPool(bool cancelAllThread = false) {
+    void quitPool(bool cancelAllThread = false)
+    {
         for (int i = 0; i < QThread::idealThreadCount(); ++i) {
             if (cancelAllThread) {
                 pool[i].requestInterruption();
@@ -66,16 +67,24 @@ private:
         }
     }
 
-    void freezeLineLayout(bool flag = true)
+    void freezeMainGUI(bool flag)
     {
-        for (int i = 0; i < lineLayout->count(); ++i) {
-            lineLayout->itemAt(i)->widget()->setEnabled(!flag);
-        }
-        settings->setEnabled(!flag);
+        freezeLayout(lineLayout, flag);
+        freezeLayout(settings->layout(), flag);
         if (flag) {
             setCursor(Qt::WaitCursor);
         } else {
             unsetCursor();
+        }
+    }
+
+    void freezeLayout(QLayout *layout, bool flag)
+    {
+        for (int i = 0; i < layout->count(); ++i) {
+            auto widget = layout->itemAt(i)->widget();
+            if (widget) { // check for not widget layoutitems
+                widget->setEnabled(!flag);
+            }
         }
     }
 

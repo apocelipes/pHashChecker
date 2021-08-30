@@ -156,27 +156,27 @@
         <translation>閉じる</translation>
     </message>
     <message>
-        <location filename="../settingpanel.cpp" line="36"/>
+        <location filename="../settingpanel.cpp" line="37"/>
         <source>matching accuracy: </source>
         <translation>マッチングの精密性: </translation>
     </message>
     <message>
-        <location filename="../settingpanel.cpp" line="23"/>
+        <location filename="../settingpanel.cpp" line="24"/>
         <source>fuzzy</source>
         <translation>低い</translation>
     </message>
     <message>
-        <location filename="../settingpanel.cpp" line="24"/>
+        <location filename="../settingpanel.cpp" line="25"/>
         <source>default</source>
         <translation>デフォルト</translation>
     </message>
     <message>
-        <location filename="../settingpanel.cpp" line="25"/>
+        <location filename="../settingpanel.cpp" line="26"/>
         <source>precise</source>
         <translation>精確</translation>
     </message>
     <message>
-        <location filename="../settingpanel.cpp" line="26"/>
+        <location filename="../settingpanel.cpp" line="27"/>
         <source>strict</source>
         <translation>シビア</translation>
     </message>

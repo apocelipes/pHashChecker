@@ -17,8 +17,9 @@ struct SettingPanelPrivate
     void init(SettingPanel *q_ptr);
 
 private:
-    QString getDistanceName(int index)
+    QString getDistanceName(int index) const noexcept
     {
+        // i18n需要在main函数中运行，因此不能依赖静态成员的初始化
         static const QString infoes[4] = {
             QObject::tr("fuzzy"),
             QObject::tr("default"),
@@ -71,5 +72,3 @@ SettingPanel::SettingPanel(QWidget *parent)
 }
 
 SettingPanel::~SettingPanel() = default;
-
-//

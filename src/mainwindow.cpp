@@ -39,7 +39,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(loadImgBtn, &QPushButton::clicked, this, &MainWindow::setImages);
     connect(pathEdit, &QLineEdit::returnPressed, this, &MainWindow::setImages);
     connect(startBtn, &QPushButton::clicked, [this]() {
-        freezeLineLayout();
+        freezeMainGUI(true);
         hashes.reserve(images.size());
         insertHistory.reserve(images.size());
         bar->setEnabled(true);
@@ -88,7 +88,7 @@ MainWindow::MainWindow(QWidget *parent)
         cancelButton->setEnabled(false); // quitPool在取消线程时较耗时，防止反复触发
         bar->setEnabled(false);
         quitPool(true);
-        freezeLineLayout(false);
+        freezeMainGUI(false);
         bar->hide();
         cancelButton->hide();
     });
@@ -139,7 +139,7 @@ void MainWindow::onProgress()
     const auto value = bar->value();
     bar->setValue(value + 1);
     if (value == bar->maximum() - 1) {
-        freezeLineLayout(false);
+        freezeMainGUI(false);
         // should click load button first
         startBtn->setEnabled(false);
         quitPool();
