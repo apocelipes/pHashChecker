@@ -1,4 +1,5 @@
-#include "hashdialog.h"
+// SPDX-License-Identifier: GPL-3.0-or-later
+// Copyright (C) 2021 apocelipes
 
 #include <QClipboard>
 #include <QCryptographicHash>
@@ -9,6 +10,7 @@
 #include <QTableWidget>
 #include <QVBoxLayout>
 
+#include "hashdialog.h"
 #include "notificationbar.h"
 #include "sizeformat.h"
 

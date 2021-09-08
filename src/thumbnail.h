@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: GPL-3.0-or-later
+// Copyright (C) 2021 apocelipes
+
 #ifndef THUMBNAIL_H
 #define THUMBNAIL_H
 

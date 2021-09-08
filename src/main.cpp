@@ -1,8 +1,11 @@
-#include "mainwindow.h"
+// SPDX-License-Identifier: GPL-3.0-or-later
+// Copyright (C) 2021 apocelipes
 
 #include <QApplication>
 #include <QLocale>
 #include <QTranslator>
+
+#include "mainwindow.h"
 
 int main(int argc, char *argv[])
 {

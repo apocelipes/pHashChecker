@@ -1,8 +1,12 @@
-#include "hashworker.h"
+// SPDX-License-Identifier: GPL-3.0-or-later
+// Copyright (C) 2021 apocelipes
+
 #include <iostream>
 #include <QThread>
 #include <QDebug>
 #include <QReadWriteLock>
+
+#include "hashworker.h"
 
 PHashDistance HashWorker::similar_distance = PHashDistance::FUZZY;
 

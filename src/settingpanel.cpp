@@ -1,4 +1,5 @@
-#include "settingpanel.h"
+// SPDX-License-Identifier: GPL-3.0-or-later
+// Copyright (C) 2021 apocelipes
 
 #include <QLabel>
 #include <QSlider>
@@ -6,6 +7,7 @@
 #include <QHBoxLayout>
 
 #include "hashworker.h"
+#include "settingpanel.h"
 
 struct SettingPanelPrivate
 {

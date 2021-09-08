@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: GPL-3.0-or-later
+// Copyright (C) 2021 apocelipes
+
 #ifndef PHASHCHECKER_NOTIFICATIONBAR_H
 #define PHASHCHECKER_NOTIFICATIONBAR_H
 

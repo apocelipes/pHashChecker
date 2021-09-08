@@ -1,4 +1,5 @@
-#include "thumbnail.h"
+// SPDX-License-Identifier: GPL-3.0-or-later
+// Copyright (C) 2021 apocelipes
 
 #include <QLabel>
 #include <QPixmap>
@@ -8,6 +9,8 @@
 
 #include <filesystem>
 #include <utility>
+
+#include "thumbnail.h"
 
 constexpr int ThumbnailWidth = 100, ThumbnailHeight = 100;
 constexpr qreal DEFAULT_OPACITY = 0.8;

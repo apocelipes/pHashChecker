@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: GPL-3.0-or-later
+// Copyright (C) 2021 apocelipes
+
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 

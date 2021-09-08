@@ -1,4 +1,6 @@
-#include "mainwindow.h"
+// SPDX-License-Identifier: GPL-3.0-or-later
+// Copyright (C) 2021 apocelipes
+
 #include <QVBoxLayout>
 #include <QDir>
 #include <QSlider>
@@ -10,6 +12,7 @@
 #include <iostream>
 #include <filesystem>
 
+#include "mainwindow.h"
 #include "hashworker.h"
 #include "imageviewerdialog.h"
 #include "notificationbar.h"

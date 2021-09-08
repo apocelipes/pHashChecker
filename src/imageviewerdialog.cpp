@@ -1,4 +1,5 @@
-#include "imageviewerdialog.h"
+// SPDX-License-Identifier: GPL-3.0-or-later
+// Copyright (C) 2021 apocelipes
 
 #include <QComboBox>
 #include <QCoreApplication>
@@ -8,6 +9,7 @@
 #include <QVBoxLayout>
 #include <QPushButton>
 
+#include "imageviewerdialog.h"
 #include "imageviewer.h"
 #include "utils.h"
 

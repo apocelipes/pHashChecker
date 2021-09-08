@@ -1,4 +1,5 @@
-#include "notificationbar.h"
+// SPDX-License-Identifier: GPL-3.0-or-later
+// Copyright (C) 2021 apocelipes
 
 #include <QGraphicsOpacityEffect>
 #include <QHBoxLayout>
@@ -7,6 +8,8 @@
 #include <QStyle>
 #include <QPropertyAnimation>
 #include <QSequentialAnimationGroup>
+
+#include "notificationbar.h"
 
 struct NotificationBarPrivate {
     NotificationBar *q = nullptr;
