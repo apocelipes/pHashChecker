@@ -150,6 +150,7 @@ void MainWindow::onProgress()
         bar->hide();
         cancelButton->hide();
         dialogBtn->show();
+        sort_result();
         Q_EMIT completed();
     }
 }

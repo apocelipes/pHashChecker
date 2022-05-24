@@ -81,13 +81,20 @@ private:
         }
     }
 
-    void freezeLayout(QLayout *layout, bool flag)
+    static void freezeLayout(QLayout *layout, bool flag)
     {
         for (int i = 0; i < layout->count(); ++i) {
             auto widget = layout->itemAt(i)->widget();
             if (widget) { // check for not widget layoutitems
                 widget->setEnabled(!flag);
             }
+        }
+    }
+
+    void sort_result()
+    {
+        for (auto &v : sameImageLists) {
+            std::sort(v.begin(), v.end());
         }
     }
 

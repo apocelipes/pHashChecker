@@ -4,6 +4,8 @@
 #ifndef SIZEFORMAT_H
 #define SIZEFORMAT_H
 
+#include <cmath>
+
 #include <QtGlobal>
 #include <QString>
 
@@ -35,11 +37,7 @@ namespace Utils {
     };
 
     inline QString sizeFormat(const qint64 fileSize) {
-        int power = 0;
-        auto count = fileSize;
-        while (count /= 1024) {
-            ++power;
-        }
+        int power = static_cast<int>(std::floor(std::log(fileSize) / std::log(1024)));
         power = power >= static_cast<int>(std::size(prefixes)) ? static_cast<int>(std::size(prefixes)) - 1 : power;
         return QString::asprintf("%.1lf", static_cast<double>(fileSize) / static_cast<double>(prefixes[power])) + prefixNames[power];
     }

@@ -8,10 +8,12 @@
 #include <vector>
 
 namespace Utils {
-// 不存在找不到的情况故不做检查
     template<typename Iterator, typename Element>
-    inline unsigned int indexOf(Iterator beginIter, Iterator endIter, const Element &target) {
+    constexpr int indexOf(Iterator beginIter, Iterator endIter, const Element &target) {
         auto iter = std::find(beginIter, endIter, target);
+        if (iter == endIter) {
+            return -1;
+        }
         return iter - beginIter;
     }
 }

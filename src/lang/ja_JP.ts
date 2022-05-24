@@ -133,12 +133,12 @@
         <translation>フォルダを選択</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="171"/>
+        <location filename="../mainwindow.cpp" line="172"/>
         <source> does not exist</source>
         <translation> そのようなファイルやディレクトリはありません</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="196"/>
+        <location filename="../mainwindow.cpp" line="197"/>
         <source>no image here</source>
         <translation>画像はありません</translation>
     </message>
