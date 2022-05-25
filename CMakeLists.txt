@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
-# Copyright (C) 2021 apocelipes
+# Copyright (C) 2022 apocelipes
 
-cmake_minimum_required(VERSION 3.5)
+cmake_minimum_required(VERSION 3.16)
 
 project(pHashChecker LANGUAGES CXX)
 
@@ -20,8 +20,9 @@ endif()
 include_directories(third-party/CImg)
 include_directories(src/utils)
 
-find_package(QT NAMES Qt6 Qt5 COMPONENTS Widgets REQUIRED)
-find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets REQUIRED)
+find_package(Qt6 REQUIRED COMPONENTS Core)
+qt_standard_project_setup()
+find_package(Qt6 COMPONENTS Core Gui Widgets REQUIRED)
 
 set(TS_FILES
     ${CMAKE_CURRENT_SOURCE_DIR}/src/lang/zh_CN.ts
@@ -53,15 +54,11 @@ endforeach()
 
 configure_file(translations.qrc ${CMAKE_CURRENT_BINARY_DIR} COPYONLY)
 
-if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
-    qt_add_executable(pHashChecker
-        ${PROJECT_SOURCES}
-    )
-else()
-    add_executable(pHashChecker
-        ${PROJECT_SOURCES}
-    )
-endif()
+
+add_executable(pHashChecker
+    ${PROJECT_SOURCES}
+)
+
 add_dependencies(${PROJECT_NAME} create_all_qm_files)
 
-target_link_libraries(pHashChecker PRIVATE Qt${QT_VERSION_MAJOR}::Widgets pHash)
+target_link_libraries(pHashChecker PRIVATE Qt6::Core Qt6::Gui Qt6::Widgets pHash)

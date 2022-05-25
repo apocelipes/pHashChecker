@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Copyright (C) 2021 apocelipes
+// Copyright (C) 2022 apocelipes
 
 #ifndef SETTINGPANEL_H
 #define SETTINGPANEL_H
@@ -12,7 +12,7 @@ class SettingPanel: public QWidget
     Q_OBJECT
 public:
     explicit SettingPanel(QWidget *parent = nullptr);
-    ~SettingPanel();
+    ~SettingPanel() noexcept override;
 
 private:
     friend struct SettingPanelPrivate;

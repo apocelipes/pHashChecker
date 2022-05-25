@@ -1,10 +1,8 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Copyright (C) 2021 apocelipes
+// Copyright (C) 2022 apocelipes
 
 #include <QVBoxLayout>
 #include <QDir>
-#include <QSlider>
-#include <QLabel>
 #include <QString>
 #include <QDebug>
 
@@ -191,7 +189,7 @@ void MainWindow::setImages()
     if (!images.empty()) {
         startBtn->setEnabled(true);
         bar->setValue(0);
-        bar->setMaximum(images.size());
+        bar->setMaximum(static_cast<int>(images.size()));
     } else {
         startBtn->setEnabled(false);
         info->setText(tr("no image here"));

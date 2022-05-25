@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Copyright (C) 2021 apocelipes
+// Copyright (C) 2022 apocelipes
 
 #include "editableimage.h"
 #include "hashdialog.h"
@@ -46,11 +46,7 @@ void EditableImage::initContextMenu()
 
     auto copyAction = new QAction(style()->standardIcon(QStyle::SP_FileDialogListView), tr("copy data"));
     connect(copyAction, &QAction::triggered, [this](){
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 15, 0))
         const auto &data = pixmap(Qt::ReturnByValue);
-#else
-        const auto &data = *pixmap();
-#endif
         QGuiApplication::clipboard()->setPixmap(data);
         Q_EMIT dataCopied(data);
     });
@@ -63,14 +59,12 @@ void EditableImage::initContextMenu()
     });
     d->contextMenu->addAction(copyPathAction);
 
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 15, 0))
     auto moveToTrashAction = new QAction(style()->standardIcon(QStyle::SP_TrashIcon), tr("move to trash"));
     connect(moveToTrashAction, &QAction::triggered, [this](){
         QFile::moveToTrash(getImagePath());
         Q_EMIT trashMoved();
     });
     d->contextMenu->addAction(moveToTrashAction);
-#endif
 
     auto deleteAction = new QAction(style()->standardIcon(QStyle::SP_DialogDiscardButton), tr("delete"));
     connect(deleteAction, &QAction::triggered, [this](){

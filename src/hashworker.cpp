@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Copyright (C) 2021 apocelipes
+// Copyright (C) 2022 apocelipes
 
-#include <iostream>
 #include <QThread>
 #include <QDebug>
 #include <QReadWriteLock>

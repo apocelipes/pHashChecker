@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Copyright (C) 2021 apocelipes
+// Copyright (C) 2022 apocelipes
 
+#include <QDebug>
 #include <QLabel>
 #include <QSlider>
 #include <QString>
@@ -19,7 +20,7 @@ struct SettingPanelPrivate
     void init(SettingPanel *q_ptr);
 
 private:
-    QString getDistanceName(int index) const noexcept
+    static QString getDistanceName(int index) noexcept
     {
         // i18n需要在main函数中运行，因此不能依赖静态成员的初始化
         static const QString infoes[4] = {
@@ -57,6 +58,8 @@ void SettingPanelPrivate::init(SettingPanel *q_ptr)
         case 3:
             HashWorker::similar_distance = PHashDistance::STRICT;
             break;
+        default:
+            qWarning() << "invalid value: " << value;
         }
     });
     auto settingsLayout = new QHBoxLayout;
