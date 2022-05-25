@@ -103,42 +103,47 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../mainwindow.cpp" line="24"/>
+        <location filename="../mainwindow.cpp" line="25"/>
         <source>entry a directory</source>
         <translation>输入目录</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="26"/>
+        <location filename="../mainwindow.cpp" line="27"/>
         <source>load</source>
         <translation>加载</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="28"/>
+        <location filename="../mainwindow.cpp" line="29"/>
         <source>start</source>
         <translation>开始计算</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="30"/>
+        <location filename="../mainwindow.cpp" line="31"/>
         <source>show result</source>
         <translation>显示结果</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="85"/>
+        <location filename="../mainwindow.cpp" line="86"/>
         <source>cancel</source>
         <translation>取消</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="103"/>
+        <location filename="../mainwindow.cpp" line="104"/>
         <source>select a directory</source>
         <translation>选择图片目录</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="170"/>
+        <location filename="../mainwindow.cpp" line="126"/>
+        <source>about</source>
+        <translation>关于</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="175"/>
         <source> does not exist</source>
         <translation> 路径不存在</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="195"/>
+        <location filename="../mainwindow.cpp" line="200"/>
         <source>no image here</source>
         <translation>目录中没有图片</translation>
     </message>

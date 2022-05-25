@@ -103,42 +103,47 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../mainwindow.cpp" line="24"/>
+        <location filename="../mainwindow.cpp" line="25"/>
         <source>entry a directory</source>
         <translation>フォルダのパスを入力</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="26"/>
+        <location filename="../mainwindow.cpp" line="27"/>
         <source>load</source>
         <translation>ロード</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="28"/>
+        <location filename="../mainwindow.cpp" line="29"/>
         <source>start</source>
         <translation>スタート</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="30"/>
+        <location filename="../mainwindow.cpp" line="31"/>
         <source>show result</source>
         <translation>結果を表示</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="85"/>
+        <location filename="../mainwindow.cpp" line="86"/>
         <source>cancel</source>
         <translation>キャンセル</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="103"/>
+        <location filename="../mainwindow.cpp" line="104"/>
         <source>select a directory</source>
         <translation>フォルダを選択</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="170"/>
+        <location filename="../mainwindow.cpp" line="126"/>
+        <source>about</source>
+        <translation>アプリについて</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="175"/>
         <source> does not exist</source>
         <translation> そのようなファイルやディレクトリはありません</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="195"/>
+        <location filename="../mainwindow.cpp" line="200"/>
         <source>no image here</source>
         <translation>画像はありません</translation>
     </message>

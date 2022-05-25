@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // Copyright (C) 2022 apocelipes
 
+#include <QApplication>
 #include <QVBoxLayout>
 #include <QDir>
 #include <QString>
@@ -115,7 +116,6 @@ MainWindow::MainWindow(QWidget *parent)
     info->setCloseButtonVisible(true);
 
     settings = new SettingPanel{this};
-    //TODO: add cancel button
 
     lineLayout = new QHBoxLayout;
     lineLayout->addWidget(loadImgBtn);
@@ -123,6 +123,11 @@ MainWindow::MainWindow(QWidget *parent)
     lineLayout->addWidget(dialogBtn);
     lineLayout->addWidget(pathEdit);
     lineLayout->addWidget(fileDialogBtn);
+    auto aboutQtBtn = new QPushButton{tr("about"), this};
+    connect(aboutQtBtn, &QPushButton::clicked, this, [](){
+        QApplication::aboutQt();
+    });
+    lineLayout->addWidget(aboutQtBtn);
 
     auto mainLayout = new QVBoxLayout;
     mainLayout->addWidget(info);
