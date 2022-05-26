@@ -12,7 +12,7 @@ class SettingPanel: public QWidget
     Q_OBJECT
 public:
     explicit SettingPanel(QWidget *parent = nullptr);
-    ~SettingPanel() noexcept override;
+    ~SettingPanel() override;
 
 private:
     friend struct SettingPanelPrivate;

@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Copyright (C) 2021 apocelipes
+// Copyright (C) 2022 apocelipes
 
 #ifndef HASHWORKER_H
 #define HASHWORKER_H
@@ -12,16 +12,9 @@
 
 #include <pHash.h>
 
+#include "utils.h"
+
 class QReadWriteLock;
-
-
-enum class PHashDistance: int
-{
-    STRICT  = 1,
-    PRECISE = 5,
-    DEFAULT = 8,
-    FUZZY   = 10,
-};
 
 class HashWorker : public QObject
 {
@@ -48,7 +41,7 @@ public:
 
     void doWork();
 
-    static PHashDistance similar_distance;
+    static Utils::PHashDistance similar_distance;
 
 Q_SIGNALS:
     void sameImg(const std::string&, const std::string&);

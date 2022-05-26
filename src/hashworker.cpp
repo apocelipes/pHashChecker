@@ -7,7 +7,7 @@
 
 #include "hashworker.h"
 
-PHashDistance HashWorker::similar_distance = PHashDistance::FUZZY;
+Utils::PHashDistance HashWorker::similar_distance = Utils::PHashDistance::FUZZY;
 
 void HashWorker::doWork()
 {

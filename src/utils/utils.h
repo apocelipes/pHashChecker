@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Copyright (C) 2021 apocelipes
+// Copyright (C) 2022 apocelipes
 
 #ifndef UTILS_H
 #define UTILS_H
@@ -16,6 +16,14 @@ namespace Utils {
         }
         return iter - beginIter;
     }
+
+    enum class PHashDistance: int
+    {
+        STRICT  = 1,
+        PRECISE = 5,
+        DEFAULT = 8,
+        FUZZY   = 10,
+    };
 }
 
 #endif // UTILS_H

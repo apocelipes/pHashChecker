@@ -161,29 +161,49 @@
         <translation>閉じる</translation>
     </message>
     <message>
-        <location filename="../settingpanel.cpp" line="40"/>
+        <location filename="../settingpanel.cpp" line="57"/>
         <source>matching accuracy: </source>
         <translation>マッチングの精密性: </translation>
     </message>
     <message>
-        <location filename="../settingpanel.cpp" line="27"/>
+        <location filename="../settingpanel.cpp" line="28"/>
         <source>fuzzy</source>
         <translation>低い</translation>
     </message>
     <message>
-        <location filename="../settingpanel.cpp" line="28"/>
+        <location filename="../settingpanel.cpp" line="29"/>
         <source>default</source>
         <translation>デフォルト</translation>
     </message>
     <message>
-        <location filename="../settingpanel.cpp" line="29"/>
+        <location filename="../settingpanel.cpp" line="30"/>
         <source>precise</source>
         <translation>精確</translation>
     </message>
     <message>
-        <location filename="../settingpanel.cpp" line="30"/>
+        <location filename="../settingpanel.cpp" line="31"/>
         <source>strict</source>
         <translation>シビア</translation>
+    </message>
+    <message>
+        <location filename="../settingpanel.cpp" line="41"/>
+        <source>Fuzzy mode may produce more erroneous results.</source>
+        <translation>若干の誤差があります。</translation>
+    </message>
+    <message>
+        <location filename="../settingpanel.cpp" line="42"/>
+        <source>The default mode.</source>
+        <translation>デフォルトモードでマッチングをします。</translation>
+    </message>
+    <message>
+        <location filename="../settingpanel.cpp" line="43"/>
+        <source>This mode provides higher precision than the default mode.</source>
+        <translation>デフォルトモードより高い正確性が保証されています。</translation>
+    </message>
+    <message>
+        <location filename="../settingpanel.cpp" line="44"/>
+        <source>Strict mode provides the highest matching accuracy.</source>
+        <translation>もっとも厳しいマッチングを行い、せいかくな結果が提供されています。</translation>
     </message>
 </context>
 </TS>

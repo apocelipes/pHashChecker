@@ -161,29 +161,49 @@
         <translation>关闭消息</translation>
     </message>
     <message>
-        <location filename="../settingpanel.cpp" line="40"/>
+        <location filename="../settingpanel.cpp" line="57"/>
         <source>matching accuracy: </source>
         <translation>匹配精度: </translation>
     </message>
     <message>
-        <location filename="../settingpanel.cpp" line="27"/>
+        <location filename="../settingpanel.cpp" line="28"/>
         <source>fuzzy</source>
         <translation>较低</translation>
     </message>
     <message>
-        <location filename="../settingpanel.cpp" line="28"/>
+        <location filename="../settingpanel.cpp" line="29"/>
         <source>default</source>
         <translation>默认</translation>
     </message>
     <message>
-        <location filename="../settingpanel.cpp" line="29"/>
+        <location filename="../settingpanel.cpp" line="30"/>
         <source>precise</source>
         <translation>较高</translation>
     </message>
     <message>
-        <location filename="../settingpanel.cpp" line="30"/>
+        <location filename="../settingpanel.cpp" line="31"/>
         <source>strict</source>
         <translation>高</translation>
+    </message>
+    <message>
+        <location filename="../settingpanel.cpp" line="41"/>
+        <source>Fuzzy mode may produce more erroneous results.</source>
+        <translation>精度较低可能产生较多错误匹配。</translation>
+    </message>
+    <message>
+        <location filename="../settingpanel.cpp" line="42"/>
+        <source>The default mode.</source>
+        <translation>默认精度。</translation>
+    </message>
+    <message>
+        <location filename="../settingpanel.cpp" line="43"/>
+        <source>This mode provides higher precision than the default mode.</source>
+        <translation>提供比默认模式更准确的匹配。</translation>
+    </message>
+    <message>
+        <location filename="../settingpanel.cpp" line="44"/>
+        <source>Strict mode provides the highest matching accuracy.</source>
+        <translation>提供最严格的匹配，很少出现误差。</translation>
     </message>
 </context>
 </TS>
