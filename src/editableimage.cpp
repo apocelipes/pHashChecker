@@ -39,13 +39,13 @@ void EditableImage::initContextMenu()
 {
     d->contextMenu = new QMenu{this};
     auto openAction = new QAction(style()->standardIcon(QStyle::SP_FileDialogContentsView), tr("open"));
-    connect(openAction, &QAction::triggered, [this](){
+    connect(openAction, &QAction::triggered, this, [this](){
         QDesktopServices::openUrl(QUrl::fromLocalFile(getImagePath()));
     });
     d->contextMenu->addAction(openAction);
 
     auto copyAction = new QAction(style()->standardIcon(QStyle::SP_FileDialogListView), tr("copy data"));
-    connect(copyAction, &QAction::triggered, [this](){
+    connect(copyAction, &QAction::triggered, this, [this](){
         const auto &data = pixmap(Qt::ReturnByValue);
         QGuiApplication::clipboard()->setPixmap(data);
         Q_EMIT dataCopied(data);
@@ -53,21 +53,21 @@ void EditableImage::initContextMenu()
     d->contextMenu->addAction(copyAction);
 
     auto copyPathAction = new QAction(style()->standardIcon(QStyle::SP_FileDialogListView), tr("copy path"));
-    connect(copyPathAction, &QAction::triggered, [this](){
+    connect(copyPathAction, &QAction::triggered, this, [this](){
         QGuiApplication::clipboard()->setText(getImagePath());
         Q_EMIT pathCopied(getImagePath());
     });
     d->contextMenu->addAction(copyPathAction);
 
     auto moveToTrashAction = new QAction(style()->standardIcon(QStyle::SP_TrashIcon), tr("move to trash"));
-    connect(moveToTrashAction, &QAction::triggered, [this](){
+    connect(moveToTrashAction, &QAction::triggered, this, [this](){
         QFile::moveToTrash(getImagePath());
         Q_EMIT trashMoved();
     });
     d->contextMenu->addAction(moveToTrashAction);
 
     auto deleteAction = new QAction(style()->standardIcon(QStyle::SP_DialogDiscardButton), tr("delete"));
-    connect(deleteAction, &QAction::triggered, [this](){
+    connect(deleteAction, &QAction::triggered, this, [this](){
         auto isDelete = QMessageBox::warning(this,
                                              tr("delete this image"),
                                              tr("do you want to delete it?"),
@@ -80,7 +80,7 @@ void EditableImage::initContextMenu()
     d->contextMenu->addAction(deleteAction);
 
     auto hashAction = new QAction{style()->standardIcon(QStyle::SP_MessageBoxInformation), tr("hash")};
-    connect(hashAction, &QAction::triggered, [this](){
+    connect(hashAction, &QAction::triggered, this, [this](){
         HashDialog dialog{getImagePath(), this};
         dialog.exec();
     });

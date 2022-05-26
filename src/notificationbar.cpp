@@ -151,7 +151,7 @@ void NotificationBar::animatedHide()
 {
     d->isClosing = true;
     auto hideAnimation = createHideAnimation(d->effect, "opacity", this);
-    connect(hideAnimation, &QAbstractAnimation::finished, [this]{
+    connect(hideAnimation, &QAbstractAnimation::finished, this, [this]{
         d->isClosing = false;
         hide();
     });

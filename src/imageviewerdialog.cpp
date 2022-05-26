@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Copyright (C) 2021 apocelipes
+// Copyright (C) 2022 apocelipes
 
 #include <QComboBox>
 #include <QCoreApplication>
@@ -24,7 +24,7 @@ ImageViewerDialog::ImageViewerDialog(const std::vector<std::vector<std::string>>
         viewers.emplace_back(imageView);
         stackView->addWidget(imageView);
         comboBox->addItem(QString::asprintf("Group %u", index++));
-        connect(imageView, &ImageViewer::emptied, [this, imageView, stackView, comboBox](){
+        connect(imageView, &ImageViewer::emptied, this, [this, imageView, stackView, comboBox](){
             stackView->removeWidget(imageView);
             auto targetIndex = Utils::indexOf(viewers.cbegin(), viewers.cend(), imageView);
             viewers.erase(viewers.begin() + targetIndex);
@@ -47,7 +47,7 @@ ImageViewerDialog::ImageViewerDialog(const std::vector<std::vector<std::string>>
     buttons->addButton(prevBtn, QDialogButtonBox::ActionRole);
 
     auto ignoreBtn = new QPushButton{style()->standardIcon(QStyle::SP_BrowserStop), tr("ignore this")};
-    connect(ignoreBtn, &QPushButton::clicked, [this, comboBox, stackView](){
+    connect(ignoreBtn, &QPushButton::clicked, this, [this, comboBox, stackView](){
         auto widget = stackView->currentWidget();
         auto index = comboBox->currentIndex();
         viewers.erase(viewers.begin() + index);
@@ -58,7 +58,7 @@ ImageViewerDialog::ImageViewerDialog(const std::vector<std::vector<std::string>>
     buttons->addButton(ignoreBtn, QDialogButtonBox::ActionRole);
 
     auto nextBtn = new QPushButton{style()->standardIcon(QStyle::SP_ArrowRight), tr("next")};
-    connect(nextBtn, &QPushButton::clicked, [comboBox](){
+    connect(nextBtn, &QPushButton::clicked, comboBox, [comboBox](){
         auto index = comboBox->currentIndex();
         comboBox->setCurrentIndex(index + 1);
     });
@@ -74,7 +74,7 @@ ImageViewerDialog::ImageViewerDialog(const std::vector<std::vector<std::string>>
                             && static_cast<unsigned int>(index) != (viewers.size() - 1));
         ignoreBtn->setEnabled(hasViewer);
     };
-    connect(comboBox, qOverload<int>(&QComboBox::currentIndexChanged), [stackView, buttonsSetEnable](int index){
+    connect(comboBox, qOverload<int>(&QComboBox::currentIndexChanged), this, [stackView, buttonsSetEnable](int index){
         stackView->setCurrentIndex(index);
         buttonsSetEnable();
     });

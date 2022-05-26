@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Copyright (C) 2021 apocelipes
+// Copyright (C) 2022 apocelipes
 
 #include <QFocusFrame>
 #include <QHBoxLayout>
@@ -81,7 +81,7 @@ inline void ImageViewerPrivate::init(const std::vector<std::string> &images, Ima
 
     for (const auto &img : images) {
         auto thumbnail = new Thumbnail{QString::fromStdString(img), q};
-        QObject::connect(thumbnail, &Thumbnail::clicked, [this, thumbnail]() {
+        QObject::connect(thumbnail, &Thumbnail::clicked, q, [this, thumbnail]() {
             auto index = Utils::indexOf(thumbs.cbegin(), thumbs.cend(), thumbnail);
             if (index == -1  || static_cast<unsigned int>(index) == currentIndex) {
                 return;
@@ -94,7 +94,7 @@ inline void ImageViewerPrivate::init(const std::vector<std::string> &images, Ima
     setDefaultSelection();
 
     imageContent = new EditableImage{thumbs[0]->getImagePath(), q};
-    QObject::connect(q, &ImageViewer::currentIndexChanged, [this](unsigned int current, unsigned int prev) {
+    QObject::connect(q, &ImageViewer::currentIndexChanged, q, [this](unsigned int current, unsigned int prev) {
         thumbnailFocusBorder->setWidget(thumbs[current]);
         thumbs[prev]->showShadow();
         thumbs[current]->hideShadow();
@@ -114,7 +114,7 @@ inline void ImageViewerPrivate::init(const std::vector<std::string> &images, Ima
     auto contentLayout = new QHBoxLayout;
     auto prevButton = createSideControlButton(QStyle::SP_ArrowLeft, q);
     contentLayout->addWidget(prevButton, 0, Qt::AlignLeft);
-    QObject::connect(prevButton, &QPushButton::clicked, [this](){
+    QObject::connect(prevButton, &QPushButton::clicked, q, [this](){
         if (thumbs.empty()) {
             return;
         }
@@ -124,7 +124,7 @@ inline void ImageViewerPrivate::init(const std::vector<std::string> &images, Ima
     contentLayout->addWidget(imageContent, 0, Qt::AlignCenter);
     auto nextButton = createSideControlButton(QStyle::SP_ArrowRight, q);
     contentLayout->addWidget(nextButton, 0, Qt::AlignRight);
-    QObject::connect(nextButton, &QPushButton::clicked, [this](){
+    QObject::connect(nextButton, &QPushButton::clicked, q, [this](){
         if (thumbs.empty()) {
             return;
         }

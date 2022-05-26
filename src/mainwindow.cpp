@@ -30,7 +30,7 @@ MainWindow::MainWindow(QWidget *parent)
     startBtn->setEnabled(false);
     dialogBtn = new QPushButton{tr("show result")};
     dialogBtn->hide();
-    connect(pathEdit, &QLineEdit::textChanged, [this](){
+    connect(pathEdit, &QLineEdit::textChanged, this, [this](){
         if (pathEdit->text().isEmpty()) {
             loadImgBtn->setEnabled(false);
             startBtn->setEnabled(false);
@@ -40,7 +40,7 @@ MainWindow::MainWindow(QWidget *parent)
     });
     connect(loadImgBtn, &QPushButton::clicked, this, &MainWindow::setImages);
     connect(pathEdit, &QLineEdit::returnPressed, this, &MainWindow::setImages);
-    connect(startBtn, &QPushButton::clicked, [this]() {
+    connect(startBtn, &QPushButton::clicked, this, [this]() {
         freezeMainGUI(true);
         hashes.reserve(images.size());
         insertHistory.reserve(images.size());
@@ -59,7 +59,7 @@ MainWindow::MainWindow(QWidget *parent)
             connect(worker, &HashWorker::doneAllWork, pool + id, &QThread::quit);
             connect(pool + id, &QThread::started, worker, &HashWorker::doWork);
             connect(worker, &HashWorker::doneOneImg, this, &MainWindow::onProgress);
-            connect(worker, &HashWorker::sameImg, [this](const std::string &origin, const std::string &same){
+            connect(worker, &HashWorker::sameImg, this, [this](const std::string &origin, const std::string &same){
                 if (sameImageIndex.count(origin) == 0) {
                     sameImageIndex.emplace(origin, sameImageLists.size());
                     // construct vectors directly with a string
@@ -68,25 +68,25 @@ MainWindow::MainWindow(QWidget *parent)
                 sameImageLists[sameImageIndex[origin]].emplace_back(same);
                 auto output = qDebug();
                 output.setAutoInsertSpaces(true);
-                output << QString::fromStdString(origin) << "same with:" << QString::fromStdString(same);
+                output << QString::fromStdString(origin) << "same with: " << QString::fromStdString(same);
             });
             (pool + id)->start();
         }
     });
-    connect(dialogBtn, &QPushButton::clicked, [this](){
+
+    auto showResultDialog = [this](){
         initResultDialog();
         imageDialog->exec();
-    });
-    connect(this, &MainWindow::completed, [this](){
-        initResultDialog();
-        imageDialog->exec();
-    });
+    };
+    connect(dialogBtn, &QPushButton::clicked, this, showResultDialog);
+    connect(this, &MainWindow::completed, this, showResultDialog);
+
     bar = new QProgressBar;
     bar->hide();
     cancelButton = new QPushButton{tr("cancel")};
     cancelButton->setCursor(Qt::PointingHandCursor);
     cancelButton->hide();
-    connect(cancelButton, &QPushButton::clicked, [this](){
+    connect(cancelButton, &QPushButton::clicked, this, [this](){
         cancelButton->setEnabled(false); // quitPool在取消线程时较耗时，防止反复触发
         bar->setEnabled(false);
         quitPool(true);
@@ -103,7 +103,7 @@ MainWindow::MainWindow(QWidget *parent)
     fileDialog->setModal(true);
     fileDialogBtn = new QPushButton(tr("select a directory"));
     connect(fileDialogBtn, &QPushButton::clicked, fileDialog, &QFileDialog::exec);
-    connect(fileDialog, &QFileDialog::fileSelected, [this](const QString &dirName) {
+    connect(fileDialog, &QFileDialog::fileSelected, this, [this](const QString &dirName) {
         if (dirName == "" || !std::filesystem::exists(dirName.toStdString())) {
             return;
         }
