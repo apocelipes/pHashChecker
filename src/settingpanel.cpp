@@ -60,8 +60,7 @@ void SettingPanelPrivate::init(SettingPanel *q_ptr)
     distanceSlider->setTickInterval(1);
     distanceSlider->setTickPosition(QSlider::TickPosition::TicksBelow);
     QObject::connect(distanceSlider, &QSlider::valueChanged, q, [this](int val) {
-        valueLabel->setToolTip(getDistanceToolTip(val));
-        distanceLabel->setToolTip(getDistanceToolTip(val));
+        q->setToolTip(getDistanceToolTip(val));
     });
     distanceSlider->setValue(1);
     QObject::connect(distanceSlider, &QSlider::valueChanged, [this](int value) {

@@ -132,7 +132,10 @@ MainWindow::MainWindow(QWidget *parent)
     auto mainLayout = new QVBoxLayout;
     mainLayout->addWidget(info);
     mainLayout->addLayout(lineLayout);
-    mainLayout->addWidget(settings);
+    auto settingLayout = new QHBoxLayout;
+    settingLayout->addWidget(settings, 2);
+    settingLayout->addStretch(1);
+    mainLayout->addLayout(settingLayout);
     auto progressLayout = new QHBoxLayout;
     progressLayout->addWidget(bar);
     progressLayout->addWidget(cancelButton);
