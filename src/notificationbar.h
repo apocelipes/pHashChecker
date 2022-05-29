@@ -43,6 +43,8 @@ public Q_SLOTS:
             const QString &msg = "",
             QWidget *parent = nullptr);
 
+    void hide();
+
 private:
     friend struct NotificationBarPrivate;
     std::unique_ptr<struct NotificationBarPrivate> d;

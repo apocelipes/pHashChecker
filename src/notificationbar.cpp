@@ -19,10 +19,47 @@ struct NotificationBarPrivate {
     QLabel *textLabel = nullptr;
     QPushButton *closeBtn = nullptr;
     QGraphicsOpacityEffect *effect = nullptr;
-    bool isClosing = false;
+    bool isClosing = false;  // hide动画运行期间一直为true
+
+    QPropertyAnimation *hideAnimation = nullptr;
+    QPropertyAnimation *showAnimation = nullptr;
+    QSequentialAnimationGroup *animeGroup = nullptr;
 
     void init(NotificationBar *q_ptr);
+
+    void stopAllAnimations() {
+        isClosing = false;
+        if (showAnimation) {
+            showAnimation->stop();
+        }
+        if (hideAnimation) {
+            hideAnimation->stop();
+        }
+        if (animeGroup) {
+            animeGroup->stop();
+        }
+    }
 };
+
+namespace {
+    inline QPropertyAnimation *createShowAnimation(QObject *target, const QByteArray &propertyName, QObject *parent = nullptr, int duration = 1000)
+    {
+        auto showAnimation = new QPropertyAnimation{target, propertyName, parent};
+        showAnimation->setStartValue(0.0);
+        showAnimation->setEndValue(1.0);
+        showAnimation->setDuration(duration);
+        return showAnimation;
+    }
+
+    inline QPropertyAnimation *createHideAnimation(QObject *target, const QByteArray &propertyName, QObject *parent = nullptr, int duration = 1000)
+    {
+        auto hideAnimation = new QPropertyAnimation{target, propertyName, parent};
+        hideAnimation->setStartValue(1.0);
+        hideAnimation->setEndValue(0.0);
+        hideAnimation->setDuration(duration);
+        return hideAnimation;
+    }
+}
 
 void NotificationBarPrivate::init(NotificationBar *q_ptr)
 {
@@ -73,7 +110,7 @@ NotificationBar::NotificationBar(const QColor &borderColor, const QColor &bgColo
 
 NotificationBar::~NotificationBar() noexcept = default;
 
-inline void NotificationBar::setColor(const QColor &borColor, const QColor &bgColor)
+void NotificationBar::setColor(const QColor &borColor, const QColor &bgColor)
 {
     if (!borColor.isValid() || !bgColor.isValid()) {
         return;
@@ -122,55 +159,52 @@ void NotificationBar::setText(const QString &text)
     updateGeometry();
 }
 
-namespace {
-    inline QPropertyAnimation *createShowAnimation(QObject *target, const QByteArray &propertyName, QObject *parent = nullptr, int duration = 1000)
-    {
-        auto showAnimation = new QPropertyAnimation{target, propertyName, parent};
-        showAnimation->setStartValue(0.0);
-        showAnimation->setEndValue(1.0);
-        showAnimation->setDuration(duration);
-        return showAnimation;
-    }
-
-    inline QPropertyAnimation *createHideAnimation(QObject *target, const QByteArray &propertyName, QObject *parent = nullptr, int duration = 1000)
-    {
-        auto hideAnimation = new QPropertyAnimation{target, propertyName, parent};
-        hideAnimation->setStartValue(1.0);
-        hideAnimation->setEndValue(0.0);
-        hideAnimation->setDuration(duration);
-        return hideAnimation;
-    }
-}
-
 void NotificationBar::animatedShow()
 {
-    auto showAnimation = createShowAnimation(d->effect, "opacity", this);
+    d->stopAllAnimations();
+    if (!d->showAnimation) {
+        d->showAnimation = createShowAnimation(d->effect, "opacity", this);
+    }
     show();
-    showAnimation->start(QAbstractAnimation::DeleteWhenStopped);
+    d->showAnimation->start();
 }
 
 void NotificationBar::animatedHide()
 {
+    d->stopAllAnimations();
     d->isClosing = true;
-    auto hideAnimation = createHideAnimation(d->effect, "opacity", this);
-    connect(hideAnimation, &QAbstractAnimation::finished, this, [this]{
-        d->isClosing = false;
-        hide();
-    });
-    hideAnimation->start(QAbstractAnimation::DeleteWhenStopped);
+    if (!d->hideAnimation) {
+        d->hideAnimation = createHideAnimation(d->effect, "opacity", this);
+        connect(d->hideAnimation, &QAbstractAnimation::finished, this, &NotificationBar::hide);
+    }
+    d->hideAnimation->start();
 }
 
 void NotificationBar::showAndHide(int remainMsecs)
 {
-    auto showAnimation = createShowAnimation(d->effect, "opacity", this);
-    auto hideAnimation = createHideAnimation(d->effect, "opacity", this);
-    auto group = new QSequentialAnimationGroup{this};
-    group->addAnimation(showAnimation);
-    group->addPause(remainMsecs);
-    group->addAnimation(hideAnimation);
-    connect(group, &QAbstractAnimation::finished, this, &QWidget::hide);
+    d->stopAllAnimations();
+    if (!d->animeGroup) {
+        auto showAnimation = createShowAnimation(d->effect, "opacity", this);
+        auto hideAnimation = createHideAnimation(d->effect, "opacity", this);
+        d->animeGroup = new QSequentialAnimationGroup{this};
+        d->animeGroup->addAnimation(showAnimation);
+        d->animeGroup->addPause(remainMsecs);
+        d->animeGroup->addAnimation(hideAnimation);
+        connect(hideAnimation, &QAbstractAnimation::stateChanged, this, [this](QAbstractAnimation::State newState, QAbstractAnimation::State) {
+            if (newState == QAbstractAnimation::Running) {
+                d->isClosing = true;
+            }
+        });
+        connect(d->animeGroup, &QAbstractAnimation::finished, this, &NotificationBar::hide);
+    }
     show();
-    group->start(QAbstractAnimation::DeleteWhenStopped);
+    d->animeGroup->start();
+}
+
+// 因为要处理标志位所以重写覆盖了hide
+void NotificationBar::hide() {
+    d->isClosing = false;
+    QWidget::hide();
 }
 
 NotificationBar *NotificationBar::createInfoBar(QWidget *parent)

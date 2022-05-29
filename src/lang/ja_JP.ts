@@ -67,7 +67,7 @@
         <translation>%1 コピーされました</translation>
     </message>
     <message>
-        <location filename="../hashdialog.cpp" line="86"/>
+        <location filename="../hashdialog.cpp" line="87"/>
         <source>Image Hash Dialog</source>
         <translation>Image Hash Dialog</translation>
     </message>
@@ -156,7 +156,7 @@
         <translation>pHashChecker</translation>
     </message>
     <message>
-        <location filename="../notificationbar.cpp" line="53"/>
+        <location filename="../notificationbar.cpp" line="90"/>
         <source>close this notification</source>
         <translation>閉じる</translation>
     </message>

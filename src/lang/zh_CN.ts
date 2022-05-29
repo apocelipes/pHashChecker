@@ -67,7 +67,7 @@
         <translation>%1 已复制</translation>
     </message>
     <message>
-        <location filename="../hashdialog.cpp" line="86"/>
+        <location filename="../hashdialog.cpp" line="87"/>
         <source>Image Hash Dialog</source>
         <translation>查看图片哈希值</translation>
     </message>
@@ -156,7 +156,7 @@
         <translation>pHashChecker</translation>
     </message>
     <message>
-        <location filename="../notificationbar.cpp" line="53"/>
+        <location filename="../notificationbar.cpp" line="90"/>
         <source>close this notification</source>
         <translation>关闭消息</translation>
     </message>

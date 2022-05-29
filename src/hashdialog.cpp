@@ -75,6 +75,7 @@ HashDialog::HashDialog(const QString &path, QWidget *parent)
         QGuiApplication::clipboard()->setText(table->item(row, column)->text());
         auto hashName = table->item(row, 0)->text();
         infoBar->setText(tr("%1 has been copied").arg(hashName));
+        infoBar->setCloseButtonVisible(true);
         infoBar->showAndHide(3000);
     });
 
