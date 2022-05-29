@@ -112,7 +112,7 @@ MainWindow::MainWindow(QWidget *parent)
         startBtn->setEnabled(false);
     });
 
-    info = NotificationBar::createErrorBar(this);
+    info = NotificationBar::createNotificationBar(NotificationBar::NotificationType::ERROR, "", this);
     info->setCloseButtonVisible(true);
 
     settings = new SettingPanel{this};

@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Copyright (C) 2021 apocelipes
+// Copyright (C) 2022 apocelipes
 
 #include <QGraphicsOpacityEffect>
 #include <QHBoxLayout>
@@ -8,6 +8,8 @@
 #include <QStyle>
 #include <QPropertyAnimation>
 #include <QSequentialAnimationGroup>
+
+#include <functional>
 
 #include "notificationbar.h"
 
@@ -121,21 +123,21 @@ void NotificationBar::setText(const QString &text)
 }
 
 namespace {
-    inline QPropertyAnimation *createShowAnimation(QObject *target, const QByteArray &propertyName, QObject *parent = nullptr)
+    inline QPropertyAnimation *createShowAnimation(QObject *target, const QByteArray &propertyName, QObject *parent = nullptr, int duration = 1000)
     {
         auto showAnimation = new QPropertyAnimation{target, propertyName, parent};
         showAnimation->setStartValue(0.0);
         showAnimation->setEndValue(1.0);
-        showAnimation->setDuration(1000);
+        showAnimation->setDuration(duration);
         return showAnimation;
     }
 
-    inline QPropertyAnimation *createHideAnimation(QObject *target, const QByteArray &propertyName, QObject *parent = nullptr)
+    inline QPropertyAnimation *createHideAnimation(QObject *target, const QByteArray &propertyName, QObject *parent = nullptr, int duration = 1000)
     {
         auto hideAnimation = new QPropertyAnimation{target, propertyName, parent};
         hideAnimation->setStartValue(1.0);
         hideAnimation->setEndValue(0.0);
-        hideAnimation->setDuration(1000);
+        hideAnimation->setDuration(duration);
         return hideAnimation;
     }
 }
@@ -171,10 +173,10 @@ void NotificationBar::showAndHide(int remainMsecs)
     group->start(QAbstractAnimation::DeleteWhenStopped);
 }
 
-NotificationBar *NotificationBar::createInformationBar(QWidget *parent)
+NotificationBar *NotificationBar::createInfoBar(QWidget *parent)
 {
-    QColor borderColor{64, 158, 255};
-    QColor bgColor{236, 245, 255, 80};
+    const QColor borderColor{64, 158, 255};
+    const QColor bgColor{236, 245, 255, 80};
     auto bar = new NotificationBar{borderColor, bgColor, parent};
     bar->setIcon(bar->style()->standardIcon(QStyle::SP_MessageBoxInformation));
     return bar;
@@ -182,9 +184,41 @@ NotificationBar *NotificationBar::createInformationBar(QWidget *parent)
 
 NotificationBar *NotificationBar::createErrorBar(QWidget *parent)
 {
-    QColor borderColor{0xf5, 0x6c, 0x6c};
-    QColor bgColor{254, 240, 240, 80};
+    const QColor borderColor{0xf5, 0x6c, 0x6c};
+    const QColor bgColor{254, 240, 240, 80};
     auto bar = new NotificationBar{borderColor, bgColor, parent};
     bar->setIcon(bar->style()->standardIcon(QStyle::SP_BrowserStop));
+    return bar;
+}
+
+NotificationBar *NotificationBar::createSuccessBar(QWidget *parent)
+{
+    const QColor borderColor{0x27, 0xae, 0x60};
+    const QColor bgColor{0xc7, 0xe2, 0xd4};
+    auto bar = new NotificationBar{borderColor, bgColor, parent};
+    bar->setIcon(bar->style()->standardIcon(QStyle::SP_DialogApplyButton));
+    return bar;
+}
+
+NotificationBar *NotificationBar::createNotificationBar(const NotificationBar::NotificationType type, const QString &msg, QWidget *parent) {
+    using creator_t = std::function<NotificationBar*(QWidget *)>;
+    static std::unordered_map<NotificationType, creator_t> notificationFactory = {
+            {
+                NotificationType::INFO,
+                &NotificationBar::createInfoBar
+            },
+            {
+                NotificationType::ERROR,
+                &NotificationBar::createErrorBar
+            },
+            {
+                NotificationType::SUCCESS,
+                &NotificationBar::createSuccessBar
+            },
+    };
+    NotificationBar *bar = notificationFactory[type](parent);
+    if (msg != "") {
+        bar->setText(msg);
+    }
     return bar;
 }

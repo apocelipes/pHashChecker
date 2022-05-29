@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Copyright (C) 2021 apocelipes
+// Copyright (C) 2022 apocelipes
 
 #include <QClipboard>
 #include <QCryptographicHash>
@@ -66,7 +66,7 @@ HashDialog::HashDialog(const QString &path, QWidget *parent)
     buttons->addButton(QDialogButtonBox::Ok);
     connect(buttons, &QDialogButtonBox::accepted, this, &QDialog::accept);
 
-    auto infoBar = NotificationBar::createInformationBar(this);
+    auto infoBar = NotificationBar::createNotificationBar(NotificationBar::NotificationType::INFO, "", this);
     connect(table, &QTableWidget::cellDoubleClicked, [table, infoBar](int row, int column) {
         if (row < hashStartIndex || column != 1) {
             return;
