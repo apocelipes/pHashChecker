@@ -68,7 +68,7 @@ MainWindow::MainWindow(QWidget *parent)
                 sameImageLists[sameImageIndex[origin]].emplace_back(same);
                 auto output = qDebug();
                 output.setAutoInsertSpaces(true);
-                output << QString::fromStdString(origin) << "same with: " << QString::fromStdString(same);
+                output << QString::fromStdString(origin) << tr("same with: ") << QString::fromStdString(same);
             });
             (pool + id)->start();
         }

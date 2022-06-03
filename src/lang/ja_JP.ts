@@ -123,6 +123,11 @@
         <translation>結果を表示</translation>
     </message>
     <message>
+        <location filename="../mainwindow.cpp" line="71"/>
+        <source>same with: </source>
+        <translation>と似ている画像は: </translation>
+    </message>
+    <message>
         <location filename="../mainwindow.cpp" line="86"/>
         <source>cancel</source>
         <translation>キャンセル</translation>

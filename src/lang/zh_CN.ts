@@ -123,6 +123,11 @@
         <translation>显示结果</translation>
     </message>
     <message>
+        <location filename="../mainwindow.cpp" line="71"/>
+        <source>same with: </source>
+        <translation>相似图片: </translation>
+    </message>
+    <message>
         <location filename="../mainwindow.cpp" line="86"/>
         <source>cancel</source>
         <translation>取消</translation>
