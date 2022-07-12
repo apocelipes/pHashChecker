@@ -62,3 +62,11 @@ add_executable(pHashChecker
 add_dependencies(${PROJECT_NAME} create_all_qm_files)
 
 target_link_libraries(pHashChecker PRIVATE Qt6::Core Qt6::Gui Qt6::Widgets pHash)
+
+include(CheckIPOSupported)
+check_ipo_supported(RESULT ipo_supported OUTPUT output)
+if(ipo_supported)
+    set_property(TARGET pHashChecker PROPERTY INTERPROCEDURAL_OPTIMIZATION TRUE)
+else()
+    message(WARNING "IPO is not supported: ${output}")
+endif()
