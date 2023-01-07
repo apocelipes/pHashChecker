@@ -1,7 +1,8 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Copyright (C) 2022 apocelipes
+// Copyright (C) 2023 apocelipes
 
 #include <QApplication>
+#include <QImageReader>
 #include <QLocale>
 #include <QTranslator>
 
@@ -15,6 +16,8 @@ int main(int argc, char *argv[])
     if (translator.load(":/" + QLocale().name() + ".qm")) {
         QCoreApplication::installTranslator(&translator);
     }
+    // does not limit qlabel image size, could let to use lots of memories
+    QImageReader::setAllocationLimit(0);
     MainWindow w;
     w.setWindowTitle(QObject::tr("pHashChecker"));
     w.show();

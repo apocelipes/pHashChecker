@@ -156,7 +156,7 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../main.cpp" line="19"/>
+        <location filename="../main.cpp" line="22"/>
         <source>pHashChecker</source>
         <translation>pHashChecker</translation>
     </message>
