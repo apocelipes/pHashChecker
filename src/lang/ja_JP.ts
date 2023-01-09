@@ -35,8 +35,8 @@
     </message>
     <message>
         <location filename="../editableimage.cpp" line="73"/>
-        <source>do you want to delete it?</source>
-        <translation>画像を削除しますか？</translation>
+        <source>do you want to delete %1 ?</source>
+        <translation>%1を削除しますか？</translation>
     </message>
     <message>
         <location filename="../editableimage.cpp" line="82"/>

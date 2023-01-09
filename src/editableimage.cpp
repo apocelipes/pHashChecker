@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Copyright (C) 2022 apocelipes
+// Copyright (C) 2023 apocelipes
 
 #include "editableimage.h"
 #include "hashdialog.h"
@@ -70,7 +70,7 @@ void EditableImage::initContextMenu()
     connect(deleteAction, &QAction::triggered, this, [this](){
         auto isDelete = QMessageBox::warning(this,
                                              tr("delete this image"),
-                                             tr("do you want to delete it?"),
+                                             tr("do you want to delete %1 ?").arg(d->m_path),
                                              QMessageBox::Ok|QMessageBox::Cancel);
         if (isDelete == QMessageBox::Ok) {
             QFile::remove(getImagePath());
