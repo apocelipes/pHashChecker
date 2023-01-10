@@ -54,6 +54,9 @@ endforeach()
 
 configure_file(translations.qrc ${CMAKE_CURRENT_BINARY_DIR} COPYONLY)
 
+set(PHASH_DYNAMIC OFF CACHE BOOL "Build pHash dynamic library")
+set(PHASH_STATIC ON CACHE BOOL "Build pHash static library")
+add_subdirectory(third-party/pHash)
 
 add_executable(pHashChecker
     ${PROJECT_SOURCES}

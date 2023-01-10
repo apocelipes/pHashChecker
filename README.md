@@ -7,15 +7,6 @@ Make sure you have installed Qt 6.2.0+ in your system.
 ## Install
 
 ```bash
-# installing libpHash
-git clone https://github.com/aetilius/pHash
-cd pHash
-mkdir build && cd build
-cmake ..
-make
-sudo make install
-sudo ln /usr/local/lib/libpHash.so.1.0.0 /usr/lib/libpHash.so.1.0.0
-
 # building pHashChecker
 cd
 git clone --recurse-submodules https://github.com/apocelipes/pHashChecker

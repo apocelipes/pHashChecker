@@ -1,3 +1,6 @@
 [submodule "third-party/CImg"]
 	path = third-party/CImg
 	url = https://github.com/dtschump/CImg
+[submodule "third-party/pHash"]
+	path = third-party/pHash
+	url = https://github.com/aetilius/pHash
