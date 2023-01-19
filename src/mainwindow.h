@@ -13,11 +13,11 @@
 #include <QReadWriteLock>
 #include <QThread>
 
-#include <array>
+#include <algorithm>
 #include <string>
 #include <vector>
 #include <unordered_map>
-#include <algorithm>
+#include <unordered_set>
 
 #include <pHash.h>
 
@@ -120,12 +120,12 @@ private:
     QThread *pool = nullptr;
 
     // supported image formats
-    inline static std::array<std::string, 5> imgExts {
+    inline static std::unordered_set<std::string> imgExts {
         ".jpg",
         ".jpeg",
         ".png",
         ".webp",
-        ".bmp"
+        ".bmp",
     };
 };
 

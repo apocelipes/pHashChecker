@@ -190,7 +190,7 @@ void MainWindow::setImages()
         std::transform(ext.begin(), ext.end(), ext.begin(), [](unsigned char c) {
             return std::tolower(c);
         });
-        if (std::find(imgExts.cbegin(), imgExts.cend(), ext) != imgExts.cend()) {
+        if (imgExts.count(ext) == 1) {
             images.emplace_back(p.path().string());
         }
     }
