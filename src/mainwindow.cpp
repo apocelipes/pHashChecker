@@ -186,11 +186,11 @@ void MainWindow::setImages()
             continue;
         }
 
-        auto ext = p.path().extension().generic_u8string();
+        auto ext = p.path().extension().generic_string();
         std::transform(ext.begin(), ext.end(), ext.begin(), [](unsigned char c) {
             return std::tolower(c);
         });
-        if (imgExts.count(ext) == 1) {
+        if (imgExts.contains(ext)) {
             images.emplace_back(p.path().string());
         }
     }
