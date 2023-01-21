@@ -24,7 +24,7 @@ public:
 
     void showShadow();
     void hideShadow();
-    QString getImagePath() noexcept;
+    [[nodiscard]] QString getImagePath() noexcept;
 
     void mouseReleaseEvent(QMouseEvent *event) override;
 

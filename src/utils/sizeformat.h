@@ -36,7 +36,7 @@ namespace Utils {
             "PiB"
     };
 
-    inline QString sizeFormat(const qint64 fileSize) {
+    [[nodiscard]] inline QString sizeFormat(const qint64 fileSize) noexcept {
         int power = static_cast<int>(std::floor(std::log(fileSize) / std::log(1024)));
         power = power >= static_cast<int>(std::size(prefixes)) ? static_cast<int>(std::size(prefixes)) - 1 : power;
         return QString::asprintf("%.1lf", static_cast<double>(fileSize) / static_cast<double>(prefixes[power])) + prefixNames[power];

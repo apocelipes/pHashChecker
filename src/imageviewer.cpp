@@ -26,7 +26,7 @@ struct ImageViewerPrivate {
         thumbnailFocusBorder->setStyleSheet("color:#30d5c8;");
     }
 
-    unsigned int decrCurrentIndex() noexcept
+    [[nodiscard]] unsigned int decrCurrentIndex() noexcept
     {
         const auto oldIndex = currentIndex;
         currentIndex = currentIndex == 0u ? thumbs.size() - 1 : currentIndex - 1;
@@ -39,7 +39,7 @@ struct ImageViewerPrivate {
         thumbnailFocusBorder->setWidget(thumbs[0]);
     }
 
-    QPushButton *createSideControlButton(QStyle::StandardPixmap pixmap, QWidget *btnParent) const
+    [[nodiscard]] QPushButton *createSideControlButton(QStyle::StandardPixmap pixmap, QWidget *btnParent) const
     {
         auto btn = new QPushButton(btnParent);
         btn->setIcon(q->style()->standardIcon(pixmap));

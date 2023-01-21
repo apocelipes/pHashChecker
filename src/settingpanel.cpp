@@ -21,7 +21,7 @@ struct SettingPanelPrivate
     void init(SettingPanel *q_ptr);
 
 private:
-    static QString getDistanceName(int index) noexcept
+    [[nodiscard]] static QString getDistanceName(int index) noexcept
     {
         // i18n需要在main函数中运行，因此不能依赖静态成员的初始化
         static const QString infoes[4] = {
@@ -36,7 +36,7 @@ private:
         return infoes[index];
     }
 
-    static QString getDistanceToolTip(int index) noexcept {
+    [[nodiscard]] static QString getDistanceToolTip(int index) noexcept {
         static const QString toolTips[4] = {
              QObject::tr("Fuzzy mode may produce more erroneous results."),
              QObject::tr("The default mode."),

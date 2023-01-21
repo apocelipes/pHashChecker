@@ -42,7 +42,7 @@ struct NotificationBarPrivate {
 };
 
 namespace {
-    inline QPropertyAnimation *createShowAnimation(QObject *target, const QByteArray &propertyName, QObject *parent = nullptr, int duration = 1000)
+    [[nodiscard]] inline QPropertyAnimation *createShowAnimation(QObject *target, const QByteArray &propertyName, QObject *parent = nullptr, int duration = 1000)
     {
         auto showAnimation = new QPropertyAnimation{target, propertyName, parent};
         showAnimation->setStartValue(0.0);
@@ -51,7 +51,7 @@ namespace {
         return showAnimation;
     }
 
-    inline QPropertyAnimation *createHideAnimation(QObject *target, const QByteArray &propertyName, QObject *parent = nullptr, int duration = 1000)
+    [[nodiscard]] inline QPropertyAnimation *createHideAnimation(QObject *target, const QByteArray &propertyName, QObject *parent = nullptr, int duration = 1000)
     {
         auto hideAnimation = new QPropertyAnimation{target, propertyName, parent};
         hideAnimation->setStartValue(1.0);

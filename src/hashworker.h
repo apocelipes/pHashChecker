@@ -56,7 +56,7 @@ private:
     std::vector<ulong64> &_insertHistory;
     QReadWriteLock &_hashesLock;
 
-    static bool checkSameImage(ulong64 a, ulong64 b) noexcept
+    [[nodiscard]] static bool checkSameImage(ulong64 a, ulong64 b) noexcept
     {
         return ph_hamming_distance(a, b) <= static_cast<int>(HashWorker::similar_distance);
     }

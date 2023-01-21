@@ -38,7 +38,7 @@ public Q_SLOTS:
     void animatedHide();
     void showAndHide(int remainMsecs = 5000);
 
-    static NotificationBar *createNotificationBar(
+    [[nodiscard]] static NotificationBar *createNotificationBar(
             NotificationBar::NotificationType type,
             const QString &msg = "",
             QWidget *parent = nullptr);
@@ -49,9 +49,9 @@ private:
     friend struct NotificationBarPrivate;
     std::unique_ptr<struct NotificationBarPrivate> d;
 
-    static NotificationBar *createInfoBar(QWidget *parent = nullptr);
-    static NotificationBar *createErrorBar(QWidget *parent = nullptr);
-    static NotificationBar *createSuccessBar(QWidget *parent = nullptr);
+    [[nodiscard]] static NotificationBar *createInfoBar(QWidget *parent = nullptr);
+    [[nodiscard]] static NotificationBar *createErrorBar(QWidget *parent = nullptr);
+    [[nodiscard]] static NotificationBar *createSuccessBar(QWidget *parent = nullptr);
 };
 
 #endif //PHASHCHECKER_NOTIFICATIONBAR_H
