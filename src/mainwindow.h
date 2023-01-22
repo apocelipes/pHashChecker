@@ -35,12 +35,12 @@ public:
     explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow() override;
 
-    unsigned int getThreadNumber() noexcept
+    [[nodiscard]] unsigned int getThreadNumber() noexcept
     {
         return std::min(static_cast<unsigned int>(images.size()), static_cast<unsigned int>(QThread::idealThreadCount()));
     }
 
-    unsigned long getNextLimit(const unsigned long oldLimit, const unsigned long threadID) noexcept
+    [[nodiscard]] unsigned long getNextLimit(const unsigned long oldLimit, const unsigned long threadID) noexcept
     {
         if (threadID + 1 == getThreadNumber()) {
             return images.size();
@@ -63,14 +63,14 @@ private:
     {
         for (int i = 0; i < QThread::idealThreadCount(); ++i) {
             if (cancelAllThread) {
-                pool[i].requestInterruption();
+                pool[i]->requestInterruption();
             }
-            pool[i].quit();
-            pool[i].wait();
+            pool[i]->quit();
+            pool[i]->wait();
         }
     }
 
-    void freezeMainGUI(bool flag)
+    void freezeMainGUI(const bool flag)
     {
         freezeLayout(lineLayout, flag);
         freezeLayout(settings->layout(), flag);
@@ -98,6 +98,15 @@ private:
         }
     }
 
+    void init_pool(unsigned long nThreads) noexcept {
+        if (!pool.empty()) {
+            return;
+        }
+        for (unsigned long i = 0; i < nThreads; ++i) {
+            pool.emplace_back(std::make_unique<QThread>(this));
+        }
+    }
+
     QHBoxLayout *lineLayout = nullptr;
     QLineEdit *pathEdit = nullptr;
     QPushButton *loadImgBtn = nullptr;
@@ -117,7 +126,7 @@ private:
     std::vector<std::vector<std::string>> sameImageLists;
     std::vector<ulong64> insertHistory;
     QReadWriteLock hashesLock;
-    QThread *pool = nullptr;
+    std::vector<std::unique_ptr<QThread>> pool;
 
     // supported image formats
     inline static std::unordered_set<std::string> imgExts {

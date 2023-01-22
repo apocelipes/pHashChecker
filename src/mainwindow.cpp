@@ -19,7 +19,7 @@
 MainWindow::MainWindow(QWidget *parent)
     : QWidget(parent)
 {
-    pool = new QThread[QThread::idealThreadCount()];
+    pool.reserve(QThread::idealThreadCount());
     images.reserve(1000);
     pathEdit = new QLineEdit;
     pathEdit->setPlaceholderText(tr("entry a directory"));
@@ -50,14 +50,16 @@ MainWindow::MainWindow(QWidget *parent)
         cancelButton->setEnabled(true);
         cancelButton->show();
 
+        const auto nThreads = getThreadNumber();
+        init_pool(nThreads);
         for (unsigned long id = 0, start = 0, limit = getNextLimit(0, 0);
-             id < getThreadNumber();
+             id < nThreads;
              ++id, start = limit, limit = getNextLimit(limit, id)) {
             auto worker = new HashWorker(start, limit, images, hashes, insertHistory, hashesLock);
-            worker->moveToThread(pool + id);
-            connect(pool + id, &QThread::finished, worker, &QObject::deleteLater);
-            connect(worker, &HashWorker::doneAllWork, pool + id, &QThread::quit);
-            connect(pool + id, &QThread::started, worker, &HashWorker::doWork);
+            worker->moveToThread(pool[id].get());
+            connect(pool[id].get(), &QThread::finished, worker, &QObject::deleteLater);
+            connect(worker, &HashWorker::doneAllWork, pool[id].get(), &QThread::quit);
+            connect(pool[id].get(), &QThread::started, worker, &HashWorker::doWork);
             connect(worker, &HashWorker::doneOneImg, this, &MainWindow::onProgress);
             connect(worker, &HashWorker::sameImg, this, [this](const std::string &origin, const std::string &same){
                 if (sameImageIndex.count(origin) == 0) {
@@ -70,7 +72,7 @@ MainWindow::MainWindow(QWidget *parent)
                 output.setAutoInsertSpaces(true);
                 output << QString::fromStdString(origin) << tr("same with: ") << QString::fromStdString(same);
             });
-            (pool + id)->start();
+            pool[id]->start();
         }
     });
 
@@ -87,6 +89,8 @@ MainWindow::MainWindow(QWidget *parent)
     cancelButton->setCursor(Qt::PointingHandCursor);
     cancelButton->hide();
     connect(cancelButton, &QPushButton::clicked, this, [this](){
+        insertHistory.clear();
+        hashes.clear();
         cancelButton->setEnabled(false); // quitPool在取消线程时较耗时，防止反复触发
         bar->setEnabled(false);
         quitPool(true);
@@ -172,7 +176,7 @@ void MainWindow::setImages()
     insertHistory.clear();
 
     info->hide(); // 重写的hide会设置isClosing
-    std::string path = pathEdit->text().toStdString();
+    const std::string path = pathEdit->text().toStdString();
     if (!std::filesystem::exists(path) || !std::filesystem::is_directory(path)) {
         startBtn->setEnabled(false);
         info->setText(QString::fromStdString(path) + tr(" does not exist"));
@@ -226,9 +230,7 @@ void MainWindow::releaseResultDialog()
 
 MainWindow::~MainWindow()
 {
-    if (pool) {
+    if (!pool.empty()) {
         quitPool(true);
-        delete [] pool;
-        pool = nullptr;
     }
 }
