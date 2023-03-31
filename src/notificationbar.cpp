@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Copyright (C) 2022 apocelipes
+// Copyright (C) 2023 apocelipes
 
 #include <QGraphicsOpacityEffect>
 #include <QHBoxLayout>
@@ -98,7 +98,7 @@ void NotificationBarPrivate::init(NotificationBar *q_ptr)
     q->setLayout(mainLayout);
 }
 
-NotificationBar::NotificationBar(const QColor &borderColor, const QColor &bgColor, QWidget *parent)
+NotificationBar::NotificationBar(const QColor &borderColor, const QColor &bgColor, QWidget *parent) noexcept
     : QFrame{parent}, d{new NotificationBarPrivate}
 {
     setAttribute(Qt::WA_StyledBackground);
@@ -110,7 +110,7 @@ NotificationBar::NotificationBar(const QColor &borderColor, const QColor &bgColo
 
 NotificationBar::~NotificationBar() noexcept = default;
 
-void NotificationBar::setColor(const QColor &borColor, const QColor &bgColor)
+void NotificationBar::setColor(const QColor &borColor, const QColor &bgColor) noexcept
 {
     if (!borColor.isValid() || !bgColor.isValid()) {
         return;
@@ -132,7 +132,7 @@ void NotificationBar::setColor(const QColor &borColor, const QColor &bgColor)
                   bgColorStyle + ";}");
 }
 
-void NotificationBar::setCloseButtonVisible(bool visible)
+void NotificationBar::setCloseButtonVisible(bool visible) noexcept
 {
     if (visible) {
         d->closeBtn->show();
@@ -141,7 +141,7 @@ void NotificationBar::setCloseButtonVisible(bool visible)
     d->closeBtn->hide();
 }
 
-void NotificationBar::setIcon(const QIcon &notifyIcon)
+void NotificationBar::setIcon(const QIcon &notifyIcon) noexcept
 {
     if (notifyIcon.isNull()) {
         d->iconLabel->hide();
@@ -153,7 +153,7 @@ void NotificationBar::setIcon(const QIcon &notifyIcon)
     d->iconLabel->show();
 }
 
-void NotificationBar::setText(const QString &text)
+void NotificationBar::setText(const QString &text) noexcept
 {
     d->textLabel->setText(text);
     updateGeometry();
@@ -207,7 +207,7 @@ void NotificationBar::hide() {
     QWidget::hide();
 }
 
-NotificationBar *NotificationBar::createInfoBar(QWidget *parent)
+NotificationBar *NotificationBar::createInfoBar(QWidget *parent) noexcept
 {
     const QColor borderColor{64, 158, 255};
     const QColor bgColor{236, 245, 255, 80};
@@ -216,7 +216,7 @@ NotificationBar *NotificationBar::createInfoBar(QWidget *parent)
     return bar;
 }
 
-NotificationBar *NotificationBar::createErrorBar(QWidget *parent)
+NotificationBar *NotificationBar::createErrorBar(QWidget *parent) noexcept
 {
     const QColor borderColor{0xf5, 0x6c, 0x6c};
     const QColor bgColor{254, 240, 240, 80};
@@ -225,7 +225,7 @@ NotificationBar *NotificationBar::createErrorBar(QWidget *parent)
     return bar;
 }
 
-NotificationBar *NotificationBar::createSuccessBar(QWidget *parent)
+NotificationBar *NotificationBar::createSuccessBar(QWidget *parent) noexcept
 {
     const QColor borderColor{0x27, 0xae, 0x60};
     const QColor bgColor{0xc7, 0xe2, 0xd4};
@@ -234,7 +234,7 @@ NotificationBar *NotificationBar::createSuccessBar(QWidget *parent)
     return bar;
 }
 
-NotificationBar *NotificationBar::createNotificationBar(const NotificationBar::NotificationType type, const QString &msg, QWidget *parent) {
+NotificationBar *NotificationBar::createNotificationBar(const NotificationBar::NotificationType type, const QString &msg, QWidget *parent) noexcept {
     using creator_t = std::function<NotificationBar*(QWidget *)>;
     static std::unordered_map<NotificationType, creator_t> notificationFactory = {
             {

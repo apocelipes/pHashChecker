@@ -91,7 +91,7 @@ private:
         }
     }
 
-    void sort_result()
+    void sort_result() noexcept
     {
         for (auto &v : sameImageLists) {
             std::sort(v.begin(), v.end());

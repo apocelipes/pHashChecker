@@ -90,10 +90,10 @@ void SettingPanelPrivate::init(SettingPanel *q_ptr)
     q->setLayout(settingsLayout);
 }
 
-SettingPanel::SettingPanel(QWidget *parent)
+SettingPanel::SettingPanel(QWidget *parent) noexcept
     :QWidget{parent}, d{new SettingPanelPrivate}
 {
     d->init(this);
 }
 
-SettingPanel::~SettingPanel() = default;
+SettingPanel::~SettingPanel() noexcept = default;

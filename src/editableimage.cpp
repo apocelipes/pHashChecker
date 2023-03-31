@@ -105,7 +105,7 @@ QString EditableImage::getImagePath() const noexcept
     return d->m_path;
 }
 
-void EditableImage::setImagePath(const QString &path)
+void EditableImage::setImagePath(const QString &path) noexcept
 {
     if (path == d->m_path) {
         return;

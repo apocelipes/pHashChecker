@@ -39,9 +39,10 @@ public:
           _hashesLock{lock}
     {}
 
-    void doWork();
-
     static Utils::PHashDistance similar_distance;
+
+public Q_SLOTS:
+    void doWork();
 
 Q_SIGNALS:
     void sameImg(const std::string&, const std::string&);

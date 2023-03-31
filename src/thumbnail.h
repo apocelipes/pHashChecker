@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Copyright (C) 2021 apocelipes
+// Copyright (C) 2023 apocelipes
 
 #ifndef THUMBNAIL_H
 #define THUMBNAIL_H
@@ -22,14 +22,16 @@ public:
     explicit Thumbnail(QString path, QWidget *parent = nullptr);
     ~Thumbnail() override;
 
-    void showShadow();
-    void hideShadow();
     [[nodiscard]] QString getImagePath() noexcept;
 
     void mouseReleaseEvent(QMouseEvent *event) override;
 
 Q_SIGNALS:
     void clicked();
+
+public Q_SLOTS:
+    void showShadow();
+    void hideShadow();
 
 private:
     friend struct ThumbnailPrivate;

@@ -26,7 +26,7 @@ public:
     ~EditableImage() noexcept override;
 
     [[nodiscard]] QString getImagePath() const noexcept;
-    void setImagePath(const QString &path);
+    void setImagePath(const QString &path) noexcept;
     [[nodiscard]] bool isEmpty() const noexcept;
 
     void mouseDoubleClickEvent(QMouseEvent* event) override;

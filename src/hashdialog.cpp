@@ -31,7 +31,7 @@ namespace {
     };
 }
 
-HashDialog::HashDialog(const QString &path, QWidget *parent)
+HashDialog::HashDialog(const QString &path, QWidget *parent) noexcept
     : QDialog(parent)
 {
     setModal(true);
