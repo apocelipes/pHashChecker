@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // Copyright (C) 2022 apocelipes
 
+#include <array>
+
 #include <QClipboard>
 #include <QCryptographicHash>
 #include <QDialogButtonBox>
@@ -16,14 +18,14 @@
 
 namespace {
     constexpr int hashStartIndex = 2;
-    QCryptographicHash::Algorithm hashAlgorithms[] = {
+    constexpr std::array<QCryptographicHash::Algorithm, 4> hashAlgorithms = {
             QCryptographicHash::Md5,
             QCryptographicHash::Sha1,
             QCryptographicHash::Sha256,
             QCryptographicHash::Sha512,
     };
 
-    const char *algorithmNames[] = {
+    constexpr std::array<const char *, 4> algorithmNames = {
             "MD5",
             "SHA-1",
             "SHA-256",

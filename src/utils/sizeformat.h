@@ -4,6 +4,7 @@
 #ifndef SIZEFORMAT_H
 #define SIZEFORMAT_H
 
+#include <array>
 #include <cmath>
 
 #include <QtGlobal>
@@ -19,7 +20,7 @@ namespace Utils {
         PebiByte = Byte << 50
     };
 
-    constexpr BinaryPrefix prefixes[] = {
+    constexpr std::array<BinaryPrefix, 6> prefixes = {
             BinaryPrefix::Byte,
             BinaryPrefix::KibiByte,
             BinaryPrefix::MibiByte,
@@ -27,7 +28,7 @@ namespace Utils {
             BinaryPrefix::TebiByte,
             BinaryPrefix::PebiByte
     };
-    constexpr const char *prefixNames[] = {
+    constexpr std::array<const char *, 6> prefixNames = {
             "B",
             "KiB",
             "MiB",
