@@ -48,7 +48,7 @@ HashDialog::HashDialog(const QString &path, QWidget *parent) noexcept
     table->horizontalHeader()->setVisible(false);
     table->setShowGrid(false);
     table->horizontalHeader()->setSectionResizeMode(0, QHeaderView::ResizeToContents);
-    table->setColumnWidth(1, fontMetrics().averageCharWidth() * 80);
+    table->setColumnWidth(1, fontMetrics().averageCharWidth() * 120);
     table->setSizeAdjustPolicy(QAbstractScrollArea::AdjustToContents);
     table->setEditTriggers(QAbstractItemView::NoEditTriggers);
 

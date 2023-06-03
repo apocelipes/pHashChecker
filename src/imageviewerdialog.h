@@ -15,7 +15,7 @@ class ImageViewerDialog : public QDialog
 {
     Q_OBJECT
 public:
-    explicit ImageViewerDialog(const std::vector<std::vector<std::string>> &sameImageList);
+    explicit ImageViewerDialog(const std::unordered_map<std::string, std::vector<std::string>> &sameImageList);
 
 private:
     std::vector<ImageViewer*> viewers;

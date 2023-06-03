@@ -4,6 +4,7 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include <QCoreApplication>
 #include <QWidget>
 #include <QProgressBar>
 #include <QPushButton>
@@ -14,6 +15,7 @@
 #include <QThread>
 
 #include <algorithm>
+#include <chrono>
 #include <string>
 #include <vector>
 #include <unordered_map>
@@ -61,12 +63,14 @@ private:
 
     void quitPool(bool cancelAllThread = false)
     {
-        for (int i = 0; i < QThread::idealThreadCount(); ++i) {
+        using namespace std::chrono_literals;
+        for (unsigned int i = 0; i < getThreadNumber(); ++i) {
             if (cancelAllThread) {
                 pool[i]->requestInterruption();
             }
             pool[i]->quit();
-            pool[i]->wait();
+            pool[i]->wait(3s);
+            QCoreApplication::processEvents();
         }
     }
 
@@ -84,8 +88,10 @@ private:
     static void freezeLayout(QLayout *layout, bool flag)
     {
         for (int i = 0; i < layout->count(); ++i) {
-            auto widget = layout->itemAt(i)->widget();
-            if (widget) { // check for not widget layoutitems
+            auto it = layout->itemAt(i);
+            if (it->layout()) {
+                freezeLayout(it->layout(), flag);
+            } else if (auto widget = it->widget()) { // check for not widget layoutItems
                 widget->setEnabled(!flag);
             }
         }
@@ -93,7 +99,7 @@ private:
 
     void sort_result() noexcept
     {
-        for (auto &v : sameImageLists) {
+        for (auto &[_, v] : sameImageResults) {
             std::sort(v.begin(), v.end());
         }
     }
@@ -122,8 +128,7 @@ private:
 
     std::vector<std::string> images;
     std::unordered_map<ulong64, std::string> hashes;
-    std::unordered_map<std::string, std::size_t> sameImageIndex;
-    std::vector<std::vector<std::string>> sameImageLists;
+    std::unordered_map<std::string, std::vector<std::string>> sameImageResults;
     std::vector<ulong64> insertHistory;
     QReadWriteLock hashesLock;
     std::vector<std::unique_ptr<QThread>> pool;

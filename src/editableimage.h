@@ -12,8 +12,8 @@
 #include <filesystem>
 #include <memory>
 
-constexpr int EditableImageFixedWidth = 800;
-constexpr int EditableImageFixedHeight = 600;
+constexpr int EditableImageFixedWidth = 850;
+constexpr int EditableImageFixedHeight = 650;
 
 class QMenu;
 

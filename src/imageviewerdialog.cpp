@@ -13,13 +13,13 @@
 #include "imageviewer.h"
 #include "utils.h"
 
-ImageViewerDialog::ImageViewerDialog(const std::vector<std::vector<std::string>> &sameImageList)
+ImageViewerDialog::ImageViewerDialog(const std::unordered_map<std::string, std::vector<std::string>> &sameImageList)
 {
     auto stackView = new QStackedWidget{this};
     auto comboBox = new QComboBox{this};
     viewers.reserve(sameImageList.size());
     unsigned int index = 1u;
-    for (const auto &images : sameImageList) {
+    for (const auto &[_, images] : sameImageList) {
         auto imageView = new ImageViewer{images, this};
         viewers.emplace_back(imageView);
         stackView->addWidget(imageView);
@@ -34,7 +34,7 @@ ImageViewerDialog::ImageViewerDialog(const std::vector<std::vector<std::string>>
         QCoreApplication::processEvents();
     }
     auto emptyWidget = new QLabel{tr("No data here!"), this};
-    emptyWidget->setMinimumSize(850, 650);
+    emptyWidget->setMinimumSize(900, 700);
     emptyWidget->setAlignment(Qt::AlignCenter);
     stackView->addWidget(emptyWidget);
 

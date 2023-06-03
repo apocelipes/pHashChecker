@@ -5,7 +5,7 @@
 #include <QVBoxLayout>
 #include <QDir>
 #include <QString>
-#include <QDebug>
+#include <QFileInfo>
 
 #include <cctype>
 #include <iostream>
@@ -62,12 +62,11 @@ MainWindow::MainWindow(QWidget *parent)
             connect(pool[id].get(), &QThread::started, worker, &HashWorker::doWork);
             connect(worker, &HashWorker::doneOneImg, this, &MainWindow::onProgress);
             connect(worker, &HashWorker::sameImg, this, [this](const std::string &origin, const std::string &same){
-                if (sameImageIndex.count(origin) == 0) {
-                    sameImageIndex.emplace(origin, sameImageLists.size());
-                    // construct vectors directly with a string
-                    sameImageLists.emplace_back(std::vector<std::string>{origin});
+                if (!sameImageResults.contains(origin)) {
+                    // construct vectors directly with the origin image
+                    sameImageResults.emplace(origin, std::vector<std::string>{origin});
                 }
-                sameImageLists[sameImageIndex[origin]].emplace_back(same);
+                sameImageResults[origin].emplace_back(same);
                 auto output = qDebug();
                 output.setAutoInsertSpaces(true);
                 output << QString::fromStdString(origin) << tr("same with: ") << QString::fromStdString(same);
@@ -108,7 +107,7 @@ MainWindow::MainWindow(QWidget *parent)
     fileDialogBtn = new QPushButton(tr("select a directory"));
     connect(fileDialogBtn, &QPushButton::clicked, fileDialog, &QFileDialog::exec);
     connect(fileDialog, &QFileDialog::fileSelected, this, [this](const QString &dirName) {
-        if (dirName == "" || !std::filesystem::exists(dirName.toStdString())) {
+        if (dirName == "" || !QFileInfo::exists(dirName)) {
             return;
         }
 
@@ -152,7 +151,7 @@ void MainWindow::onProgress()
 {
     const auto value = bar->value();
     bar->setValue(value + 1);
-    if (value == bar->maximum() - 1) {
+    if (bar->value() == bar->maximum()) {
         freezeMainGUI(false);
         // should click load button first
         startBtn->setEnabled(false);
@@ -169,8 +168,7 @@ void MainWindow::setImages()
 {
     dialogBtn->hide();
     releaseResultDialog();
-    sameImageIndex.clear();
-    sameImageLists.clear();
+    sameImageResults.clear();
     hashes.clear();
     images.clear();
     insertHistory.clear();
@@ -215,7 +213,7 @@ void MainWindow::initResultDialog()
         return;
     }
     dialogBtn->setEnabled(false);
-    imageDialog = new ImageViewerDialog{sameImageLists};
+    imageDialog = new ImageViewerDialog{sameImageResults};
     imageDialog->setModal(true);
     dialogBtn->setEnabled(true);
 }
