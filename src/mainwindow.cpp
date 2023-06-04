@@ -55,6 +55,7 @@ MainWindow::MainWindow(QWidget *parent)
         for (unsigned long id = 0, start = 0, limit = getNextLimit(0, 0);
              id < nThreads;
              ++id, start = limit, limit = getNextLimit(limit, id)) {
+            // cannot use a QThreadPool because we need an event-loop in our worker functions
             auto worker = new HashWorker(start, limit, images, hashes, insertHistory, hashesLock);
             worker->moveToThread(pool[id].get());
             connect(pool[id].get(), &QThread::finished, worker, &QObject::deleteLater);
@@ -88,11 +89,13 @@ MainWindow::MainWindow(QWidget *parent)
     cancelButton->setCursor(Qt::PointingHandCursor);
     cancelButton->hide();
     connect(cancelButton, &QPushButton::clicked, this, [this](){
-        insertHistory.clear();
-        hashes.clear();
         cancelButton->setEnabled(false); // quitPool在取消线程时较耗时，防止反复触发
         bar->setEnabled(false);
         quitPool(true);
+        // wait for all threads to exit before cleaning up, otherwise data races will occur
+        insertHistory.clear();
+        hashes.clear();
+        sameImageResults.clear();
         freezeMainGUI(false);
         bar->hide();
         cancelButton->hide();

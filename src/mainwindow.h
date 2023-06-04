@@ -64,12 +64,12 @@ private:
     void quitPool(bool cancelAllThread = false)
     {
         using namespace std::chrono_literals;
-        for (unsigned int i = 0; i < getThreadNumber(); ++i) {
+        for (const auto &thread : pool) {
             if (cancelAllThread) {
-                pool[i]->requestInterruption();
+                thread->requestInterruption();
             }
-            pool[i]->quit();
-            pool[i]->wait(3s);
+            thread->quit();
+            thread->wait(3s);
             QCoreApplication::processEvents();
         }
     }
@@ -105,10 +105,13 @@ private:
     }
 
     void init_pool(unsigned long nThreads) noexcept {
-        if (!pool.empty()) {
+        const auto oldSize = pool.size();
+        quitPool(true);
+        if (oldSize > nThreads) {
+            pool.resize(nThreads);
             return;
         }
-        for (unsigned long i = 0; i < nThreads; ++i) {
+        for (std::size_t i = nThreads; i > oldSize; --i) {
             pool.emplace_back(std::make_unique<QThread>(this));
         }
     }
