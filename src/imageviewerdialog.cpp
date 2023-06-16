@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Copyright (C) 2022 apocelipes
+// Copyright (C) 2023 apocelipes
 
 #include <QComboBox>
 #include <QCoreApplication>
@@ -27,8 +27,12 @@ ImageViewerDialog::ImageViewerDialog(const std::unordered_map<std::string, std::
         connect(imageView, &ImageViewer::emptied, this, [this, imageView, stackView, comboBox](){
             stackView->removeWidget(imageView);
             auto targetIndex = Utils::indexOf(viewers.cbegin(), viewers.cend(), imageView);
-            viewers.erase(viewers.begin() + targetIndex);
-            comboBox->removeItem(targetIndex);
+            if (!targetIndex) {
+                qWarning() << tr("target ImageViewer not found");
+                return;
+            }
+            viewers.erase(viewers.begin() + *targetIndex);
+            comboBox->removeItem(static_cast<int>(*targetIndex));
             imageView->deleteLater();
         });
         QCoreApplication::processEvents();

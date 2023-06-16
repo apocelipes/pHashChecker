@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Copyright (C) 2022 apocelipes
+// Copyright (C) 2023 apocelipes
 
 #include <QFocusFrame>
 #include <QHBoxLayout>
@@ -83,11 +83,11 @@ inline void ImageViewerPrivate::init(const std::vector<std::string> &images, Ima
         auto thumbnail = new Thumbnail{QString::fromStdString(img), q};
         QObject::connect(thumbnail, &Thumbnail::clicked, q, [this, thumbnail]() {
             auto index = Utils::indexOf(thumbs.cbegin(), thumbs.cend(), thumbnail);
-            if (index == -1  || static_cast<unsigned int>(index) == currentIndex) {
+            if (!index  || *index == currentIndex) {
                 return;
             }
-            Q_EMIT q->currentIndexChanged(index, currentIndex);
-            currentIndex = index;
+            Q_EMIT q->currentIndexChanged(*index, currentIndex);
+            currentIndex = *index;
         });
         thumbs.emplace_back(thumbnail);
     }
