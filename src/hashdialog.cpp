@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Copyright (C) 2022 apocelipes
+// Copyright (C) 2023 apocelipes
 
 #include <array>
 
@@ -17,7 +17,7 @@
 #include "sizeformat.h"
 
 namespace {
-    constexpr int hashStartIndex = 2;
+    constexpr int fileSizeIndex = 1;
     constexpr std::array<QCryptographicHash::Algorithm, 4> hashAlgorithms = {
             QCryptographicHash::Md5,
             QCryptographicHash::Sha1,
@@ -39,11 +39,11 @@ HashDialog::HashDialog(const QString &path, QWidget *parent) noexcept
     setModal(true);
     QFile img{path};
     img.open(QIODevice::ReadOnly);
-    auto data = img.readAll();
+    const auto &data = img.readAll();
 
     auto table = new QTableWidget;
     table->setColumnCount(2);
-    table->setRowCount(hashStartIndex + std::size(hashAlgorithms));
+    table->setRowCount(fileSizeIndex + std::size(hashAlgorithms));
     table->verticalHeader()->setVisible(false);
     table->horizontalHeader()->setVisible(false);
     table->setShowGrid(false);
@@ -58,10 +58,10 @@ HashDialog::HashDialog(const QString &path, QWidget *parent) noexcept
 
     const auto fileSize = img.size();
     table->setItem(1, 1, new QTableWidgetItem{Utils::sizeFormat(fileSize) + QString::asprintf(" (%lld)", fileSize)});
-    for (int i = hashStartIndex; i < table->rowCount(); ++i) {
-        table->setItem(i, 0, new QTableWidgetItem{algorithmNames[i-hashStartIndex] + QString{":"}});
-        const auto hashText = QCryptographicHash::hash(data, hashAlgorithms[i-hashStartIndex]).toHex();
-        table->setItem(i, 1, new QTableWidgetItem{QString{hashText}});
+    for (int i = fileSizeIndex; i < table->rowCount(); ++i) {
+        table->setItem(i, 0, new QTableWidgetItem{algorithmNames[i - fileSizeIndex] + QString{":"}});
+        const QString &hashText = QCryptographicHash::hash(data, hashAlgorithms[i - fileSizeIndex]).toHex();
+        table->setItem(i, 1, new QTableWidgetItem{hashText});
     }
 
     auto buttons = new QDialogButtonBox;
@@ -70,13 +70,13 @@ HashDialog::HashDialog(const QString &path, QWidget *parent) noexcept
 
     auto infoBar = NotificationBar::createNotificationBar(NotificationBar::NotificationType::INFO, "", this);
     connect(table, &QTableWidget::cellDoubleClicked, [table, infoBar](int row, int column) {
-        if (row < hashStartIndex || column != 1) {
+        if (row == fileSizeIndex) [[unlikely]] {
             return;
         }
 
         QGuiApplication::clipboard()->setText(table->item(row, column)->text());
-        auto hashName = table->item(row, 0)->text();
-        infoBar->setText(tr("%1 has been copied").arg(hashName));
+        const auto &rowName = table->item(row, 0)->text();
+        infoBar->setText(tr("%1 has been copied").arg(rowName));
         infoBar->setCloseButtonVisible(true);
         infoBar->showAndHide(3000);
     });
