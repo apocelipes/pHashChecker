@@ -16,7 +16,7 @@
 #include "imageviewerdialog.h"
 #include "notificationbar.h"
 
-MainWindow::MainWindow(QWidget *parent)
+MainWindow::MainWindow(QWidget *parent) noexcept
     : QWidget(parent)
 {
     pool.reserve(QThread::idealThreadCount());
@@ -150,7 +150,7 @@ MainWindow::MainWindow(QWidget *parent)
     pathEdit->setFocus();
 }
 
-void MainWindow::onProgress()
+void MainWindow::onProgress() noexcept
 {
     const auto value = bar->value();
     bar->setValue(value + 1);
@@ -167,7 +167,7 @@ void MainWindow::onProgress()
     }
 }
 
-void MainWindow::setImages()
+void MainWindow::setImages() noexcept
 {
     dialogBtn->hide();
     releaseResultDialog();
@@ -210,7 +210,7 @@ void MainWindow::setImages()
     }
 }
 
-void MainWindow::initResultDialog()
+void MainWindow::initResultDialog() noexcept
 {
     if (imageDialog != nullptr) {
         return;
@@ -221,7 +221,7 @@ void MainWindow::initResultDialog()
     dialogBtn->setEnabled(true);
 }
 
-void MainWindow::releaseResultDialog()
+void MainWindow::releaseResultDialog() noexcept
 {
     if (imageDialog != nullptr) {
         imageDialog->deleteLater();
@@ -229,7 +229,7 @@ void MainWindow::releaseResultDialog()
     }
 }
 
-MainWindow::~MainWindow()
+MainWindow::~MainWindow() noexcept
 {
     if (!pool.empty()) {
         quitPool(true);

@@ -40,13 +40,13 @@ Q_SIGNALS:
     void pathChanged(const QString &imgPath);
 
 private Q_SLOTS:
-    void showContextMenu(const QPoint &pos);
+    void showContextMenu(const QPoint &pos) noexcept;
 
 private:
     friend struct EditableImagePrivate;
     std::unique_ptr<struct EditableImagePrivate> d;
 
-    void initContextMenu();
+    void initContextMenu() noexcept;
 };
 
 #endif // EDITABLEIMAGE_H

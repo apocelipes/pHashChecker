@@ -25,9 +25,9 @@ struct NotificationBarPrivate {
     QPropertyAnimation *showAnimation = nullptr;
     QSequentialAnimationGroup *animeGroup = nullptr;
 
-    void init(NotificationBar *q_ptr);
+    void init(NotificationBar *q_ptr) noexcept;
 
-    void stopAllAnimations() {
+    void stopAllAnimations() noexcept {
         isClosing = false;
         if (showAnimation) {
             showAnimation->stop();
@@ -42,7 +42,7 @@ struct NotificationBarPrivate {
 };
 
 namespace {
-    [[nodiscard]] inline QPropertyAnimation *createShowAnimation(QObject *target, const QByteArray &propertyName, QObject *parent = nullptr, int duration = 1000)
+    [[nodiscard]] inline QPropertyAnimation *createShowAnimation(QObject *target, const QByteArray &propertyName, QObject *parent = nullptr, int duration = 1000) noexcept
     {
         auto showAnimation = new QPropertyAnimation{target, propertyName, parent};
         showAnimation->setStartValue(0.0);
@@ -51,7 +51,7 @@ namespace {
         return showAnimation;
     }
 
-    [[nodiscard]] inline QPropertyAnimation *createHideAnimation(QObject *target, const QByteArray &propertyName, QObject *parent = nullptr, int duration = 1000)
+    [[nodiscard]] inline QPropertyAnimation *createHideAnimation(QObject *target, const QByteArray &propertyName, QObject *parent = nullptr, int duration = 1000) noexcept
     {
         auto hideAnimation = new QPropertyAnimation{target, propertyName, parent};
         hideAnimation->setStartValue(1.0);
@@ -61,7 +61,7 @@ namespace {
     }
 }
 
-void NotificationBarPrivate::init(NotificationBar *q_ptr)
+void NotificationBarPrivate::init(NotificationBar *q_ptr) noexcept
 {
     q = q_ptr;
 
@@ -159,7 +159,7 @@ void NotificationBar::setText(const QString &text) noexcept
     updateGeometry();
 }
 
-void NotificationBar::animatedShow()
+void NotificationBar::animatedShow() noexcept
 {
     d->stopAllAnimations();
     if (!d->showAnimation) {
@@ -169,7 +169,7 @@ void NotificationBar::animatedShow()
     d->showAnimation->start();
 }
 
-void NotificationBar::animatedHide()
+void NotificationBar::animatedHide() noexcept
 {
     d->stopAllAnimations();
     d->isClosing = true;
@@ -180,7 +180,7 @@ void NotificationBar::animatedHide()
     d->hideAnimation->start();
 }
 
-void NotificationBar::showAndHide(int remainMsecs)
+void NotificationBar::showAndHide(int remainMsecs) noexcept
 {
     d->stopAllAnimations();
     if (!d->animeGroup) {

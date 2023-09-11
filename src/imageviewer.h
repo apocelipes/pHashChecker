@@ -28,7 +28,7 @@ Q_SIGNALS:
     void emptied();
 
 private Q_SLOTS:
-    void removeCurrentImage();
+    void removeCurrentImage() noexcept;
 
 private:
     friend struct ImageViewerPrivate;

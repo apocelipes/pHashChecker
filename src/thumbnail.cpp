@@ -30,12 +30,12 @@ struct ThumbnailPrivate {
     explicit ThumbnailPrivate(QString &&path): imgPath{std::forward<QString>(path)}
     {}
 
-    void init(Thumbnail *q_ptr);
-    void initShowShadowAnimation();
-    void initHideShadowAnimation();
+    void init(Thumbnail *q_ptr) noexcept;
+    void initShowShadowAnimation() noexcept;
+    void initHideShadowAnimation() noexcept;
 };
 
-void ThumbnailPrivate::init(Thumbnail *q_ptr)
+void ThumbnailPrivate::init(Thumbnail *q_ptr) noexcept
 {
     q = q_ptr;
     image = new QLabel{q};
@@ -59,7 +59,7 @@ void ThumbnailPrivate::init(Thumbnail *q_ptr)
     shadow->setGraphicsEffect(opacityEffect);
 }
 
-inline void ThumbnailPrivate::initShowShadowAnimation()
+inline void ThumbnailPrivate::initShowShadowAnimation() noexcept
 {
     auto blurShowAnimation = new QPropertyAnimation{blurEffect, "blurRadius", q};
     blurShowAnimation->setDuration(DEFAULT_ANIME_DURATION);
@@ -74,7 +74,7 @@ inline void ThumbnailPrivate::initShowShadowAnimation()
     showAnimation->addAnimation(shadowShowAnimation);
 }
 
-inline void ThumbnailPrivate::initHideShadowAnimation()
+inline void ThumbnailPrivate::initHideShadowAnimation() noexcept
 {
     auto blurHideAnimation = new QPropertyAnimation{blurEffect, "blurRadius", q};
     blurHideAnimation->setDuration(DEFAULT_ANIME_DURATION);
@@ -90,14 +90,14 @@ inline void ThumbnailPrivate::initHideShadowAnimation()
     QObject::connect(hideAnimation, &QAbstractAnimation::finished, shadow, &QWidget::hide);
 }
 
-Thumbnail::Thumbnail(QString path, QWidget *parent)
+Thumbnail::Thumbnail(QString path, QWidget *parent) noexcept
     : QWidget(parent), d{new ThumbnailPrivate{std::move(path)}}
 {
     setFixedSize(ThumbnailWidth, ThumbnailHeight);
     d->init(this);
 }
 
-void Thumbnail::showShadow()
+void Thumbnail::showShadow() noexcept
 {
     if (d->showAnimation == nullptr) {
         d->initShowShadowAnimation();
@@ -106,7 +106,7 @@ void Thumbnail::showShadow()
     d->showAnimation->start();
 }
 
-void Thumbnail::hideShadow()
+void Thumbnail::hideShadow() noexcept
 {
     if (d->hideAnimation == nullptr) {
         d->initHideShadowAnimation();
@@ -125,4 +125,4 @@ void Thumbnail::mouseReleaseEvent(QMouseEvent *event)
     event->accept();
 }
 
-Thumbnail::~Thumbnail() = default;
+Thumbnail::~Thumbnail() noexcept = default;

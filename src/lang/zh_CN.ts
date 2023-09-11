@@ -171,47 +171,47 @@
         <translation>关闭消息</translation>
     </message>
     <message>
-        <location filename="../settingpanel.cpp" line="57"/>
+        <location filename="../settingpanel.cpp" line="56"/>
         <source>matching accuracy: </source>
         <translation>匹配精度: </translation>
     </message>
     <message>
-        <location filename="../settingpanel.cpp" line="28"/>
+        <location filename="../settingpanel.cpp" line="27"/>
         <source>fuzzy</source>
         <translation>较低</translation>
     </message>
     <message>
-        <location filename="../settingpanel.cpp" line="29"/>
+        <location filename="../settingpanel.cpp" line="28"/>
         <source>default</source>
         <translation>默认</translation>
     </message>
     <message>
-        <location filename="../settingpanel.cpp" line="30"/>
+        <location filename="../settingpanel.cpp" line="29"/>
         <source>precise</source>
         <translation>较高</translation>
     </message>
     <message>
-        <location filename="../settingpanel.cpp" line="31"/>
+        <location filename="../settingpanel.cpp" line="30"/>
         <source>strict</source>
         <translation>高</translation>
     </message>
     <message>
-        <location filename="../settingpanel.cpp" line="41"/>
+        <location filename="../settingpanel.cpp" line="40"/>
         <source>Fuzzy mode may produce more erroneous results.</source>
         <translation>精度较低可能产生较多错误匹配。</translation>
     </message>
     <message>
-        <location filename="../settingpanel.cpp" line="42"/>
+        <location filename="../settingpanel.cpp" line="41"/>
         <source>The default mode.</source>
         <translation>默认精度。</translation>
     </message>
     <message>
-        <location filename="../settingpanel.cpp" line="43"/>
+        <location filename="../settingpanel.cpp" line="42"/>
         <source>This mode provides higher precision than the default mode.</source>
         <translation>提供比默认模式更准确的匹配。</translation>
     </message>
     <message>
-        <location filename="../settingpanel.cpp" line="44"/>
+        <location filename="../settingpanel.cpp" line="43"/>
         <source>Strict mode provides the highest matching accuracy.</source>
         <translation>提供最严格的匹配，很少出现误差。</translation>
     </message>

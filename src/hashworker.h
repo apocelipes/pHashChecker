@@ -29,7 +29,7 @@ public:
                HashContainerType &hashes,
                std::vector<ulong64> &insertHistory,
                QReadWriteLock &lock,
-               QObject *parent = nullptr)
+               QObject *parent = nullptr) noexcept
         : QObject(parent),
           _start{start},
           _limit{limit},

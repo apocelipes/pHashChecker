@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // Copyright (C) 2022 apocelipes
 
-#include <QDebug>
 #include <QLabel>
 #include <QSlider>
 #include <QString>
@@ -18,7 +17,7 @@ struct SettingPanelPrivate
     QLabel *valueLabel = nullptr;
     QSlider *distanceSlider = nullptr;
 
-    void init(SettingPanel *q_ptr);
+    void init(SettingPanel *q_ptr) noexcept;
 
 private:
     [[nodiscard]] static QString getDistanceName(int index) noexcept
@@ -50,7 +49,7 @@ private:
     }
 };
 
-void SettingPanelPrivate::init(SettingPanel *q_ptr)
+void SettingPanelPrivate::init(SettingPanel *q_ptr) noexcept
 {
     q = q_ptr;
     distanceSlider = new QSlider{Qt::Horizontal, q};

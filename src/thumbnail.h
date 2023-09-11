@@ -19,8 +19,8 @@ class Thumbnail : public QWidget
 {
     Q_OBJECT
 public:
-    explicit Thumbnail(QString path, QWidget *parent = nullptr);
-    ~Thumbnail() override;
+    explicit Thumbnail(QString path, QWidget *parent = nullptr) noexcept;
+    ~Thumbnail() noexcept override;
 
     [[nodiscard]] QString getImagePath() noexcept;
 
@@ -30,8 +30,8 @@ Q_SIGNALS:
     void clicked();
 
 public Q_SLOTS:
-    void showShadow();
-    void hideShadow();
+    void showShadow() noexcept;
+    void hideShadow() noexcept;
 
 private:
     friend struct ThumbnailPrivate;

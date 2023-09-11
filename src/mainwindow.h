@@ -34,8 +34,8 @@ class MainWindow : public QWidget
 {
     Q_OBJECT
 public:
-    explicit MainWindow(QWidget *parent = nullptr);
-    ~MainWindow() override;
+    explicit MainWindow(QWidget *parent = nullptr) noexcept;
+    ~MainWindow() noexcept override;
 
     [[nodiscard]] unsigned int getThreadNumber() noexcept
     {
@@ -54,14 +54,14 @@ Q_SIGNALS:
     void completed();
 
 public Q_SLOTS:
-    void setImages();
-    void onProgress();
+    void setImages() noexcept;
+    void onProgress() noexcept;
 
 private:
-    void initResultDialog();
-    void releaseResultDialog();
+    void initResultDialog() noexcept;
+    void releaseResultDialog() noexcept;
 
-    void quitPool(bool cancelAllThread = false)
+    void quitPool(bool cancelAllThread = false) noexcept
     {
         using namespace std::chrono_literals;
         for (const auto &thread : pool) {
@@ -74,7 +74,7 @@ private:
         }
     }
 
-    void freezeMainGUI(const bool flag)
+    void freezeMainGUI(const bool flag) noexcept
     {
         freezeLayout(lineLayout, flag);
         freezeLayout(settings->layout(), flag);
@@ -85,7 +85,7 @@ private:
         }
     }
 
-    static void freezeLayout(QLayout *layout, bool flag)
+    static void freezeLayout(QLayout *layout, bool flag) noexcept
     {
         for (int i = 0; i < layout->count(); ++i) {
             auto it = layout->itemAt(i);

@@ -38,9 +38,9 @@ public Q_SLOTS:
     void setIcon(const QIcon &notifyIcon) noexcept;
     void setText(const QString &text) noexcept;
 
-    void animatedShow();
-    void animatedHide();
-    void showAndHide(int remainMsecs = 5000);
+    void animatedShow() noexcept;
+    void animatedHide() noexcept;
+    void showAndHide(int remainMsecs = 5000) noexcept;
 
     void hide();
 

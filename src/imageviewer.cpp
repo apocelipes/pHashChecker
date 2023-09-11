@@ -19,7 +19,7 @@ struct ImageViewerPrivate {
     QFocusFrame *thumbnailFocusBorder = nullptr;
 
     void init(const std::vector<std::string> &images, ImageViewer *q_ptr);
-    void initThumbnailFocusBorder()
+    void initThumbnailFocusBorder() noexcept
     {
         thumbnailFocusBorder = new QFocusFrame{q};
         thumbnailFocusBorder->setAutoFillBackground(true);
@@ -33,13 +33,13 @@ struct ImageViewerPrivate {
         return oldIndex;
     }
 
-    void setDefaultSelection()
+    void setDefaultSelection() noexcept
     {
         thumbs[0]->hideShadow();
         thumbnailFocusBorder->setWidget(thumbs[0]);
     }
 
-    [[nodiscard]] QPushButton *createSideControlButton(QStyle::StandardPixmap pixmap, QWidget *btnParent) const
+    [[nodiscard]] QPushButton *createSideControlButton(QStyle::StandardPixmap pixmap, QWidget *btnParent) const noexcept
     {
         auto btn = new QPushButton(btnParent);
         btn->setIcon(q->style()->standardIcon(pixmap));
@@ -49,7 +49,7 @@ struct ImageViewerPrivate {
         return btn;
     }
 
-    void removeCurrentImage()
+    void removeCurrentImage() noexcept
     {
         auto rmWidget = thumbs[currentIndex];
         imageThumbnailList->layout()->removeWidget(rmWidget);
@@ -147,7 +147,7 @@ ImageViewer::ImageViewer(const std::vector<std::string> &images, QWidget *parent
 
 ImageViewer::~ImageViewer() noexcept = default;
 
-void ImageViewer::removeCurrentImage()
+void ImageViewer::removeCurrentImage() noexcept
 {
     d->removeCurrentImage();
 }

@@ -35,7 +35,7 @@ EditableImage::EditableImage(const QString &imgPath, QWidget *parent)
 
 EditableImage::~EditableImage() noexcept = default;
 
-void EditableImage::initContextMenu()
+void EditableImage::initContextMenu() noexcept
 {
     d->contextMenu = new QMenu{this};
     auto openAction = new QAction(style()->standardIcon(QStyle::SP_FileDialogContentsView), tr("open"));
@@ -87,7 +87,7 @@ void EditableImage::initContextMenu()
     d->contextMenu->addAction(hashAction);
 }
 
-void EditableImage::showContextMenu(const QPoint &pos)
+void EditableImage::showContextMenu(const QPoint &pos) noexcept
 {
     if (d->contextMenu == nullptr) {
         initContextMenu();
