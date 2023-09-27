@@ -8,8 +8,8 @@ Make sure you have installed Qt 6.2.0+ in your system.
 
 ```bash
 # building pHashChecker
-cd
 git clone --recurse-submodules https://github.com/apocelipes/pHashChecker
+cd pHashChecker
 mkdir build && cd build
 cmake ..
 make
@@ -20,13 +20,13 @@ make
 
 ## Screenshots
 
-![main_layout](screenshots/main_layout.png)
+![mainLayout](screenshots/main_layout.png)
 
 ![progressing](screenshots/progressing.png)
 
-![image_viewer](screenshots/image_viewer.gif)
+![imageViewer](screenshots/image_viewer.gif)
 
-![image_viewer](screenshots/hash_dialog.png)
+![imageViewer](screenshots/hash_dialog.png)
 
 ## TODO
 
