@@ -19,7 +19,6 @@
 #include <string>
 #include <vector>
 #include <unordered_map>
-#include <unordered_set>
 
 #include <pHash.h>
 
@@ -135,15 +134,6 @@ private:
     std::vector<ulong64> insertHistory;
     QReadWriteLock hashesLock;
     std::vector<std::unique_ptr<QThread>> pool;
-
-    // supported image formats
-    inline static std::unordered_set<std::string> imgExts {
-        ".jpg",
-        ".jpeg",
-        ".png",
-        ".webp",
-        ".bmp",
-    };
 };
 
 #endif // MAINWINDOW_H

@@ -5,7 +5,10 @@
 #define UTILS_H
 
 #include <algorithm>
+#include <array>
+#include <filesystem>
 #include <optional>
+#include <string_view>
 
 namespace Utils {
     template<typename Iterator, typename Element>
@@ -24,6 +27,23 @@ namespace Utils {
         DEFAULT = 8,
         FUZZY   = 10,
     };
+
+    inline constexpr std::array<std::string_view, 6> imageExtensions{
+        ".jpg",
+        ".jpeg",
+        ".png",
+        ".webp",
+        ".bmp",
+        ".avif",
+    };
+
+    [[nodiscard]] inline bool isSupportImageFormat(const std::filesystem::path &img) noexcept {
+        auto ext = img.extension().generic_string();
+        std::transform(ext.begin(), ext.end(), ext.begin(), [](unsigned char c) {
+            return std::tolower(c);
+        });
+        return std::find(imageExtensions.cbegin(), imageExtensions.cend(), ext) != imageExtensions.cend();
+    }
 }
 
 #endif // UTILS_H
