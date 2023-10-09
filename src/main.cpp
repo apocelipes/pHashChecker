@@ -10,11 +10,11 @@
 
 int main(int argc, char *argv[])
 {
-    QApplication a(argc, argv);
+    QApplication app(argc, argv);
     QTranslator translator;
     // like zh_CN.qm
     if (translator.load(":/" + QLocale().name() + ".qm")) {
-        QCoreApplication::installTranslator(&translator);
+        app.installTranslator(&translator);
     }
     // does not limit qlabel image size, could let to use lots of memories
     QImageReader::setAllocationLimit(0);

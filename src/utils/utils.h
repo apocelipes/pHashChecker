@@ -10,6 +10,9 @@
 #include <optional>
 #include <string_view>
 
+#include <QDir>
+#include <QTemporaryDir>
+
 namespace Utils {
     template<typename Iterator, typename Element>
     [[nodiscard]] constexpr std::optional<std::ptrdiff_t> indexOf(Iterator beginIter, Iterator endIter, const Element &target) noexcept {
@@ -43,6 +46,15 @@ namespace Utils {
             return std::tolower(c);
         });
         return std::find(imageExtensions.cbegin(), imageExtensions.cend(), ext) != imageExtensions.cend();
+    }
+
+    // NOTICE: only init once
+    [[nodiscard]] inline QString getTempDirPath() noexcept {
+        static QTemporaryDir temp{QDir::tempPath() + QDir::separator() + "pHashChecker-XXXXXX"};
+        if (!temp.isValid()) {
+            qFatal() << QObject::tr("create temporary dir failed");
+        }
+        return temp.path();
     }
 }
 

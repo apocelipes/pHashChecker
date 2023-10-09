@@ -161,6 +161,11 @@
 <context>
     <name>QObject</name>
     <message>
+        <location filename="../utils/utils.h" line="55"/>
+        <source>create temporary dir failed</source>
+        <translation>无法创建临时目录</translation>
+    </message>
+    <message>
         <location filename="../main.cpp" line="22"/>
         <source>pHashChecker</source>
         <translation>pHashChecker</translation>
