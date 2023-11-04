@@ -220,5 +220,10 @@
         <source>Strict mode provides the highest matching accuracy.</source>
         <translation>もっとも厳しいマッチングを行い、せいかくな結果が提供されています。</translation>
     </message>
+    <message>
+        <location filename="../convertedimage.hpp" line="43"/>
+        <source>create converted image failed</source>
+        <translation>画像は転換できませんでした</translation>
+    </message>
 </context>
 </TS>
