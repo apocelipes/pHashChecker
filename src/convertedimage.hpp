@@ -7,6 +7,7 @@
 #include <optional>
 
 #include <QFile>
+#include <QFileInfo>
 #include <QString>
 #include <QProcess>
 
@@ -14,25 +15,33 @@
 
 class ConvertedImage {
     std::optional<QString> path;
+    bool isKeepAlive;
 
     [[nodiscard]] static QString getConvertedFullName(const QString &srcPath, const int width, const int height) noexcept {
         const auto &tmpPath = Utils::getTempDirPath();
-        const auto &name = QString("%1_%2x%3.jpg").arg(srcPath).arg(width).arg(height);
+        const auto fileName = QFileInfo{srcPath}.baseName();
+        const auto &name = QString("%1_%2x%3.jpg").arg(fileName).arg(width).arg(height);
         return QDir::cleanPath(tmpPath + QDir::separator() + name);
     }
 
     void clear() noexcept {
-        if (path) {
+        if (!isKeepAlive && path && *path != "") {
             QFile::remove(*path);
         }
     }
 public:
-    ConvertedImage(const QString &srcPath, const int width, const int height) noexcept {
+    ConvertedImage(const QString &srcPath, const int width, const int height, bool keepAlive = false) noexcept
+    : isKeepAlive{keepAlive} {
         if (!QFile::exists(srcPath)) [[unlikely]] {
             return;
         }
-        QStringList arguments;
         const auto &newPath = getConvertedFullName(srcPath, width, height);
+        path.emplace(newPath);
+        // maybe some TOCTOU problems, but no impacts on this code
+        if (QFile::exists(newPath) && isKeepAlive) {
+            return;
+        }
+        QStringList arguments;
         arguments << srcPath
                   << "-quality" << "75"
                   << "-resize" << QString("%1x%2!").arg(width).arg(height)
@@ -42,7 +51,9 @@ public:
         if (!cmd.waitForFinished()) {
             qFatal() << QObject::tr("create converted image failed");
         }
-        path.emplace(newPath);
+        if (cmd.exitCode() != 0) {
+            qFatal() << QObject::tr("call magick failed:") << QString{cmd.readAllStandardError()};
+        }
     }
 
     ~ConvertedImage() noexcept {

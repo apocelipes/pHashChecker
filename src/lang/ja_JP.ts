@@ -4,47 +4,47 @@
 <context>
     <name>EditableImage</name>
     <message>
-        <location filename="../editableimage.cpp" line="41"/>
+        <location filename="../editableimage.cpp" line="43"/>
         <source>open</source>
         <translation>アプリケーションで開く</translation>
     </message>
     <message>
-        <location filename="../editableimage.cpp" line="47"/>
+        <location filename="../editableimage.cpp" line="49"/>
         <source>copy data</source>
         <translation>画像をコピー</translation>
     </message>
     <message>
-        <location filename="../editableimage.cpp" line="55"/>
+        <location filename="../editableimage.cpp" line="57"/>
         <source>copy path</source>
         <translation>画像のパスをコピー</translation>
     </message>
     <message>
-        <location filename="../editableimage.cpp" line="62"/>
+        <location filename="../editableimage.cpp" line="64"/>
         <source>move to trash</source>
         <translation>ゴミ箱に移動</translation>
     </message>
     <message>
-        <location filename="../editableimage.cpp" line="69"/>
+        <location filename="../editableimage.cpp" line="71"/>
         <source>delete</source>
         <translation>削除</translation>
     </message>
     <message>
-        <location filename="../editableimage.cpp" line="72"/>
+        <location filename="../editableimage.cpp" line="74"/>
         <source>delete this image</source>
         <translation>画像を削除</translation>
     </message>
     <message>
-        <location filename="../editableimage.cpp" line="73"/>
+        <location filename="../editableimage.cpp" line="75"/>
         <source>do you want to delete %1 ?</source>
         <translation>%1を削除しますか？</translation>
     </message>
     <message>
-        <location filename="../editableimage.cpp" line="82"/>
+        <location filename="../editableimage.cpp" line="84"/>
         <source>hash</source>
         <translation>ハッシュ</translation>
     </message>
     <message>
-        <location filename="../editableimage.cpp" line="115"/>
+        <location filename="../editableimage.cpp" line="118"/>
         <source>There&apos;s no image here</source>
         <translation>画像なし</translation>
     </message>
@@ -62,12 +62,12 @@
         <translation>サイズ:</translation>
     </message>
     <message>
-        <location filename="../hashdialog.cpp" line="79"/>
+        <location filename="../hashdialog.cpp" line="80"/>
         <source>%1 has been copied</source>
         <translation>%1 コピーされました</translation>
     </message>
     <message>
-        <location filename="../hashdialog.cpp" line="89"/>
+        <location filename="../hashdialog.cpp" line="90"/>
         <source>Image Hash Dialog</source>
         <translation>Image Hash Dialog</translation>
     </message>
@@ -161,7 +161,7 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../utils/utils.h" line="55"/>
+        <location filename="../utils/utils.h" line="60"/>
         <source>create temporary dir failed</source>
         <translation>一時ディレクトリの作成が失敗しました</translation>
     </message>
@@ -221,9 +221,14 @@
         <translation>もっとも厳しいマッチングを行い、せいかくな結果が提供されています。</translation>
     </message>
     <message>
-        <location filename="../convertedimage.hpp" line="43"/>
+        <location filename="../convertedimage.hpp" line="52"/>
         <source>create converted image failed</source>
         <translation>画像は転換できませんでした</translation>
+    </message>
+    <message>
+        <location filename="../convertedimage.hpp" line="55"/>
+        <source>call magick failed:</source>
+        <translation>magickの呼び出しでエラーが発生しました:</translation>
     </message>
 </context>
 </TS>

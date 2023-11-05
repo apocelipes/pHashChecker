@@ -40,11 +40,16 @@ namespace Utils {
         ".avif",
     };
 
-    [[nodiscard]] inline bool isSupportImageFormat(const std::filesystem::path &img) noexcept {
-        auto ext = img.extension().generic_string();
+    [[nodiscard]] inline std::string getFileExtension(const std::filesystem::path &filePath) noexcept {
+        auto ext = filePath.extension().generic_string();
         std::transform(ext.begin(), ext.end(), ext.begin(), [](unsigned char c) {
             return std::tolower(c);
         });
+        return ext;
+    }
+
+    [[nodiscard]] inline bool isSupportImageFormat(const std::filesystem::path &img) noexcept {
+        const auto &ext = getFileExtension(img);
         return std::find(imageExtensions.cbegin(), imageExtensions.cend(), ext) != imageExtensions.cend();
     }
 

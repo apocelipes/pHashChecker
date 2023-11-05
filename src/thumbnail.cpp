@@ -10,6 +10,7 @@
 #include <filesystem>
 #include <utility>
 
+#include "convertedimage.hpp"
 #include "thumbnail.h"
 
 constexpr int ThumbnailWidth = 100, ThumbnailHeight = 100;
@@ -41,7 +42,13 @@ void ThumbnailPrivate::init(Thumbnail *q_ptr) noexcept
     image = new QLabel{q};
     image->setGeometry(q->geometry());
     if (std::filesystem::exists(imgPath.toStdString())) {
-        QPixmap data{imgPath};
+        QPixmap data;
+        if (Utils::getFileExtension(imgPath.toStdString()) == ".avif") {
+            ConvertedImage converted{imgPath, ThumbnailHeight, ThumbnailHeight};
+            data.load(converted.getImagePath());
+        } else {
+            data.load(imgPath);
+        }
         image->setPixmap(data.scaled(ThumbnailWidth, ThumbnailHeight));
     }
     blurEffect = new QGraphicsBlurEffect{q};

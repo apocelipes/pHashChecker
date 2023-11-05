@@ -61,6 +61,7 @@ HashDialog::HashDialog(const QString &path, QWidget *parent) noexcept
     for (int i = fileSizeIndex; i < table->rowCount(); ++i) {
         table->setItem(i, 0, new QTableWidgetItem{algorithmNames[i - fileSizeIndex] + QString{":"}});
         const QString &hashText = QCryptographicHash::hash(data, hashAlgorithms[i - fileSizeIndex]).toHex();
+        QCoreApplication::processEvents();
         table->setItem(i, 1, new QTableWidgetItem{hashText});
     }
 

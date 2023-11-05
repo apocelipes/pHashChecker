@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // Copyright (C) 2023 apocelipes
 
+#include "convertedimage.hpp"
 #include "editableimage.h"
 #include "hashdialog.h"
 
@@ -19,6 +20,7 @@
 struct EditableImagePrivate {
     QMenu *contextMenu = nullptr;
     QString m_path;
+    std::optional<ConvertedImage> convertedImg;
 };
 
 EditableImage::EditableImage(const QString &imgPath, QWidget *parent)
@@ -112,11 +114,18 @@ void EditableImage::setImagePath(const QString &path) noexcept
     }
     if (!std::filesystem::exists(path.toStdString())) {
         clear();
+        d->convertedImg.reset();
         setToolTip(isEmpty() ? tr("There's no image here") : getImagePath());
         return;
     }
     d->m_path = path;
-    QPixmap newImg{d->m_path};
+    auto newPath = d->m_path;
+    //TODO: use function to check
+    if (Utils::getFileExtension(path.toStdString()) == ".avif") {
+        d->convertedImg.emplace(path, EditableImageFixedWidth, EditableImageFixedHeight, true);
+        newPath = d->convertedImg->getImagePath();
+    }
+    QPixmap newImg{newPath};
     setPixmap(newImg.scaled(EditableImageFixedWidth, EditableImageFixedHeight));
     setToolTip(d->m_path);
     Q_EMIT pathChanged(d->m_path);
