@@ -4,47 +4,47 @@
 <context>
     <name>EditableImage</name>
     <message>
-        <location filename="../editableimage.cpp" line="41"/>
+        <location filename="../editableimage.cpp" line="43"/>
         <source>open</source>
         <translation>打开</translation>
     </message>
     <message>
-        <location filename="../editableimage.cpp" line="47"/>
+        <location filename="../editableimage.cpp" line="49"/>
         <source>copy data</source>
         <translation>复制图片</translation>
     </message>
     <message>
-        <location filename="../editableimage.cpp" line="55"/>
+        <location filename="../editableimage.cpp" line="57"/>
         <source>copy path</source>
         <translation>复制图片路径</translation>
     </message>
     <message>
-        <location filename="../editableimage.cpp" line="62"/>
+        <location filename="../editableimage.cpp" line="64"/>
         <source>move to trash</source>
         <translation>移动到回收站</translation>
     </message>
     <message>
-        <location filename="../editableimage.cpp" line="69"/>
+        <location filename="../editableimage.cpp" line="71"/>
         <source>delete</source>
         <translation>删除</translation>
     </message>
     <message>
-        <location filename="../editableimage.cpp" line="72"/>
+        <location filename="../editableimage.cpp" line="74"/>
         <source>delete this image</source>
         <translation>删除图片</translation>
     </message>
     <message>
-        <location filename="../editableimage.cpp" line="73"/>
+        <location filename="../editableimage.cpp" line="75"/>
         <source>do you want to delete %1 ?</source>
         <translation>你确定删除 %1 吗？</translation>
     </message>
     <message>
-        <location filename="../editableimage.cpp" line="82"/>
+        <location filename="../editableimage.cpp" line="84"/>
         <source>hash</source>
         <translation>计算hash</translation>
     </message>
     <message>
-        <location filename="../editableimage.cpp" line="115"/>
+        <location filename="../editableimage.cpp" line="118"/>
         <source>There&apos;s no image here</source>
         <translation>无图片</translation>
     </message>
@@ -62,12 +62,12 @@
         <translation>文件大小:</translation>
     </message>
     <message>
-        <location filename="../hashdialog.cpp" line="79"/>
+        <location filename="../hashdialog.cpp" line="80"/>
         <source>%1 has been copied</source>
         <translation>%1 已复制</translation>
     </message>
     <message>
-        <location filename="../hashdialog.cpp" line="89"/>
+        <location filename="../hashdialog.cpp" line="90"/>
         <source>Image Hash Dialog</source>
         <translation>查看图片哈希值</translation>
     </message>
@@ -108,58 +108,63 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../mainwindow.cpp" line="25"/>
+        <location filename="../mainwindow.cpp" line="26"/>
         <source>entry a directory</source>
         <translation>输入目录</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="27"/>
+        <location filename="../mainwindow.cpp" line="28"/>
         <source>load</source>
         <translation>加载</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="29"/>
+        <location filename="../mainwindow.cpp" line="30"/>
         <source>start</source>
         <translation>开始计算</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="31"/>
+        <location filename="../mainwindow.cpp" line="32"/>
         <source>show result</source>
         <translation>显示结果</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="73"/>
+        <location filename="../mainwindow.cpp" line="74"/>
         <source>same with: </source>
         <translation>相似图片: </translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="88"/>
+        <location filename="../mainwindow.cpp" line="89"/>
         <source>cancel</source>
         <translation>取消</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="110"/>
+        <location filename="../mainwindow.cpp" line="111"/>
         <source>select a directory</source>
         <translation>选择图片目录</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="132"/>
+        <location filename="../mainwindow.cpp" line="133"/>
         <source>about</source>
         <translation>关于</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="183"/>
+        <location filename="../mainwindow.cpp" line="184"/>
         <source> does not exist</source>
         <translation> 路径不存在</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="208"/>
+        <location filename="../mainwindow.cpp" line="204"/>
         <source>no image here</source>
         <translation>目录中没有图片</translation>
     </message>
 </context>
 <context>
     <name>QObject</name>
+    <message>
+        <location filename="../utils/utils.h" line="60"/>
+        <source>create temporary dir failed</source>
+        <translation>无法创建临时目录</translation>
+    </message>
     <message>
         <location filename="../main.cpp" line="22"/>
         <source>pHashChecker</source>
@@ -214,6 +219,16 @@
         <location filename="../settingpanel.cpp" line="43"/>
         <source>Strict mode provides the highest matching accuracy.</source>
         <translation>提供最严格的匹配，很少出现误差。</translation>
+    </message>
+    <message>
+        <location filename="../convertedimage.hpp" line="52"/>
+        <source>create converted image failed</source>
+        <translation>图片转换失败</translation>
+    </message>
+    <message>
+        <location filename="../convertedimage.hpp" line="55"/>
+        <source>call magick failed:</source>
+        <translation>magick调用失败:</translation>
     </message>
 </context>
 </TS>

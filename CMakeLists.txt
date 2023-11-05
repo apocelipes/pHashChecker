@@ -18,6 +18,7 @@ if (${CMAKE_CXX_COMPILER_ID} MATCHES "Clang" OR ${CMAKE_CXX_COMPILER_ID} MATCHES
 endif()
 
 include_directories(third-party/CImg)
+include_directories(third-party/pHash/src)
 include_directories(src/utils)
 
 find_package(Qt6 REQUIRED COMPONENTS Core)
@@ -67,7 +68,7 @@ add_dependencies(${PROJECT_NAME} create_all_qm_files)
 target_link_libraries(pHashChecker PRIVATE Qt6::Core Qt6::Gui Qt6::Widgets pHash)
 
 include(CheckIPOSupported)
-check_ipo_supported(RESULT ipo_supported OUTPUT output)
+check_ipo_supported(RESULT ipo_supported OUTPUT output LANGUAGES CXX)
 if(ipo_supported)
     set_property(TARGET pHashChecker PROPERTY INTERPROCEDURAL_OPTIMIZATION TRUE)
 else()

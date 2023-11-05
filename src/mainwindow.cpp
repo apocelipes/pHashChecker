@@ -15,6 +15,7 @@
 #include "hashworker.h"
 #include "imageviewerdialog.h"
 #include "notificationbar.h"
+#include "utils/utils.h"
 
 MainWindow::MainWindow(QWidget *parent) noexcept
     : QWidget(parent)
@@ -190,12 +191,7 @@ void MainWindow::setImages() noexcept
         if (!p.is_regular_file()) {
             continue;
         }
-
-        auto ext = p.path().extension().generic_string();
-        std::transform(ext.begin(), ext.end(), ext.begin(), [](unsigned char c) {
-            return std::tolower(c);
-        });
-        if (imgExts.contains(ext)) {
+        if (Utils::isSupportImageFormat(p.path())) {
             images.emplace_back(p.path().string());
         }
     }

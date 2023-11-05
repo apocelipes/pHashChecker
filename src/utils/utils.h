@@ -5,7 +5,13 @@
 #define UTILS_H
 
 #include <algorithm>
+#include <array>
+#include <filesystem>
 #include <optional>
+#include <string_view>
+
+#include <QDir>
+#include <QTemporaryDir>
 
 namespace Utils {
     template<typename Iterator, typename Element>
@@ -24,6 +30,37 @@ namespace Utils {
         DEFAULT = 8,
         FUZZY   = 10,
     };
+
+    inline constexpr std::array<std::string_view, 6> imageExtensions{
+        ".jpg",
+        ".jpeg",
+        ".png",
+        ".webp",
+        ".bmp",
+        ".avif",
+    };
+
+    [[nodiscard]] inline std::string getFileExtension(const std::filesystem::path &filePath) noexcept {
+        auto ext = filePath.extension().generic_string();
+        std::transform(ext.begin(), ext.end(), ext.begin(), [](unsigned char c) {
+            return std::tolower(c);
+        });
+        return ext;
+    }
+
+    [[nodiscard]] inline bool isSupportImageFormat(const std::filesystem::path &img) noexcept {
+        const auto &ext = getFileExtension(img);
+        return std::find(imageExtensions.cbegin(), imageExtensions.cend(), ext) != imageExtensions.cend();
+    }
+
+    // NOTICE: only init once
+    [[nodiscard]] inline QString getTempDirPath() noexcept {
+        static QTemporaryDir temp{QDir::tempPath() + QDir::separator() + "pHashChecker-XXXXXX"};
+        if (!temp.isValid()) {
+            qFatal() << QObject::tr("create temporary dir failed");
+        }
+        return temp.path();
+    }
 }
 
 #endif // UTILS_H
