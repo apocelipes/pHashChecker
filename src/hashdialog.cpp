@@ -43,7 +43,7 @@ HashDialog::HashDialog(const QString &path, QWidget *parent) noexcept
 
     auto table = new QTableWidget;
     table->setColumnCount(2);
-    table->setRowCount(fileSizeIndex + std::size(hashAlgorithms));
+    table->setRowCount(2 + std::size(hashAlgorithms));
     table->verticalHeader()->setVisible(false);
     table->horizontalHeader()->setVisible(false);
     table->setShowGrid(false);
@@ -57,12 +57,12 @@ HashDialog::HashDialog(const QString &path, QWidget *parent) noexcept
     table->setItem(1, 0, new QTableWidgetItem{tr("File Size:")});
 
     const auto fileSize = img.size();
-    table->setItem(1, 1, new QTableWidgetItem{Utils::sizeFormat(fileSize) + QString::asprintf(" (%lld)", fileSize)});
-    for (int i = fileSizeIndex; i < table->rowCount(); ++i) {
-        table->setItem(i, 0, new QTableWidgetItem{algorithmNames[i - fileSizeIndex] + QString{":"}});
-        const QString &hashText = QCryptographicHash::hash(data, hashAlgorithms[i - fileSizeIndex]).toHex();
+    table->setItem(1, 1, new QTableWidgetItem{Utils::sizeFormat(fileSize) + QString{" (%1)"}.arg(fileSize)});
+    for (std::size_t i = 0; i < std::size(algorithmNames); ++i) {
+        table->setItem(i+fileSizeIndex+1, 0, new QTableWidgetItem{algorithmNames[i] + QString{":"}});
+        const QString &hashText = QCryptographicHash::hash(data, hashAlgorithms[i]).toHex();
         QCoreApplication::processEvents();
-        table->setItem(i, 1, new QTableWidgetItem{hashText});
+        table->setItem(i+fileSizeIndex+1, 1, new QTableWidgetItem{hashText});
     }
 
     auto buttons = new QDialogButtonBox;
