@@ -116,11 +116,11 @@ void NotificationBar::setColor(const QColor &borColor, const QColor &bgColor) no
         return;
     }
 
-    auto borderColorStyle = QString{"rgba(%1,%2,%3,%4)"}.arg(borColor.red())
+    const auto &borderColorStyle = QString{"rgba(%1,%2,%3,%4)"}.arg(borColor.red())
                                               .arg(borColor.green())
                                               .arg(borColor.blue())
                                               .arg(borColor.alpha());
-    auto bgColorStyle = QString{"rgba(%1,%2,%3,%4)"}.arg(bgColor.red())
+    const auto &bgColorStyle = QString{"rgba(%1,%2,%3,%4)"}.arg(bgColor.red())
                                               .arg(bgColor.green())
                                               .arg(bgColor.blue())
                                               .arg(bgColor.alpha());
