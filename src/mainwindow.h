@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Copyright (C) 2021 apocelipes
+// Copyright (C) 2024 apocelipes
 
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
@@ -36,17 +36,21 @@ public:
     explicit MainWindow(QWidget *parent = nullptr) noexcept;
     ~MainWindow() noexcept override;
 
-    [[nodiscard]] unsigned int getThreadNumber() noexcept
+    [[nodiscard]] size_t getThreadNumber() noexcept
     {
-        return std::min(static_cast<unsigned int>(images.size()), static_cast<unsigned int>(QThread::idealThreadCount()));
+        size_t nThreads = 1;
+        if (int n = QThread::idealThreadCount(); n > 1) {
+            nThreads = static_cast<size_t>(n);
+        }
+        return std::min(images.size(), nThreads);
     }
 
-    [[nodiscard]] unsigned long getNextLimit(const unsigned long oldLimit, const unsigned long threadID) noexcept
+    [[nodiscard]] size_t getNextLimit(const size_t oldLimit, const size_t threadID) noexcept
     {
         if (threadID + 1 == getThreadNumber()) {
             return images.size();
         }
-        return oldLimit+images.size()/getThreadNumber();
+        return oldLimit+images.size() / getThreadNumber();
     }
 
 Q_SIGNALS:
@@ -103,7 +107,7 @@ private:
         }
     }
 
-    void init_pool(unsigned long nThreads) noexcept {
+    void init_pool(const size_t nThreads) noexcept {
         const auto oldSize = pool.size();
         quitPool(true);
         if (oldSize > nThreads) {
@@ -129,7 +133,7 @@ private:
     SettingPanel *settings = nullptr;
 
     std::vector<std::string> images;
-    std::unordered_map<ulong64, std::string> hashes;
+    std::unordered_map<ulong64, size_t> hashes;
     std::unordered_map<std::string, std::vector<std::string>> sameImageResults;
     std::vector<ulong64> insertHistory;
     QReadWriteLock hashesLock;

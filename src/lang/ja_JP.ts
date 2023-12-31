@@ -129,8 +129,8 @@
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="74"/>
-        <source>same with: </source>
-        <translation>と似ている画像は: </translation>
+        <source> same with: </source>
+        <translation> と似ている画像は: </translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="89"/>

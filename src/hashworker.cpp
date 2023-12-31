@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Copyright (C) 2022 apocelipes
+// Copyright (C) 2024 apocelipes
 
 #include <QThread>
 #include <QDebug>
@@ -11,7 +11,7 @@ Utils::PHashDistance HashWorker::similar_distance = Utils::PHashDistance::FUZZY;
 
 void HashWorker::doWork()
 {
-    for (unsigned long index = _start; index < _limit; ++index) {
+    for (size_t index = _start; index < _limit; ++index) {
         if (this->thread()->isInterruptionRequested()) {
             qInfo() << "thread exit!";
             break;
@@ -19,7 +19,7 @@ void HashWorker::doWork()
 
         ulong64 hash = 0;
         bool isSameInHashes = false;
-        ph_dct_imagehash(_images[index].c_str(), hash);
+        ph_dct_imagehash(_images[index].c_str(), hash); //TODO error check
         _hashesLock.lockForRead();
         // 获得读锁后即为最新的size
         // 在获取读锁之前取得size，size可能会在读锁阻塞期间被更新，导致已经进入hashes的数据被重复比较
@@ -28,7 +28,7 @@ void HashWorker::doWork()
             if (checkSameImage(hash, key)) {
                 isSameInHashes = true;
                 // origin必须为已经存在于hashes里的图片
-                Q_EMIT sameImg(val, _images[index]);
+                Q_EMIT sameImg(val, index);
                 break;
             }
         }
@@ -44,12 +44,12 @@ void HashWorker::doWork()
         for (auto i = lastInsertIndex; i < _insertHistory.size(); ++i) {
             if (checkSameImage(hash, _insertHistory[i])) {
                 isSameInNewInsert = true;
-                Q_EMIT sameImg(_hashes[_insertHistory[i]], _images[index]);
+                Q_EMIT sameImg(_hashes[_insertHistory[i]], index);
                 break;
             }
         }
         if (!isSameInNewInsert) {
-            _hashes.emplace(std::make_pair(hash, _images[index]));
+            _hashes.emplace(std::make_pair(hash, index));
             _insertHistory.emplace_back(hash);
         }
         _hashesLock.unlock();

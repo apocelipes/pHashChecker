@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Copyright (C) 2022 apocelipes
+// Copyright (C) 2024 apocelipes
 
 #include <QApplication>
 #include <QVBoxLayout>
@@ -53,7 +53,7 @@ MainWindow::MainWindow(QWidget *parent) noexcept
 
         const auto nThreads = getThreadNumber();
         init_pool(nThreads);
-        for (unsigned long id = 0, start = 0, limit = getNextLimit(0, 0);
+        for (size_t id = 0, start = 0, limit = getNextLimit(0, 0);
              id < nThreads;
              ++id, start = limit, limit = getNextLimit(limit, id)) {
             // cannot use a QThreadPool because we need an event-loop in our worker functions
@@ -63,15 +63,15 @@ MainWindow::MainWindow(QWidget *parent) noexcept
             connect(worker, &HashWorker::doneAllWork, pool[id].get(), &QThread::quit);
             connect(pool[id].get(), &QThread::started, worker, &HashWorker::doWork);
             connect(worker, &HashWorker::doneOneImg, this, &MainWindow::onProgress);
-            connect(worker, &HashWorker::sameImg, this, [this](const std::string &origin, const std::string &same){
+            connect(worker, &HashWorker::sameImg, this, [this](size_t originIndex, size_t sameIndex){
+                const auto &origin = images[originIndex];
+                const auto &same = images[sameIndex];
                 if (!sameImageResults.contains(origin)) {
                     // construct vectors directly with the origin image
                     sameImageResults.emplace(origin, std::vector<std::string>{origin});
                 }
                 sameImageResults[origin].emplace_back(same);
-                auto output = qDebug();
-                output.setAutoInsertSpaces(true);
-                output << QString::fromStdString(origin) << tr("same with: ") << QString::fromStdString(same);
+                qDebug() << QString::fromStdString(origin) << tr(" same with: ") << QString::fromStdString(same);
             });
             pool[id]->start();
         }

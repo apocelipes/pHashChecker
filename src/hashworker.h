@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Copyright (C) 2022 apocelipes
+// Copyright (C) 2024 apocelipes
 
 #ifndef HASHWORKER_H
 #define HASHWORKER_H
@@ -21,10 +21,10 @@ class HashWorker : public QObject
     Q_OBJECT
 public:
     using ContainerType = const std::vector<std::string>;
-    using HashContainerType = std::unordered_map<ulong64, std::string>;
+    using HashContainerType = std::unordered_map<ulong64, size_t>;
 
-    HashWorker(unsigned long start,
-               unsigned long limit,
+    HashWorker(size_t start,
+               size_t limit,
                ContainerType &c,
                HashContainerType &hashes,
                std::vector<ulong64> &insertHistory,
@@ -45,13 +45,13 @@ public Q_SLOTS:
     void doWork();
 
 Q_SIGNALS:
-    void sameImg(const std::string&, const std::string&);
+    void sameImg(size_t, size_t);
     void doneOneImg();
     void doneAllWork();
 
 private:
-    unsigned long _start{};
-    unsigned long _limit{};
+    size_t _start{};
+    size_t _limit{};
     ContainerType &_images;
     HashContainerType &_hashes;
     std::vector<ulong64> &_insertHistory;
