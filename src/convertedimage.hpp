@@ -63,10 +63,11 @@ public:
     ConvertedImage(const ConvertedImage&) = delete;
     ConvertedImage& operator=(const ConvertedImage&) = delete;
 
-    ConvertedImage(ConvertedImage &&other) noexcept: path{std::move(other.path)} {}
+    ConvertedImage(ConvertedImage &&other) noexcept: path{std::move(other.path)}, isKeepAlive{other.isKeepAlive} {}
     ConvertedImage& operator=(ConvertedImage &&other) noexcept {
         clear();
         path = std::move(other.path);
+        isKeepAlive = other.isKeepAlive;
         return *this;
     }
 
