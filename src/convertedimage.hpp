@@ -25,7 +25,7 @@ class ConvertedImage {
     }
 
     void clear() noexcept {
-        if (!isKeepAlive && path && *path != "") {
+        if (!isKeepAlive && path.value_or("") != "") {
             QFile::remove(*path);
         }
     }
@@ -71,7 +71,7 @@ public:
     }
 
     [[nodiscard]] QString getImagePath() const noexcept {
-        return path ? *path : "";
+        return path.value_or("");
     }
 };
 

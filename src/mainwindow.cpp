@@ -21,7 +21,6 @@ MainWindow::MainWindow(QWidget *parent) noexcept
     : QWidget(parent)
 {
     pool.reserve(QThread::idealThreadCount());
-    images.reserve(1000);
     pathEdit = new QLineEdit;
     pathEdit->setPlaceholderText(tr("entry a directory"));
     pathEdit->setMinimumWidth(pathEdit->fontMetrics().averageCharWidth() * MIN_EDIT_WIDTH);
@@ -187,14 +186,10 @@ void MainWindow::setImages() noexcept
     }
 
     std::filesystem::directory_iterator dir{path, std::filesystem::directory_options::skip_permission_denied};
-    for (const auto &p : dir) {
-        if (!p.is_regular_file()) {
-            continue;
-        }
-        if (Utils::isSupportImageFormat(p.path())) {
-            images.emplace_back(p.path().string());
-        }
-    }
+    auto result = dir | std::views::filter([](const std::filesystem::directory_entry &p) { return p.is_regular_file(); })
+                      | std::views::filter([](const std::filesystem::directory_entry &p) { return Utils::isSupportImageFormat(p); })
+                      | std::views::transform([](const std::filesystem::directory_entry &p) { return p.path().string(); });
+    std::ranges::copy(result.begin(), result.end(), std::back_inserter(images)); // using c++23's ranges::to is the best way
     if (!images.empty()) {
         startBtn->setEnabled(true);
         bar->setValue(0);

@@ -8,19 +8,20 @@
 #include <array>
 #include <filesystem>
 #include <optional>
+#include <ranges>
 #include <string_view>
 
 #include <QDir>
 #include <QTemporaryDir>
 
 namespace Utils {
-    template<typename Iterator, typename Element>
-    [[nodiscard]] constexpr std::optional<std::ptrdiff_t> indexOf(Iterator beginIter, Iterator endIter, const Element &target) noexcept {
-        auto iter = std::find(beginIter, endIter, target);
-        if (iter == endIter) {
+    template<std::ranges::range Container, typename Element>
+    [[nodiscard]] constexpr std::optional<std::ptrdiff_t> indexOf(const Container &container, const Element &target) noexcept {
+        auto iter = std::ranges::find(container, target);
+        if (iter == std::ranges::cend(container)) {
             return std::nullopt;
         }
-        return iter - beginIter;
+        return iter - std::ranges::cbegin(container);
     }
 
     enum class PHashDistance: int
@@ -48,9 +49,9 @@ namespace Utils {
         return ext;
     }
 
-    [[nodiscard]] inline bool isSupportImageFormat(const std::filesystem::path &img) noexcept {
-        const auto &ext = getFileExtension(img);
-        return std::find(imageExtensions.cbegin(), imageExtensions.cend(), ext) != imageExtensions.cend();
+    [[nodiscard]] inline bool isSupportImageFormat(const std::filesystem::directory_entry &img) noexcept {
+        const auto &ext = getFileExtension(img.path());
+        return std::ranges::find(imageExtensions, ext) != imageExtensions.cend();
     }
 
     // NOTICE: only init once

@@ -26,7 +26,7 @@ ImageViewerDialog::ImageViewerDialog(const std::unordered_map<std::string, std::
         comboBox->addItem(QString{"Group %1"}.arg(index++));
         connect(imageView, &ImageViewer::emptied, this, [this, imageView, stackView, comboBox](){
             stackView->removeWidget(imageView);
-            auto targetIndex = Utils::indexOf(viewers.cbegin(), viewers.cend(), imageView);
+            auto targetIndex = Utils::indexOf(viewers, imageView);
             if (!targetIndex) {
                 qWarning() << tr("target ImageViewer not found");
                 return;

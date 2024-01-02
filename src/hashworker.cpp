@@ -5,6 +5,9 @@
 #include <QDebug>
 #include <QReadWriteLock>
 
+#include <algorithm>
+#include <ranges>
+
 #include "hashworker.h"
 
 Utils::PHashDistance HashWorker::similar_distance = Utils::PHashDistance::FUZZY;
@@ -24,13 +27,11 @@ void HashWorker::doWork()
         // 获得读锁后即为最新的size
         // 在获取读锁之前取得size，size可能会在读锁阻塞期间被更新，导致已经进入hashes的数据被重复比较
         auto lastInsertIndex = _insertHistory.size();
-        for (const auto &[key, val]: _hashes) {
-            if (checkSameImage(hash, key)) {
-                isSameInHashes = true;
-                // origin必须为已经存在于hashes里的图片
-                Q_EMIT sameImg(val, index);
-                break;
-            }
+        if (auto iter = std::ranges::find_if(_hashes, [hash](const std::pair<ulong64, size_t> &item) {
+            return HashWorker::checkSameImage(hash, item.first);
+        }); iter != _hashes.end()) {
+            isSameInHashes = true;
+            Q_EMIT sameImg(iter->second, index);
         }
         _hashesLock.unlock();
 
@@ -41,12 +42,11 @@ void HashWorker::doWork()
 
         auto isSameInNewInsert = false;
         _hashesLock.lockForWrite();
-        for (auto i = lastInsertIndex; i < _insertHistory.size(); ++i) {
-            if (checkSameImage(hash, _insertHistory[i])) {
-                isSameInNewInsert = true;
-                Q_EMIT sameImg(_hashes[_insertHistory[i]], index);
-                break;
-            }
+        if (auto iter = std::ranges::find_if(_insertHistory | std::views::drop(lastInsertIndex), [hash](const ulong64 item) {
+            return HashWorker::checkSameImage(hash, item);
+        }); iter != _insertHistory.end()) {
+            isSameInHashes = true;
+            Q_EMIT sameImg(_hashes[*iter], index);
         }
         if (!isSameInNewInsert) {
             _hashes.emplace(std::make_pair(hash, index));
