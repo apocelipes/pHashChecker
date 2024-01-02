@@ -27,7 +27,7 @@ void HashWorker::doWork()
         // 获得读锁后即为最新的size
         // 在获取读锁之前取得size，size可能会在读锁阻塞期间被更新，导致已经进入hashes的数据被重复比较
         auto lastInsertIndex = _insertHistory.size();
-        if (auto iter = std::ranges::find_if(_hashes, [hash](const std::pair<ulong64, size_t> &item) {
+        if (auto iter = std::ranges::find_if(_hashes, [hash](const std::pair<const ulong64, size_t> &item) {
             return HashWorker::checkSameImage(hash, item.first);
         }); iter != _hashes.end()) {
             isSameInHashes = true;

@@ -12,6 +12,7 @@
 #include <string_view>
 
 #include <QDir>
+#include <QStringBuilder>
 #include <QTemporaryDir>
 
 namespace Utils {
@@ -56,7 +57,7 @@ namespace Utils {
 
     // NOTICE: only init once
     [[nodiscard]] inline QString getTempDirPath() noexcept {
-        static QTemporaryDir temp{QDir::tempPath() + QDir::separator() + "pHashChecker-XXXXXX"};
+        static QTemporaryDir temp{QDir::tempPath() % QDir::separator() % QStringLiteral(u"pHashChecker-XXXXXX")};
         if (!temp.isValid()) {
             qFatal() << QObject::tr("create temporary dir failed");
         }

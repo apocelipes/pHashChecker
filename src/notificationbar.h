@@ -29,7 +29,7 @@ public:
 
     [[nodiscard]] static NotificationBar *createNotificationBar(
             NotificationBar::NotificationType type,
-            const QString &msg = "",
+            const QString &msg = QString{},
             QWidget *parent = nullptr) noexcept;
 
 public Q_SLOTS:

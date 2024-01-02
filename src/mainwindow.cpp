@@ -5,6 +5,7 @@
 #include <QVBoxLayout>
 #include <QDir>
 #include <QString>
+#include <QStringBuilder>
 #include <QFileInfo>
 
 #include <cctype>
@@ -70,7 +71,7 @@ MainWindow::MainWindow(QWidget *parent) noexcept
                     sameImageResults.emplace(origin, std::vector<std::string>{origin});
                 }
                 sameImageResults[origin].emplace_back(same);
-                qDebug() << QString::fromStdString(origin) << tr(" same with: ") << QString::fromStdString(same);
+                qDebug() << QString::fromStdString(origin) % tr(" same with: ") % QString::fromStdString(same);
             });
             pool[id]->start();
         }
@@ -189,7 +190,7 @@ void MainWindow::setImages() noexcept
     auto result = dir | std::views::filter([](const std::filesystem::directory_entry &p) { return p.is_regular_file(); })
                       | std::views::filter([](const std::filesystem::directory_entry &p) { return Utils::isSupportImageFormat(p); })
                       | std::views::transform([](const std::filesystem::directory_entry &p) { return p.path().string(); });
-    std::ranges::copy(result.begin(), result.end(), std::back_inserter(images)); // using c++23's ranges::to is the best way
+    std::ranges::copy(result, std::back_inserter(images)); // using c++23's ranges::to is the best way
     if (!images.empty()) {
         startBtn->setEnabled(true);
         bar->setValue(0);

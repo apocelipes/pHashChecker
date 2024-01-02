@@ -23,7 +23,7 @@ ImageViewerDialog::ImageViewerDialog(const std::unordered_map<std::string, std::
         auto imageView = new ImageViewer{images, this};
         viewers.emplace_back(imageView);
         stackView->addWidget(imageView);
-        comboBox->addItem(QString{"Group %1"}.arg(index++));
+        comboBox->addItem(tr("Group %1").arg(index++));
         connect(imageView, &ImageViewer::emptied, this, [this, imageView, stackView, comboBox](){
             stackView->removeWidget(imageView);
             auto targetIndex = Utils::indexOf(viewers, imageView);

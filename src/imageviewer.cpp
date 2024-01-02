@@ -23,7 +23,7 @@ struct ImageViewerPrivate {
     {
         thumbnailFocusBorder = new QFocusFrame{q};
         thumbnailFocusBorder->setAutoFillBackground(true);
-        thumbnailFocusBorder->setStyleSheet("color:#30d5c8;");
+        thumbnailFocusBorder->setStyleSheet(QStringLiteral(u"color:#30d5c8;"));
     }
 
     [[nodiscard]] unsigned int decrCurrentIndex() noexcept
@@ -45,7 +45,7 @@ struct ImageViewerPrivate {
         btn->setIcon(q->style()->standardIcon(pixmap));
         btn->setAttribute(Qt::WA_StyledBackground);
         btn->setIconSize(QSize{50, 50});
-        btn->setStyleSheet("background:rgba(0,0,0,0);border:0;");
+        btn->setStyleSheet(QStringLiteral(u"background:rgba(0,0,0,0);border:0;"));
         return btn;
     }
 
@@ -56,7 +56,7 @@ struct ImageViewerPrivate {
         thumbs.erase(thumbs.begin() + currentIndex);
         rmWidget->deleteLater();
         if (thumbs.empty()) {
-            imageContent->setImagePath("");
+            imageContent->setImagePath(QString{});
             Q_EMIT q->emptied();
             return;
         }
@@ -128,7 +128,7 @@ inline void ImageViewerPrivate::init(const std::vector<std::string> &images, Ima
         if (thumbs.empty()) {
             return;
         }
-        const auto newIndex = (currentIndex+1)%thumbs.size();
+        const auto newIndex = (currentIndex+1) % thumbs.size();
         Q_EMIT q->currentIndexChanged(newIndex, currentIndex);
         currentIndex = newIndex;
     });

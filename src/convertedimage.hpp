@@ -9,6 +9,7 @@
 #include <QFile>
 #include <QFileInfo>
 #include <QString>
+#include <QStringBuilder>
 #include <QProcess>
 
 #include "utils.h"
@@ -20,12 +21,15 @@ class ConvertedImage {
     [[nodiscard]] static QString getConvertedFullName(const QString &srcPath, const int width, const int height) noexcept {
         const auto &tmpPath = Utils::getTempDirPath();
         const auto fileName = QFileInfo{srcPath}.baseName();
-        const auto &name = QString("%1_%2x%3.jpg").arg(fileName).arg(width).arg(height);
-        return QDir::cleanPath(tmpPath + QDir::separator() + name);
+        // name_WxH.jpg
+        const QString &name = fileName % QChar('_')
+                           % QString::number(width) % QChar('x') % QString::number(height)
+                           % QStringLiteral(u".jpg");
+        return QDir::cleanPath(tmpPath % QDir::separator() % name);
     }
 
     void clear() noexcept {
-        if (!isKeepAlive && path.value_or("") != "") {
+        if (!isKeepAlive && path && !path->isEmpty()) {
             QFile::remove(*path);
         }
     }
@@ -43,16 +47,16 @@ public:
         }
         QStringList arguments;
         arguments << srcPath
-                  << "-quality" << "75"
-                  << "-resize" << QString("%1x%2!").arg(width).arg(height)
+                  << QStringLiteral(u"-quality") << QStringLiteral(u"75")
+                  << QStringLiteral(u"-resize") << QString::number(width) % QChar('x') % QString::number(height)
                   << newPath;
         QProcess cmd;
-        cmd.start("magick", arguments);
+        cmd.start(QStringLiteral(u"magick"), arguments);
         if (!cmd.waitForFinished()) {
             qFatal() << QObject::tr("create converted image failed");
         }
         if (cmd.exitCode() != 0) {
-            qFatal() << QObject::tr("call magick failed:") << QString{cmd.readAllStandardError()};
+            qFatal() << QObject::tr("call magick failed:") % QString{cmd.readAllStandardError()};
         }
     }
 
@@ -72,7 +76,7 @@ public:
     }
 
     [[nodiscard]] QString getImagePath() const noexcept {
-        return path.value_or("");
+        return path.value_or(QString{});
     }
 };
 

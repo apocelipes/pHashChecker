@@ -52,28 +52,33 @@
 <context>
     <name>HashDialog</name>
     <message>
-        <location filename="../hashdialog.cpp" line="55"/>
+        <location filename="../hashdialog.cpp" line="56"/>
         <source>File Name:</source>
         <translation>文件名:</translation>
     </message>
     <message>
-        <location filename="../hashdialog.cpp" line="57"/>
+        <location filename="../hashdialog.cpp" line="58"/>
         <source>File Size:</source>
         <translation>文件大小:</translation>
     </message>
     <message>
-        <location filename="../hashdialog.cpp" line="80"/>
+        <location filename="../hashdialog.cpp" line="81"/>
         <source>%1 has been copied</source>
         <translation>%1 已复制</translation>
     </message>
     <message>
-        <location filename="../hashdialog.cpp" line="90"/>
+        <location filename="../hashdialog.cpp" line="91"/>
         <source>Image Hash Dialog</source>
         <translation>查看图片哈希值</translation>
     </message>
 </context>
 <context>
     <name>ImageViewerDialog</name>
+    <message>
+        <location filename="../imageviewerdialog.cpp" line="26"/>
+        <source>Group %1</source>
+        <translation>分组 %1</translation>
+    </message>
     <message>
         <location filename="../imageviewerdialog.cpp" line="31"/>
         <source>target ImageViewer not found</source>
@@ -108,52 +113,52 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../mainwindow.cpp" line="25"/>
+        <location filename="../mainwindow.cpp" line="26"/>
         <source>entry a directory</source>
         <translation>输入目录</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="27"/>
+        <location filename="../mainwindow.cpp" line="28"/>
         <source>load</source>
         <translation>加载</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="29"/>
+        <location filename="../mainwindow.cpp" line="30"/>
         <source>start</source>
         <translation>开始计算</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="31"/>
+        <location filename="../mainwindow.cpp" line="32"/>
         <source>show result</source>
         <translation>显示结果</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="73"/>
+        <location filename="../mainwindow.cpp" line="74"/>
         <source> same with: </source>
         <translation> 相似图片: </translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="88"/>
+        <location filename="../mainwindow.cpp" line="89"/>
         <source>cancel</source>
         <translation>取消</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="110"/>
+        <location filename="../mainwindow.cpp" line="111"/>
         <source>select a directory</source>
         <translation>选择图片目录</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="132"/>
+        <location filename="../mainwindow.cpp" line="133"/>
         <source>about</source>
         <translation>关于</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="183"/>
+        <location filename="../mainwindow.cpp" line="184"/>
         <source> does not exist</source>
         <translation> 路径不存在</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="199"/>
+        <location filename="../mainwindow.cpp" line="200"/>
         <source>no image here</source>
         <translation>目录中没有图片</translation>
     </message>
@@ -161,17 +166,17 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../utils/utils.h" line="61"/>
+        <location filename="../utils/utils.h" line="62"/>
         <source>create temporary dir failed</source>
         <translation>无法创建临时目录</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="22"/>
+        <location filename="../main.cpp" line="23"/>
         <source>pHashChecker</source>
         <translation>pHashChecker</translation>
     </message>
     <message>
-        <location filename="../notificationbar.cpp" line="90"/>
+        <location filename="../notificationbar.cpp" line="91"/>
         <source>close this notification</source>
         <translation>关闭消息</translation>
     </message>
@@ -221,12 +226,12 @@
         <translation>提供最严格的匹配，很少出现误差。</translation>
     </message>
     <message>
-        <location filename="../convertedimage.hpp" line="52"/>
+        <location filename="../convertedimage.hpp" line="56"/>
         <source>create converted image failed</source>
         <translation>图片转换失败</translation>
     </message>
     <message>
-        <location filename="../convertedimage.hpp" line="55"/>
+        <location filename="../convertedimage.hpp" line="59"/>
         <source>call magick failed:</source>
         <translation>magick调用失败:</translation>
     </message>

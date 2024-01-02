@@ -5,6 +5,7 @@
 #include <QHBoxLayout>
 #include <QLabel>
 #include <QPushButton>
+#include <QStringBuilder>
 #include <QStyle>
 #include <QPropertyAnimation>
 #include <QSequentialAnimationGroup>
@@ -86,7 +87,7 @@ void NotificationBarPrivate::init(NotificationBar *q_ptr) noexcept
         q->animatedHide();
     });
     closeBtn->setAttribute(Qt::WA_StyledBackground);
-    closeBtn->setStyleSheet(".QPushButton{background:rgba(0,0,0,0);border:0;}");
+    closeBtn->setStyleSheet(QStringLiteral(u".QPushButton{background:rgba(0,0,0,0);border:0;}"));
     closeBtn->setToolTip(QObject::tr("close this notification"));
     closeBtn->hide();
 
@@ -116,18 +117,18 @@ void NotificationBar::setColor(const QColor &borColor, const QColor &bgColor) no
         return;
     }
 
-    const auto &borderColorStyle = QString{"rgba(%1,%2,%3,%4)"}.arg(borColor.red())
+    const auto &borderColorStyle = QStringLiteral(u"rgba(%1,%2,%3,%4)").arg(borColor.red())
                                               .arg(borColor.green())
                                               .arg(borColor.blue())
                                               .arg(borColor.alpha());
-    const auto &bgColorStyle = QString{"rgba(%1,%2,%3,%4)"}.arg(bgColor.red())
+    const auto &bgColorStyle = QStringLiteral(u"rgba(%1,%2,%3,%4)").arg(bgColor.red())
                                               .arg(bgColor.green())
                                               .arg(bgColor.blue())
                                               .arg(bgColor.alpha());
-    setStyleSheet(".NotificationBar{border: 1px solid " +
-                  borderColorStyle +
-                  "; background-color: " +
-                  bgColorStyle + ";}");
+    setStyleSheet(QStringLiteral(u".NotificationBar{border: 1px solid ") %
+                  borderColorStyle %
+                  QStringLiteral(u"; background-color: ") %
+                  bgColorStyle % QStringLiteral(u";}"));
 }
 
 void NotificationBar::setCloseButtonVisible(bool visible) noexcept

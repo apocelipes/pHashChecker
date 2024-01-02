@@ -30,7 +30,7 @@ private:
             QObject::tr("strict")
         };
         if (index >= 4 || index < 0) {
-            return QString{""};
+            return QString{};
         }
         return infoes[index];
     }
@@ -43,7 +43,7 @@ private:
              QObject::tr("Strict mode provides the highest matching accuracy."),
         };
         if (index >= 4 || index < 0) {
-            return QString{""};
+            return QString{};
         }
         return toolTips[index];
     }

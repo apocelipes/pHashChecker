@@ -52,28 +52,33 @@
 <context>
     <name>HashDialog</name>
     <message>
-        <location filename="../hashdialog.cpp" line="55"/>
+        <location filename="../hashdialog.cpp" line="56"/>
         <source>File Name:</source>
         <translation>ファイル名:</translation>
     </message>
     <message>
-        <location filename="../hashdialog.cpp" line="57"/>
+        <location filename="../hashdialog.cpp" line="58"/>
         <source>File Size:</source>
         <translation>サイズ:</translation>
     </message>
     <message>
-        <location filename="../hashdialog.cpp" line="80"/>
+        <location filename="../hashdialog.cpp" line="81"/>
         <source>%1 has been copied</source>
         <translation>%1 コピーされました</translation>
     </message>
     <message>
-        <location filename="../hashdialog.cpp" line="90"/>
+        <location filename="../hashdialog.cpp" line="91"/>
         <source>Image Hash Dialog</source>
         <translation>Image Hash Dialog</translation>
     </message>
 </context>
 <context>
     <name>ImageViewerDialog</name>
+    <message>
+        <location filename="../imageviewerdialog.cpp" line="26"/>
+        <source>Group %1</source>
+        <translation>グループ %1</translation>
+    </message>
     <message>
         <location filename="../imageviewerdialog.cpp" line="31"/>
         <source>target ImageViewer not found</source>
@@ -108,52 +113,52 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../mainwindow.cpp" line="25"/>
+        <location filename="../mainwindow.cpp" line="26"/>
         <source>entry a directory</source>
         <translation>フォルダのパスを入力</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="27"/>
+        <location filename="../mainwindow.cpp" line="28"/>
         <source>load</source>
         <translation>ロード</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="29"/>
+        <location filename="../mainwindow.cpp" line="30"/>
         <source>start</source>
         <translation>スタート</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="31"/>
+        <location filename="../mainwindow.cpp" line="32"/>
         <source>show result</source>
         <translation>結果を表示</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="73"/>
+        <location filename="../mainwindow.cpp" line="74"/>
         <source> same with: </source>
         <translation> と似ている画像は: </translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="88"/>
+        <location filename="../mainwindow.cpp" line="89"/>
         <source>cancel</source>
         <translation>キャンセル</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="110"/>
+        <location filename="../mainwindow.cpp" line="111"/>
         <source>select a directory</source>
         <translation>フォルダを選択</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="132"/>
+        <location filename="../mainwindow.cpp" line="133"/>
         <source>about</source>
         <translation>アプリについて</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="183"/>
+        <location filename="../mainwindow.cpp" line="184"/>
         <source> does not exist</source>
         <translation> そのようなファイルやディレクトリはありません</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="199"/>
+        <location filename="../mainwindow.cpp" line="200"/>
         <source>no image here</source>
         <translation>画像はありません</translation>
     </message>
@@ -161,17 +166,17 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../utils/utils.h" line="61"/>
+        <location filename="../utils/utils.h" line="62"/>
         <source>create temporary dir failed</source>
         <translation>一時ディレクトリの作成が失敗しました</translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="22"/>
+        <location filename="../main.cpp" line="23"/>
         <source>pHashChecker</source>
         <translation>pHashChecker</translation>
     </message>
     <message>
-        <location filename="../notificationbar.cpp" line="90"/>
+        <location filename="../notificationbar.cpp" line="91"/>
         <source>close this notification</source>
         <translation>閉じる</translation>
     </message>
@@ -221,12 +226,12 @@
         <translation>もっとも厳しいマッチングを行い、せいかくな結果が提供されています。</translation>
     </message>
     <message>
-        <location filename="../convertedimage.hpp" line="52"/>
+        <location filename="../convertedimage.hpp" line="56"/>
         <source>create converted image failed</source>
         <translation>画像は転換できませんでした</translation>
     </message>
     <message>
-        <location filename="../convertedimage.hpp" line="55"/>
+        <location filename="../convertedimage.hpp" line="59"/>
         <source>call magick failed:</source>
         <translation>magickの呼び出しでエラーが発生しました:</translation>
     </message>

@@ -9,6 +9,7 @@
 #include <QFile>
 #include <QGuiApplication>
 #include <QHeaderView>
+#include <QStringBuilder>
 #include <QTableWidget>
 #include <QVBoxLayout>
 
@@ -57,9 +58,9 @@ HashDialog::HashDialog(const QString &path, QWidget *parent) noexcept
     table->setItem(1, 0, new QTableWidgetItem{tr("File Size:")});
 
     const auto fileSize = img.size();
-    table->setItem(1, 1, new QTableWidgetItem{Utils::sizeFormat(fileSize) + QString{" (%1)"}.arg(fileSize)});
+    table->setItem(1, 1, new QTableWidgetItem{Utils::sizeFormat(fileSize) % QStringLiteral(u" (%1)").arg(fileSize)});
     for (std::size_t i = 0; i < std::size(algorithmNames); ++i) {
-        table->setItem(i+fileSizeIndex+1, 0, new QTableWidgetItem{algorithmNames[i] + QString{":"}});
+        table->setItem(i+fileSizeIndex+1, 0, new QTableWidgetItem{algorithmNames[i] % QChar(':')});
         const QString &hashText = QCryptographicHash::hash(data, hashAlgorithms[i]).toHex();
         QCoreApplication::processEvents();
         table->setItem(i+fileSizeIndex+1, 1, new QTableWidgetItem{hashText});

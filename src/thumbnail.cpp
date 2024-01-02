@@ -59,7 +59,7 @@ void ThumbnailPrivate::init(Thumbnail *q_ptr) noexcept
     shadow = new QWidget{q};
     shadow->setWindowFlag(Qt::FramelessWindowHint);
     shadow->setAttribute(Qt::WA_StyledBackground);
-    shadow->setStyleSheet("background:rgb(255,255,255);");
+    shadow->setStyleSheet(QStringLiteral(u"background:rgb(255,255,255);"));
     shadow->setGeometry(q->geometry());
     opacityEffect = new QGraphicsOpacityEffect{q};
     opacityEffect->setOpacity(DEFAULT_OPACITY);
