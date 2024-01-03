@@ -12,6 +12,8 @@
 
 #include <functional>
 
+#include <ankerl/unordered_dense.h>
+
 #include "notificationbar.h"
 
 struct NotificationBarPrivate {
@@ -233,9 +235,9 @@ NotificationBar *NotificationBar::createSuccessBar(QWidget *parent) noexcept
     return bar;
 }
 
-NotificationBar *NotificationBar::createNotificationBar(const NotificationBar::NotificationType type, const QString &msg, QWidget *parent) noexcept {
+NotificationBar *NotificationBar::createNotificationBar(const NotificationType type, const QString &msg, QWidget *parent) noexcept {
     using creator_t = std::function<NotificationBar*(QWidget *)>;
-    static std::unordered_map<NotificationType, creator_t> notificationFactory = {
+    static ankerl::unordered_dense::map<NotificationType, creator_t> notificationFactory = {
             {
                 NotificationType::INFO,
                 &NotificationBar::createInfoBar

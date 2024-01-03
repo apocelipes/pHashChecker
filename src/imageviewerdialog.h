@@ -9,13 +9,15 @@
 #include <string>
 #include <vector>
 
+#include <ankerl/unordered_dense.h>
+
 class ImageViewer;
 
 class ImageViewerDialog : public QDialog
 {
     Q_OBJECT
 public:
-    explicit ImageViewerDialog(const std::unordered_map<std::string, std::vector<std::string>> &sameImageList);
+    explicit ImageViewerDialog(const ankerl::unordered_dense::map<std::string, std::vector<std::string>> &sameImageList);
 
 private:
     std::vector<ImageViewer*> viewers;

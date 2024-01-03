@@ -176,7 +176,7 @@
         <translation>pHashChecker</translation>
     </message>
     <message>
-        <location filename="../notificationbar.cpp" line="91"/>
+        <location filename="../notificationbar.cpp" line="93"/>
         <source>close this notification</source>
         <translation>閉じる</translation>
     </message>

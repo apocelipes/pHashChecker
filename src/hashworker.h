@@ -8,9 +8,9 @@
 
 #include <string>
 #include <vector>
-#include <unordered_map>
 
 #include <pHash.h>
+#include <ankerl/unordered_dense.h>
 
 #include "utils.h"
 
@@ -21,7 +21,7 @@ class HashWorker : public QObject
     Q_OBJECT
 public:
     using ContainerType = const std::vector<std::string>;
-    using HashContainerType = std::unordered_map<ulong64, size_t>;
+    using HashContainerType = ankerl::unordered_dense::map<ulong64, size_t>;
 
     HashWorker(size_t start,
                size_t limit,

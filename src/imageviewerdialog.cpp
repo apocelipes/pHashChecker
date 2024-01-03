@@ -13,7 +13,7 @@
 #include "imageviewer.h"
 #include "utils.h"
 
-ImageViewerDialog::ImageViewerDialog(const std::unordered_map<std::string, std::vector<std::string>> &sameImageList)
+ImageViewerDialog::ImageViewerDialog(const ankerl::unordered_dense::map<std::string, std::vector<std::string>> &sameImageList)
 {
     auto stackView = new QStackedWidget{this};
     auto comboBox = new QComboBox{this};

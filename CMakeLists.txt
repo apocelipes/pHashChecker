@@ -17,9 +17,11 @@ if (${CMAKE_CXX_COMPILER_ID} MATCHES "Clang" OR ${CMAKE_CXX_COMPILER_ID} MATCHES
     add_compile_options(-Wall -Wextra -fno-rtti -O2)
 endif()
 
-include_directories(third-party/CImg)
-include_directories(third-party/pHash/src)
-include_directories(src/utils)
+include_directories(third-party/CImg
+    third-party/pHash/src
+    third-party/unordered_dense/include
+    src/utils
+)
 
 find_package(Qt6 REQUIRED COMPONENTS Core)
 qt_standard_project_setup()
