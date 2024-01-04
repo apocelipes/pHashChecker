@@ -251,6 +251,10 @@ NotificationBar *NotificationBar::createNotificationBar(const NotificationType t
                 &NotificationBar::createSuccessBar
             },
     };
+
+    if (!notificationFactory.contains(type)) {
+	return nullptr;
+    }
     NotificationBar *bar = notificationFactory[type](parent);
     if (msg != "") {
         bar->setText(msg);

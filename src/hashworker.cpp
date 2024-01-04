@@ -7,6 +7,7 @@
 
 #include <algorithm>
 #include <ranges>
+#include <utility>
 
 #include "hashworker.h"
 
@@ -27,7 +28,7 @@ void HashWorker::doWork()
         // 获得读锁后即为最新的size
         // 在获取读锁之前取得size，size可能会在读锁阻塞期间被更新，导致已经进入hashes的数据被重复比较
         auto lastInsertIndex = _insertHistory.size();
-        if (auto iter = std::ranges::find_if(_hashes, [hash](const auto &item) {
+        if (auto iter = std::ranges::find_if(std::as_const(_hashes), [hash](const auto &item) {
             return HashWorker::checkSameImage(hash, item.first);
         }); iter != _hashes.end()) {
             isSameInHashes = true;
@@ -42,7 +43,7 @@ void HashWorker::doWork()
 
         auto isSameInNewInsert = false;
         _hashesLock.lockForWrite();
-        if (auto iter = std::ranges::find_if(_insertHistory | std::views::drop(lastInsertIndex), [hash](const ulong64 item) {
+        if (auto iter = std::ranges::find_if(std::as_const(_insertHistory) | std::views::drop(lastInsertIndex), [hash](const ulong64 item) {
             return HashWorker::checkSameImage(hash, item);
         }); iter != _insertHistory.end()) {
             isSameInHashes = true;

@@ -7,6 +7,7 @@
 #include <algorithm>
 #include <array>
 #include <filesystem>
+#include <iterator>
 #include <optional>
 #include <ranges>
 #include <string_view>
@@ -22,7 +23,7 @@ namespace Utils {
         if (iter == std::ranges::cend(container)) {
             return std::nullopt;
         }
-        return iter - std::ranges::cbegin(container);
+	return std::ranges::distance(std::ranges::cbegin(container), iter);
     }
 
     enum class PHashDistance: int

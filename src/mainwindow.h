@@ -102,9 +102,9 @@ private:
 
     void sort_result() noexcept
     {
-        for (auto &[_, v] : sameImageResults) {
-            std::sort(v.begin(), v.end());
-        }
+	std::ranges::for_each(sameImageResults, [](auto &result){
+	    std::ranges::sort(result.second);
+	});
     }
 
     void init_pool(const size_t nThreads) noexcept {
