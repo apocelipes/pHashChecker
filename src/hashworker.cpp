@@ -4,6 +4,7 @@
 #include <QThread>
 #include <QDebug>
 #include <QReadWriteLock>
+#include <QStringBuilder>
 
 #include <algorithm>
 #include <ranges>
@@ -17,13 +18,17 @@ void HashWorker::doWork()
 {
     for (size_t index = _start; index < _limit; ++index) {
         if (this->thread()->isInterruptionRequested()) {
-            qInfo() << "thread exit!";
+            qInfo() << tr("thread exit");
             break;
         }
 
         ulong64 hash = 0;
         bool isSameInHashes = false;
-        ph_dct_imagehash(_images[index].c_str(), hash); //TODO error check
+        if (ph_dct_imagehash(_images[index].c_str(), hash) < 0) {
+            qWarning() << tr("calculating pHash failed, skip: ") % QString::fromStdString(_images[index]);
+            Q_EMIT doneOneImg();
+            continue;
+        }
         _hashesLock.lockForRead();
         // 获得读锁后即为最新的size
         // 在获取读锁之前取得size，size可能会在读锁阻塞期间被更新，导致已经进入hashes的数据被重复比较

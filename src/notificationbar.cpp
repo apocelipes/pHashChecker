@@ -252,8 +252,8 @@ NotificationBar *NotificationBar::createNotificationBar(const NotificationType t
             },
     };
 
-    if (!notificationFactory.contains(type)) {
-	return nullptr;
+    if (!notificationFactory.contains(type)) [[unlikely]] {
+        return nullptr;
     }
     NotificationBar *bar = notificationFactory[type](parent);
     if (msg != "") {

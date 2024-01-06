@@ -73,6 +73,19 @@
     </message>
 </context>
 <context>
+    <name>HashWorker</name>
+    <message>
+        <location filename="../hashworker.cpp" line="21"/>
+        <source>thread exit</source>
+        <translation>スレッドが終了しました</translation>
+    </message>
+    <message>
+        <location filename="../hashworker.cpp" line="28"/>
+        <source>calculating pHash failed, skip: </source>
+        <translation>pHash計算にエラーが発生し該当画像をスキップします： </translation>
+    </message>
+</context>
+<context>
     <name>ImageViewerDialog</name>
     <message>
         <location filename="../imageviewerdialog.cpp" line="26"/>
