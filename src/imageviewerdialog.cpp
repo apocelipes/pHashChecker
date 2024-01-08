@@ -36,7 +36,7 @@ ImageViewerDialog::ImageViewerDialog(ankerl::unordered_dense::map<std::string, s
     auto buttons = new QDialogButtonBox{this};
     prevBtn = new QPushButton{style()->standardIcon(QStyle::SP_ArrowLeft), tr("prev")};
     connect(prevBtn, &QPushButton::clicked, [this](){
-        auto index = comboBox->currentIndex();
+        const auto index = comboBox->currentIndex();
         comboBox->setCurrentIndex(index - 1);
     });
     prevBtn->setEnabled(false);
@@ -45,7 +45,7 @@ ImageViewerDialog::ImageViewerDialog(ankerl::unordered_dense::map<std::string, s
     ignoreBtn = new QPushButton{style()->standardIcon(QStyle::SP_BrowserStop), tr("ignore this")};
     connect(ignoreBtn, &QPushButton::clicked, this, [this](){
         auto widget = viewers[comboBox->currentText()];
-        auto index = comboBox->currentIndex();
+        const auto index = comboBox->currentIndex();
         viewers.erase(comboBox->currentText());
         comboBox->removeItem(index);
         setCurrentWidgetByName(comboBox->currentText());
@@ -55,15 +55,15 @@ ImageViewerDialog::ImageViewerDialog(ankerl::unordered_dense::map<std::string, s
 
     nextBtn = new QPushButton{style()->standardIcon(QStyle::SP_ArrowRight), tr("next")};
     connect(nextBtn, &QPushButton::clicked, comboBox, [this](){
-        auto index = comboBox->currentIndex();
+        const auto index = comboBox->currentIndex();
         comboBox->setCurrentIndex(index + 1);
     });
     buttons->addButton(nextBtn, QDialogButtonBox::ActionRole);
     buttons->addButton(QDialogButtonBox::Ok);
 
     auto buttonsSetEnable = [this](){
-        auto index = comboBox->currentIndex();
-        auto hasViewer = comboBox->count() != 0;
+        const auto index = comboBox->currentIndex();
+        const auto hasViewer = comboBox->count() != 0;
         prevBtn->setEnabled(hasViewer && index != 0);
         nextBtn->setEnabled(hasViewer && index != comboBox->count() - 1);
         ignoreBtn->setEnabled(hasViewer);
@@ -89,13 +89,13 @@ void ImageViewerDialog::createImageViewer(const QString &name) noexcept
     auto imageView = new ImageViewer{results[name], this};
     imageView->hide();
     connect(imageView, &ImageViewer::emptied, this, [this, name, imageView](){
-        auto targetIndex = Utils::indexOf(viewers | std::views::values, imageView);
-        if (!viewers.contains(name) || viewers[name] != imageView) {
+        const auto targetIndex = comboBox->findText(name);
+        if (targetIndex < 0 || !viewers.contains(name) || viewers[name] != imageView) {
             qWarning() << tr("target ImageViewer not found");
             return;
         }
         viewers.erase(name);
-        comboBox->removeItem(static_cast<int>(*targetIndex));
+        comboBox->removeItem(targetIndex);
         setCurrentWidgetByName(comboBox->currentText());
         imageView->deleteLater();
     });
