@@ -88,37 +88,37 @@
 <context>
     <name>ImageViewerDialog</name>
     <message>
-        <location filename="../imageviewerdialog.cpp" line="26"/>
+        <location filename="../imageviewerdialog.cpp" line="21"/>
         <source>Group %1</source>
         <translation>グループ %1</translation>
     </message>
     <message>
-        <location filename="../imageviewerdialog.cpp" line="31"/>
+        <location filename="../imageviewerdialog.cpp" line="94"/>
         <source>target ImageViewer not found</source>
         <translation>ターゲットのImageViewerは見つかりませんでした</translation>
     </message>
     <message>
-        <location filename="../imageviewerdialog.cpp" line="40"/>
+        <location filename="../imageviewerdialog.cpp" line="25"/>
         <source>No data here!</source>
         <translation>コンテンツはありません！</translation>
     </message>
     <message>
-        <location filename="../imageviewerdialog.cpp" line="46"/>
+        <location filename="../imageviewerdialog.cpp" line="37"/>
         <source>prev</source>
         <translation>前へ</translation>
     </message>
     <message>
-        <location filename="../imageviewerdialog.cpp" line="53"/>
+        <location filename="../imageviewerdialog.cpp" line="45"/>
         <source>ignore this</source>
         <translation>無視</translation>
     </message>
     <message>
-        <location filename="../imageviewerdialog.cpp" line="64"/>
+        <location filename="../imageviewerdialog.cpp" line="56"/>
         <source>next</source>
         <translation>次へ</translation>
     </message>
     <message>
-        <location filename="../imageviewerdialog.cpp" line="94"/>
+        <location filename="../imageviewerdialog.cpp" line="84"/>
         <source>Check Images</source>
         <translation>ギャラリー</translation>
     </message>

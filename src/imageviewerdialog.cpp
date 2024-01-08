@@ -2,9 +2,7 @@
 // Copyright (C) 2023 apocelipes
 
 #include <QComboBox>
-#include <QCoreApplication>
 #include <QDialogButtonBox>
-#include <QStackedWidget>
 #include <QtGlobal>
 #include <QVBoxLayout>
 #include <QPushButton>
@@ -13,83 +11,115 @@
 #include "imageviewer.h"
 #include "utils.h"
 
-ImageViewerDialog::ImageViewerDialog(const ankerl::unordered_dense::map<std::string, std::vector<std::string>> &sameImageList)
+ImageViewerDialog::ImageViewerDialog(ankerl::unordered_dense::map<std::string, std::vector<std::string>> &sameImageList)
 {
-    auto stackView = new QStackedWidget{this};
-    auto comboBox = new QComboBox{this};
-    viewers.reserve(sameImageList.size());
+    mainLayout = new QVBoxLayout;
+    comboBox = new QComboBox{this};
+    results.reserve(sameImageList.size());
     unsigned int index = 1u;
-    for (const auto &[_, images] : sameImageList) {
-        auto imageView = new ImageViewer{images, this};
-        viewers.emplace_back(imageView);
-        stackView->addWidget(imageView);
-        comboBox->addItem(tr("Group %1").arg(index++));
-        connect(imageView, &ImageViewer::emptied, this, [this, imageView, stackView, comboBox](){
-            stackView->removeWidget(imageView);
-            auto targetIndex = Utils::indexOf(viewers, imageView);
-            if (!targetIndex) {
-                qWarning() << tr("target ImageViewer not found");
-                return;
-            }
-            viewers.erase(viewers.begin() + *targetIndex);
-            comboBox->removeItem(static_cast<int>(*targetIndex));
-            imageView->deleteLater();
-        });
-        QCoreApplication::processEvents();
+    for (auto &images : sameImageList | std::views::values) {
+        QString name = tr("Group %1").arg(index++);
+        comboBox->addItem(name);
+        results.emplace(std::move(name), std::move(images));
     }
-    auto emptyWidget = new QLabel{tr("No data here!"), this};
-    emptyWidget->setMinimumSize(900, 700);
-    emptyWidget->setAlignment(Qt::AlignCenter);
-    stackView->addWidget(emptyWidget);
+    empty = new QLabel{tr("No data here!"), this};
+    empty->setMinimumSize(900, 700);
+    empty->setAlignment(Qt::AlignCenter);
+    empty->hide();
+    if (results.empty()) {
+        current = empty;
+    } else {
+        createImageViewer(comboBox->currentText());
+        current = viewers[comboBox->currentText()];
+    }
 
     auto buttons = new QDialogButtonBox{this};
-    auto prevBtn = new QPushButton{style()->standardIcon(QStyle::SP_ArrowLeft), tr("prev")};
-    connect(prevBtn, &QPushButton::clicked, [comboBox](){
+    prevBtn = new QPushButton{style()->standardIcon(QStyle::SP_ArrowLeft), tr("prev")};
+    connect(prevBtn, &QPushButton::clicked, [this](){
         auto index = comboBox->currentIndex();
         comboBox->setCurrentIndex(index - 1);
     });
+    prevBtn->setEnabled(false);
     buttons->addButton(prevBtn, QDialogButtonBox::ActionRole);
 
-    auto ignoreBtn = new QPushButton{style()->standardIcon(QStyle::SP_BrowserStop), tr("ignore this")};
-    connect(ignoreBtn, &QPushButton::clicked, this, [this, comboBox, stackView](){
-        auto widget = stackView->currentWidget();
+    ignoreBtn = new QPushButton{style()->standardIcon(QStyle::SP_BrowserStop), tr("ignore this")};
+    connect(ignoreBtn, &QPushButton::clicked, this, [this](){
+        auto widget = viewers[comboBox->currentText()];
         auto index = comboBox->currentIndex();
-        viewers.erase(viewers.begin() + index);
+        viewers.erase(comboBox->currentText());
         comboBox->removeItem(index);
-        stackView->removeWidget(widget);
+        setCurrentWidgetByName(comboBox->currentText());
         widget->deleteLater();
     });
     buttons->addButton(ignoreBtn, QDialogButtonBox::ActionRole);
 
-    auto nextBtn = new QPushButton{style()->standardIcon(QStyle::SP_ArrowRight), tr("next")};
-    connect(nextBtn, &QPushButton::clicked, comboBox, [comboBox](){
+    nextBtn = new QPushButton{style()->standardIcon(QStyle::SP_ArrowRight), tr("next")};
+    connect(nextBtn, &QPushButton::clicked, comboBox, [this](){
         auto index = comboBox->currentIndex();
         comboBox->setCurrentIndex(index + 1);
     });
     buttons->addButton(nextBtn, QDialogButtonBox::ActionRole);
     buttons->addButton(QDialogButtonBox::Ok);
 
-    auto buttonsSetEnable = [this, stackView, prevBtn, nextBtn, ignoreBtn](){
-        auto index = stackView->currentIndex();
-        // 因为有空白组件做default，不能靠currentIndex == -1判断
-        auto hasViewer = !viewers.empty();
+    auto buttonsSetEnable = [this](){
+        auto index = comboBox->currentIndex();
+        auto hasViewer = comboBox->count() != 0;
         prevBtn->setEnabled(hasViewer && index != 0);
-        nextBtn->setEnabled(hasViewer
-                            && static_cast<unsigned int>(index) != (viewers.size() - 1));
+        nextBtn->setEnabled(hasViewer && index != comboBox->count() - 1);
         ignoreBtn->setEnabled(hasViewer);
     };
-    connect(comboBox, qOverload<int>(&QComboBox::currentIndexChanged), this, [stackView, buttonsSetEnable](int index){
-        stackView->setCurrentIndex(index);
+    connect(comboBox, qOverload<int>(&QComboBox::currentIndexChanged), this, [this, buttonsSetEnable](int){
+        setCurrentWidgetByName(comboBox->currentText());
         buttonsSetEnable();
     });
     connect(buttons, &QDialogButtonBox::accepted, this, &QDialog::accept);
     connect(buttons, &QDialogButtonBox::rejected, this, &QDialog::reject);
     buttonsSetEnable();
 
-    auto mainLayout = new QVBoxLayout;
     mainLayout->addWidget(comboBox, 0, Qt::AlignLeft);
-    mainLayout->addWidget(stackView);
+    current->show();
+    mainLayout->addWidget(current);
     mainLayout->addWidget(buttons);
     setLayout(mainLayout);
     setWindowTitle(tr("Check Images"));
+}
+
+void ImageViewerDialog::createImageViewer(const QString &name) noexcept
+{
+    auto imageView = new ImageViewer{results[name], this};
+    imageView->hide();
+    connect(imageView, &ImageViewer::emptied, this, [this, name, imageView](){
+        auto targetIndex = Utils::indexOf(viewers | std::views::values, imageView);
+        if (!viewers.contains(name) || viewers[name] != imageView) {
+            qWarning() << tr("target ImageViewer not found");
+            return;
+        }
+        viewers.erase(name);
+        comboBox->removeItem(static_cast<int>(*targetIndex));
+        setCurrentWidgetByName(comboBox->currentText());
+        imageView->deleteLater();
+    });
+    viewers[name] = imageView;
+}
+
+void ImageViewerDialog::replaceCurrentWidget(QWidget *newCurrent) noexcept
+{
+    assert(current != nullptr);
+    current->hide();
+    delete mainLayout->replaceWidget(current, newCurrent);
+    newCurrent->show();
+    current = newCurrent;
+}
+
+void ImageViewerDialog::setCurrentWidgetByName(const QString &name) noexcept
+{
+    if (name.isEmpty()) {
+        ignoreBtn->setEnabled(false);
+        replaceCurrentWidget(empty);
+        return;
+    }
+    if (!viewers.contains(name)) {
+        createImageViewer(name);
+    }
+    replaceCurrentWidget(viewers[name]);
 }

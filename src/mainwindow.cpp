@@ -78,7 +78,7 @@ MainWindow::MainWindow(QWidget *parent) noexcept
     });
 
     auto showResultDialog = [this](){
-        initResultDialog();
+        initResultDialog(); // ownerships of sameImageResults' elements will be taken
         imageDialog->exec();
     };
     connect(dialogBtn, &QPushButton::clicked, this, showResultDialog);
