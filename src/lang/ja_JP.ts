@@ -166,12 +166,12 @@
         <translation>アプリについて</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="184"/>
+        <location filename="../mainwindow.cpp" line="199"/>
         <source> does not exist</source>
         <translation> そのようなファイルやディレクトリはありません</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="200"/>
+        <location filename="../mainwindow.cpp" line="216"/>
         <source>no image here</source>
         <translation>画像はありません</translation>
     </message>
@@ -194,49 +194,59 @@
         <translation>閉じる</translation>
     </message>
     <message>
-        <location filename="../settingpanel.cpp" line="56"/>
+        <location filename="../settingpanel.cpp" line="58"/>
         <source>matching accuracy: </source>
         <translation>マッチングの精密性: </translation>
     </message>
     <message>
-        <location filename="../settingpanel.cpp" line="27"/>
+        <location filename="../settingpanel.cpp" line="29"/>
         <source>fuzzy</source>
         <translation>低い</translation>
     </message>
     <message>
-        <location filename="../settingpanel.cpp" line="28"/>
+        <location filename="../settingpanel.cpp" line="30"/>
         <source>default</source>
         <translation>デフォルト</translation>
     </message>
     <message>
-        <location filename="../settingpanel.cpp" line="29"/>
+        <location filename="../settingpanel.cpp" line="31"/>
         <source>precise</source>
         <translation>精確</translation>
     </message>
     <message>
-        <location filename="../settingpanel.cpp" line="30"/>
+        <location filename="../settingpanel.cpp" line="32"/>
         <source>strict</source>
         <translation>シビア</translation>
     </message>
     <message>
-        <location filename="../settingpanel.cpp" line="40"/>
+        <location filename="../settingpanel.cpp" line="42"/>
         <source>Fuzzy mode may produce more erroneous results.</source>
         <translation>若干の誤差があります。</translation>
     </message>
     <message>
-        <location filename="../settingpanel.cpp" line="41"/>
+        <location filename="../settingpanel.cpp" line="43"/>
         <source>The default mode.</source>
         <translation>デフォルトモードでマッチングをします。</translation>
     </message>
     <message>
-        <location filename="../settingpanel.cpp" line="42"/>
+        <location filename="../settingpanel.cpp" line="44"/>
         <source>This mode provides higher precision than the default mode.</source>
         <translation>デフォルトモードより高い正確性が保証されています。</translation>
     </message>
     <message>
-        <location filename="../settingpanel.cpp" line="43"/>
+        <location filename="../settingpanel.cpp" line="45"/>
         <source>Strict mode provides the highest matching accuracy.</source>
         <translation>もっとも厳しいマッチングを行い、せいかくな結果が提供されています。</translation>
+    </message>
+    <message>
+        <location filename="../settingpanel.cpp" line="87"/>
+        <source>recursive searching</source>
+        <translation>サブディレクトリも併せて検索</translation>
+    </message>
+    <message>
+        <location filename="../settingpanel.cpp" line="88"/>
+        <source>Recursively searches all images in the current directory and its subdirectories.</source>
+        <translation>現在のディレクトリとそのサブディレクトリにあるすべての画像を再帰的に検索します。</translation>
     </message>
     <message>
         <location filename="../convertedimage.hpp" line="56"/>

@@ -168,6 +168,21 @@ void MainWindow::onProgress() noexcept
     }
 }
 
+template <typename T>
+concept IsDirIterator = requires(T iter) {
+    { *iter } -> std::same_as<const std::filesystem::directory_entry&>;
+    { *std::filesystem::begin(iter) } -> std::same_as<const std::filesystem::directory_entry&>;
+    { *std::filesystem::end(iter) } -> std::same_as<const std::filesystem::directory_entry&>;
+};
+
+inline void fillImages(IsDirIterator auto &&dir, std::vector<std::string> &images) noexcept
+{
+    auto result = dir | std::views::filter([](const std::filesystem::directory_entry &p) { return p.is_regular_file(); })
+                      | std::views::filter([](const std::filesystem::directory_entry &p) { return Utils::isSupportImageFormat(p); })
+                      | std::views::transform([](const std::filesystem::directory_entry &p) { return p.path().string(); });
+    std::ranges::copy(result, std::back_inserter(images)); // using c++23's ranges::to is the best way
+}
+
 void MainWindow::setImages() noexcept
 {
     dialogBtn->hide();
@@ -186,11 +201,12 @@ void MainWindow::setImages() noexcept
         return;
     }
 
-    std::filesystem::directory_iterator dir{path, std::filesystem::directory_options::skip_permission_denied};
-    auto result = dir | std::views::filter([](const std::filesystem::directory_entry &p) { return p.is_regular_file(); })
-                      | std::views::filter([](const std::filesystem::directory_entry &p) { return Utils::isSupportImageFormat(p); })
-                      | std::views::transform([](const std::filesystem::directory_entry &p) { return p.path().string(); });
-    std::ranges::copy(result, std::back_inserter(images)); // using c++23's ranges::to is the best way
+    constexpr auto opts = std::filesystem::directory_options::skip_permission_denied;
+    if (settings->isRecursiveSearching()) {
+        fillImages(std::filesystem::recursive_directory_iterator{path, opts}, images);
+    } else {
+        fillImages(std::filesystem::directory_iterator{path, opts}, images);
+    }
     if (!images.empty()) {
         startBtn->setEnabled(true);
         bar->setValue(0);

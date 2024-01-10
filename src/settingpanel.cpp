@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // Copyright (C) 2022 apocelipes
 
+#include <QCheckBox>
 #include <QLabel>
 #include <QSlider>
 #include <QString>
@@ -16,6 +17,7 @@ struct SettingPanelPrivate
     QLabel *distanceLabel = nullptr;
     QLabel *valueLabel = nullptr;
     QSlider *distanceSlider = nullptr;
+    QCheckBox *recursiveSearchChecker = nullptr;
 
     void init(SettingPanel *q_ptr) noexcept;
 
@@ -81,10 +83,16 @@ void SettingPanelPrivate::init(SettingPanel *q_ptr) noexcept
             qWarning() << "invalid value: " << value;
         }
     });
+
+    recursiveSearchChecker = new QCheckBox{QObject::tr("recursive searching"), q};
+    recursiveSearchChecker->setToolTip(QObject::tr("Recursively searches all images in the current directory and its subdirectories."));
+
     auto settingsLayout = new QHBoxLayout;
     settingsLayout->addWidget(distanceLabel);
     settingsLayout->addWidget(distanceSlider);
     settingsLayout->addWidget(valueLabel);
+    settingsLayout->addStretch();
+    settingsLayout->addWidget(recursiveSearchChecker);
     settingsLayout->addStretch();
     q->setLayout(settingsLayout);
 }
@@ -96,3 +104,8 @@ SettingPanel::SettingPanel(QWidget *parent) noexcept
 }
 
 SettingPanel::~SettingPanel() noexcept = default;
+
+bool SettingPanel::isRecursiveSearching() noexcept
+{
+    return d->recursiveSearchChecker->isChecked();
+}

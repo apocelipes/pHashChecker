@@ -166,12 +166,12 @@
         <translation>关于</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="184"/>
+        <location filename="../mainwindow.cpp" line="199"/>
         <source> does not exist</source>
         <translation> 路径不存在</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="200"/>
+        <location filename="../mainwindow.cpp" line="216"/>
         <source>no image here</source>
         <translation>目录中没有图片</translation>
     </message>
@@ -194,49 +194,59 @@
         <translation>关闭消息</translation>
     </message>
     <message>
-        <location filename="../settingpanel.cpp" line="56"/>
+        <location filename="../settingpanel.cpp" line="58"/>
         <source>matching accuracy: </source>
         <translation>匹配精度: </translation>
     </message>
     <message>
-        <location filename="../settingpanel.cpp" line="27"/>
+        <location filename="../settingpanel.cpp" line="29"/>
         <source>fuzzy</source>
         <translation>较低</translation>
     </message>
     <message>
-        <location filename="../settingpanel.cpp" line="28"/>
+        <location filename="../settingpanel.cpp" line="30"/>
         <source>default</source>
         <translation>默认</translation>
     </message>
     <message>
-        <location filename="../settingpanel.cpp" line="29"/>
+        <location filename="../settingpanel.cpp" line="31"/>
         <source>precise</source>
         <translation>较高</translation>
     </message>
     <message>
-        <location filename="../settingpanel.cpp" line="30"/>
+        <location filename="../settingpanel.cpp" line="32"/>
         <source>strict</source>
         <translation>高</translation>
     </message>
     <message>
-        <location filename="../settingpanel.cpp" line="40"/>
+        <location filename="../settingpanel.cpp" line="42"/>
         <source>Fuzzy mode may produce more erroneous results.</source>
         <translation>精度较低可能产生较多错误匹配。</translation>
     </message>
     <message>
-        <location filename="../settingpanel.cpp" line="41"/>
+        <location filename="../settingpanel.cpp" line="43"/>
         <source>The default mode.</source>
         <translation>默认精度。</translation>
     </message>
     <message>
-        <location filename="../settingpanel.cpp" line="42"/>
+        <location filename="../settingpanel.cpp" line="44"/>
         <source>This mode provides higher precision than the default mode.</source>
         <translation>提供比默认模式更准确的匹配。</translation>
     </message>
     <message>
-        <location filename="../settingpanel.cpp" line="43"/>
+        <location filename="../settingpanel.cpp" line="45"/>
         <source>Strict mode provides the highest matching accuracy.</source>
         <translation>提供最严格的匹配，很少出现误差。</translation>
+    </message>
+    <message>
+        <location filename="../settingpanel.cpp" line="87"/>
+        <source>recursive searching</source>
+        <translation>递归搜索子目录</translation>
+    </message>
+    <message>
+        <location filename="../settingpanel.cpp" line="88"/>
+        <source>Recursively searches all images in the current directory and its subdirectories.</source>
+        <translation>递归搜索当前目录和其子目录中所有的图片。</translation>
     </message>
     <message>
         <location filename="../convertedimage.hpp" line="56"/>

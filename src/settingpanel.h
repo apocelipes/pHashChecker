@@ -14,6 +14,8 @@ public:
     explicit SettingPanel(QWidget *parent = nullptr) noexcept;
     ~SettingPanel() noexcept override;
 
+    [[nodiscard]] bool isRecursiveSearching() noexcept;
+
 private:
     friend struct SettingPanelPrivate;
     std::unique_ptr<struct SettingPanelPrivate> d;
