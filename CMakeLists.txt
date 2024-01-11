@@ -21,6 +21,7 @@ include_directories(third-party/CImg
     third-party/pHash/src
     third-party/unordered_dense/include
     src/utils
+    src
 )
 
 find_package(Qt6 REQUIRED COMPONENTS Core)

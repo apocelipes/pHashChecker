@@ -11,6 +11,8 @@
 
 #include <ankerl/unordered_dense.h>
 
+#include "qstringhasher.hpp"
+
 class QComboBox;
 class QLabel;
 class QPushButton;
