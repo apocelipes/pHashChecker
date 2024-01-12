@@ -93,7 +93,7 @@
         <translation>分组 %1</translation>
     </message>
     <message>
-        <location filename="../imageviewerdialog.cpp" line="94"/>
+        <location filename="../imageviewerdialog.cpp" line="97"/>
         <source>target ImageViewer not found</source>
         <translation>未找到目标ImageViewer</translation>
     </message>
@@ -103,22 +103,22 @@
         <translation>无内容！</translation>
     </message>
     <message>
-        <location filename="../imageviewerdialog.cpp" line="37"/>
+        <location filename="../imageviewerdialog.cpp" line="38"/>
         <source>prev</source>
         <translation>上一个</translation>
     </message>
     <message>
-        <location filename="../imageviewerdialog.cpp" line="45"/>
+        <location filename="../imageviewerdialog.cpp" line="46"/>
         <source>ignore this</source>
         <translation>忽略</translation>
     </message>
     <message>
-        <location filename="../imageviewerdialog.cpp" line="56"/>
+        <location filename="../imageviewerdialog.cpp" line="59"/>
         <source>next</source>
         <translation>下一个</translation>
     </message>
     <message>
-        <location filename="../imageviewerdialog.cpp" line="84"/>
+        <location filename="../imageviewerdialog.cpp" line="87"/>
         <source>Check Images</source>
         <translation>查看图片</translation>
     </message>

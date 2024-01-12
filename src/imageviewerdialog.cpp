@@ -23,14 +23,15 @@ ImageViewerDialog::ImageViewerDialog(ankerl::unordered_dense::map<std::string, s
         results.emplace(std::move(name), std::move(images));
     }
     empty = new QLabel{tr("No data here!"), this};
-    empty->setMinimumSize(900, 700);
+    empty->setMinimumSize(EditableImageFixedWidth + 50, EditableImageFixedHeight + 50);
     empty->setAlignment(Qt::AlignCenter);
     empty->hide();
     if (results.empty()) {
         current = empty;
     } else {
-        createImageViewer(comboBox->currentText());
-        current = viewers[comboBox->currentText()];
+        const auto &name = comboBox->currentText();
+        createImageViewer(name);
+        current = viewers[name];
     }
 
     auto buttons = new QDialogButtonBox{this};
@@ -44,9 +45,11 @@ ImageViewerDialog::ImageViewerDialog(ankerl::unordered_dense::map<std::string, s
 
     ignoreBtn = new QPushButton{style()->standardIcon(QStyle::SP_BrowserStop), tr("ignore this")};
     connect(ignoreBtn, &QPushButton::clicked, this, [this](){
-        auto widget = viewers[comboBox->currentText()];
+        const auto &oldName = comboBox->currentText();
         const auto index = comboBox->currentIndex();
-        viewers.erase(comboBox->currentText());
+        auto widget = viewers[oldName];
+        viewers.erase(oldName);
+        results.erase(oldName);
         comboBox->removeItem(index);
         setCurrentWidgetByName(comboBox->currentText());
         widget->deleteLater();
@@ -95,6 +98,7 @@ void ImageViewerDialog::createImageViewer(const QString &name) noexcept
             return;
         }
         viewers.erase(name);
+        results.erase(name);
         comboBox->removeItem(targetIndex);
         setCurrentWidgetByName(comboBox->currentText());
         imageView->deleteLater();

@@ -93,7 +93,7 @@
         <translation>グループ %1</translation>
     </message>
     <message>
-        <location filename="../imageviewerdialog.cpp" line="94"/>
+        <location filename="../imageviewerdialog.cpp" line="97"/>
         <source>target ImageViewer not found</source>
         <translation>ターゲットのImageViewerは見つかりませんでした</translation>
     </message>
@@ -103,22 +103,22 @@
         <translation>コンテンツはありません！</translation>
     </message>
     <message>
-        <location filename="../imageviewerdialog.cpp" line="37"/>
+        <location filename="../imageviewerdialog.cpp" line="38"/>
         <source>prev</source>
         <translation>前へ</translation>
     </message>
     <message>
-        <location filename="../imageviewerdialog.cpp" line="45"/>
+        <location filename="../imageviewerdialog.cpp" line="46"/>
         <source>ignore this</source>
         <translation>無視</translation>
     </message>
     <message>
-        <location filename="../imageviewerdialog.cpp" line="56"/>
+        <location filename="../imageviewerdialog.cpp" line="59"/>
         <source>next</source>
         <translation>次へ</translation>
     </message>
     <message>
-        <location filename="../imageviewerdialog.cpp" line="84"/>
+        <location filename="../imageviewerdialog.cpp" line="87"/>
         <source>Check Images</source>
         <translation>ギャラリー</translation>
     </message>
