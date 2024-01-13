@@ -105,7 +105,7 @@ SettingPanel::SettingPanel(QWidget *parent) noexcept
 
 SettingPanel::~SettingPanel() noexcept = default;
 
-bool SettingPanel::isRecursiveSearching() noexcept
+bool SettingPanel::isRecursiveSearching() const noexcept
 {
     return d->recursiveSearchChecker->isChecked();
 }

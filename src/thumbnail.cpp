@@ -7,11 +7,12 @@
 #include <QGraphicsOpacityEffect>
 #include <QPropertyAnimation>
 
-#include <filesystem>
 #include <utility>
 
 #include "convertedimage.hpp"
 #include "thumbnail.h"
+
+using namespace Qt::Literals::StringLiterals;
 
 constexpr int ThumbnailWidth = 100, ThumbnailHeight = 100;
 constexpr qreal DEFAULT_OPACITY = 0.8;
@@ -41,7 +42,7 @@ void ThumbnailPrivate::init(Thumbnail *q_ptr) noexcept
     q = q_ptr;
     image = new QLabel{q};
     image->setGeometry(q->geometry());
-    if (std::filesystem::exists(imgPath.toStdString())) {
+    if (QFile::exists(imgPath)) {
         QPixmap data;
         if (Utils::getFileExtension(imgPath.toStdString()) == ".avif") {
             ConvertedImage converted{imgPath, ThumbnailHeight, ThumbnailHeight};
@@ -68,11 +69,11 @@ void ThumbnailPrivate::init(Thumbnail *q_ptr) noexcept
 
 inline void ThumbnailPrivate::initShowShadowAnimation() noexcept
 {
-    auto blurShowAnimation = new QPropertyAnimation{blurEffect, "blurRadius", q};
+    auto blurShowAnimation = new QPropertyAnimation{blurEffect, "blurRadius"_ba, q};
     blurShowAnimation->setDuration(DEFAULT_ANIME_DURATION);
     blurShowAnimation->setStartValue(0.0);
     blurShowAnimation->setEndValue(DEFAULT_BLUR_RADIUS);
-    auto shadowShowAnimation = new QPropertyAnimation{opacityEffect, "opacity", q};
+    auto shadowShowAnimation = new QPropertyAnimation{opacityEffect, "opacity"_ba, q};
     shadowShowAnimation->setDuration(DEFAULT_ANIME_DURATION);
     shadowShowAnimation->setStartValue(0.0);
     shadowShowAnimation->setEndValue(DEFAULT_OPACITY);
@@ -83,11 +84,11 @@ inline void ThumbnailPrivate::initShowShadowAnimation() noexcept
 
 inline void ThumbnailPrivate::initHideShadowAnimation() noexcept
 {
-    auto blurHideAnimation = new QPropertyAnimation{blurEffect, "blurRadius", q};
+    auto blurHideAnimation = new QPropertyAnimation{blurEffect, "blurRadius"_ba, q};
     blurHideAnimation->setDuration(DEFAULT_ANIME_DURATION);
     blurHideAnimation->setStartValue(DEFAULT_BLUR_RADIUS);
     blurHideAnimation->setEndValue(0.0);
-    auto shadowHideAnimation = new QPropertyAnimation{opacityEffect, "opacity", q};
+    auto shadowHideAnimation = new QPropertyAnimation{opacityEffect, "opacity"_ba, q};
     shadowHideAnimation->setDuration(DEFAULT_ANIME_DURATION);
     shadowHideAnimation->setStartValue(DEFAULT_OPACITY);
     shadowHideAnimation->setEndValue(0.0);

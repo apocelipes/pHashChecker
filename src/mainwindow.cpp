@@ -111,7 +111,7 @@ MainWindow::MainWindow(QWidget *parent) noexcept
     fileDialogBtn = new QPushButton(tr("select a directory"));
     connect(fileDialogBtn, &QPushButton::clicked, fileDialog, &QFileDialog::exec);
     connect(fileDialog, &QFileDialog::fileSelected, this, [this](const QString &dirName) {
-        if (dirName == "" || !QFileInfo::exists(dirName)) {
+        if (dirName.isEmpty() || !QFileInfo::exists(dirName)) {
             return;
         }
 

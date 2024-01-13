@@ -83,7 +83,7 @@ inline void ImageViewerPrivate::init(const std::vector<std::string> &images, Ima
         auto thumbnail = new Thumbnail{QString::fromStdString(img), q};
         QObject::connect(thumbnail, &Thumbnail::clicked, q, [this, thumbnail]() {
             auto index = Utils::indexOf(thumbs, thumbnail);
-            if (!index  || *index == currentIndex) {
+            if (!index || *index == currentIndex) {
                 return;
             }
             Q_EMIT q->currentIndexChanged(*index, currentIndex);

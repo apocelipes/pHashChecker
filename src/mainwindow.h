@@ -36,7 +36,7 @@ public:
     explicit MainWindow(QWidget *parent = nullptr) noexcept;
     ~MainWindow() noexcept override;
 
-    [[nodiscard]] size_t getThreadNumber() noexcept
+    [[nodiscard]] size_t getThreadNumber() const noexcept
     {
         size_t nThreads = 1;
         if (int n = QThread::idealThreadCount(); n > 1) {
@@ -45,7 +45,7 @@ public:
         return std::min(images.size(), nThreads);
     }
 
-    [[nodiscard]] size_t getNextLimit(const size_t oldLimit, const size_t threadID) noexcept
+    [[nodiscard]] size_t getNextLimit(const size_t oldLimit, const size_t threadID) const noexcept
     {
         if (threadID + 1 == getThreadNumber()) {
             return images.size();
@@ -102,9 +102,9 @@ private:
 
     void sort_result() noexcept
     {
-	std::ranges::for_each(sameImageResults, [](auto &result){
-	    std::ranges::sort(result.second);
-	});
+        std::ranges::for_each(sameImageResults, [](auto &result){
+            std::ranges::sort(result.second);
+        });
     }
 
     void init_pool(const size_t nThreads) noexcept {

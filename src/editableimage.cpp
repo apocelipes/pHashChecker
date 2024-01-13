@@ -1,10 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // Copyright (C) 2023 apocelipes
 
-#include "convertedimage.hpp"
-#include "editableimage.h"
-#include "hashdialog.h"
-
 #include <QtGlobal>
 #include <QAction>
 #include <QClipboard>
@@ -16,6 +12,10 @@
 #include <QPoint>
 #include <QStyle>
 #include <QUrl>
+
+#include "convertedimage.hpp"
+#include "editableimage.h"
+#include "hashdialog.h"
 
 struct EditableImagePrivate {
     QMenu *contextMenu = nullptr;
@@ -112,7 +112,7 @@ void EditableImage::setImagePath(const QString &path) noexcept
     if (path == d->m_path) {
         return;
     }
-    if (!std::filesystem::exists(path.toStdString())) {
+    if (!QFile::exists(path)) {
         clear();
         d->convertedImg.reset();
         setToolTip(isEmpty() ? tr("There's no image here") : getImagePath());

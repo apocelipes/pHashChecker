@@ -16,6 +16,8 @@
 
 #include "notificationbar.h"
 
+using namespace Qt::Literals::StringLiterals;
+
 struct NotificationBarPrivate {
     NotificationBar *q = nullptr;
     QLabel *iconLabel = nullptr;
@@ -119,14 +121,14 @@ void NotificationBar::setColor(const QColor &borColor, const QColor &bgColor) no
         return;
     }
 
-    const auto &borderColorStyle = QStringLiteral(u"rgba(%1,%2,%3,%4)").arg(borColor.red())
-                                              .arg(borColor.green())
-                                              .arg(borColor.blue())
-                                              .arg(borColor.alpha());
-    const auto &bgColorStyle = QStringLiteral(u"rgba(%1,%2,%3,%4)").arg(bgColor.red())
-                                              .arg(bgColor.green())
-                                              .arg(bgColor.blue())
-                                              .arg(bgColor.alpha());
+    const QString &borderColorStyle = QStringLiteral(u"rgba(") % QString::number(borColor.red()) % QChar(',')
+                                              % QString::number(borColor.green()) % QChar(',')
+                                              % QString::number(borColor.blue()) % QChar(',')
+                                              % QString::number(borColor.alpha()) % QChar(')');
+    const QString &bgColorStyle = QStringLiteral(u"rgba(") % QString::number(bgColor.red()) % QChar(',')
+                                              % QString::number(bgColor.green()) % QChar(',')
+                                              % QString::number(bgColor.blue()) % QChar(',')
+                                              % QString::number(bgColor.alpha()) % QChar(')');
     setStyleSheet(QStringLiteral(u".NotificationBar{border: 1px solid ") %
                   borderColorStyle %
                   QStringLiteral(u"; background-color: ") %
@@ -164,7 +166,7 @@ void NotificationBar::animatedShow() noexcept
 {
     d->stopAllAnimations();
     if (!d->showAnimation) {
-        d->showAnimation = createShowAnimation(d->effect, "opacity", this);
+        d->showAnimation = createShowAnimation(d->effect, "opacity"_ba, this);
     }
     show();
     d->showAnimation->start();
@@ -175,7 +177,7 @@ void NotificationBar::animatedHide() noexcept
     d->stopAllAnimations();
     d->isClosing = true;
     if (!d->hideAnimation) {
-        d->hideAnimation = createHideAnimation(d->effect, "opacity", this);
+        d->hideAnimation = createHideAnimation(d->effect, "opacity"_ba, this);
         connect(d->hideAnimation, &QAbstractAnimation::finished, this, &NotificationBar::hide);
     }
     d->hideAnimation->start();
@@ -185,8 +187,8 @@ void NotificationBar::showAndHide(int remainMsecs) noexcept
 {
     d->stopAllAnimations();
     if (!d->animeGroup) {
-        auto showAnimation = createShowAnimation(d->effect, "opacity", this);
-        auto hideAnimation = createHideAnimation(d->effect, "opacity", this);
+        auto showAnimation = createShowAnimation(d->effect, "opacity"_ba, this);
+        auto hideAnimation = createHideAnimation(d->effect, "opacity"_ba, this);
         d->animeGroup = new QSequentialAnimationGroup{this};
         d->animeGroup->addAnimation(showAnimation);
         d->animeGroup->addPause(remainMsecs);
@@ -256,7 +258,7 @@ NotificationBar *NotificationBar::createNotificationBar(const NotificationType t
         return nullptr;
     }
     NotificationBar *bar = notificationFactory[type](parent);
-    if (msg != "") {
+    if (msg.isEmpty()) {
         bar->setText(msg);
     }
     return bar;
