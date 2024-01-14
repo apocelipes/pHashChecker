@@ -120,8 +120,7 @@ void EditableImage::setImagePath(const QString &path) noexcept
     }
     d->m_path = path;
     auto newPath = d->m_path;
-    //TODO: use function to check
-    if (Utils::getFileExtension(path.toStdString()) == ".avif") {
+    if (Utils::isFormatNeedConvert(path)) {
         d->convertedImg.emplace(path, EditableImageFixedWidth, EditableImageFixedHeight, true);
         newPath = d->convertedImg->getImagePath();
     }

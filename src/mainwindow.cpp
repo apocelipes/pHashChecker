@@ -178,7 +178,10 @@ concept IsDirIterator = requires(T iter) {
 inline void fillImages(IsDirIterator auto &&dir, std::vector<std::string> &images) noexcept
 {
     auto result = dir | std::views::filter([](const std::filesystem::directory_entry &p) { return p.is_regular_file(); })
-                      | std::views::filter([](const std::filesystem::directory_entry &p) { return Utils::isSupportImageFormat(p); })
+                      | std::views::filter([](const std::filesystem::directory_entry &p) {
+                            const auto &path = QString::fromStdString(p.path().string());
+                            return Utils::isSupportImageFormat(path);
+                        })
                       | std::views::transform([](const std::filesystem::directory_entry &p) { return p.path().string(); });
     std::ranges::copy(result, std::back_inserter(images)); // using c++23's ranges::to is the best way
 }

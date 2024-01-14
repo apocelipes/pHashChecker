@@ -23,7 +23,7 @@ namespace Utils {
         if (iter == std::ranges::cend(container)) {
             return std::nullopt;
         }
-	return std::ranges::distance(std::ranges::cbegin(container), iter);
+	    return std::ranges::distance(std::ranges::cbegin(container), iter);
     }
 
     enum class PHashDistance: int
@@ -34,35 +34,36 @@ namespace Utils {
         FUZZY   = 10,
     };
 
-    inline constexpr std::array<std::string_view, 6> imageExtensions{
-        ".jpg",
-        ".jpeg",
-        ".png",
-        ".webp",
-        ".bmp",
-        ".avif",
-    };
-
-    [[nodiscard]] inline std::string getFileExtension(const std::filesystem::path &filePath) noexcept {
-        auto ext = filePath.extension().generic_string();
-        std::transform(ext.begin(), ext.end(), ext.begin(), [](unsigned char c) {
-            return std::tolower(c);
-        });
-        return ext;
+    [[nodiscard]] inline QString getFileExtension(const QString &filePath) noexcept {
+        return filePath.section(QChar('.'), -1, -1);
     }
 
-    [[nodiscard]] inline bool isSupportImageFormat(const std::filesystem::directory_entry &img) noexcept {
-        const auto &ext = getFileExtension(img.path());
-        return std::ranges::find(imageExtensions, ext) != imageExtensions.cend();
+    [[nodiscard]] inline bool isSupportImageFormat(const QString &img) noexcept {
+        static const std::array imageExtensions{
+            QStringLiteral(u"jpg"),
+            QStringLiteral(u"jpeg"),
+            QStringLiteral(u"png"),
+            QStringLiteral(u"webp"),
+            QStringLiteral(u"bmp"),
+            QStringLiteral(u"avif"),
+        };
+
+        return imageExtensions.cend() != std::ranges::find_if(imageExtensions, [ext = getFileExtension(img)](const QString &s) {
+            return QString::compare(s, ext, Qt::CaseInsensitive) == 0;
+        });
     }
 
     // NOTICE: only init once
     [[nodiscard]] inline QString getTempDirPath() noexcept {
         static QTemporaryDir temp{QDir::tempPath() % QDir::separator() % QStringLiteral(u"pHashChecker-XXXXXX")};
-        if (!temp.isValid()) {
+        if (!temp.isValid()) [[unlikely]] {
             qFatal() << QObject::tr("create temporary dir failed");
         }
         return temp.path();
+    }
+
+    [[nodiscard]] inline bool isFormatNeedConvert(const QString &imgPath) noexcept {
+        return QString::compare(getFileExtension(imgPath), QStringLiteral(u"avif"), Qt::CaseInsensitive) == 0;
     }
 }
 

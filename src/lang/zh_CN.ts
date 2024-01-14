@@ -166,12 +166,12 @@
         <translation>关于</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="199"/>
+        <location filename="../mainwindow.cpp" line="202"/>
         <source> does not exist</source>
         <translation> 路径不存在</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="216"/>
+        <location filename="../mainwindow.cpp" line="219"/>
         <source>no image here</source>
         <translation>目录中没有图片</translation>
     </message>
@@ -179,7 +179,7 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../utils/utils.h" line="63"/>
+        <location filename="../utils/utils.h" line="60"/>
         <source>create temporary dir failed</source>
         <translation>无法创建临时目录</translation>
     </message>

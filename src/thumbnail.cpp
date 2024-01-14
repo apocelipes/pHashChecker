@@ -44,7 +44,7 @@ void ThumbnailPrivate::init(Thumbnail *q_ptr) noexcept
     image->setGeometry(q->geometry());
     if (QFile::exists(imgPath)) {
         QPixmap data;
-        if (Utils::getFileExtension(imgPath.toStdString()) == ".avif") {
+        if (Utils::isFormatNeedConvert(imgPath)) {
             ConvertedImage converted{imgPath, ThumbnailHeight, ThumbnailHeight};
             data.load(converted.getImagePath());
         } else {
