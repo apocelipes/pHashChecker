@@ -10,8 +10,6 @@
 #include <QPropertyAnimation>
 #include <QSequentialAnimationGroup>
 
-#include <functional>
-
 #include <ankerl/unordered_dense.h>
 
 #include "notificationbar.h"
@@ -238,8 +236,8 @@ NotificationBar *NotificationBar::createSuccessBar(QWidget *parent) noexcept
 }
 
 NotificationBar *NotificationBar::createNotificationBar(const NotificationType type, const QString &msg, QWidget *parent) noexcept {
-    using creator_t = std::function<NotificationBar*(QWidget *)>;
-    static ankerl::unordered_dense::map<NotificationType, creator_t> notificationFactory = {
+    using creator_t = NotificationBar *(*)(QWidget *);
+    const static ankerl::unordered_dense::map<NotificationType, creator_t> notificationFactory = {
             {
                 NotificationType::INFO,
                 &NotificationBar::createInfoBar
@@ -254,10 +252,7 @@ NotificationBar *NotificationBar::createNotificationBar(const NotificationType t
             },
     };
 
-    if (!notificationFactory.contains(type)) [[unlikely]] {
-        return nullptr;
-    }
-    NotificationBar *bar = notificationFactory[type](parent);
+    NotificationBar *bar = notificationFactory.at(type)(parent);
     if (msg.isEmpty()) {
         bar->setText(msg);
     }
