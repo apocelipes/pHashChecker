@@ -23,8 +23,9 @@ public:
     using ContainerType = const std::vector<std::string>;
     using HashContainerType = ankerl::unordered_dense::map<ulong64, size_t>;
 
-    HashWorker(size_t start,
-               size_t limit,
+    HashWorker(const size_t start,
+               const size_t limit,
+               const Utils::PHashDistance distance,
                ContainerType &c,
                HashContainerType &hashes,
                std::vector<ulong64> &insertHistory,
@@ -33,13 +34,12 @@ public:
         : QObject(parent),
           _start{start},
           _limit{limit},
+          _similar_distance{distance},
           _images{c},
           _hashes{hashes},
           _insertHistory{insertHistory},
           _hashesLock{lock}
     {}
-
-    static Utils::PHashDistance similar_distance;
 
 public Q_SLOTS:
     void doWork();
@@ -52,14 +52,15 @@ Q_SIGNALS:
 private:
     size_t _start{};
     size_t _limit{};
+    Utils::PHashDistance _similar_distance = Utils::PHashDistance::DEFAULT;
     ContainerType &_images;
     HashContainerType &_hashes;
     std::vector<ulong64> &_insertHistory;
     QReadWriteLock &_hashesLock;
 
-    [[nodiscard]] static bool checkSameImage(ulong64 a, ulong64 b) noexcept
+    [[nodiscard]] bool checkSameImage(ulong64 a, ulong64 b) noexcept
     {
-        return ph_hamming_distance(a, b) <= static_cast<int>(HashWorker::similar_distance);
+        return ph_hamming_distance(a, b) <= static_cast<int>(_similar_distance);
     }
 };
 

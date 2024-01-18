@@ -53,11 +53,12 @@ MainWindow::MainWindow(QWidget *parent) noexcept
 
         const auto nThreads = getThreadNumber();
         init_pool(nThreads);
+        const auto distance = settings->getSimilarDistance();
         for (size_t id = 0, start = 0, limit = getNextLimit(0, 0);
              id < nThreads;
              ++id, start = limit, limit = getNextLimit(limit, id)) {
             // cannot use a QThreadPool because we need an event-loop in our worker functions
-            auto worker = new HashWorker(start, limit, images, hashes, insertHistory, hashesLock);
+            auto worker = new HashWorker(start, limit, distance, images, hashes, insertHistory, hashesLock);
             worker->moveToThread(pool[id].get());
             connect(pool[id].get(), &QThread::finished, worker, &QObject::deleteLater);
             connect(worker, &HashWorker::doneAllWork, pool[id].get(), &QThread::quit);

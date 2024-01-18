@@ -12,8 +12,6 @@
 
 #include "hashworker.h"
 
-Utils::PHashDistance HashWorker::similar_distance = Utils::PHashDistance::FUZZY;
-
 void HashWorker::doWork()
 {
     for (size_t index = _start; index < _limit; ++index) {
@@ -33,8 +31,8 @@ void HashWorker::doWork()
         // 获得读锁后即为最新的size
         // 在获取读锁之前取得size，size可能会在读锁阻塞期间被更新，导致已经进入hashes的数据被重复比较
         auto lastInsertIndex = _insertHistory.size();
-        if (auto iter = std::ranges::find_if(std::as_const(_hashes), [hash](const auto &item) {
-            return HashWorker::checkSameImage(hash, item.first);
+        if (auto iter = std::ranges::find_if(std::as_const(_hashes), [this, hash](const auto &item) {
+            return checkSameImage(hash, item.first);
         }); iter != _hashes.end()) {
             isSameInHashes = true;
             Q_EMIT sameImg(iter->second, index);
@@ -48,8 +46,8 @@ void HashWorker::doWork()
 
         auto isSameInNewInsert = false;
         _hashesLock.lockForWrite();
-        if (auto iter = std::ranges::find_if(std::as_const(_insertHistory) | std::views::drop(lastInsertIndex), [hash](const ulong64 item) {
-            return HashWorker::checkSameImage(hash, item);
+        if (auto iter = std::ranges::find_if(std::as_const(_insertHistory) | std::views::drop(lastInsertIndex), [this, hash](const ulong64 item) {
+            return checkSameImage(hash, item);
         }); iter != _insertHistory.end()) {
             isSameInHashes = true;
             Q_EMIT sameImg(_hashes[*iter], index);

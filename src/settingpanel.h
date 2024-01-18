@@ -7,6 +7,8 @@
 #include <QWidget>
 #include <memory>
 
+#include "utils.h"
+
 class SettingPanel: public QWidget
 {
     Q_OBJECT
@@ -15,6 +17,7 @@ public:
     ~SettingPanel() noexcept override;
 
     [[nodiscard]] bool isRecursiveSearching() const noexcept;
+    [[nodiscard]] Utils::PHashDistance getSimilarDistance() const noexcept;
 
 private:
     friend struct SettingPanelPrivate;

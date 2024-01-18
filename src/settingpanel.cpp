@@ -7,9 +7,7 @@
 #include <QString>
 #include <QHBoxLayout>
 
-#include "hashworker.h"
 #include "settingpanel.h"
-#include "utils.h"
 
 struct SettingPanelPrivate
 {
@@ -66,22 +64,6 @@ void SettingPanelPrivate::init(SettingPanel *q_ptr) noexcept
     distanceSlider->setValue(1);
     QObject::connect(distanceSlider, &QSlider::valueChanged, [this](int value) {
         valueLabel->setText(getDistanceName(value));
-        switch (value) {
-        case 0:
-            HashWorker::similar_distance = Utils::PHashDistance::FUZZY;
-            break;
-        case 1:
-            HashWorker::similar_distance = Utils::PHashDistance::DEFAULT;
-            break;
-        case 2:
-            HashWorker::similar_distance = Utils::PHashDistance::PRECISE;
-            break;
-        case 3:
-            HashWorker::similar_distance = Utils::PHashDistance::STRICT;
-            break;
-        default:
-            qWarning() << "invalid value: " << value;
-        }
     });
 
     recursiveSearchChecker = new QCheckBox{QObject::tr("recursive searching"), q};
@@ -108,4 +90,22 @@ SettingPanel::~SettingPanel() noexcept = default;
 bool SettingPanel::isRecursiveSearching() const noexcept
 {
     return d->recursiveSearchChecker->isChecked();
+}
+
+Utils::PHashDistance SettingPanel::getSimilarDistance() const noexcept
+{
+    auto value = d->distanceSlider->value();
+    switch (value) {
+    case 0:
+        return Utils::PHashDistance::FUZZY;
+    case 1:
+        return Utils::PHashDistance::DEFAULT;
+    case 2:
+        return Utils::PHashDistance::PRECISE;
+    case 3:
+        return Utils::PHashDistance::STRICT;
+    default:
+        qWarning() << tr("returning DEFAULT because of invalid value: ") << value;
+        return Utils::PHashDistance::DEFAULT;
+    }
 }

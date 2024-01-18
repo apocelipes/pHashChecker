@@ -75,12 +75,12 @@
 <context>
     <name>HashWorker</name>
     <message>
-        <location filename="../hashworker.cpp" line="21"/>
+        <location filename="../hashworker.cpp" line="19"/>
         <source>thread exit</source>
         <translation>スレッドが終了しました</translation>
     </message>
     <message>
-        <location filename="../hashworker.cpp" line="28"/>
+        <location filename="../hashworker.cpp" line="26"/>
         <source>calculating pHash failed, skip: </source>
         <translation>pHash計算にエラーが発生し該当画像をスキップします： </translation>
     </message>
@@ -146,32 +146,32 @@
         <translation>結果を表示</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="74"/>
+        <location filename="../mainwindow.cpp" line="75"/>
         <source> same with: </source>
         <translation> と似ている画像は: </translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="89"/>
+        <location filename="../mainwindow.cpp" line="90"/>
         <source>cancel</source>
         <translation>キャンセル</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="111"/>
+        <location filename="../mainwindow.cpp" line="112"/>
         <source>select a directory</source>
         <translation>フォルダを選択</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="133"/>
+        <location filename="../mainwindow.cpp" line="134"/>
         <source>about</source>
         <translation>アプリについて</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="202"/>
+        <location filename="../mainwindow.cpp" line="203"/>
         <source> does not exist</source>
         <translation> そのようなファイルやディレクトリはありません</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="219"/>
+        <location filename="../mainwindow.cpp" line="220"/>
         <source>no image here</source>
         <translation>画像はありません</translation>
     </message>
@@ -194,57 +194,57 @@
         <translation>閉じる</translation>
     </message>
     <message>
-        <location filename="../settingpanel.cpp" line="58"/>
+        <location filename="../settingpanel.cpp" line="56"/>
         <source>matching accuracy: </source>
         <translation>マッチングの精密性: </translation>
     </message>
     <message>
-        <location filename="../settingpanel.cpp" line="29"/>
+        <location filename="../settingpanel.cpp" line="27"/>
         <source>fuzzy</source>
         <translation>低い</translation>
     </message>
     <message>
-        <location filename="../settingpanel.cpp" line="30"/>
+        <location filename="../settingpanel.cpp" line="28"/>
         <source>default</source>
         <translation>デフォルト</translation>
     </message>
     <message>
-        <location filename="../settingpanel.cpp" line="31"/>
+        <location filename="../settingpanel.cpp" line="29"/>
         <source>precise</source>
         <translation>精確</translation>
     </message>
     <message>
-        <location filename="../settingpanel.cpp" line="32"/>
+        <location filename="../settingpanel.cpp" line="30"/>
         <source>strict</source>
         <translation>シビア</translation>
     </message>
     <message>
-        <location filename="../settingpanel.cpp" line="42"/>
+        <location filename="../settingpanel.cpp" line="40"/>
         <source>Fuzzy mode may produce more erroneous results.</source>
         <translation>若干の誤差があります。</translation>
     </message>
     <message>
-        <location filename="../settingpanel.cpp" line="43"/>
+        <location filename="../settingpanel.cpp" line="41"/>
         <source>The default mode.</source>
         <translation>デフォルトモードでマッチングをします。</translation>
     </message>
     <message>
-        <location filename="../settingpanel.cpp" line="44"/>
+        <location filename="../settingpanel.cpp" line="42"/>
         <source>This mode provides higher precision than the default mode.</source>
         <translation>デフォルトモードより高い正確性が保証されています。</translation>
     </message>
     <message>
-        <location filename="../settingpanel.cpp" line="45"/>
+        <location filename="../settingpanel.cpp" line="43"/>
         <source>Strict mode provides the highest matching accuracy.</source>
         <translation>もっとも厳しいマッチングを行い、せいかくな結果が提供されています。</translation>
     </message>
     <message>
-        <location filename="../settingpanel.cpp" line="87"/>
+        <location filename="../settingpanel.cpp" line="69"/>
         <source>recursive searching</source>
         <translation>サブディレクトリも併せて検索</translation>
     </message>
     <message>
-        <location filename="../settingpanel.cpp" line="88"/>
+        <location filename="../settingpanel.cpp" line="70"/>
         <source>Recursively searches all images in the current directory and its subdirectories.</source>
         <translation>現在のディレクトリとそのサブディレクトリにあるすべての画像を再帰的に検索します。</translation>
     </message>
@@ -257,6 +257,14 @@
         <location filename="../convertedimage.hpp" line="59"/>
         <source>call magick failed:</source>
         <translation>magickの呼び出しでエラーが発生しました:</translation>
+    </message>
+</context>
+<context>
+    <name>SettingPanel</name>
+    <message>
+        <location filename="../settingpanel.cpp" line="108"/>
+        <source>returning DEFAULT because of invalid value: </source>
+        <translation>未知の値があるため、DEFAULTを返します： </translation>
     </message>
 </context>
 </TS>
