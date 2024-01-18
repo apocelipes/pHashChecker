@@ -4,6 +4,16 @@ A GUI tool using libpHash to search similar images in your system.
 
 Make sure you have installed Qt 6.2.0+ in your system.
 
+To support AVIF images, you need to install `libheif` in your system:
+
+```bash
+# Ubuntu
+sudo apt install libheif1
+
+# Arch Linux
+sudo pacman -S libheif
+```
+
 ## Install
 
 ```bash
