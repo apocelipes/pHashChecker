@@ -118,9 +118,14 @@
         <translation>次へ</translation>
     </message>
     <message>
-        <location filename="../imageviewerdialog.cpp" line="87"/>
-        <source>Check Images</source>
-        <translation>ギャラリー</translation>
+        <location filename="../imageviewerdialog.cpp" line="138"/>
+        <source>Check Results: No Results</source>
+        <translation>検索結果：空</translation>
+    </message>
+    <message>
+        <location filename="../imageviewerdialog.cpp" line="142"/>
+        <source>Check Results: %1/%2</source>
+        <translation>検索結果：%1/%2</translation>
     </message>
 </context>
 <context>

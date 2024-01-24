@@ -118,9 +118,14 @@
         <translation>下一个</translation>
     </message>
     <message>
-        <location filename="../imageviewerdialog.cpp" line="87"/>
-        <source>Check Images</source>
-        <translation>查看图片</translation>
+        <location filename="../imageviewerdialog.cpp" line="138"/>
+        <source>Check Results: No Results</source>
+        <translation>查看结果：无结果</translation>
+    </message>
+    <message>
+        <location filename="../imageviewerdialog.cpp" line="142"/>
+        <source>Check Results: %1/%2</source>
+        <translation>查看图片： %2个中的第%1个</translation>
     </message>
 </context>
 <context>

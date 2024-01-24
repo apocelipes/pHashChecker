@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Copyright (C) 2023 apocelipes
+// Copyright (C) 2024 apocelipes
 
 #include <QComboBox>
 #include <QDialogButtonBox>
@@ -84,7 +84,7 @@ ImageViewerDialog::ImageViewerDialog(ankerl::unordered_dense::map<std::string, s
     mainLayout->addWidget(current);
     mainLayout->addWidget(buttons);
     setLayout(mainLayout);
-    setWindowTitle(tr("Check Images"));
+    updateTitle();
 }
 
 void ImageViewerDialog::createImageViewer(const QString &name) noexcept
@@ -117,13 +117,30 @@ void ImageViewerDialog::replaceCurrentWidget(QWidget *newCurrent) noexcept
 
 void ImageViewerDialog::setCurrentWidgetByName(const QString &name) noexcept
 {
+    QWidget *widget = empty;
     if (name.isEmpty()) {
         ignoreBtn->setEnabled(false);
-        replaceCurrentWidget(empty);
-        return;
+        goto end;
     }
     if (!viewers.contains(name)) {
         createImageViewer(name);
     }
-    replaceCurrentWidget(viewers[name]);
+    widget = viewers[name];
+end:
+    replaceCurrentWidget(widget);
+    updateTitle();
+}
+
+void ImageViewerDialog::updateTitle() noexcept
+{
+    const int count = comboBox->count();
+    if (count <= 0) {
+        setWindowTitle(tr("Check Results: No Results"));
+        return;
+    }
+
+    setWindowTitle(tr("Check Results: %1/%2")
+                   .arg(comboBox->currentIndex() + 1)
+                   .arg(count)
+    );
 }
