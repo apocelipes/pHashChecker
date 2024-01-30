@@ -22,7 +22,7 @@ void HashWorker::doWork()
 
         ulong64 hash = 0;
         bool isSameInHashes = false;
-        if (ph_dct_imagehash(_images[index].c_str(), hash) < 0) {
+        if (ph_dct_imagehash(_images[index].c_str(), hash) < 0) [[unlikely]] {
             qWarning() << tr("calculating pHash failed, skip: ") % QString::fromStdString(_images[index]);
             Q_EMIT doneOneImg();
             continue;
