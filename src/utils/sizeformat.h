@@ -37,7 +37,7 @@ namespace Utils {
             "PiB"
     };
 
-    [[nodiscard]] inline QString sizeFormat(const qint64 fileSize) noexcept {
+    [[nodiscard]] inline QString sizeFormat(const quint64 fileSize) noexcept {
         size_t power = static_cast<size_t>(std::floor(std::log(fileSize) / std::log(1024)));
         const size_t prefixsLength = std::size(prefixes);
         power = power >= prefixsLength ? prefixsLength - 1 : power;

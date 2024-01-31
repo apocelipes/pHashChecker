@@ -57,7 +57,7 @@ HashDialog::HashDialog(const QString &path, QWidget *parent) noexcept
     table->setItem(0, 1, new QTableWidgetItem{path});
     table->setItem(1, 0, new QTableWidgetItem{tr("File Size:")});
 
-    const auto fileSize = img.size();
+    const auto fileSize = static_cast<quint64>(img.size());
     table->setItem(1, 1, new QTableWidgetItem{Utils::sizeFormat(fileSize) % QStringLiteral(u" (%1)").arg(fileSize)});
     for (std::size_t i = 0; i < std::size(algorithmNames); ++i) {
         table->setItem(i+fileSizeIndex+1, 0, new QTableWidgetItem{algorithmNames[i] % QChar(':')});

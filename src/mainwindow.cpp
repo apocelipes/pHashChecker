@@ -8,14 +8,16 @@
 #include <QStringBuilder>
 #include <QFileInfo>
 
-#include <cctype>
+#include <atomic>
 #include <iostream>
 #include <filesystem>
+#include <thread>
 
 #include "mainwindow.h"
 #include "hashworker.h"
 #include "imageviewerdialog.h"
 #include "notificationbar.h"
+#include "utils/sizeformat.h"
 #include "utils/utils.h"
 
 MainWindow::MainWindow(QWidget *parent) noexcept
@@ -34,7 +36,7 @@ MainWindow::MainWindow(QWidget *parent) noexcept
     connect(pathEdit, &QLineEdit::textChanged, this, [this](){
         if (pathEdit->text().isEmpty()) {
             loadImgBtn->setEnabled(false);
-            startBtn->setEnabled(false);
+            disableStartBtn();
         } else {
             loadImgBtn->setEnabled(true);
         }
@@ -117,7 +119,7 @@ MainWindow::MainWindow(QWidget *parent) noexcept
         }
 
         pathEdit->setText(dirName);
-        startBtn->setEnabled(false);
+        disableStartBtn();
     });
 
     info = NotificationBar::createNotificationBar(NotificationBar::NotificationType::ERROR, "", this);
@@ -159,7 +161,7 @@ void MainWindow::onProgress() noexcept
     if (bar->value() == bar->maximum()) {
         freezeMainGUI(false);
         // should click load button first
-        startBtn->setEnabled(false);
+        disableStartBtn();
         quitPool();
         bar->hide();
         cancelButton->hide();
@@ -187,6 +189,39 @@ inline void fillImages(IsDirIterator auto &&dir, std::vector<std::string> &image
     std::ranges::copy(result, std::back_inserter(images)); // using c++23's ranges::to is the best way
 }
 
+uint64_t MainWindow::countFilesSize2() const noexcept
+{
+    // only support for 64-bit systems
+    static_assert(std::atomic<uint64_t>::is_always_lock_free, "std::atomic<uint64_t> is not lock-free");
+    std::atomic<uint64_t> ret{0};
+
+    const auto nThreads = getThreadNumber();
+    std::vector<std::thread> threads;
+    threads.reserve(nThreads);
+
+    // Because QThreadPool doesn't support move-only functions until 6.6.0, use STL for back compatibilities
+    for (size_t id = 0, start = 0, limit = getNextLimit(0, 0);
+        id < nThreads;
+        ++id, start = limit, limit = getNextLimit(limit, id)) {
+        threads.emplace_back([start, limit, this, &ret](){
+            uint64_t size{};
+            size_t i{start};
+
+            for (; i < limit; ++i) {
+                size += std::filesystem::file_size(images[i]);
+            }
+
+            ret.fetch_add(size, std::memory_order_relaxed);
+        });
+    }
+    
+    for (size_t i = 0; i < nThreads; ++i) {
+        threads[i].join();
+    }
+
+    return ret.load(std::memory_order_relaxed);
+}
+
 void MainWindow::setImages() noexcept
 {
     dialogBtn->hide();
@@ -199,7 +234,7 @@ void MainWindow::setImages() noexcept
     info->hide(); // 重写的hide会设置isClosing
     const std::string path = pathEdit->text().toStdString();
     if (!std::filesystem::exists(path) || !std::filesystem::is_directory(path)) {
-        startBtn->setEnabled(false);
+        disableStartBtn();
         info->setText(QString::fromStdString(path) + tr(" does not exist"));
         info->animatedShow();
         return;
@@ -212,11 +247,13 @@ void MainWindow::setImages() noexcept
         fillImages(std::filesystem::directory_iterator{path, opts}, images);
     }
     if (!images.empty()) {
-        startBtn->setEnabled(true);
         bar->setValue(0);
         bar->setMaximum(static_cast<int>(images.size()));
+        const auto totalSize = Utils::sizeFormat(countFilesSize2());
+        startBtn->setEnabled(true);
+        startBtn->setToolTip(tr("%1 images, total size: %2").arg(images.size()).arg(totalSize));
     } else {
-        startBtn->setEnabled(false);
+        disableStartBtn();
         info->setText(tr("no image here"));
         info->animatedShow();
     }

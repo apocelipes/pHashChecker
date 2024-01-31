@@ -119,6 +119,14 @@ private:
         }
     }
 
+    void disableStartBtn() noexcept
+    {
+        startBtn->setEnabled(false);
+        startBtn->setToolTip(QString{});
+    }
+
+    uint64_t countFilesSize2() const noexcept;
+
     QHBoxLayout *lineLayout = nullptr;
     QLineEdit *pathEdit = nullptr;
     QPushButton *loadImgBtn = nullptr;
