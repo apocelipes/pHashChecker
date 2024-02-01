@@ -4,7 +4,7 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include <QCoreApplication>
+#include <QApplication>
 #include <QWidget>
 #include <QProgressBar>
 #include <QPushButton>
@@ -23,6 +23,7 @@
 #include <ankerl/unordered_dense.h>
 
 #include "settingpanel.h"
+#include "widgethelpers.h"
 
 class ImageViewerDialog;
 class NotificationBar;
@@ -35,23 +36,6 @@ class MainWindow : public QWidget
 public:
     explicit MainWindow(QWidget *parent = nullptr) noexcept;
     ~MainWindow() noexcept override;
-
-    [[nodiscard]] size_t getThreadNumber() const noexcept
-    {
-        size_t nThreads = 1;
-        if (int n = QThread::idealThreadCount(); n > 1) {
-            nThreads = static_cast<size_t>(n);
-        }
-        return std::min(images.size(), nThreads);
-    }
-
-    [[nodiscard]] size_t getNextLimit(const size_t oldLimit, const size_t threadID) const noexcept
-    {
-        if (threadID + 1 == getThreadNumber()) {
-            return images.size();
-        }
-        return oldLimit+images.size() / getThreadNumber();
-    }
 
 Q_SIGNALS:
     void completed();
@@ -79,24 +63,12 @@ private:
 
     void freezeMainGUI(const bool flag) noexcept
     {
-        freezeLayout(lineLayout, flag);
-        freezeLayout(settings->layout(), flag);
+        Utils::freezeLayout(lineLayout, flag);
+        Utils::freezeLayout(settings->layout(), flag);
         if (flag) {
             setCursor(Qt::WaitCursor);
         } else {
             unsetCursor();
-        }
-    }
-
-    static void freezeLayout(QLayout *layout, bool flag) noexcept
-    {
-        for (int i = 0; i < layout->count(); ++i) {
-            auto it = layout->itemAt(i);
-            if (it->layout()) {
-                freezeLayout(it->layout(), flag);
-            } else if (auto widget = it->widget()) { // check for not widget layoutItems
-                widget->setEnabled(!flag);
-            }
         }
     }
 
@@ -124,8 +96,6 @@ private:
         startBtn->setEnabled(false);
         startBtn->setToolTip(QString{});
     }
-
-    uint64_t countFilesSize2() const noexcept;
 
     QHBoxLayout *lineLayout = nullptr;
     QLineEdit *pathEdit = nullptr;

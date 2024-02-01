@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // Copyright (C) 2024 apocelipes
 
-#include <QApplication>
 #include <QVBoxLayout>
 #include <QDir>
 #include <QString>
@@ -9,7 +8,6 @@
 #include <QFileInfo>
 
 #include <atomic>
-#include <iostream>
 #include <filesystem>
 #include <thread>
 
@@ -19,6 +17,77 @@
 #include "notificationbar.h"
 #include "utils/sizeformat.h"
 #include "utils/utils.h"
+
+namespace {
+    template <typename T>
+    concept IsDirIterator = requires(T iter) {
+        { *iter } -> std::same_as<const std::filesystem::directory_entry&>;
+        { *std::filesystem::begin(iter) } -> std::same_as<const std::filesystem::directory_entry&>;
+        { *std::filesystem::end(iter) } -> std::same_as<const std::filesystem::directory_entry&>;
+    };
+
+    inline void fillImages(IsDirIterator auto &&dir, std::vector<std::string> &images) noexcept
+    {
+        auto result = dir | std::views::filter([](const std::filesystem::directory_entry &p) { return p.is_regular_file(); })
+                          | std::views::filter([](const std::filesystem::directory_entry &p) {
+                                const auto &path = QString::fromStdString(p.path().string());
+                                return Utils::isSupportImageFormat(path);
+                            })
+                          | std::views::transform([](const std::filesystem::directory_entry &p) { return p.path().string(); });
+        std::ranges::copy(result, std::back_inserter(images)); // using c++23's ranges::to is the best way
+    }
+
+    template <std::ranges::range Container>
+    [[nodiscard]] inline size_t getThreadNumber(const Container &contents) noexcept
+    {
+        size_t nThreads = 1;
+        if (int n = QThread::idealThreadCount(); n > 1) {
+            nThreads = static_cast<size_t>(n);
+        }
+        return std::min(std::ranges::size(contents), nThreads);
+    }
+
+    [[nodiscard]] constexpr inline size_t getNextLimit(const size_t oldLimit, const size_t threadID, const size_t maxThreads, const size_t totalItems) noexcept
+    {
+        if (threadID + 1 == maxThreads) {
+            return totalItems;
+        }
+        return oldLimit+totalItems / maxThreads;
+    }
+
+    template <std::ranges::range Container>
+    inline uint64_t countFilesSize(const Container &files) noexcept
+    {
+        // only support for 64-bit systems
+        static_assert(std::atomic<uint64_t>::is_always_lock_free, "std::atomic<uint64_t> is not lock-free");
+        std::atomic<uint64_t> ret{0};
+
+        const auto nThreads = getThreadNumber(files);
+        std::vector<std::thread> threads;
+        threads.reserve(nThreads);
+
+        // Because QThreadPool doesn't support move-only functions until 6.6.0, use STL for back compatibilities
+        for (size_t id = 0, start = 0, limit = getNextLimit(0, 0, nThreads, files.size());
+            id < nThreads;
+            ++id, start = limit, limit = getNextLimit(limit, id, nThreads, files.size())) {
+            threads.emplace_back([start, limit, &files, &ret](){
+                uint64_t size{};
+
+                for (size_t i{start}; i < limit; ++i) {
+                    size += std::filesystem::file_size(files[i]);
+                }
+
+                ret.fetch_add(size, std::memory_order_relaxed);
+            });
+        }
+    
+        for (size_t i = 0; i < nThreads; ++i) {
+            threads[i].join();
+        }
+
+        return ret.load(std::memory_order_relaxed);
+    }
+}
 
 MainWindow::MainWindow(QWidget *parent) noexcept
     : QWidget(parent)
@@ -53,12 +122,12 @@ MainWindow::MainWindow(QWidget *parent) noexcept
         cancelButton->setEnabled(true);
         cancelButton->show();
 
-        const auto nThreads = getThreadNumber();
+        const auto nThreads = getThreadNumber(images);
         init_pool(nThreads);
         const auto distance = settings->getSimilarDistance();
-        for (size_t id = 0, start = 0, limit = getNextLimit(0, 0);
+        for (size_t id = 0, start = 0, limit = getNextLimit(0, 0, nThreads, images.size());
              id < nThreads;
-             ++id, start = limit, limit = getNextLimit(limit, id)) {
+             ++id, start = limit, limit = getNextLimit(limit, id,nThreads, images.size())) {
             // cannot use a QThreadPool because we need an event-loop in our worker functions
             auto worker = new HashWorker(start, limit, distance, images, hashes, insertHistory, hashesLock);
             worker->moveToThread(pool[id].get());
@@ -158,68 +227,19 @@ void MainWindow::onProgress() noexcept
 {
     const auto value = bar->value();
     bar->setValue(value + 1);
-    if (bar->value() == bar->maximum()) {
-        freezeMainGUI(false);
-        // should click load button first
-        disableStartBtn();
-        quitPool();
-        bar->hide();
-        cancelButton->hide();
-        dialogBtn->show();
-        sort_result();
-        Q_EMIT completed();
-    }
-}
-
-template <typename T>
-concept IsDirIterator = requires(T iter) {
-    { *iter } -> std::same_as<const std::filesystem::directory_entry&>;
-    { *std::filesystem::begin(iter) } -> std::same_as<const std::filesystem::directory_entry&>;
-    { *std::filesystem::end(iter) } -> std::same_as<const std::filesystem::directory_entry&>;
-};
-
-inline void fillImages(IsDirIterator auto &&dir, std::vector<std::string> &images) noexcept
-{
-    auto result = dir | std::views::filter([](const std::filesystem::directory_entry &p) { return p.is_regular_file(); })
-                      | std::views::filter([](const std::filesystem::directory_entry &p) {
-                            const auto &path = QString::fromStdString(p.path().string());
-                            return Utils::isSupportImageFormat(path);
-                        })
-                      | std::views::transform([](const std::filesystem::directory_entry &p) { return p.path().string(); });
-    std::ranges::copy(result, std::back_inserter(images)); // using c++23's ranges::to is the best way
-}
-
-uint64_t MainWindow::countFilesSize2() const noexcept
-{
-    // only support for 64-bit systems
-    static_assert(std::atomic<uint64_t>::is_always_lock_free, "std::atomic<uint64_t> is not lock-free");
-    std::atomic<uint64_t> ret{0};
-
-    const auto nThreads = getThreadNumber();
-    std::vector<std::thread> threads;
-    threads.reserve(nThreads);
-
-    // Because QThreadPool doesn't support move-only functions until 6.6.0, use STL for back compatibilities
-    for (size_t id = 0, start = 0, limit = getNextLimit(0, 0);
-        id < nThreads;
-        ++id, start = limit, limit = getNextLimit(limit, id)) {
-        threads.emplace_back([start, limit, this, &ret](){
-            uint64_t size{};
-            size_t i{start};
-
-            for (; i < limit; ++i) {
-                size += std::filesystem::file_size(images[i]);
-            }
-
-            ret.fetch_add(size, std::memory_order_relaxed);
-        });
-    }
-    
-    for (size_t i = 0; i < nThreads; ++i) {
-        threads[i].join();
+    if (bar->value() != bar->maximum()) [[likely]] {
+        return;
     }
 
-    return ret.load(std::memory_order_relaxed);
+    freezeMainGUI(false);
+    // should click load button first
+    disableStartBtn();
+    quitPool();
+    bar->hide();
+    cancelButton->hide();
+    dialogBtn->show();
+    sort_result();
+    Q_EMIT completed();
 }
 
 void MainWindow::setImages() noexcept
@@ -232,24 +252,24 @@ void MainWindow::setImages() noexcept
     insertHistory.clear();
 
     info->hide(); // 重写的hide会设置isClosing
-    const std::string path = pathEdit->text().toStdString();
-    if (!std::filesystem::exists(path) || !std::filesystem::is_directory(path)) {
+    const auto &path = pathEdit->text();
+    if (!QDir{path}.exists()) {
         disableStartBtn();
-        info->setText(QString::fromStdString(path) + tr(" does not exist"));
+        info->setText(path % tr(" directory does not exist"));
         info->animatedShow();
         return;
     }
 
     constexpr auto opts = std::filesystem::directory_options::skip_permission_denied;
     if (settings->isRecursiveSearching()) {
-        fillImages(std::filesystem::recursive_directory_iterator{path, opts}, images);
+        fillImages(std::filesystem::recursive_directory_iterator{path.toStdString(), opts}, images);
     } else {
-        fillImages(std::filesystem::directory_iterator{path, opts}, images);
+        fillImages(std::filesystem::directory_iterator{path.toStdString(), opts}, images);
     }
     if (!images.empty()) {
         bar->setValue(0);
         bar->setMaximum(static_cast<int>(images.size()));
-        const auto totalSize = Utils::sizeFormat(countFilesSize2());
+        const auto &totalSize = Utils::sizeFormat(countFilesSize(images));
         startBtn->setEnabled(true);
         startBtn->setToolTip(tr("%1 images, total size: %2").arg(images.size()).arg(totalSize));
     } else {
