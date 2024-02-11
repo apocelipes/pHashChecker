@@ -266,6 +266,7 @@ void MainWindow::setImages() noexcept
     } else {
         fillImages(std::filesystem::directory_iterator{path.toStdString(), opts}, images);
     }
+    QCoreApplication::processEvents();
     if (!images.empty()) {
         bar->setValue(0);
         bar->setMaximum(static_cast<int>(images.size()));

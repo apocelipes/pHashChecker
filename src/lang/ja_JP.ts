@@ -176,12 +176,12 @@
         <translation> そのようなディレクトリはありません</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="274"/>
+        <location filename="../mainwindow.cpp" line="275"/>
         <source>%1 images, total size: %2</source>
         <translation>%1 枚の画像、合計サイズ： %2</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="277"/>
+        <location filename="../mainwindow.cpp" line="278"/>
         <source>no image here</source>
         <translation>画像はありません</translation>
     </message>
