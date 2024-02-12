@@ -58,9 +58,10 @@ namespace {
     template <std::ranges::range Container>
     inline uint64_t countFilesSize(const Container &files) noexcept
     {
-        // only support for 64-bit systems
-        static_assert(std::atomic<uint64_t>::is_always_lock_free, "std::atomic<uint64_t> is not lock-free");
-        std::atomic<uint64_t> ret{0};
+        // std::atomic_ref<uint64_t> must be lock-free
+        static_assert(std::atomic_ref<uint64_t>::is_always_lock_free, "std::atomic_ref<uint64_t> is not lock-free");
+        alignas(std::atomic_ref<uint64_t>::required_alignment) uint64_t result{};
+        std::atomic_ref<uint64_t> ret{result};
 
         const auto nThreads = getThreadNumber(files);
         std::vector<std::thread> threads;
@@ -85,7 +86,7 @@ namespace {
             threads[i].join();
         }
 
-        return ret.load(std::memory_order_relaxed);
+        return result;
     }
 }
 
