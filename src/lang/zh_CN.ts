@@ -93,7 +93,7 @@
         <translation>分组 %1</translation>
     </message>
     <message>
-        <location filename="../imageviewerdialog.cpp" line="97"/>
+        <location filename="../imageviewerdialog.cpp" line="98"/>
         <source>target ImageViewer not found</source>
         <translation>未找到目标ImageViewer</translation>
     </message>

@@ -90,6 +90,7 @@ ImageViewerDialog::ImageViewerDialog(ankerl::unordered_dense::map<std::string, s
 void ImageViewerDialog::createImageViewer(const QString &name) noexcept
 {
     auto imageView = new ImageViewer{results[name], this};
+    results.erase(name);
     imageView->hide();
     connect(imageView, &ImageViewer::emptied, this, [this, name, imageView](){
         const auto targetIndex = comboBox->findText(name);
@@ -98,7 +99,6 @@ void ImageViewerDialog::createImageViewer(const QString &name) noexcept
             return;
         }
         viewers.erase(name);
-        results.erase(name);
         comboBox->removeItem(targetIndex);
         setCurrentWidgetByName(comboBox->currentText());
         imageView->deleteLater();

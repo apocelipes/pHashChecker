@@ -93,7 +93,7 @@
         <translation>グループ %1</translation>
     </message>
     <message>
-        <location filename="../imageviewerdialog.cpp" line="97"/>
+        <location filename="../imageviewerdialog.cpp" line="98"/>
         <source>target ImageViewer not found</source>
         <translation>ターゲットのImageViewerは見つかりませんでした</translation>
     </message>
