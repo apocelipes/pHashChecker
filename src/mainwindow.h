@@ -23,6 +23,7 @@
 #include <ankerl/unordered_dense.h>
 
 #include "settingpanel.h"
+#include "qstringhasher.hpp"
 #include "widgethelpers.h"
 
 class ImageViewerDialog;
@@ -112,7 +113,7 @@ private:
 
     std::vector<std::string> images;
     ankerl::unordered_dense::map<ulong64, size_t> hashes;
-    ankerl::unordered_dense::map<std::string, std::vector<std::string>> sameImageResults;
+    SameImagesContainer sameImageResults;
     std::vector<ulong64> insertHistory;
     QReadWriteLock hashesLock;
     std::vector<std::unique_ptr<QThread>> pool;

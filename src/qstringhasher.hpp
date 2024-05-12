@@ -18,4 +18,6 @@ struct ankerl::unordered_dense::hash<QString> {
     }
 };
 
+using SameImagesContainer = ankerl::unordered_dense::map<std::string, std::vector<std::string>>;
+
 #endif /* QSTRINGHASHER_H */

@@ -11,7 +11,7 @@
 #include "imageviewer.h"
 #include "utils.h"
 
-ImageViewerDialog::ImageViewerDialog(ankerl::unordered_dense::map<std::string, std::vector<std::string>> &sameImageList)
+ImageViewerDialog::ImageViewerDialog(SameImagesContainer sameImageList)
 {
     mainLayout = new QVBoxLayout;
     comboBox = new QComboBox{this};
@@ -49,7 +49,6 @@ ImageViewerDialog::ImageViewerDialog(ankerl::unordered_dense::map<std::string, s
         const auto index = comboBox->currentIndex();
         auto widget = viewers[oldName];
         viewers.erase(oldName);
-        results.erase(oldName);
         comboBox->removeItem(index);
         setCurrentWidgetByName(comboBox->currentText());
         widget->deleteLater();

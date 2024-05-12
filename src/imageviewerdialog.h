@@ -9,8 +9,6 @@
 #include <string>
 #include <vector>
 
-#include <ankerl/unordered_dense.h>
-
 #include "qstringhasher.hpp"
 
 class QComboBox;
@@ -23,7 +21,8 @@ class ImageViewerDialog : public QDialog
 {
     Q_OBJECT
 public:
-    explicit ImageViewerDialog(ankerl::unordered_dense::map<std::string, std::vector<std::string>> &sameImageList);
+    // take the ownership from MainWindow
+    explicit ImageViewerDialog(SameImagesContainer sameImageList);
 
 private:
     ankerl::unordered_dense::map<QString, ImageViewer*> viewers;
