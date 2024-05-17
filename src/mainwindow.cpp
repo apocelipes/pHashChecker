@@ -169,7 +169,7 @@ MainWindow::MainWindow(QWidget *parent) noexcept
         // wait for all threads to exit before cleaning up, otherwise data races will occur
         insertHistory.clear();
         hashes.clear();
-        sameImageResults = SameImagesContainer{};
+        sameImageResults.clear();
         freezeMainGUI(false);
         bar->hide();
         cancelButton->hide();
@@ -247,7 +247,7 @@ void MainWindow::setImages() noexcept
 {
     dialogBtn->hide();
     releaseResultDialog();
-    sameImageResults = SameImagesContainer{};
+    sameImageResults.clear();
     hashes.clear();
     images.clear();
     insertHistory.clear();
@@ -288,6 +288,7 @@ void MainWindow::initResultDialog() noexcept
     }
     dialogBtn->setEnabled(false);
     imageDialog = new ImageViewerDialog{std::move(sameImageResults)};
+    sameImageResults = SameImagesContainer{};
     imageDialog->setModal(true);
     dialogBtn->setEnabled(true);
 }
