@@ -1,9 +1,6 @@
 [submodule "third-party/CImg"]
 	path = third-party/CImg
 	url = https://github.com/dtschump/CImg
-[submodule "third-party/pHash"]
-	path = third-party/pHash
-	url = https://github.com/aetilius/pHash
 [submodule "third-party/unordered_dense"]
 	path = third-party/unordered_dense
 	url = https://github.com/martinus/unordered_dense
