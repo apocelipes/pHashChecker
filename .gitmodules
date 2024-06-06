@@ -4,3 +4,6 @@
 [submodule "third-party/unordered_dense"]
 	path = third-party/unordered_dense
 	url = https://github.com/martinus/unordered_dense
+[submodule "third-party/pHash"]
+	path = third-party/pHash
+	url = https://github.com/apocelipes/pHash
