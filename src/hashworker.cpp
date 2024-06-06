@@ -21,7 +21,7 @@ void HashWorker::doWork()
         }
 
         ulong64 hash = 0;
-        bool isSameInHashes = false;
+        bool foundSame = false;
         if (ph_dct_imagehash(_images[index].c_str(), hash) < 0) [[unlikely]] {
             qWarning() << tr("calculating pHash failed, skip: ") % QString::fromStdString(_images[index]);
             Q_EMIT doneOneImg();
@@ -34,25 +34,24 @@ void HashWorker::doWork()
         if (auto iter = std::ranges::find_if(std::as_const(_hashes), [this, hash](const auto &item) {
             return checkSameImage(hash, item.first);
         }); iter != _hashes.end()) {
-            isSameInHashes = true;
+            foundSame = true;
             Q_EMIT sameImg(iter->second, index);
         }
         _hashesLock.unlock();
 
-        if (isSameInHashes) {
+        if (foundSame) {
             Q_EMIT doneOneImg();
             continue;
         }
 
-        auto isSameInNewInsert = false;
         _hashesLock.lockForWrite();
         if (auto iter = std::ranges::find_if(std::as_const(_insertHistory) | std::views::drop(lastInsertIndex), [this, hash](const ulong64 item) {
             return checkSameImage(hash, item);
         }); iter != _insertHistory.end()) {
-            isSameInHashes = true;
+            foundSame = true;
             Q_EMIT sameImg(_hashes[*iter], index);
         }
-        if (!isSameInNewInsert) {
+        if (!foundSame) {
             _hashes.emplace(std::make_pair(hash, index));
             _insertHistory.emplace_back(hash);
         }
