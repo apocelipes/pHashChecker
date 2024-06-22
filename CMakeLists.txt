@@ -20,6 +20,7 @@ endif()
 include_directories(third-party/CImg
     third-party/pHash/src
     third-party/unordered_dense/include
+    third-party/cpp-sort/include
     src/utils
     src
 )

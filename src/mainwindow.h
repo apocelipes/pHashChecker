@@ -21,6 +21,7 @@
 
 #include <pHash.h>
 #include <ankerl/unordered_dense.h>
+#include <cpp-sort/sorters/pdq_sorter.h>
 
 #include "settingpanel.h"
 #include "qstringhasher.hpp"
@@ -75,8 +76,8 @@ private:
 
     void sort_result() noexcept
     {
-        std::ranges::for_each(sameImageResults, [](auto &result){
-            std::ranges::sort(result.second);
+        std::ranges::for_each(sameImageResults, [sorter = cppsort::pdq_sorter{}](auto &result){
+            sorter(result.second);
         });
     }
 

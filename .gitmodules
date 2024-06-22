@@ -7,3 +7,6 @@
 [submodule "third-party/pHash"]
 	path = third-party/pHash
 	url = https://github.com/apocelipes/pHash
+[submodule "third-party/cpp-sort"]
+	path = third-party/cpp-sort
+	url = https://github.com/Morwenn/cpp-sort
