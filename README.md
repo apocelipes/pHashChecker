@@ -22,10 +22,20 @@ To support AVIF images, you need to install `libheif` in your system:
 
 ```bash
 # Ubuntu
-sudo apt install libheif1
+sudo apt install libheif1 libheif-dev
 
 # Arch Linux
 sudo pacman -S libheif
+```
+
+To support WebP images, you need to install `imagemagick`:
+
+```bash
+# Ubuntu
+sudo apt install imagemagick
+
+# Arch Linux
+sudo pacman -S imagemagick
 ```
 
 ## Screenshots

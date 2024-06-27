@@ -25,6 +25,8 @@ include_directories(third-party/CImg
     src
 )
 
+add_definitions(-Dcimg_use_heif)
+
 find_package(Qt6 REQUIRED COMPONENTS Core)
 qt_standard_project_setup()
 find_package(Qt6 COMPONENTS Core Gui Widgets REQUIRED)
