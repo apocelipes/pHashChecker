@@ -27,9 +27,8 @@ include_directories(third-party/CImg
 
 add_definitions(-Dcimg_use_heif)
 
-find_package(Qt6 REQUIRED COMPONENTS Core)
-qt_standard_project_setup()
-find_package(Qt6 COMPONENTS Core Gui Widgets REQUIRED)
+set(REQUIRED_QT_VERSION 6.5.0)
+find_package(Qt6 ${REQUIRED_QT_VERSION} NO_MODULE REQUIRED COMPONENTS Core Gui Widgets REQUIRED)
 
 set(TS_FILES
     ${CMAKE_CURRENT_SOURCE_DIR}/src/lang/zh_CN.ts

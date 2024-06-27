@@ -2,7 +2,7 @@
 
 A GUI tool using libpHash to search similar images in your system.
 
-Make sure you have installed Qt 6.2.0+ in your system.
+Make sure you have installed Qt 6.5.0+ in your system.
 
 ## Install
 
