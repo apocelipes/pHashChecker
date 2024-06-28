@@ -151,37 +151,37 @@
         <translation>結果を表示</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="147"/>
+        <location filename="../mainwindow.cpp" line="151"/>
         <source> same with: </source>
         <translation> と似ている画像は: </translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="162"/>
+        <location filename="../mainwindow.cpp" line="171"/>
         <source>cancel</source>
         <translation>キャンセル</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="184"/>
+        <location filename="../mainwindow.cpp" line="196"/>
         <source>select a directory</source>
         <translation>フォルダを選択</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="206"/>
+        <location filename="../mainwindow.cpp" line="218"/>
         <source>about</source>
         <translation>アプリについて</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="259"/>
+        <location filename="../mainwindow.cpp" line="274"/>
         <source> directory does not exist</source>
         <translation> そのようなディレクトリはありません</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="276"/>
+        <location filename="../mainwindow.cpp" line="291"/>
         <source>%1 images, total size: %2</source>
         <translation>%1 枚の画像、合計サイズ： %2</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="279"/>
+        <location filename="../mainwindow.cpp" line="294"/>
         <source>no image here</source>
         <translation>画像はありません</translation>
     </message>
@@ -204,59 +204,69 @@
         <translation>閉じる</translation>
     </message>
     <message>
-        <location filename="../settingpanel.cpp" line="56"/>
+        <location filename="../settingpanel.cpp" line="57"/>
         <source>matching accuracy: </source>
         <translation>マッチングの精密性: </translation>
     </message>
     <message>
-        <location filename="../settingpanel.cpp" line="27"/>
+        <location filename="../settingpanel.cpp" line="28"/>
         <source>fuzzy</source>
         <translation>低い</translation>
     </message>
     <message>
-        <location filename="../settingpanel.cpp" line="28"/>
+        <location filename="../settingpanel.cpp" line="29"/>
         <source>default</source>
         <translation>デフォルト</translation>
     </message>
     <message>
-        <location filename="../settingpanel.cpp" line="29"/>
+        <location filename="../settingpanel.cpp" line="30"/>
         <source>precise</source>
         <translation>精確</translation>
     </message>
     <message>
-        <location filename="../settingpanel.cpp" line="30"/>
+        <location filename="../settingpanel.cpp" line="31"/>
         <source>strict</source>
         <translation>シビア</translation>
     </message>
     <message>
-        <location filename="../settingpanel.cpp" line="40"/>
+        <location filename="../settingpanel.cpp" line="41"/>
         <source>Fuzzy mode may produce more erroneous results.</source>
         <translation>若干の誤差があります。</translation>
     </message>
     <message>
-        <location filename="../settingpanel.cpp" line="41"/>
+        <location filename="../settingpanel.cpp" line="42"/>
         <source>The default mode.</source>
         <translation>デフォルトモードでマッチングをします。</translation>
     </message>
     <message>
-        <location filename="../settingpanel.cpp" line="42"/>
+        <location filename="../settingpanel.cpp" line="43"/>
         <source>This mode provides higher precision than the default mode.</source>
         <translation>デフォルトモードより高い正確性が保証されています。</translation>
     </message>
     <message>
-        <location filename="../settingpanel.cpp" line="43"/>
+        <location filename="../settingpanel.cpp" line="44"/>
         <source>Strict mode provides the highest matching accuracy.</source>
         <translation>もっとも厳しいマッチングを行い、せいかくな結果が提供されています。</translation>
     </message>
     <message>
-        <location filename="../settingpanel.cpp" line="69"/>
+        <location filename="../settingpanel.cpp" line="71"/>
         <source>recursive searching</source>
         <translation>サブディレクトリも併せて検索</translation>
     </message>
     <message>
-        <location filename="../settingpanel.cpp" line="70"/>
+        <location filename="../settingpanel.cpp" line="72"/>
         <source>Recursively searches all images in the current directory and its subdirectories.</source>
         <translation>現在のディレクトリとそのサブディレクトリにあるすべての画像を再帰的に検索します。</translation>
+    </message>
+    <message>
+        <location filename="../settingpanel.cpp" line="74"/>
+        <source>record calculation time</source>
+        <translation>処理の総合時間を記録</translation>
+    </message>
+    <message>
+        <location filename="../settingpanel.cpp" line="75"/>
+        <source>Record the time spent on calculation.</source>
+        <translation>すべての画像の処理時間の合計を記録します。</translation>
     </message>
     <message>
         <location filename="../convertedimage.hpp" line="56"/>
@@ -272,9 +282,47 @@
 <context>
     <name>SettingPanel</name>
     <message>
-        <location filename="../settingpanel.cpp" line="108"/>
+        <location filename="../settingpanel.cpp" line="113"/>
         <source>returning DEFAULT because of invalid value: </source>
         <translation>未知の値があるため、DEFAULTを返します： </translation>
+    </message>
+</context>
+<context>
+    <name>TimerDialog</name>
+    <message>
+        <location filename="../timerdialog.cpp" line="21"/>
+        <source>Start:</source>
+        <translation>開始時刻:</translation>
+    </message>
+    <message>
+        <location filename="../timerdialog.cpp" line="22"/>
+        <source>End:</source>
+        <translation>終了時刻:</translation>
+    </message>
+    <message>
+        <location filename="../timerdialog.cpp" line="23"/>
+        <source>Cost:</source>
+        <translation>経過時間:</translation>
+    </message>
+    <message>
+        <location filename="../timerdialog.cpp" line="33"/>
+        <source>Timer Dialog</source>
+        <translation>経過時間計算</translation>
+    </message>
+    <message>
+        <location filename="../timerdialog.cpp" line="40"/>
+        <source>TimerDialog has already started</source>
+        <translation>タイマーはもうスタートしました</translation>
+    </message>
+    <message>
+        <location filename="../timerdialog.cpp" line="53"/>
+        <source>stop must be called after start()</source>
+        <translation>スタートしたタイマーしか止まりません</translation>
+    </message>
+    <message>
+        <location filename="../timerdialog.cpp" line="59"/>
+        <source>%1 min %2.%3 seconds</source>
+        <translation>%1分 %2.%3秒</translation>
     </message>
 </context>
 </TS>

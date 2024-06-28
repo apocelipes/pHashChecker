@@ -103,6 +103,7 @@ MainWindow::MainWindow(QWidget *parent) noexcept
     startBtn->setEnabled(false);
     dialogBtn = new QPushButton{tr("show result")};
     dialogBtn->hide();
+    timerDialog = new TimerDialog{this};
     connect(pathEdit, &QLineEdit::textChanged, this, [this](){
         if (pathEdit->text().isEmpty()) {
             loadImgBtn->setEnabled(false);
@@ -126,6 +127,9 @@ MainWindow::MainWindow(QWidget *parent) noexcept
         const auto nThreads = getThreadNumber(images);
         init_pool(nThreads);
         const auto distance = settings->getSimilarDistance();
+        if (settings->isUseTimerDialog()) {
+            timerDialog->start();
+        }
         for (size_t id = 0, start = 0, limit = getNextLimit(0, 0, nThreads, images.size());
              id < nThreads;
              ++id, start = limit, limit = getNextLimit(limit, id,nThreads, images.size())) {
@@ -150,12 +154,17 @@ MainWindow::MainWindow(QWidget *parent) noexcept
         }
     });
 
-    auto showResultDialog = [this](){
-        initResultDialog(); // ownerships of sameImageResults' elements will be taken
+    connect(dialogBtn, &QPushButton::clicked, this, [this](){
+        initResultDialog();
         imageDialog->exec();
-    };
-    connect(dialogBtn, &QPushButton::clicked, this, showResultDialog);
-    connect(this, &MainWindow::completed, this, showResultDialog);
+    });
+    connect(this, &MainWindow::completed, this, [this](){
+        initResultDialog();
+        if (settings->isUseTimerDialog()) {
+            timerDialog->exec();
+        }
+        imageDialog->exec();
+    });
 
     bar = new QProgressBar;
     bar->hide();
@@ -173,6 +182,9 @@ MainWindow::MainWindow(QWidget *parent) noexcept
         freezeMainGUI(false);
         bar->hide();
         cancelButton->hide();
+        if (settings->isUseTimerDialog()) {
+            timerDialog->stop();
+        }
     });
 
     fileDialog = new QFileDialog{this};
@@ -240,6 +252,9 @@ void MainWindow::onProgress() noexcept
     cancelButton->hide();
     dialogBtn->show();
     sort_result();
+    if (settings->isUseTimerDialog()) {
+        timerDialog->stop();
+    }
     Q_EMIT completed();
 }
 

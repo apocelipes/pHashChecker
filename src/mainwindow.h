@@ -26,6 +26,7 @@
 #include "settingpanel.h"
 #include "qstringhasher.hpp"
 #include "widgethelpers.h"
+#include "timerdialog.h"
 
 class ImageViewerDialog;
 class NotificationBar;
@@ -111,6 +112,7 @@ private:
     ImageViewerDialog *imageDialog = nullptr;
     NotificationBar *info = nullptr;
     SettingPanel *settings = nullptr;
+    TimerDialog *timerDialog = nullptr;
 
     std::vector<std::string> images;
     ankerl::unordered_dense::map<ulong64, size_t> hashes;

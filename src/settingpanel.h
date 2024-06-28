@@ -18,6 +18,7 @@ public:
 
     [[nodiscard]] bool isRecursiveSearching() const noexcept;
     [[nodiscard]] Utils::PHashDistance getSimilarDistance() const noexcept;
+    [[nodiscard]] bool isUseTimerDialog() const noexcept;
 
 private:
     friend struct SettingPanelPrivate;

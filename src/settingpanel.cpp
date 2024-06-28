@@ -16,6 +16,7 @@ struct SettingPanelPrivate
     QLabel *valueLabel = nullptr;
     QSlider *distanceSlider = nullptr;
     QCheckBox *recursiveSearchChecker = nullptr;
+    QCheckBox *timerDialogChecker = nullptr;
 
     void init(SettingPanel *q_ptr) noexcept;
 
@@ -58,6 +59,7 @@ void SettingPanelPrivate::init(SettingPanel *q_ptr) noexcept
     distanceSlider->setRange(0, 3);
     distanceSlider->setTickInterval(1);
     distanceSlider->setTickPosition(QSlider::TickPosition::TicksBelow);
+    distanceSlider->setMinimumWidth(100);
     QObject::connect(distanceSlider, &QSlider::valueChanged, q, [this](int val) {
         q->setToolTip(getDistanceToolTip(val));
     });
@@ -69,13 +71,16 @@ void SettingPanelPrivate::init(SettingPanel *q_ptr) noexcept
     recursiveSearchChecker = new QCheckBox{QObject::tr("recursive searching"), q};
     recursiveSearchChecker->setToolTip(QObject::tr("Recursively searches all images in the current directory and its subdirectories."));
 
+    timerDialogChecker = new QCheckBox{QObject::tr("record calculation time"), q};
+    timerDialogChecker->setToolTip(QObject::tr("Record the time spent on calculation."));
+    timerDialogChecker->setChecked(true);
+
     auto settingsLayout = new QHBoxLayout;
     settingsLayout->addWidget(distanceLabel);
     settingsLayout->addWidget(distanceSlider);
     settingsLayout->addWidget(valueLabel);
-    settingsLayout->addStretch();
     settingsLayout->addWidget(recursiveSearchChecker);
-    settingsLayout->addStretch();
+    settingsLayout->addWidget(timerDialogChecker);
     q->setLayout(settingsLayout);
 }
 
@@ -108,4 +113,9 @@ Utils::PHashDistance SettingPanel::getSimilarDistance() const noexcept
         qWarning() << tr("returning DEFAULT because of invalid value: ") << value;
         return Utils::PHashDistance::DEFAULT;
     }
+}
+
+bool SettingPanel::isUseTimerDialog() const noexcept
+{
+    return d->timerDialogChecker->isChecked();
 }
