@@ -6,6 +6,7 @@
 #include <QString>
 #include <QStringBuilder>
 #include <QFileInfo>
+#include <QRegularExpression>
 
 #include <atomic>
 #include <filesystem>
@@ -268,7 +269,8 @@ void MainWindow::setImages() noexcept
     insertHistory.clear();
 
     info->hide(); // 重写的hide会设置isClosing
-    const auto &path = pathEdit->text();
+    static const auto &shellHomeDirPattern = QRegularExpression{"^~/"};
+    const auto path = pathEdit->text().replace(shellHomeDirPattern, QDir::homePath()+QDir::separator());
     if (!QDir{path}.exists()) {
         disableStartBtn();
         info->setText(path % tr(" directory does not exist"));
