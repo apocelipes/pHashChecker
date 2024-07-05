@@ -11,7 +11,6 @@
 #include <QLineEdit>
 #include <QFileDialog>
 #include <QHBoxLayout>
-#include <QReadWriteLock>
 #include <QThread>
 
 #include <algorithm>
@@ -115,10 +114,8 @@ private:
     TimerDialog *timerDialog = nullptr;
 
     std::vector<std::string> images;
-    ankerl::unordered_dense::map<ulong64, size_t> hashes;
     SameImagesContainer sameImageResults;
-    std::vector<ulong64> insertHistory;
-    QReadWriteLock hashesLock;
+    std::vector<std::pair<ulong64, size_t>> matchHistory;
     std::vector<std::unique_ptr<QThread>> pool;
 };
 

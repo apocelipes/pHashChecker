@@ -75,12 +75,12 @@
 <context>
     <name>HashWorker</name>
     <message>
-        <location filename="../hashworker.cpp" line="19"/>
+        <location filename="../hashworker.cpp" line="23"/>
         <source>thread exit</source>
         <translation>线程退出执行</translation>
     </message>
     <message>
-        <location filename="../hashworker.cpp" line="26"/>
+        <location filename="../hashworker.cpp" line="30"/>
         <source>calculating pHash failed, skip: </source>
         <translation>计算pHash时发生错误，将跳过： </translation>
     </message>
@@ -151,37 +151,37 @@
         <translation>显示结果</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="152"/>
+        <location filename="../mainwindow.cpp" line="151"/>
         <source> same with: </source>
         <translation> 相似图片: </translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="172"/>
+        <location filename="../mainwindow.cpp" line="171"/>
         <source>cancel</source>
         <translation>取消</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="197"/>
+        <location filename="../mainwindow.cpp" line="195"/>
         <source>select a directory</source>
         <translation>选择图片目录</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="219"/>
+        <location filename="../mainwindow.cpp" line="217"/>
         <source>about</source>
         <translation>关于</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="276"/>
+        <location filename="../mainwindow.cpp" line="273"/>
         <source> directory does not exist</source>
         <translation> 文件夹不存在</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="293"/>
+        <location filename="../mainwindow.cpp" line="290"/>
         <source>%1 images, total size: %2</source>
         <translation>%1 张图片，总大小： %2</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="296"/>
+        <location filename="../mainwindow.cpp" line="293"/>
         <source>no image here</source>
         <translation>目录中没有图片</translation>
     </message>

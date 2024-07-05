@@ -75,12 +75,12 @@
 <context>
     <name>HashWorker</name>
     <message>
-        <location filename="../hashworker.cpp" line="19"/>
+        <location filename="../hashworker.cpp" line="23"/>
         <source>thread exit</source>
         <translation>スレッドが終了しました</translation>
     </message>
     <message>
-        <location filename="../hashworker.cpp" line="26"/>
+        <location filename="../hashworker.cpp" line="30"/>
         <source>calculating pHash failed, skip: </source>
         <translation>pHash計算にエラーが発生し該当画像をスキップします： </translation>
     </message>
@@ -151,37 +151,37 @@
         <translation>結果を表示</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="152"/>
+        <location filename="../mainwindow.cpp" line="151"/>
         <source> same with: </source>
         <translation> と似ている画像は: </translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="172"/>
+        <location filename="../mainwindow.cpp" line="171"/>
         <source>cancel</source>
         <translation>キャンセル</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="197"/>
+        <location filename="../mainwindow.cpp" line="195"/>
         <source>select a directory</source>
         <translation>フォルダを選択</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="219"/>
+        <location filename="../mainwindow.cpp" line="217"/>
         <source>about</source>
         <translation>アプリについて</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="276"/>
+        <location filename="../mainwindow.cpp" line="273"/>
         <source> directory does not exist</source>
         <translation> そのようなディレクトリはありません</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="293"/>
+        <location filename="../mainwindow.cpp" line="290"/>
         <source>%1 images, total size: %2</source>
         <translation>%1 枚の画像、合計サイズ： %2</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="296"/>
+        <location filename="../mainwindow.cpp" line="293"/>
         <source>no image here</source>
         <translation>画像はありません</translation>
     </message>

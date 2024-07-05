@@ -12,6 +12,10 @@
 
 #include "hashworker.h"
 
+namespace {
+    inline QReadWriteLock matchHistoryLock;
+}
+
 void HashWorker::doWork()
 {
     for (size_t index = _start; index < _limit; ++index) {
@@ -27,35 +31,34 @@ void HashWorker::doWork()
             Q_EMIT doneOneImg();
             continue;
         }
-        _hashesLock.lockForRead();
+
+        const auto pred = [this, hash](const auto &item) {
+            return checkSameImage(hash, item.first);
+        };
+        matchHistoryLock.lockForRead();
         // 获得读锁后即为最新的size
         // 在获取读锁之前取得size，size可能会在读锁阻塞期间被更新，导致已经进入hashes的数据被重复比较
-        auto lastInsertIndex = _insertHistory.size();
-        if (auto iter = std::ranges::find_if(std::as_const(_hashes), [this, hash](const auto &item) {
-            return checkSameImage(hash, item.first);
-        }); iter != _hashes.end()) {
+        auto lastInsertIndex = _matchHistory.size();
+        if (auto iter = std::ranges::find_if(std::as_const(_matchHistory), pred); iter != _matchHistory.end()) {
             foundSame = true;
             Q_EMIT sameImg(iter->second, index);
         }
-        _hashesLock.unlock();
+        matchHistoryLock.unlock();
 
         if (foundSame) {
             Q_EMIT doneOneImg();
             continue;
         }
 
-        _hashesLock.lockForWrite();
-        if (auto iter = std::ranges::find_if(std::as_const(_insertHistory) | std::views::drop(lastInsertIndex), [this, hash](const ulong64 item) {
-            return checkSameImage(hash, item);
-        }); iter != _insertHistory.end()) {
+        matchHistoryLock.lockForWrite();
+        if (auto iter = std::ranges::find_if(std::as_const(_matchHistory) | std::views::drop(lastInsertIndex), pred); iter != _matchHistory.end()) {
             foundSame = true;
-            Q_EMIT sameImg(_hashes[*iter], index);
+            Q_EMIT sameImg(iter->second, index);
         }
         if (!foundSame) {
-            _hashes.emplace(std::make_pair(hash, index));
-            _insertHistory.emplace_back(hash);
+            _matchHistory.emplace_back(hash, index);
         }
-        _hashesLock.unlock();
+        matchHistoryLock.unlock();
         Q_EMIT doneOneImg();
     }
 

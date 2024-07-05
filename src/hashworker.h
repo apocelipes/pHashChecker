@@ -21,24 +21,19 @@ class HashWorker : public QObject
     Q_OBJECT
 public:
     using ContainerType = const std::vector<std::string>;
-    using HashContainerType = ankerl::unordered_dense::map<ulong64, size_t>;
 
     HashWorker(const size_t start,
                const size_t limit,
                const Utils::PHashDistance distance,
                ContainerType &c,
-               HashContainerType &hashes,
-               std::vector<ulong64> &insertHistory,
-               QReadWriteLock &lock,
+               std::vector<std::pair<ulong64, size_t>> &matchHistory,
                QObject *parent = nullptr) noexcept
         : QObject(parent),
           _start{start},
           _limit{limit},
           _similar_distance{distance},
           _images{c},
-          _hashes{hashes},
-          _insertHistory{insertHistory},
-          _hashesLock{lock}
+          _matchHistory{matchHistory}
     {}
 
 public Q_SLOTS:
@@ -54,9 +49,7 @@ private:
     size_t _limit{};
     Utils::PHashDistance _similar_distance = Utils::PHashDistance::DEFAULT;
     ContainerType &_images;
-    HashContainerType &_hashes;
-    std::vector<ulong64> &_insertHistory;
-    QReadWriteLock &_hashesLock;
+    std::vector<std::pair<ulong64, size_t>> &_matchHistory;
 
     [[nodiscard]] bool checkSameImage(ulong64 a, ulong64 b) noexcept
     {

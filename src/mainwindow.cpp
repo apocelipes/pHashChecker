@@ -117,8 +117,7 @@ MainWindow::MainWindow(QWidget *parent) noexcept
     connect(pathEdit, &QLineEdit::returnPressed, this, &MainWindow::setImages);
     connect(startBtn, &QPushButton::clicked, this, [this]() {
         freezeMainGUI(true);
-        hashes.reserve(images.size());
-        insertHistory.reserve(images.size());
+        matchHistory.reserve(images.size());
         bar->setEnabled(true);
         bar->show();
         bar->setValue(0);
@@ -135,7 +134,7 @@ MainWindow::MainWindow(QWidget *parent) noexcept
              id < nThreads;
              ++id, start = limit, limit = getNextLimit(limit, id,nThreads, images.size())) {
             // cannot use a QThreadPool because we need an event-loop in our worker functions
-            auto worker = new HashWorker(start, limit, distance, images, hashes, insertHistory, hashesLock);
+            auto worker = new HashWorker(start, limit, distance, images, matchHistory);
             worker->moveToThread(pool[id].get());
             connect(pool[id].get(), &QThread::finished, worker, &QObject::deleteLater);
             connect(worker, &HashWorker::doneAllWork, pool[id].get(), &QThread::quit);
@@ -177,8 +176,7 @@ MainWindow::MainWindow(QWidget *parent) noexcept
         bar->setEnabled(false);
         quitPool(true);
         // wait for all threads to exit before cleaning up, otherwise data races will occur
-        insertHistory.clear();
-        hashes.clear();
+        matchHistory.clear();
         sameImageResults.clear();
         freezeMainGUI(false);
         bar->hide();
@@ -264,9 +262,8 @@ void MainWindow::setImages() noexcept
     dialogBtn->hide();
     releaseResultDialog();
     sameImageResults.clear();
-    hashes.clear();
     images.clear();
-    insertHistory.clear();
+    matchHistory.clear();
 
     info->hide(); // 重写的hide会设置isClosing
     static const auto &shellHomeDirPattern = QRegularExpression{"^~/"};
@@ -306,6 +303,7 @@ void MainWindow::initResultDialog() noexcept
     dialogBtn->setEnabled(false);
     imageDialog = new ImageViewerDialog{std::move(sameImageResults)};
     sameImageResults = SameImagesContainer{};
+    matchHistory.clear();
     imageDialog->setModal(true);
     dialogBtn->setEnabled(true);
 }
