@@ -151,6 +151,11 @@
         <translation>显示结果</translation>
     </message>
     <message>
+        <location filename="../mainwindow.cpp" line="107"/>
+        <source>Stopwatch Dialog</source>
+        <translation>计算耗时</translation>
+    </message>
+    <message>
         <location filename="../mainwindow.cpp" line="151"/>
         <source> same with: </source>
         <translation> 相似图片: </translation>
@@ -288,39 +293,34 @@
     </message>
 </context>
 <context>
-    <name>TimerDialog</name>
+    <name>StopwatchDialog</name>
     <message>
-        <location filename="../timerdialog.cpp" line="21"/>
+        <location filename="../stopwatchdialog.cpp" line="21"/>
         <source>Start:</source>
         <translation>开始时间:</translation>
     </message>
     <message>
-        <location filename="../timerdialog.cpp" line="22"/>
+        <location filename="../stopwatchdialog.cpp" line="22"/>
         <source>End:</source>
         <translation>结束时间:</translation>
     </message>
     <message>
-        <location filename="../timerdialog.cpp" line="23"/>
+        <location filename="../stopwatchdialog.cpp" line="23"/>
         <source>Cost:</source>
         <translation>耗时:</translation>
     </message>
     <message>
-        <location filename="../timerdialog.cpp" line="33"/>
-        <source>Timer Dialog</source>
-        <translation>计算耗时</translation>
-    </message>
-    <message>
-        <location filename="../timerdialog.cpp" line="40"/>
-        <source>TimerDialog has already started</source>
+        <location filename="../stopwatchdialog.cpp" line="40"/>
+        <source>StopwatchDialog has already started</source>
         <translation>计时已经启动了</translation>
     </message>
     <message>
-        <location filename="../timerdialog.cpp" line="53"/>
+        <location filename="../stopwatchdialog.cpp" line="53"/>
         <source>stop must be called after start()</source>
         <translation>只有在start()调用过之后才能停止</translation>
     </message>
     <message>
-        <location filename="../timerdialog.cpp" line="59"/>
+        <location filename="../stopwatchdialog.cpp" line="59"/>
         <source>%1 min %2.%3 seconds</source>
         <translation>%1分 %2.%3秒</translation>
     </message>

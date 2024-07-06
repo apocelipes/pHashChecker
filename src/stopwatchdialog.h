@@ -7,10 +7,10 @@
 #include <QDateTime>
 #include <QLabel>
 
-class TimerDialog: public QDialog {
+class StopwatchDialog: public QDialog {
     Q_OBJECT
 public:
-    TimerDialog(QWidget *parent = nullptr) noexcept;
+    explicit StopwatchDialog(const QString &title, QWidget *parent = nullptr) noexcept;
     void start() noexcept;
     void stop() noexcept;
 private:

@@ -7,11 +7,11 @@
 #include <QLocale>
 #include <QStringBuilder>
 
-#include "timerdialog.h"
+#include "stopwatchdialog.h"
 
 #define TIMERDIALOG_TIME_FORMAT QStringLiteral(u"yyyy-MM-dd HH:mm:ss.zzz ddd")
 
-TimerDialog::TimerDialog(QWidget *parent) noexcept
+StopwatchDialog::StopwatchDialog(const QString &title, QWidget *parent) noexcept
     : QDialog(parent)
 {
     startLabel = new  QLabel{this};
@@ -30,14 +30,14 @@ TimerDialog::TimerDialog(QWidget *parent) noexcept
     mainLayout->addLayout(timerLayout);
     mainLayout->addWidget(buttons);
     setLayout(mainLayout);
-    setWindowTitle(tr("Timer Dialog"));
+    setWindowTitle(title);
     setModal(true);
 }
 
-void TimerDialog::start() noexcept
+void StopwatchDialog::start() noexcept
 {
     if (running) {
-        qWarning() << tr("TimerDialog has already started");
+        qWarning() << tr("StopwatchDialog has already started");
         return;
     }
     endLabel->setText(QString{});
@@ -47,7 +47,7 @@ void TimerDialog::start() noexcept
     running = true;
 }
 
-void TimerDialog::stop() noexcept
+void StopwatchDialog::stop() noexcept
 {
     if (!running) {
         qWarning() << tr("stop must be called after start()");

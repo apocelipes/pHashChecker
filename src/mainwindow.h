@@ -25,7 +25,7 @@
 #include "settingpanel.h"
 #include "qstringhasher.hpp"
 #include "widgethelpers.h"
-#include "timerdialog.h"
+#include "stopwatchdialog.h"
 
 class ImageViewerDialog;
 class NotificationBar;
@@ -111,7 +111,7 @@ private:
     ImageViewerDialog *imageDialog = nullptr;
     NotificationBar *info = nullptr;
     SettingPanel *settings = nullptr;
-    TimerDialog *timerDialog = nullptr;
+    StopwatchDialog *timerDialog = nullptr;
 
     std::vector<std::string> images;
     SameImagesContainer sameImageResults;

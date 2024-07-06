@@ -151,6 +151,11 @@
         <translation>結果を表示</translation>
     </message>
     <message>
+        <location filename="../mainwindow.cpp" line="107"/>
+        <source>Stopwatch Dialog</source>
+        <translation>経過した時間</translation>
+    </message>
+    <message>
         <location filename="../mainwindow.cpp" line="151"/>
         <source> same with: </source>
         <translation> と似ている画像は: </translation>
@@ -288,39 +293,34 @@
     </message>
 </context>
 <context>
-    <name>TimerDialog</name>
+    <name>StopwatchDialog</name>
     <message>
-        <location filename="../timerdialog.cpp" line="21"/>
+        <location filename="../stopwatchdialog.cpp" line="21"/>
         <source>Start:</source>
         <translation>開始時刻:</translation>
     </message>
     <message>
-        <location filename="../timerdialog.cpp" line="22"/>
+        <location filename="../stopwatchdialog.cpp" line="22"/>
         <source>End:</source>
         <translation>終了時刻:</translation>
     </message>
     <message>
-        <location filename="../timerdialog.cpp" line="23"/>
+        <location filename="../stopwatchdialog.cpp" line="23"/>
         <source>Cost:</source>
         <translation>経過時間:</translation>
     </message>
     <message>
-        <location filename="../timerdialog.cpp" line="33"/>
-        <source>Timer Dialog</source>
-        <translation>経過時間計算</translation>
+        <location filename="../stopwatchdialog.cpp" line="40"/>
+        <source>StopwatchDialog has already started</source>
+        <translation>ストップウォッチはすでにスタートしました</translation>
     </message>
     <message>
-        <location filename="../timerdialog.cpp" line="40"/>
-        <source>TimerDialog has already started</source>
-        <translation>タイマーはもうスタートしました</translation>
-    </message>
-    <message>
-        <location filename="../timerdialog.cpp" line="53"/>
+        <location filename="../stopwatchdialog.cpp" line="53"/>
         <source>stop must be called after start()</source>
-        <translation>スタートしたタイマーしか止まりません</translation>
+        <translation>スタートしたストップウォッチしか止まりません</translation>
     </message>
     <message>
-        <location filename="../timerdialog.cpp" line="59"/>
+        <location filename="../stopwatchdialog.cpp" line="59"/>
         <source>%1 min %2.%3 seconds</source>
         <translation>%1分 %2.%3秒</translation>
     </message>

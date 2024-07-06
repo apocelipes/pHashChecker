@@ -104,7 +104,7 @@ MainWindow::MainWindow(QWidget *parent) noexcept
     startBtn->setEnabled(false);
     dialogBtn = new QPushButton{tr("show result")};
     dialogBtn->hide();
-    timerDialog = new TimerDialog{this};
+    timerDialog = new StopwatchDialog{tr("Stopwatch Dialog"), this};
     connect(pathEdit, &QLineEdit::textChanged, this, [this](){
         if (pathEdit->text().isEmpty()) {
             loadImgBtn->setEnabled(false);
