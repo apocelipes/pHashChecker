@@ -106,7 +106,7 @@ MainWindow::MainWindow(QWidget *parent) noexcept
     dialogBtn->hide();
     timerDialog = new StopwatchDialog{tr("Stopwatch Dialog"), this};
     connect(pathEdit, &QLineEdit::textChanged, this, [this](){
-        if (pathEdit->text().isEmpty()) {
+        if (pathEdit->text().trimmed().isEmpty()) {
             loadImgBtn->setEnabled(false);
             disableStartBtn();
         } else {
@@ -195,7 +195,7 @@ MainWindow::MainWindow(QWidget *parent) noexcept
     fileDialogBtn = new QPushButton(tr("select a directory"));
     connect(fileDialogBtn, &QPushButton::clicked, fileDialog, &QFileDialog::exec);
     connect(fileDialog, &QFileDialog::fileSelected, this, [this](const QString &dirName) {
-        if (dirName.isEmpty() || !QFileInfo::exists(dirName)) {
+        if (dirName.isEmpty() || !QFileInfo::exists(dirName)) [[unlikely]] {
             return;
         }
 
@@ -259,6 +259,12 @@ void MainWindow::onProgress() noexcept
 
 void MainWindow::setImages() noexcept
 {
+    static const auto &shellHomeDirPattern = QRegularExpression{"^~/"};
+    const auto path = pathEdit->text().trimmed().replace(shellHomeDirPattern, QDir::homePath()+'/');
+    if (path.isEmpty()) {
+        return;
+    }
+
     dialogBtn->hide();
     releaseResultDialog();
     sameImageResults.clear();
@@ -266,8 +272,6 @@ void MainWindow::setImages() noexcept
     matchHistory.clear();
 
     info->hide(); // 重写的hide会设置isClosing
-    static const auto &shellHomeDirPattern = QRegularExpression{"^~/"};
-    const auto path = pathEdit->text().replace(shellHomeDirPattern, QDir::homePath()+QDir::separator());
     if (!QDir{path}.exists()) {
         disableStartBtn();
         info->setText(path % tr(" directory does not exist"));

@@ -30,7 +30,7 @@
 class ImageViewerDialog;
 class NotificationBar;
 
-constexpr int MIN_EDIT_WIDTH = 30;
+constexpr int MIN_EDIT_WIDTH = 40;
 
 class MainWindow : public QWidget
 {
