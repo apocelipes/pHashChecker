@@ -131,62 +131,72 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../mainwindow.cpp" line="107"/>
+        <location filename="../mainwindow.cpp" line="108"/>
         <source>entry a directory</source>
         <translation>フォルダのパスを入力</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="120"/>
+        <location filename="../mainwindow.cpp" line="121"/>
         <source>load</source>
         <translation>ロード</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="122"/>
+        <location filename="../mainwindow.cpp" line="124"/>
+        <source>Ctrl + Enter</source>
+        <translation>ショートカット: Ctrl + エンターキー</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="125"/>
         <source>start</source>
         <translation>スタート</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="124"/>
+        <location filename="../mainwindow.cpp" line="128"/>
+        <source>Ctrl + Shift + R</source>
+        <translation>ショートカット: Ctrl + Shift + R</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="129"/>
         <source>show result</source>
         <translation>結果を表示</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="126"/>
+        <location filename="../mainwindow.cpp" line="131"/>
         <source>Stopwatch Dialog</source>
         <translation>経過した時間</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="181"/>
+        <location filename="../mainwindow.cpp" line="185"/>
         <source> same with: </source>
         <translation> と似ている画像は: </translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="201"/>
+        <location filename="../mainwindow.cpp" line="205"/>
         <source>cancel</source>
         <translation>キャンセル</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="225"/>
+        <location filename="../mainwindow.cpp" line="229"/>
         <source>select a directory</source>
         <translation>フォルダを選択</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="247"/>
+        <location filename="../mainwindow.cpp" line="251"/>
         <source>about</source>
         <translation>アプリについて</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="306"/>
+        <location filename="../mainwindow.cpp" line="311"/>
         <source> directory does not exist</source>
         <translation> そのようなディレクトリはありません</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="323"/>
-        <source>%1 images, total size: %2</source>
-        <translation>%1 枚の画像、合計サイズ： %2</translation>
+        <location filename="../mainwindow.cpp" line="329"/>
+        <source>%1 images, total size: %2&lt;br/&gt;Ctrl + Shift + R</source>
+        <translation>%1 枚の画像、合計サイズ： %2&lt;br/&gt;ショートカット: Ctrl + Shift + R</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="326"/>
+        <location filename="../mainwindow.cpp" line="332"/>
         <source>no image here</source>
         <translation>画像はありません</translation>
     </message>

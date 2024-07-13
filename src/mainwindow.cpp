@@ -8,6 +8,7 @@
 #include <QFileInfo>
 #include <QFileSystemModel>
 #include <QRegularExpression>
+#include <QKeySequence>
 
 #include <atomic>
 #include <filesystem>
@@ -119,8 +120,12 @@ MainWindow::MainWindow(QWidget *parent) noexcept
 
     loadImgBtn = new QPushButton{tr("load")};
     loadImgBtn->setEnabled(false);
+    loadImgBtn->setShortcut(QKeySequence{Qt::CTRL | Qt::Key_Return});
+    loadImgBtn->setToolTip(tr("Ctrl + Enter"));
     startBtn = new QPushButton{tr("start")};
     startBtn->setEnabled(false);
+    startBtn->setShortcut(QKeySequence{Qt::CTRL | Qt::SHIFT | Qt::Key_R});
+    startBtn->setToolTip(tr("Ctrl + Shift + R"));
     dialogBtn = new QPushButton{tr("show result")};
     dialogBtn->hide();
     timerDialog = new StopwatchDialog{tr("Stopwatch Dialog"), this};
@@ -144,7 +149,6 @@ MainWindow::MainWindow(QWidget *parent) noexcept
         }
     });
     connect(loadImgBtn, &QPushButton::clicked, this, &MainWindow::setImages);
-    connect(pathEdit, &QLineEdit::returnPressed, this, &MainWindow::setImages);
     connect(startBtn, &QPushButton::clicked, this, [this]() {
         freezeMainGUI(true);
         matchHistory.reserve(images.size());
@@ -280,6 +284,7 @@ void MainWindow::onProgress() noexcept
     bar->hide();
     cancelButton->hide();
     dialogBtn->show();
+    startBtn->hide();
     sort_result();
     if (settings->isUseTimerDialog()) {
         timerDialog->stop();
@@ -319,8 +324,9 @@ void MainWindow::setImages() noexcept
         bar->setValue(0);
         bar->setMaximum(static_cast<int>(images.size()));
         const auto &totalSize = Utils::sizeFormat(countFilesSize(images));
+        startBtn->show();
         startBtn->setEnabled(true);
-        startBtn->setToolTip(tr("%1 images, total size: %2").arg(images.size()).arg(totalSize));
+        startBtn->setToolTip(tr("%1 images, total size: %2<br/>Ctrl + Shift + R").arg(images.size()).arg(totalSize));
     } else {
         disableStartBtn();
         info->setText(tr("no image here"));
