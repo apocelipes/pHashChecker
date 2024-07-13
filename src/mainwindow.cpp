@@ -6,6 +6,7 @@
 #include <QString>
 #include <QStringBuilder>
 #include <QFileInfo>
+#include <QFileSystemModel>
 #include <QRegularExpression>
 
 #include <atomic>
@@ -89,15 +90,33 @@ namespace {
 
         return result;
     }
+
+    inline QString replaceWithHomeDir(const QString &text) noexcept
+    {
+        static const auto &shellHomeDirPattern = QRegularExpression{"^~/"};
+        return text.trimmed().replace(shellHomeDirPattern, QDir::homePath()+'/');
+    }
 }
 
 MainWindow::MainWindow(QWidget *parent) noexcept
     : QWidget(parent)
 {
     pool.reserve(QThread::idealThreadCount());
+
     pathEdit = new QLineEdit;
     pathEdit->setPlaceholderText(tr("entry a directory"));
     pathEdit->setMinimumWidth(pathEdit->fontMetrics().averageCharWidth() * MIN_EDIT_WIDTH);
+    pathCompleter = new QCompleter{this};
+    pathCompleter->setCompletionMode(QCompleter::UnfilteredPopupCompletion);
+    auto fsModel = new QFileSystemModel{pathCompleter};
+    fsModel->setOptions(QFileSystemModel::DontWatchForChanges|QFileSystemModel::DontUseCustomDirectoryIcons);
+    fsModel->setFilter(QDir::AllDirs|QDir::NoDotAndDotDot);
+    fsModel->setReadOnly(true);
+    fsModel->setRootPath("/");
+    pathCompleter->setModel(fsModel);
+    pathCompleter->setMaxVisibleItems(5);
+    pathEdit->setCompleter(pathCompleter);
+
     loadImgBtn = new QPushButton{tr("load")};
     loadImgBtn->setEnabled(false);
     startBtn = new QPushButton{tr("start")};
@@ -105,12 +124,23 @@ MainWindow::MainWindow(QWidget *parent) noexcept
     dialogBtn = new QPushButton{tr("show result")};
     dialogBtn->hide();
     timerDialog = new StopwatchDialog{tr("Stopwatch Dialog"), this};
-    connect(pathEdit, &QLineEdit::textChanged, this, [this](){
-        if (pathEdit->text().trimmed().isEmpty()) {
+    connect(pathEdit, &QLineEdit::textChanged, this, [this](const QString &text){
+        const auto &path = text.trimmed();
+        if (path.isEmpty()) {
             loadImgBtn->setEnabled(false);
+            pathEdit->setCompleter(nullptr);
             disableStartBtn();
-        } else {
-            loadImgBtn->setEnabled(true);
+            return;
+        }
+
+        loadImgBtn->setEnabled(true);
+        if (pathEdit->completer() == nullptr) {
+            pathEdit->setCompleter(pathCompleter);
+        }
+    });
+    connect(pathEdit, &QLineEdit::textEdited, this, [this](const QString &text){
+        if (text.trimmed().startsWith("~/")) {
+            pathEdit->setText(replaceWithHomeDir(text));
         }
     });
     connect(loadImgBtn, &QPushButton::clicked, this, &MainWindow::setImages);
@@ -259,8 +289,7 @@ void MainWindow::onProgress() noexcept
 
 void MainWindow::setImages() noexcept
 {
-    static const auto &shellHomeDirPattern = QRegularExpression{"^~/"};
-    const auto path = pathEdit->text().trimmed().replace(shellHomeDirPattern, QDir::homePath()+'/');
+    const auto path = replaceWithHomeDir(pathEdit->text()); // maybe unnecessary
     if (path.isEmpty()) {
         return;
     }

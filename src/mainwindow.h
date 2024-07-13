@@ -12,6 +12,7 @@
 #include <QFileDialog>
 #include <QHBoxLayout>
 #include <QThread>
+#include <QCompleter>
 
 #include <algorithm>
 #include <chrono>
@@ -101,6 +102,7 @@ private:
 
     QHBoxLayout *lineLayout = nullptr;
     QLineEdit *pathEdit = nullptr;
+    QCompleter *pathCompleter = nullptr;
     QPushButton *loadImgBtn = nullptr;
     QPushButton *startBtn = nullptr;
     QProgressBar *bar = nullptr;
