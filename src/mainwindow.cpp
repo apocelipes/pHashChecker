@@ -145,7 +145,10 @@ MainWindow::MainWindow(QWidget *parent) noexcept
     });
     connect(pathEdit, &QLineEdit::textEdited, this, [this](const QString &text){
         if (text.trimmed().startsWith("~/")) {
-            pathEdit->setText(replaceWithHomeDir(text));
+            const auto &path = replaceWithHomeDir(text);
+            pathEdit->setText(path);
+            pathCompleter->setCompletionPrefix(path);
+            pathCompleter->complete();
         }
     });
     connect(loadImgBtn, &QPushButton::clicked, this, &MainWindow::setImages);
