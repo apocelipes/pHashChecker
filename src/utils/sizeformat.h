@@ -38,8 +38,8 @@ namespace Utils {
     };
 
     [[nodiscard]] inline QString sizeFormat(const quint64 fileSize) noexcept {
-        size_t power = static_cast<size_t>(std::floor(std::log(fileSize) / std::log(1024)));
-        const size_t prefixsLength = std::size(prefixes);
+        std::size_t power = static_cast<std::size_t>(std::floor(std::log(fileSize) / std::log(1024)));
+        const std::size_t prefixsLength = std::size(prefixes);
         power = power >= prefixsLength ? prefixsLength - 1 : power;
         return QStringLiteral(u"%1").arg(static_cast<double>(fileSize) / static_cast<double>(prefixes[power]), 0, 'f', 1)
                                + prefixNames[power];

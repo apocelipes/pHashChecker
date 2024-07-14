@@ -22,11 +22,11 @@ class HashWorker : public QObject
 public:
     using ContainerType = const std::vector<std::string>;
 
-    HashWorker(const size_t start,
-               const size_t limit,
+    HashWorker(const std::size_t start,
+               const std::size_t limit,
                const Utils::PHashDistance distance,
                ContainerType &c,
-               std::vector<std::pair<ulong64, size_t>> &matchHistory,
+               std::vector<std::pair<ulong64, std::size_t>> &matchHistory,
                QObject *parent = nullptr) noexcept
         : QObject(parent),
           _start{start},
@@ -40,16 +40,16 @@ public Q_SLOTS:
     void doWork();
 
 Q_SIGNALS:
-    void sameImg(size_t, size_t);
+    void sameImg(std::size_t, std::size_t);
     void doneOneImg();
     void doneAllWork();
 
 private:
-    size_t _start{};
-    size_t _limit{};
+    std::size_t _start{};
+    std::size_t _limit{};
     Utils::PHashDistance _similar_distance = Utils::PHashDistance::DEFAULT;
     ContainerType &_images;
-    std::vector<std::pair<ulong64, size_t>> &_matchHistory;
+    std::vector<std::pair<ulong64, std::size_t>> &_matchHistory;
 
     [[nodiscard]] bool checkSameImage(ulong64 a, ulong64 b) noexcept
     {

@@ -4,47 +4,47 @@
 <context>
     <name>EditableImage</name>
     <message>
-        <location filename="../editableimage.cpp" line="43"/>
+        <location filename="../editableimage.cpp" line="46"/>
         <source>open</source>
         <translation>アプリケーションで開く</translation>
     </message>
     <message>
-        <location filename="../editableimage.cpp" line="49"/>
+        <location filename="../editableimage.cpp" line="52"/>
         <source>copy data</source>
         <translation>画像をコピー</translation>
     </message>
     <message>
-        <location filename="../editableimage.cpp" line="57"/>
+        <location filename="../editableimage.cpp" line="60"/>
         <source>copy path</source>
         <translation>画像のパスをコピー</translation>
     </message>
     <message>
-        <location filename="../editableimage.cpp" line="64"/>
+        <location filename="../editableimage.cpp" line="67"/>
         <source>move to trash</source>
         <translation>ゴミ箱に移動</translation>
     </message>
     <message>
-        <location filename="../editableimage.cpp" line="71"/>
+        <location filename="../editableimage.cpp" line="74"/>
         <source>delete</source>
         <translation>削除</translation>
     </message>
     <message>
-        <location filename="../editableimage.cpp" line="74"/>
+        <location filename="../editableimage.cpp" line="77"/>
         <source>delete this image</source>
         <translation>画像を削除</translation>
     </message>
     <message>
-        <location filename="../editableimage.cpp" line="75"/>
+        <location filename="../editableimage.cpp" line="78"/>
         <source>do you want to delete %1 ?</source>
         <translation>%1を削除しますか？</translation>
     </message>
     <message>
-        <location filename="../editableimage.cpp" line="84"/>
+        <location filename="../editableimage.cpp" line="87"/>
         <source>hash</source>
         <translation>ハッシュ</translation>
     </message>
     <message>
-        <location filename="../editableimage.cpp" line="118"/>
+        <location filename="../editableimage.cpp" line="121"/>
         <source>There&apos;s no image here</source>
         <translation>画像なし</translation>
     </message>
@@ -131,72 +131,72 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../mainwindow.cpp" line="108"/>
+        <location filename="../mainwindow.cpp" line="112"/>
         <source>entry a directory</source>
         <translation>フォルダのパスを入力</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="121"/>
+        <location filename="../mainwindow.cpp" line="125"/>
         <source>load</source>
         <translation>ロード</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="124"/>
+        <location filename="../mainwindow.cpp" line="128"/>
         <source>Ctrl + Enter</source>
         <translation>ショートカット: Ctrl + エンターキー</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="125"/>
+        <location filename="../mainwindow.cpp" line="129"/>
         <source>start</source>
         <translation>スタート</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="128"/>
+        <location filename="../mainwindow.cpp" line="132"/>
         <source>Ctrl + Shift + R</source>
         <translation>ショートカット: Ctrl + Shift + R</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="129"/>
+        <location filename="../mainwindow.cpp" line="133"/>
         <source>show result</source>
         <translation>結果を表示</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="131"/>
+        <location filename="../mainwindow.cpp" line="135"/>
         <source>Stopwatch Dialog</source>
         <translation>経過した時間</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="188"/>
+        <location filename="../mainwindow.cpp" line="192"/>
         <source> same with: </source>
         <translation> と似ている画像は: </translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="208"/>
+        <location filename="../mainwindow.cpp" line="212"/>
         <source>cancel</source>
         <translation>キャンセル</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="232"/>
+        <location filename="../mainwindow.cpp" line="236"/>
         <source>select a directory</source>
         <translation>フォルダを選択</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="254"/>
+        <location filename="../mainwindow.cpp" line="258"/>
         <source>about</source>
         <translation>アプリについて</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="314"/>
+        <location filename="../mainwindow.cpp" line="318"/>
         <source> directory does not exist</source>
         <translation> そのようなディレクトリはありません</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="332"/>
+        <location filename="../mainwindow.cpp" line="336"/>
         <source>%1 images, total size: %2&lt;br/&gt;Ctrl + Shift + R</source>
         <translation>%1 枚の画像、合計サイズ： %2&lt;br/&gt;ショートカット: Ctrl + Shift + R</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="335"/>
+        <location filename="../mainwindow.cpp" line="339"/>
         <source>no image here</source>
         <translation>画像はありません</translation>
     </message>
@@ -284,12 +284,12 @@
         <translation>すべての画像の処理時間の合計を記録します。</translation>
     </message>
     <message>
-        <location filename="../convertedimage.hpp" line="56"/>
+        <location filename="../convertedimage.hpp" line="60"/>
         <source>create converted image failed</source>
         <translation>画像は転換できませんでした</translation>
     </message>
     <message>
-        <location filename="../convertedimage.hpp" line="59"/>
+        <location filename="../convertedimage.hpp" line="63"/>
         <source>call magick failed:</source>
         <translation>magickの呼び出しでエラーが発生しました:</translation>
     </message>
@@ -305,32 +305,32 @@
 <context>
     <name>StopwatchDialog</name>
     <message>
-        <location filename="../stopwatchdialog.cpp" line="21"/>
+        <location filename="../stopwatchdialog.cpp" line="22"/>
         <source>Start:</source>
         <translation>開始時刻:</translation>
     </message>
     <message>
-        <location filename="../stopwatchdialog.cpp" line="22"/>
+        <location filename="../stopwatchdialog.cpp" line="23"/>
         <source>End:</source>
         <translation>終了時刻:</translation>
     </message>
     <message>
-        <location filename="../stopwatchdialog.cpp" line="23"/>
+        <location filename="../stopwatchdialog.cpp" line="24"/>
         <source>Cost:</source>
         <translation>経過時間:</translation>
     </message>
     <message>
-        <location filename="../stopwatchdialog.cpp" line="40"/>
+        <location filename="../stopwatchdialog.cpp" line="41"/>
         <source>StopwatchDialog has already started</source>
         <translation>ストップウォッチはすでにスタートしました</translation>
     </message>
     <message>
-        <location filename="../stopwatchdialog.cpp" line="53"/>
+        <location filename="../stopwatchdialog.cpp" line="54"/>
         <source>stop must be called after start()</source>
         <translation>スタートしたストップウォッチしか止まりません</translation>
     </message>
     <message>
-        <location filename="../stopwatchdialog.cpp" line="59"/>
+        <location filename="../stopwatchdialog.cpp" line="60"/>
         <source>%1 min %2.%3 seconds</source>
         <translation>%1分 %2.%3秒</translation>
     </message>

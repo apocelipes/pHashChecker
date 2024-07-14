@@ -2,9 +2,12 @@
 // Copyright (C) 2024 apocelipes
 
 #include <QVBoxLayout>
+#include <QCompleter>
 #include <QDir>
+#include <QFileDialog>
 #include <QString>
 #include <QStringBuilder>
+#include <QProgressBar>
 #include <QFileInfo>
 #include <QFileSystemModel>
 #include <QRegularExpression>
@@ -18,6 +21,7 @@
 #include "hashworker.h"
 #include "imageviewerdialog.h"
 #include "notificationbar.h"
+#include "stopwatchdialog.h"
 #include "utils/sizeformat.h"
 #include "utils/utils.h"
 
@@ -41,16 +45,16 @@ namespace {
     }
 
     template <std::ranges::range Container>
-    [[nodiscard]] inline size_t getThreadNumber(const Container &contents) noexcept
+    [[nodiscard]] inline std::size_t getThreadNumber(const Container &contents) noexcept
     {
-        size_t nThreads = 1;
+        std::size_t nThreads = 1;
         if (int n = QThread::idealThreadCount(); n > 1) {
-            nThreads = static_cast<size_t>(n);
+            nThreads = static_cast<std::size_t>(n);
         }
         return std::min(std::ranges::size(contents), nThreads);
     }
 
-    [[nodiscard]] constexpr inline size_t getNextLimit(const size_t oldLimit, const size_t threadID, const size_t maxThreads, const size_t totalItems) noexcept
+    [[nodiscard]] constexpr inline std::size_t getNextLimit(const std::size_t oldLimit, const std::size_t threadID, const std::size_t maxThreads, const std::size_t totalItems) noexcept
     {
         if (threadID + 1 == maxThreads) {
             return totalItems;
@@ -71,13 +75,13 @@ namespace {
         threads.reserve(nThreads);
 
         // Because QThreadPool doesn't support move-only functions until 6.6.0, use STL for back compatibilities
-        for (size_t id = 0, start = 0, limit = getNextLimit(0, 0, nThreads, files.size());
+        for (std::size_t id = 0, start = 0, limit = getNextLimit(0, 0, nThreads, files.size());
             id < nThreads;
             ++id, start = limit, limit = getNextLimit(limit, id, nThreads, files.size())) {
             threads.emplace_back([start, limit, &files, &ret](){
                 uint64_t size{};
 
-                for (size_t i{start}; i < limit; ++i) {
+                for (std::size_t i{start}; i < limit; ++i) {
                     size += std::filesystem::file_size(files[i]);
                 }
 
@@ -85,7 +89,7 @@ namespace {
             });
         }
     
-        for (size_t i = 0; i < nThreads; ++i) {
+        for (std::size_t i = 0; i < nThreads; ++i) {
             threads[i].join();
         }
 
@@ -167,7 +171,7 @@ MainWindow::MainWindow(QWidget *parent) noexcept
         if (settings->isUseTimerDialog()) {
             timerDialog->start();
         }
-        for (size_t id = 0, start = 0, limit = getNextLimit(0, 0, nThreads, images.size());
+        for (std::size_t id = 0, start = 0, limit = getNextLimit(0, 0, nThreads, images.size());
              id < nThreads;
              ++id, start = limit, limit = getNextLimit(limit, id,nThreads, images.size())) {
             // cannot use a QThreadPool because we need an event-loop in our worker functions
@@ -177,7 +181,7 @@ MainWindow::MainWindow(QWidget *parent) noexcept
             connect(worker, &HashWorker::doneAllWork, pool[id].get(), &QThread::quit);
             connect(pool[id].get(), &QThread::started, worker, &HashWorker::doWork);
             connect(worker, &HashWorker::doneOneImg, this, &MainWindow::onProgress);
-            connect(worker, &HashWorker::sameImg, this, [this](size_t originIndex, size_t sameIndex){
+            connect(worker, &HashWorker::sameImg, this, [this](std::size_t originIndex, std::size_t sameIndex){
                 const auto &origin = images[originIndex];
                 const auto &same = images[sameIndex];
                 if (!sameImageResults.contains(origin)) {
@@ -309,7 +313,7 @@ void MainWindow::setImages() noexcept
     matchHistory.clear();
 
     info->hide(); // 重写的hide会设置isClosing
-    if (!QDir{path}.exists()) {
+    if (!QFileInfo::exists(path)) {
         disableStartBtn();
         info->setText(path % tr(" directory does not exist"));
         info->animatedShow();

@@ -8,10 +8,13 @@
 #include <QFile>
 #include <QGuiApplication>
 #include <QMenu>
+#include <QMouseEvent>
 #include <QMessageBox>
 #include <QPoint>
 #include <QStyle>
 #include <QUrl>
+
+#include <filesystem>
 
 #include "convertedimage.hpp"
 #include "editableimage.h"

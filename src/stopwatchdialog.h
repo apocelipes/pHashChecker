@@ -5,9 +5,11 @@
 
 #include <QDialog>
 #include <QDateTime>
-#include <QLabel>
 
-class StopwatchDialog: public QDialog {
+class QLabel;
+
+class StopwatchDialog: public QDialog
+{
     Q_OBJECT
 public:
     explicit StopwatchDialog(const QString &title, QWidget *parent = nullptr) noexcept;

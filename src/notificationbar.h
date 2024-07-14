@@ -10,11 +10,6 @@
 
 #include <memory>
 
-class QLabel;
-class QPushButton;
-class QGraphicsOpacityEffect;
-class QPropertyAnimation;
-
 class NotificationBar: public QFrame {
     Q_OBJECT
 public:

@@ -5,6 +5,7 @@
 #include <QHBoxLayout>
 #include <QPushButton>
 #include <QSize>
+#include <QStyle>
 
 #include "imageviewer.h"
 #include "thumbnail.h"

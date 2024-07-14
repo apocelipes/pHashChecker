@@ -6,6 +6,8 @@
 #include <QGraphicsBlurEffect>
 #include <QGraphicsOpacityEffect>
 #include <QPropertyAnimation>
+#include <QMouseEvent>
+#include <QParallelAnimationGroup>
 
 #include <utility>
 
@@ -42,7 +44,7 @@ void ThumbnailPrivate::init(Thumbnail *q_ptr) noexcept
     q = q_ptr;
     image = new QLabel{q};
     image->setGeometry(q->geometry());
-    if (QFile::exists(imgPath)) {
+    if (QFileInfo::exists(imgPath)) {
         QPixmap data;
         if (Utils::isFormatNeedConvert(imgPath)) {
             ConvertedImage converted{imgPath, ThumbnailHeight, ThumbnailHeight};
@@ -122,7 +124,7 @@ void Thumbnail::hideShadow() noexcept
     d->hideAnimation->start();
 }
 
-QString Thumbnail::getImagePath() noexcept
+QString Thumbnail::getImagePath() const noexcept
 {
     return d->imgPath;
 }

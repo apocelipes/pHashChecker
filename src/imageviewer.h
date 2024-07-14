@@ -5,7 +5,6 @@
 #define IMAGEVIEWER_H
 
 #include <QWidget>
-#include <QStyle>
 
 #include <string>
 #include <vector>

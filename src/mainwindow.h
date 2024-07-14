@@ -6,13 +6,10 @@
 
 #include <QApplication>
 #include <QWidget>
-#include <QProgressBar>
 #include <QPushButton>
 #include <QLineEdit>
-#include <QFileDialog>
 #include <QHBoxLayout>
 #include <QThread>
-#include <QCompleter>
 
 #include <algorithm>
 #include <chrono>
@@ -26,10 +23,14 @@
 #include "settingpanel.h"
 #include "qstringhasher.hpp"
 #include "widgethelpers.h"
-#include "stopwatchdialog.h"
+
+class QCompleter;
+class QFileDialog;
+class QProgressBar;
 
 class ImageViewerDialog;
 class NotificationBar;
+class StopwatchDialog;
 
 constexpr int MIN_EDIT_WIDTH = 40;
 
@@ -82,7 +83,7 @@ private:
         });
     }
 
-    void init_pool(const size_t nThreads) noexcept {
+    void init_pool(const std::size_t nThreads) noexcept {
         const auto oldSize = pool.size();
         quitPool(true);
         if (oldSize > nThreads) {
@@ -117,7 +118,7 @@ private:
 
     std::vector<std::string> images;
     SameImagesContainer sameImageResults;
-    std::vector<std::pair<ulong64, size_t>> matchHistory;
+    std::vector<std::pair<ulong64, std::size_t>> matchHistory;
     std::vector<std::unique_ptr<QThread>> pool;
 };
 

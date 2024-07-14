@@ -18,7 +18,7 @@ namespace {
 
 void HashWorker::doWork()
 {
-    for (size_t index = _start; index < _limit; ++index) {
+    for (std::size_t index = _start; index < _limit; ++index) {
         if (this->thread()->isInterruptionRequested()) {
             qInfo() << tr("thread exit");
             break;

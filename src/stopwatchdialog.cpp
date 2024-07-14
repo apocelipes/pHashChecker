@@ -3,6 +3,7 @@
 
 #include <QDialogButtonBox>
 #include  <QFormLayout>
+#include <QLabel>
 #include <QVBoxLayout>
 #include <QLocale>
 #include <QStringBuilder>

@@ -4,47 +4,47 @@
 <context>
     <name>EditableImage</name>
     <message>
-        <location filename="../editableimage.cpp" line="43"/>
+        <location filename="../editableimage.cpp" line="46"/>
         <source>open</source>
         <translation>打开</translation>
     </message>
     <message>
-        <location filename="../editableimage.cpp" line="49"/>
+        <location filename="../editableimage.cpp" line="52"/>
         <source>copy data</source>
         <translation>复制图片</translation>
     </message>
     <message>
-        <location filename="../editableimage.cpp" line="57"/>
+        <location filename="../editableimage.cpp" line="60"/>
         <source>copy path</source>
         <translation>复制图片路径</translation>
     </message>
     <message>
-        <location filename="../editableimage.cpp" line="64"/>
+        <location filename="../editableimage.cpp" line="67"/>
         <source>move to trash</source>
         <translation>移动到回收站</translation>
     </message>
     <message>
-        <location filename="../editableimage.cpp" line="71"/>
+        <location filename="../editableimage.cpp" line="74"/>
         <source>delete</source>
         <translation>删除</translation>
     </message>
     <message>
-        <location filename="../editableimage.cpp" line="74"/>
+        <location filename="../editableimage.cpp" line="77"/>
         <source>delete this image</source>
         <translation>删除图片</translation>
     </message>
     <message>
-        <location filename="../editableimage.cpp" line="75"/>
+        <location filename="../editableimage.cpp" line="78"/>
         <source>do you want to delete %1 ?</source>
         <translation>你确定删除 %1 吗？</translation>
     </message>
     <message>
-        <location filename="../editableimage.cpp" line="84"/>
+        <location filename="../editableimage.cpp" line="87"/>
         <source>hash</source>
         <translation>计算hash</translation>
     </message>
     <message>
-        <location filename="../editableimage.cpp" line="118"/>
+        <location filename="../editableimage.cpp" line="121"/>
         <source>There&apos;s no image here</source>
         <translation>无图片</translation>
     </message>
@@ -131,72 +131,72 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../mainwindow.cpp" line="108"/>
+        <location filename="../mainwindow.cpp" line="112"/>
         <source>entry a directory</source>
         <translation>输入目录</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="121"/>
+        <location filename="../mainwindow.cpp" line="125"/>
         <source>load</source>
         <translation>加载</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="124"/>
+        <location filename="../mainwindow.cpp" line="128"/>
         <source>Ctrl + Enter</source>
         <translation>快捷键: Ctrl + 回车</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="125"/>
+        <location filename="../mainwindow.cpp" line="129"/>
         <source>start</source>
         <translation>开始计算</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="128"/>
+        <location filename="../mainwindow.cpp" line="132"/>
         <source>Ctrl + Shift + R</source>
         <translation>快捷键: Ctrl + Shift + R</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="129"/>
+        <location filename="../mainwindow.cpp" line="133"/>
         <source>show result</source>
         <translation>显示结果</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="131"/>
+        <location filename="../mainwindow.cpp" line="135"/>
         <source>Stopwatch Dialog</source>
         <translation>计算耗时</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="188"/>
+        <location filename="../mainwindow.cpp" line="192"/>
         <source> same with: </source>
         <translation> 相似图片: </translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="208"/>
+        <location filename="../mainwindow.cpp" line="212"/>
         <source>cancel</source>
         <translation>取消</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="232"/>
+        <location filename="../mainwindow.cpp" line="236"/>
         <source>select a directory</source>
         <translation>选择图片目录</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="254"/>
+        <location filename="../mainwindow.cpp" line="258"/>
         <source>about</source>
         <translation>关于</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="314"/>
+        <location filename="../mainwindow.cpp" line="318"/>
         <source> directory does not exist</source>
         <translation> 文件夹不存在</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="332"/>
+        <location filename="../mainwindow.cpp" line="336"/>
         <source>%1 images, total size: %2&lt;br/&gt;Ctrl + Shift + R</source>
         <translation>%1 张图片，总大小： %2&lt;br/&gt;快捷键: Ctrl + Shift + R</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="335"/>
+        <location filename="../mainwindow.cpp" line="339"/>
         <source>no image here</source>
         <translation>目录中没有图片</translation>
     </message>
@@ -284,12 +284,12 @@
         <translation>计算匹配所有图片所需的时间。</translation>
     </message>
     <message>
-        <location filename="../convertedimage.hpp" line="56"/>
+        <location filename="../convertedimage.hpp" line="60"/>
         <source>create converted image failed</source>
         <translation>图片转换失败</translation>
     </message>
     <message>
-        <location filename="../convertedimage.hpp" line="59"/>
+        <location filename="../convertedimage.hpp" line="63"/>
         <source>call magick failed:</source>
         <translation>magick调用失败:</translation>
     </message>
@@ -305,32 +305,32 @@
 <context>
     <name>StopwatchDialog</name>
     <message>
-        <location filename="../stopwatchdialog.cpp" line="21"/>
+        <location filename="../stopwatchdialog.cpp" line="22"/>
         <source>Start:</source>
         <translation>开始时间:</translation>
     </message>
     <message>
-        <location filename="../stopwatchdialog.cpp" line="22"/>
+        <location filename="../stopwatchdialog.cpp" line="23"/>
         <source>End:</source>
         <translation>结束时间:</translation>
     </message>
     <message>
-        <location filename="../stopwatchdialog.cpp" line="23"/>
+        <location filename="../stopwatchdialog.cpp" line="24"/>
         <source>Cost:</source>
         <translation>耗时:</translation>
     </message>
     <message>
-        <location filename="../stopwatchdialog.cpp" line="40"/>
+        <location filename="../stopwatchdialog.cpp" line="41"/>
         <source>StopwatchDialog has already started</source>
         <translation>计时已经启动了</translation>
     </message>
     <message>
-        <location filename="../stopwatchdialog.cpp" line="53"/>
+        <location filename="../stopwatchdialog.cpp" line="54"/>
         <source>stop must be called after start()</source>
         <translation>只有在start()调用过之后才能停止</translation>
     </message>
     <message>
-        <location filename="../stopwatchdialog.cpp" line="59"/>
+        <location filename="../stopwatchdialog.cpp" line="60"/>
         <source>%1 min %2.%3 seconds</source>
         <translation>%1分 %2.%3秒</translation>
     </message>

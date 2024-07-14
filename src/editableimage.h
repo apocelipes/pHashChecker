@@ -5,17 +5,16 @@
 #define EDITABLEIMAGE_H
 
 #include <QLabel>
-#include <QMouseEvent>
 #include <QPixmap>
 #include <QString>
 
-#include <filesystem>
 #include <memory>
 
 constexpr int EditableImageFixedWidth = 850;
 constexpr int EditableImageFixedHeight = 650;
 
 class QMenu;
+class QMouseEvent;
 
 class EditableImage : public QLabel
 {

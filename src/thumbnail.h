@@ -6,14 +6,10 @@
 
 #include <QWidget>
 #include <QString>
-#include <QMouseEvent>
-#include <QParallelAnimationGroup>
 
 #include <memory>
 
-class QLabel;
-class QGraphicsBlurEffect;
-class QGraphicsOpacityEffect;
+class QMouseEvent;
 
 class Thumbnail : public QWidget
 {
@@ -22,7 +18,7 @@ public:
     explicit Thumbnail(QString path, QWidget *parent = nullptr) noexcept;
     ~Thumbnail() noexcept override;
 
-    [[nodiscard]] QString getImagePath() noexcept;
+    [[nodiscard]] QString getImagePath() const noexcept;
 
     void mouseReleaseEvent(QMouseEvent *event) override;
 
