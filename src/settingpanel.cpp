@@ -6,8 +6,20 @@
 #include <QSlider>
 #include <QString>
 #include <QHBoxLayout>
+#include <QSettings>
 
 #include "settingpanel.h"
+
+namespace
+{
+    const char *pHashDistanceIndexKey = "settingpanel/pHashDistanceIndex";
+    const char *recursiveSearchKey = "settingpanel/recursiveSearch";
+    const char *useStopwatchDialogKey = "settingpanel/useStopwatchDialog";
+
+    constexpr int defaultPHashDistanceIndex = 1;
+    constexpr bool defaultRecursiveSearch = false;
+    constexpr bool defaultUseStopwatchDialog = false;
+}
 
 struct SettingPanelPrivate
 {
@@ -16,9 +28,22 @@ struct SettingPanelPrivate
     QLabel *valueLabel = nullptr;
     QSlider *distanceSlider = nullptr;
     QCheckBox *recursiveSearchChecker = nullptr;
-    QCheckBox *timerDialogChecker = nullptr;
+    QCheckBox *stopwatchDialogChecker = nullptr;
+    QSettings settings;
 
     void init(SettingPanel *q_ptr) noexcept;
+
+    SettingPanelPrivate() noexcept
+    : settings{"apocelipes", "pHashChecker"}
+    {}
+
+    ~SettingPanelPrivate() noexcept
+    {
+        settings.setValue(pHashDistanceIndexKey, distanceSlider->value());
+        settings.setValue(recursiveSearchKey, recursiveSearchChecker->isChecked());
+        settings.setValue(useStopwatchDialogKey, stopwatchDialogChecker->isChecked());
+        settings.sync();
+    }
 
 private:
     [[nodiscard]] static QString getDistanceName(int index) noexcept
@@ -63,24 +88,25 @@ void SettingPanelPrivate::init(SettingPanel *q_ptr) noexcept
     QObject::connect(distanceSlider, &QSlider::valueChanged, q, [this](int val) {
         q->setToolTip(getDistanceToolTip(val));
     });
-    distanceSlider->setValue(1);
+    distanceSlider->setValue(settings.value(pHashDistanceIndexKey, defaultPHashDistanceIndex).toInt());
     QObject::connect(distanceSlider, &QSlider::valueChanged, [this](int value) {
         valueLabel->setText(getDistanceName(value));
     });
 
     recursiveSearchChecker = new QCheckBox{QObject::tr("recursive searching"), q};
+    recursiveSearchChecker->setChecked(settings.value(recursiveSearchKey, defaultRecursiveSearch).toBool());
     recursiveSearchChecker->setToolTip(QObject::tr("Recursively searches all images in the current directory and its subdirectories."));
 
-    timerDialogChecker = new QCheckBox{QObject::tr("record calculation time"), q};
-    timerDialogChecker->setToolTip(QObject::tr("Record the time spent on calculation."));
-    timerDialogChecker->setChecked(true);
+    stopwatchDialogChecker = new QCheckBox{QObject::tr("record calculation time"), q};
+    stopwatchDialogChecker->setToolTip(QObject::tr("Record the time spent on calculation."));
+    stopwatchDialogChecker->setChecked(settings.value(useStopwatchDialogKey, defaultUseStopwatchDialog).toBool());
 
     auto settingsLayout = new QHBoxLayout;
     settingsLayout->addWidget(distanceLabel);
     settingsLayout->addWidget(distanceSlider);
     settingsLayout->addWidget(valueLabel);
     settingsLayout->addWidget(recursiveSearchChecker);
-    settingsLayout->addWidget(timerDialogChecker);
+    settingsLayout->addWidget(stopwatchDialogChecker);
     q->setLayout(settingsLayout);
 }
 
@@ -115,7 +141,7 @@ Utils::PHashDistance SettingPanel::getSimilarDistance() const noexcept
     }
 }
 
-bool SettingPanel::isUseTimerDialog() const noexcept
+bool SettingPanel::isUseStopwatchDialog() const noexcept
 {
-    return d->timerDialogChecker->isChecked();
+    return d->stopwatchDialogChecker->isChecked();
 }

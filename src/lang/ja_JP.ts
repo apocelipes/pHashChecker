@@ -219,67 +219,67 @@
         <translation>閉じる</translation>
     </message>
     <message>
-        <location filename="../settingpanel.cpp" line="57"/>
+        <location filename="../settingpanel.cpp" line="82"/>
         <source>matching accuracy: </source>
         <translation>マッチングの精密性: </translation>
     </message>
     <message>
-        <location filename="../settingpanel.cpp" line="28"/>
+        <location filename="../settingpanel.cpp" line="53"/>
         <source>fuzzy</source>
         <translation>低い</translation>
     </message>
     <message>
-        <location filename="../settingpanel.cpp" line="29"/>
+        <location filename="../settingpanel.cpp" line="54"/>
         <source>default</source>
         <translation>デフォルト</translation>
     </message>
     <message>
-        <location filename="../settingpanel.cpp" line="30"/>
+        <location filename="../settingpanel.cpp" line="55"/>
         <source>precise</source>
         <translation>精確</translation>
     </message>
     <message>
-        <location filename="../settingpanel.cpp" line="31"/>
+        <location filename="../settingpanel.cpp" line="56"/>
         <source>strict</source>
         <translation>シビア</translation>
     </message>
     <message>
-        <location filename="../settingpanel.cpp" line="41"/>
+        <location filename="../settingpanel.cpp" line="66"/>
         <source>Fuzzy mode may produce more erroneous results.</source>
         <translation>若干の誤差があります。</translation>
     </message>
     <message>
-        <location filename="../settingpanel.cpp" line="42"/>
+        <location filename="../settingpanel.cpp" line="67"/>
         <source>The default mode.</source>
         <translation>デフォルトモードでマッチングをします。</translation>
     </message>
     <message>
-        <location filename="../settingpanel.cpp" line="43"/>
+        <location filename="../settingpanel.cpp" line="68"/>
         <source>This mode provides higher precision than the default mode.</source>
         <translation>デフォルトモードより高い正確性が保証されています。</translation>
     </message>
     <message>
-        <location filename="../settingpanel.cpp" line="44"/>
+        <location filename="../settingpanel.cpp" line="69"/>
         <source>Strict mode provides the highest matching accuracy.</source>
         <translation>もっとも厳しいマッチングを行い、せいかくな結果が提供されています。</translation>
     </message>
     <message>
-        <location filename="../settingpanel.cpp" line="71"/>
+        <location filename="../settingpanel.cpp" line="96"/>
         <source>recursive searching</source>
         <translation>サブディレクトリも併せて検索</translation>
     </message>
     <message>
-        <location filename="../settingpanel.cpp" line="72"/>
+        <location filename="../settingpanel.cpp" line="98"/>
         <source>Recursively searches all images in the current directory and its subdirectories.</source>
         <translation>現在のディレクトリとそのサブディレクトリにあるすべての画像を再帰的に検索します。</translation>
     </message>
     <message>
-        <location filename="../settingpanel.cpp" line="74"/>
+        <location filename="../settingpanel.cpp" line="100"/>
         <source>record calculation time</source>
         <translation>処理の総合時間を記録</translation>
     </message>
     <message>
-        <location filename="../settingpanel.cpp" line="75"/>
+        <location filename="../settingpanel.cpp" line="101"/>
         <source>Record the time spent on calculation.</source>
         <translation>すべての画像の処理時間の合計を記録します。</translation>
     </message>
@@ -297,7 +297,7 @@
 <context>
     <name>SettingPanel</name>
     <message>
-        <location filename="../settingpanel.cpp" line="113"/>
+        <location filename="../settingpanel.cpp" line="139"/>
         <source>returning DEFAULT because of invalid value: </source>
         <translation>未知の値があるため、DEFAULTを返します： </translation>
     </message>

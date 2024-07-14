@@ -168,7 +168,7 @@ MainWindow::MainWindow(QWidget *parent) noexcept
         const auto nThreads = getThreadNumber(images);
         init_pool(nThreads);
         const auto distance = settings->getSimilarDistance();
-        if (settings->isUseTimerDialog()) {
+        if (settings->isUseStopwatchDialog()) {
             timerDialog->start();
         }
         for (std::size_t id = 0, start = 0, limit = getNextLimit(0, 0, nThreads, images.size());
@@ -201,7 +201,7 @@ MainWindow::MainWindow(QWidget *parent) noexcept
     });
     connect(this, &MainWindow::completed, this, [this](){
         initResultDialog();
-        if (settings->isUseTimerDialog()) {
+        if (settings->isUseStopwatchDialog()) {
             timerDialog->exec();
         }
         imageDialog->exec();
@@ -222,7 +222,7 @@ MainWindow::MainWindow(QWidget *parent) noexcept
         freezeMainGUI(false);
         bar->hide();
         cancelButton->hide();
-        if (settings->isUseTimerDialog()) {
+        if (settings->isUseStopwatchDialog()) {
             timerDialog->stop();
         }
     });
@@ -293,7 +293,7 @@ void MainWindow::onProgress() noexcept
     dialogBtn->show();
     startBtn->hide();
     sort_result();
-    if (settings->isUseTimerDialog()) {
+    if (settings->isUseStopwatchDialog()) {
         timerDialog->stop();
     }
     Q_EMIT completed();
