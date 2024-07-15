@@ -10,13 +10,38 @@
 
 #include "settingpanel.h"
 
-namespace
-{
-    const char *pHashDistanceIndexKey = "settingpanel/pHashDistanceIndex";
-    const char *recursiveSearchKey = "settingpanel/recursiveSearch";
-    const char *useStopwatchDialogKey = "settingpanel/useStopwatchDialog";
+#define SETTINGS_PREFIX "settingpanel/"
 
-    constexpr int defaultPHashDistanceIndex = 1;
+using PHashDistance = Utils::PHashDistance;
+
+namespace {
+    const std::array distances = {
+        PHashDistance::FUZZY,
+        PHashDistance::DEFAULT,
+        PHashDistance::PRECISE,
+        PHashDistance::STRICT,
+    };
+
+    inline constexpr std::size_t distance2Index(const PHashDistance distance) noexcept
+    {
+        auto ret  = Utils::indexOf(distances, distance);
+        return ret.value_or(1);
+    }
+
+    inline constexpr std::optional<PHashDistance> index2Distance(const int idx) noexcept
+    {
+        if (idx < 0 || static_cast<std::size_t>(idx) >= distances.size()) [[unlikely]] {
+            return std::nullopt;
+        }
+
+        return distances[idx];
+    }
+
+    const char *pHashDistanceIndexKey = SETTINGS_PREFIX"pHashDistanceIndex";
+    const char *recursiveSearchKey = SETTINGS_PREFIX"recursiveSearch";
+    const char *useStopwatchDialogKey = SETTINGS_PREFIX"useStopwatchDialog";
+
+    constexpr int defaultPHashDistanceIndex = static_cast<int>(distance2Index(PHashDistance::DEFAULT));
     constexpr bool defaultRecursiveSearch = false;
     constexpr bool defaultUseStopwatchDialog = false;
 }
@@ -125,20 +150,13 @@ bool SettingPanel::isRecursiveSearching() const noexcept
 
 Utils::PHashDistance SettingPanel::getSimilarDistance() const noexcept
 {
-    auto value = d->distanceSlider->value();
-    switch (value) {
-    case 0:
-        return Utils::PHashDistance::FUZZY;
-    case 1:
-        return Utils::PHashDistance::DEFAULT;
-    case 2:
-        return Utils::PHashDistance::PRECISE;
-    case 3:
-        return Utils::PHashDistance::STRICT;
-    default:
+    const auto value = d->distanceSlider->value();
+    const auto distance = index2Distance(value);
+    if (!distance.has_value()) [[unlikely]] {
         qWarning() << tr("returning DEFAULT because of invalid value: ") << value;
-        return Utils::PHashDistance::DEFAULT;
     }
+
+    return distance.value_or(PHashDistance::DEFAULT);
 }
 
 bool SettingPanel::isUseStopwatchDialog() const noexcept
