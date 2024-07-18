@@ -6,7 +6,6 @@
 #include <QDir>
 #include <QFileDialog>
 #include <QString>
-#include <QStringBuilder>
 #include <QProgressBar>
 #include <QFileInfo>
 #include <QFileSystemModel>
@@ -14,6 +13,7 @@
 #include <QKeySequence>
 
 #include <atomic>
+#include <cstring>
 #include <filesystem>
 #include <thread>
 
@@ -25,7 +25,30 @@
 #include "utils/sizeformat.h"
 #include "utils/utils.h"
 
+#include <string.h> // for POSIX strcasecmp
+
 namespace {
+    [[nodiscard]] inline bool isSupportedImageFormat(const std::string &img) noexcept
+    {
+        static const std::array imageExtensions{
+            ".jpg",
+            ".png",
+            ".jpeg",
+            ".avif",
+            ".webp",
+            ".bmp",
+        };
+
+        const auto ext = std::strrchr(img.c_str(), '.');
+        if (ext == nullptr) [[unlikely]] {
+            return false;
+        }
+
+        return imageExtensions.cend() != std::ranges::find_if(imageExtensions, [ext](const char *s) {
+            return strcasecmp(s, ext) == 0;
+        });
+    }
+
     template <typename T>
     concept IsDirIterator = requires(T iter) {
         { *iter } -> std::same_as<const std::filesystem::directory_entry&>;
@@ -35,11 +58,7 @@ namespace {
 
     inline void fillImages(IsDirIterator auto &&dir, std::vector<std::string> &images) noexcept
     {
-        auto result = dir | std::views::filter([](const std::filesystem::directory_entry &p) { return p.is_regular_file(); })
-                          | std::views::filter([](const std::filesystem::directory_entry &p) {
-                                const auto &path = QString::fromStdString(p.path().string());
-                                return Utils::isSupportImageFormat(path);
-                            })
+        auto result = dir | std::views::filter([](const std::filesystem::directory_entry &p) { return p.is_regular_file() && isSupportedImageFormat(p.path().native()); })
                           | std::views::transform([](const std::filesystem::directory_entry &p) { return p.path().string(); });
         std::ranges::copy(result, std::back_inserter(images)); // using c++23's ranges::to is the best way
     }
@@ -96,7 +115,7 @@ namespace {
         return result;
     }
 
-    inline QString replaceWithHomeDir(const QString &text) noexcept
+    [[nodiscard]] inline QString replaceWithHomeDir(const QString &text) noexcept
     {
         static const auto &shellHomeDirPattern = QRegularExpression{"^~/"};
         return text.trimmed().replace(shellHomeDirPattern, QDir::homePath()+'/');

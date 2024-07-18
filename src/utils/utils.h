@@ -18,7 +18,8 @@
 
 namespace Utils {
     template<std::ranges::range Container, typename Element>
-    [[nodiscard]] constexpr std::optional<std::ptrdiff_t> indexOf(const Container &container, const Element &target) noexcept {
+    [[nodiscard]] constexpr std::optional<std::ptrdiff_t> indexOf(const Container &container, const Element &target) noexcept
+    {
         auto iter = std::ranges::find(container, target);
         if (iter == std::ranges::cend(container)) {
             return std::nullopt;
@@ -34,27 +35,14 @@ namespace Utils {
         FUZZY   = 10,
     };
 
-    [[nodiscard]] inline QString getFileExtension(const QString &filePath) noexcept {
+    [[nodiscard]] inline QString getFileExtension(const QString &filePath) noexcept
+    {
         return filePath.section(QChar('.'), -1, -1);
     }
 
-    [[nodiscard]] inline bool isSupportImageFormat(const QString &img) noexcept {
-        static const std::array imageExtensions{
-            QStringLiteral(u"jpg"),
-            QStringLiteral(u"jpeg"),
-            QStringLiteral(u"png"),
-            QStringLiteral(u"webp"),
-            QStringLiteral(u"bmp"),
-            QStringLiteral(u"avif"),
-        };
-
-        return imageExtensions.cend() != std::ranges::find_if(imageExtensions, [ext = getFileExtension(img)](const QString &s) {
-            return QString::compare(s, ext, Qt::CaseInsensitive) == 0;
-        });
-    }
-
     // NOTICE: only init once
-    [[nodiscard]] inline QString getTempDirPath() noexcept {
+    [[nodiscard]] inline QString getTempDirPath() noexcept
+    {
         static QTemporaryDir temp{QDir::tempPath() % QDir::separator() % QStringLiteral(u"pHashChecker-XXXXXX")};
         if (!temp.isValid()) [[unlikely]] {
             qFatal() << QObject::tr("create temporary dir failed");
@@ -62,7 +50,8 @@ namespace Utils {
         return temp.path();
     }
 
-    [[nodiscard]] inline bool isFormatNeedConvert(const QString &imgPath) noexcept {
+    [[nodiscard]] inline bool isFormatNeedConvert(const QString &imgPath) noexcept
+    {
         return QString::compare(getFileExtension(imgPath), QStringLiteral(u"avif"), Qt::CaseInsensitive) == 0;
     }
 }
