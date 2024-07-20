@@ -15,6 +15,7 @@
 #include <atomic>
 #include <cstring>
 #include <filesystem>
+#include <iterator>
 #include <thread>
 
 #include "mainwindow.h"
@@ -56,11 +57,11 @@ namespace {
         { *std::filesystem::end(iter) } -> std::same_as<const std::filesystem::directory_entry&>;
     };
 
-    inline void fillImages(IsDirIterator auto &&dir, std::vector<std::string> &images) noexcept
+    inline void fillImages(IsDirIterator auto &&dir, std::output_iterator<std::string> auto &&output) noexcept
     {
         auto result = dir | std::views::filter([](const std::filesystem::directory_entry &p) { return p.is_regular_file() && isSupportedImageFormat(p.path().native()); })
                           | std::views::transform([](const std::filesystem::directory_entry &p) { return p.path().string(); });
-        std::ranges::copy(result, std::back_inserter(images)); // using c++23's ranges::to is the best way
+        std::ranges::copy(result, output); // using c++23's ranges::to is the best way
     }
 
     template <std::ranges::range Container>
@@ -341,9 +342,9 @@ void MainWindow::setImages() noexcept
 
     constexpr auto opts = std::filesystem::directory_options::skip_permission_denied;
     if (settings->isRecursiveSearching()) {
-        fillImages(std::filesystem::recursive_directory_iterator{path.toStdString(), opts}, images);
+        fillImages(std::filesystem::recursive_directory_iterator{path.toStdString(), opts}, std::back_inserter(images));
     } else {
-        fillImages(std::filesystem::directory_iterator{path.toStdString(), opts}, images);
+        fillImages(std::filesystem::directory_iterator{path.toStdString(), opts}, std::back_inserter(images));
     }
     QCoreApplication::processEvents();
     if (!images.empty()) {
