@@ -327,7 +327,10 @@ void MainWindow::setImages() noexcept
     }
 
     dialogBtn->hide();
+    dialogBtn->setEnabled(false);
     releaseResultDialog();
+    startBtn->setEnabled(false);
+    startBtn->show();
     sameImageResults.clear();
     images.clear();
     matchHistory.clear();
@@ -366,7 +369,6 @@ void MainWindow::initResultDialog() noexcept
     if (imageDialog != nullptr) {
         return;
     }
-    dialogBtn->setEnabled(false);
     imageDialog = new ImageViewerDialog{std::move(sameImageResults)};
     sameImageResults = SameImagesContainer{};
     matchHistory.clear();
