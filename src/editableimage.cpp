@@ -19,6 +19,7 @@
 #include "convertedimage.hpp"
 #include "editableimage.h"
 #include "hashdialog.h"
+#include "utils/sizeformat.h"
 
 struct EditableImagePrivate {
     QMenu *contextMenu = nullptr;
@@ -115,7 +116,8 @@ void EditableImage::setImagePath(const QString &path) noexcept
     if (path == d->m_path) {
         return;
     }
-    if (!QFile::exists(path)) {
+    const auto &info = QFileInfo{path};
+    if (!info.exists()) {
         clear();
         d->convertedImg.reset();
         setToolTip(isEmpty() ? tr("There's no image here") : getImagePath());
@@ -129,7 +131,7 @@ void EditableImage::setImagePath(const QString &path) noexcept
     }
     QPixmap newImg{newPath};
     setPixmap(newImg.scaled(EditableImageFixedWidth, EditableImageFixedHeight));
-    setToolTip(d->m_path);
+    setToolTip(tr("%1<br>size: %2").arg(d->m_path).arg(Utils::sizeFormat(info.size())));
     Q_EMIT pathChanged(d->m_path);
 }
 

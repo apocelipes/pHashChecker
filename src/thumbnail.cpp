@@ -13,6 +13,7 @@
 
 #include "convertedimage.hpp"
 #include "thumbnail.h"
+#include "utils/sizeformat.h"
 
 using namespace Qt::Literals::StringLiterals;
 
@@ -44,16 +45,22 @@ void ThumbnailPrivate::init(Thumbnail *q_ptr) noexcept
     q = q_ptr;
     image = new QLabel{q};
     image->setGeometry(q->geometry());
-    if (QFileInfo::exists(imgPath)) {
-        QPixmap data;
-        if (Utils::isFormatNeedConvert(imgPath)) {
-            ConvertedImage converted{imgPath, ThumbnailHeight, ThumbnailHeight};
-            data.load(converted.getImagePath());
-        } else {
-            data.load(imgPath);
-        }
-        image->setPixmap(data.scaled(ThumbnailWidth, ThumbnailHeight));
+    const auto &info = QFileInfo{imgPath};
+    if (!info.exists()) {
+        qFatal() << QObject::tr("Image file does not exist:") << imgPath;
+        return;
     }
+
+    QPixmap data;
+    if (Utils::isFormatNeedConvert(imgPath)) {
+        ConvertedImage converted{imgPath, ThumbnailHeight, ThumbnailHeight};
+        data.load(converted.getImagePath());
+    } else {
+        data.load(imgPath);
+    }
+    image->setPixmap(data.scaled(ThumbnailWidth, ThumbnailHeight));
+    q->setToolTip(QObject::tr("%1<br>size: %2").arg(imgPath).arg(Utils::sizeFormat(info.size())));
+
     blurEffect = new QGraphicsBlurEffect{q};
     blurEffect->setBlurRadius(DEFAULT_BLUR_RADIUS);
     blurEffect->setBlurHints(QGraphicsBlurEffect::AnimationHint);

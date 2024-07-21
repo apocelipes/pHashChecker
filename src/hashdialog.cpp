@@ -19,14 +19,14 @@
 
 namespace {
     constexpr int fileSizeIndex = 1;
-    constexpr std::array<QCryptographicHash::Algorithm, 4> hashAlgorithms = {
+    constexpr std::array hashAlgorithms = {
             QCryptographicHash::Md5,
             QCryptographicHash::Sha1,
             QCryptographicHash::Sha256,
             QCryptographicHash::Sha512,
     };
 
-    constexpr std::array<const char *, 4> algorithmNames = {
+    constexpr std::array algorithmNames = {
             "MD5",
             "SHA-1",
             "SHA-256",

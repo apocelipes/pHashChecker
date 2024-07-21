@@ -4,49 +4,54 @@
 <context>
     <name>EditableImage</name>
     <message>
-        <location filename="../editableimage.cpp" line="46"/>
+        <location filename="../editableimage.cpp" line="47"/>
         <source>open</source>
         <translation>打开</translation>
     </message>
     <message>
-        <location filename="../editableimage.cpp" line="52"/>
+        <location filename="../editableimage.cpp" line="53"/>
         <source>copy data</source>
         <translation>复制图片</translation>
     </message>
     <message>
-        <location filename="../editableimage.cpp" line="60"/>
+        <location filename="../editableimage.cpp" line="61"/>
         <source>copy path</source>
         <translation>复制图片路径</translation>
     </message>
     <message>
-        <location filename="../editableimage.cpp" line="67"/>
+        <location filename="../editableimage.cpp" line="68"/>
         <source>move to trash</source>
         <translation>移动到回收站</translation>
     </message>
     <message>
-        <location filename="../editableimage.cpp" line="74"/>
+        <location filename="../editableimage.cpp" line="75"/>
         <source>delete</source>
         <translation>删除</translation>
     </message>
     <message>
-        <location filename="../editableimage.cpp" line="77"/>
+        <location filename="../editableimage.cpp" line="78"/>
         <source>delete this image</source>
         <translation>删除图片</translation>
     </message>
     <message>
-        <location filename="../editableimage.cpp" line="78"/>
+        <location filename="../editableimage.cpp" line="79"/>
         <source>do you want to delete %1 ?</source>
         <translation>你确定删除 %1 吗？</translation>
     </message>
     <message>
-        <location filename="../editableimage.cpp" line="87"/>
+        <location filename="../editableimage.cpp" line="88"/>
         <source>hash</source>
         <translation>计算hash</translation>
     </message>
     <message>
-        <location filename="../editableimage.cpp" line="121"/>
+        <location filename="../editableimage.cpp" line="123"/>
         <source>There&apos;s no image here</source>
         <translation>无图片</translation>
+    </message>
+    <message>
+        <location filename="../editableimage.cpp" line="134"/>
+        <source>%1&lt;br&gt;size: %2</source>
+        <translation>%1&lt;br&gt;大小： %2</translation>
     </message>
 </context>
 <context>
@@ -292,6 +297,16 @@
         <location filename="../convertedimage.hpp" line="63"/>
         <source>call magick failed:</source>
         <translation>magick调用失败:</translation>
+    </message>
+    <message>
+        <location filename="../thumbnail.cpp" line="50"/>
+        <source>Image file does not exist:</source>
+        <translation>图像文件不存在：</translation>
+    </message>
+    <message>
+        <location filename="../thumbnail.cpp" line="62"/>
+        <source>%1&lt;br&gt;size: %2</source>
+        <translation>%1&lt;br&gt;大小： %2</translation>
     </message>
 </context>
 <context>
