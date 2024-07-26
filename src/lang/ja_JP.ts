@@ -209,7 +209,7 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../utils/utils.h" line="48"/>
+        <location filename="../utils/utils.h" line="47"/>
         <source>create temporary dir failed</source>
         <translation>一時ディレクトリの作成が失敗しました</translation>
     </message>
@@ -289,12 +289,12 @@
         <translation>すべての画像の処理時間の合計を記録します。</translation>
     </message>
     <message>
-        <location filename="../convertedimage.hpp" line="60"/>
+        <location filename="../convertedimage.hpp" line="59"/>
         <source>create converted image failed</source>
         <translation>画像は転換できませんでした</translation>
     </message>
     <message>
-        <location filename="../convertedimage.hpp" line="63"/>
+        <location filename="../convertedimage.hpp" line="62"/>
         <source>call magick failed:</source>
         <translation>magickの呼び出しでエラーが発生しました:</translation>
     </message>

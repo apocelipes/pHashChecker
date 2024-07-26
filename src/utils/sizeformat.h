@@ -1,8 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // Copyright (C) 2021 apocelipes
 
-#ifndef SIZEFORMAT_H
-#define SIZEFORMAT_H
+#pragma once
 
 #include <array>
 #include <cmath>
@@ -49,5 +48,3 @@ namespace Utils {
                                + prefixNames[power];
     }
 }
-
-#endif // SIZEFORMAT_H

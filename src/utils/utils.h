@@ -1,8 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // Copyright (C) 2023 apocelipes
 
-#ifndef UTILS_H
-#define UTILS_H
+#pragma once
 
 #include <algorithm>
 #include <array>
@@ -55,5 +54,3 @@ namespace Utils {
         return QString::compare(getFileExtension(imgPath), QStringLiteral(u"avif"), Qt::CaseInsensitive) == 0;
     }
 }
-
-#endif // UTILS_H

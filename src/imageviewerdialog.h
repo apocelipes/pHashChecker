@@ -1,8 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // Copyright (C) 2024 apocelipes
 
-#ifndef IMAGEVIEWERDIALOG_H
-#define IMAGEVIEWERDIALOG_H
+#pragma once
 
 #include <QDialog>
 
@@ -40,5 +39,3 @@ private:
     void setCurrentWidgetByName(const QString &name) noexcept;
     void updateTitle() noexcept;
 };
-
-#endif // IMAGEVIEWERDIALOG_H

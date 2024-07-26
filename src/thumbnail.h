@@ -1,8 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // Copyright (C) 2023 apocelipes
 
-#ifndef THUMBNAIL_H
-#define THUMBNAIL_H
+#pragma once
 
 #include <QWidget>
 #include <QString>
@@ -33,5 +32,3 @@ private:
     friend struct ThumbnailPrivate;
     std::unique_ptr<struct ThumbnailPrivate> d;
 };
-
-#endif // THUMBNAIL_H

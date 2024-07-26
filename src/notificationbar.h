@@ -1,8 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // Copyright (C) 2023 apocelipes
 
-#ifndef PHASHCHECKER_NOTIFICATIONBAR_H
-#define PHASHCHECKER_NOTIFICATIONBAR_H
+#pragma once
 
 #include <QFrame>
 #include <QColor>
@@ -47,5 +46,3 @@ private:
     [[nodiscard]] static NotificationBar *createErrorBar(QWidget *parent = nullptr) noexcept;
     [[nodiscard]] static NotificationBar *createSuccessBar(QWidget *parent = nullptr) noexcept;
 };
-
-#endif //PHASHCHECKER_NOTIFICATIONBAR_H

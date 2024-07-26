@@ -209,7 +209,7 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../utils/utils.h" line="48"/>
+        <location filename="../utils/utils.h" line="47"/>
         <source>create temporary dir failed</source>
         <translation>无法创建临时目录</translation>
     </message>
@@ -289,12 +289,12 @@
         <translation>计算匹配所有图片所需的时间。</translation>
     </message>
     <message>
-        <location filename="../convertedimage.hpp" line="60"/>
+        <location filename="../convertedimage.hpp" line="59"/>
         <source>create converted image failed</source>
         <translation>图片转换失败</translation>
     </message>
     <message>
-        <location filename="../convertedimage.hpp" line="63"/>
+        <location filename="../convertedimage.hpp" line="62"/>
         <source>call magick failed:</source>
         <translation>magick调用失败:</translation>
     </message>

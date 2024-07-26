@@ -1,8 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // Copyright (C) 2024 apocelipes
 
-#ifndef WIDGETHELPERS_H
-#define WIDGETHELPERS_H
+#pragma once
 
 #include <QLayout>
 
@@ -19,5 +18,3 @@ namespace Utils {
         }
     }
 }
-
-#endif /* WIDGETHELPERS_H */

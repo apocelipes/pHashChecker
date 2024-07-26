@@ -1,8 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // Copyright (C) 2024 apocelipes
 
-#ifndef HASHWORKER_H
-#define HASHWORKER_H
+#pragma once
 
 #include <QObject>
 
@@ -56,5 +55,3 @@ private:
         return ph_hamming_distance(a, b) <= static_cast<int>(_similar_distance);
     }
 };
-
-#endif // HASHWORKER_H

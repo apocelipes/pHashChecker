@@ -1,8 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // Copyright (C) 2021 apocelipes
 
-#ifndef IMAGEVIEWER_H
-#define IMAGEVIEWER_H
+#pragma once
 
 #include <QWidget>
 
@@ -33,5 +32,3 @@ private:
     friend struct ImageViewerPrivate;
     std::unique_ptr<struct ImageViewerPrivate> d;
 };
-
-#endif // IMAGEVIEWER_H

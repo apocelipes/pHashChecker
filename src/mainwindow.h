@@ -1,8 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // Copyright (C) 2024 apocelipes
 
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
+#pragma once
 
 #include <QApplication>
 #include <QWidget>
@@ -121,5 +120,3 @@ private:
     std::vector<std::pair<ulong64, std::size_t>> matchHistory;
     std::vector<std::unique_ptr<QThread>> pool;
 };
-
-#endif // MAINWINDOW_H

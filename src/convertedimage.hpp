@@ -1,8 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // Copyright (C) 2023 apocelipes
 
-#ifndef CONVERTEDIMAGE_H
-#define CONVERTEDIMAGE_H
+#pragma once
 
 #include <optional>
 
@@ -86,4 +85,3 @@ public:
     }
 };
 
-#endif // CONVERTEDIMAGE_H

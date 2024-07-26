@@ -1,8 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // Copyright (C) 2024 apocelipes
 
-#ifndef QSTRINGHASHER_H
-#define QSTRINGHASHER_H
+#pragma once
 
 #include <QString>
 
@@ -19,5 +18,3 @@ struct ankerl::unordered_dense::hash<QString> {
 };
 
 using SameImagesContainer = ankerl::unordered_dense::map<std::string, std::vector<std::string>>;
-
-#endif /* QSTRINGHASHER_H */

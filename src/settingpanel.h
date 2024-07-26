@@ -1,8 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // Copyright (C) 2022 apocelipes
 
-#ifndef SETTINGPANEL_H
-#define SETTINGPANEL_H
+#pragma once
 
 #include <QWidget>
 #include <memory>
@@ -24,5 +23,3 @@ private:
     friend struct SettingPanelPrivate;
     std::unique_ptr<struct SettingPanelPrivate> d;
 };
-
-#endif // SETTINGPANEL_H
