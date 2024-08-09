@@ -289,14 +289,14 @@
         <translation>计算匹配所有图片所需的时间。</translation>
     </message>
     <message>
-        <location filename="../convertedimage.hpp" line="59"/>
+        <location filename="../convertedimage.hpp" line="118"/>
         <source>create converted image failed</source>
         <translation>图片转换失败</translation>
     </message>
     <message>
-        <location filename="../convertedimage.hpp" line="62"/>
-        <source>call magick failed:</source>
-        <translation>magick调用失败:</translation>
+        <location filename="../convertedimage.hpp" line="121"/>
+        <source>call ImageMagick failed:</source>
+        <translation>ImageMagick调用失败:</translation>
     </message>
     <message>
         <location filename="../thumbnail.cpp" line="50"/>

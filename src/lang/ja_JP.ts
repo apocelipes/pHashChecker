@@ -289,14 +289,14 @@
         <translation>すべての画像の処理時間の合計を記録します。</translation>
     </message>
     <message>
-        <location filename="../convertedimage.hpp" line="59"/>
+        <location filename="../convertedimage.hpp" line="118"/>
         <source>create converted image failed</source>
         <translation>画像は転換できませんでした</translation>
     </message>
     <message>
-        <location filename="../convertedimage.hpp" line="62"/>
-        <source>call magick failed:</source>
-        <translation>magickの呼び出しでエラーが発生しました:</translation>
+        <location filename="../convertedimage.hpp" line="121"/>
+        <source>call ImageMagick failed:</source>
+        <translation>ImageMagickの呼び出しにエラーが発生しました:</translation>
     </message>
     <message>
         <location filename="../thumbnail.cpp" line="50"/>
