@@ -18,7 +18,7 @@
 using namespace Qt::Literals::StringLiterals;
 
 constexpr int ThumbnailWidth = 100, ThumbnailHeight = 100;
-constexpr qreal DEFAULT_OPACITY = 0.8;
+constexpr qreal DEFAULT_OPACITY = 0.7;
 constexpr qreal DEFAULT_BLUR_RADIUS = 5.0;
 constexpr int DEFAULT_ANIME_DURATION = 300; // ms
 
@@ -71,7 +71,7 @@ void ThumbnailPrivate::init(Thumbnail *q_ptr) noexcept
     shadow->setAttribute(Qt::WA_StyledBackground);
     shadow->setStyleSheet(QStringLiteral(u"background:rgb(255,255,255);"));
     shadow->setGeometry(q->geometry());
-    opacityEffect = new QGraphicsOpacityEffect{q};
+    opacityEffect = new QGraphicsOpacityEffect{shadow};
     opacityEffect->setOpacity(DEFAULT_OPACITY);
     shadow->setGraphicsEffect(opacityEffect);
 }

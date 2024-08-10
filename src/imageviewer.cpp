@@ -23,8 +23,7 @@ struct ImageViewerPrivate {
     void initThumbnailFocusBorder() noexcept
     {
         thumbnailFocusBorder = new QFocusFrame{q};
-        thumbnailFocusBorder->setAutoFillBackground(true);
-        thumbnailFocusBorder->setStyleSheet(QStringLiteral(u"color:#30d5c8;"));
+        thumbnailFocusBorder->setStyleSheet(QStringLiteral(u"border: 2px solid #e57cdc;"));
     }
 
     [[nodiscard]] unsigned int decrCurrentIndex() noexcept
