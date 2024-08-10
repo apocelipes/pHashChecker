@@ -15,10 +15,10 @@
 StopwatchDialog::StopwatchDialog(const QString &title, QWidget *parent) noexcept
     : QDialog(parent)
 {
-    startLabel = new  QLabel{this};
-    endLabel = new  QLabel{this};
-    durationLabel = new  QLabel{this};
-    auto timerLayout  = new QFormLayout{};
+    startLabel = new QLabel{this};
+    endLabel = new QLabel{this};
+    durationLabel = new QLabel{this};
+    auto timerLayout = new QFormLayout{};
     timerLayout->addRow(tr("Start:"), startLabel);
     timerLayout->addRow(tr("End:"), endLabel);
     timerLayout->addRow(tr("Cost:"), durationLabel);

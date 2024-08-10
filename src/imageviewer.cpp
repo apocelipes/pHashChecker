@@ -19,7 +19,7 @@ struct ImageViewerPrivate {
     unsigned int currentIndex{};
     QFocusFrame *thumbnailFocusBorder = nullptr;
 
-    void init(const std::vector<std::string> &images, ImageViewer *q_ptr);
+    void init(const std::vector<std::string> &images, ImageViewer *q_ptr) noexcept;
     void initThumbnailFocusBorder() noexcept
     {
         thumbnailFocusBorder = new QFocusFrame{q};
@@ -70,7 +70,7 @@ struct ImageViewerPrivate {
     }
 };
 
-inline void ImageViewerPrivate::init(const std::vector<std::string> &images, ImageViewer *q_ptr)
+inline void ImageViewerPrivate::init(const std::vector<std::string> &images, ImageViewer *q_ptr) noexcept
 {
     q = q_ptr;
     if (images.empty()) {
@@ -140,7 +140,7 @@ inline void ImageViewerPrivate::init(const std::vector<std::string> &images, Ima
     q->setLayout(mainLayout);
 }
 
-ImageViewer::ImageViewer(const std::vector<std::string> &images, QWidget *parent)
+ImageViewer::ImageViewer(const std::vector<std::string> &images, QWidget *parent) noexcept
     : QWidget(parent), d{new ImageViewerPrivate}
 {
     d->init(images, this);

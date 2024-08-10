@@ -18,7 +18,7 @@ class ImageViewer : public QWidget
 {
     Q_OBJECT
 public:
-    explicit ImageViewer(const std::vector<std::string> &images, QWidget *parent = nullptr);
+    explicit ImageViewer(const std::vector<std::string> &images, QWidget *parent = nullptr) noexcept;
     ~ImageViewer() noexcept override;
 
 Q_SIGNALS:

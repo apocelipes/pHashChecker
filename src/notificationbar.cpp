@@ -203,7 +203,7 @@ void NotificationBar::showAndHide(int remainMsecs) noexcept
 }
 
 // 因为要处理标志位所以重写覆盖了hide
-void NotificationBar::hide() {
+void NotificationBar::hide() noexcept {
     d->isClosing = false;
     QWidget::hide();
 }

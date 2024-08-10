@@ -36,7 +36,7 @@ public Q_SLOTS:
     void animatedHide() noexcept;
     void showAndHide(int remainMsecs = 5000) noexcept;
 
-    void hide();
+    void hide() noexcept;
 
 private:
     friend struct NotificationBarPrivate;

@@ -16,7 +16,7 @@ namespace {
     inline QReadWriteLock matchHistoryLock;
 }
 
-void HashWorker::doWork()
+void HashWorker::doWork() noexcept
 {
     for (std::size_t index = _start; index < _limit; ++index) {
         if (this->thread()->isInterruptionRequested()) {

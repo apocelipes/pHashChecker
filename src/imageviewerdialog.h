@@ -21,7 +21,7 @@ class ImageViewerDialog : public QDialog
     Q_OBJECT
 public:
     // take the ownership from MainWindow
-    explicit ImageViewerDialog(SameImagesContainer sameImageList);
+    explicit ImageViewerDialog(SameImagesContainer sameImageList) noexcept;
 
 private:
     ankerl::unordered_dense::map<QString, ImageViewer*> viewers;

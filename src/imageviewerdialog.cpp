@@ -11,7 +11,7 @@
 #include "imageviewer.h"
 #include "utils.h"
 
-ImageViewerDialog::ImageViewerDialog(SameImagesContainer sameImageList)
+ImageViewerDialog::ImageViewerDialog(SameImagesContainer sameImageList) noexcept
 {
     mainLayout = new QVBoxLayout;
     comboBox = new QComboBox{this};

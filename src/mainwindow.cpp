@@ -83,7 +83,7 @@ namespace {
     }
 
     template <std::ranges::range Container>
-    inline uint64_t countFilesSize(const Container &files) noexcept
+    [[nodiscard]] inline uint64_t countFilesSize(const Container &files) noexcept
     {
         // std::atomic_ref<uint64_t> must be lock-free
         static_assert(std::atomic_ref<uint64_t>::is_always_lock_free, "std::atomic_ref<uint64_t> is not lock-free");

@@ -27,7 +27,7 @@ struct EditableImagePrivate {
     std::optional<ConvertedImage> convertedImg;
 };
 
-EditableImage::EditableImage(const QString &imgPath, QWidget *parent)
+EditableImage::EditableImage(const QString &imgPath, QWidget *parent) noexcept
     : QLabel(parent), d{new EditableImagePrivate}
 {
     setImagePath(imgPath);

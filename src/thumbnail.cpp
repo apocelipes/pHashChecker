@@ -32,7 +32,7 @@ struct ThumbnailPrivate {
     QParallelAnimationGroup *hideAnimation = nullptr;
     QString imgPath;
 
-    explicit ThumbnailPrivate(QString &&path): imgPath{std::forward<QString>(path)}
+    explicit ThumbnailPrivate(QString &&path) noexcept: imgPath{std::forward<QString>(path)}
     {}
 
     void init(Thumbnail *q_ptr) noexcept;

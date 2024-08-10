@@ -36,7 +36,7 @@ public:
     {}
 
 public Q_SLOTS:
-    void doWork();
+    void doWork() noexcept;
 
 Q_SIGNALS:
     void sameImg(std::size_t, std::size_t);

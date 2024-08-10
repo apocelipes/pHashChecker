@@ -21,7 +21,7 @@
 #include "utils.h"
 
 namespace {
-    inline bool searchPath(const char *file)
+    [[nodiscard]] inline bool searchPath(const char *file) noexcept
     {
         if (!file || !*file) {
             return false;
@@ -65,7 +65,7 @@ namespace {
         return false;
     }
 
-    inline const QString &getImageMagickPath()
+    inline const QString &getImageMagickPath() noexcept
     {
         static const QString &path = searchPath("magick") ? QStringLiteral(u"magick") : QStringLiteral(u"convert");
         return path;

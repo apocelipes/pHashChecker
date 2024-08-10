@@ -20,7 +20,7 @@ class EditableImage : public QLabel
     Q_OBJECT
     Q_PROPERTY(QString imagePath READ getImagePath WRITE setImagePath NOTIFY pathChanged);
 public:
-    explicit EditableImage(const QString& imgPath, QWidget *parent = nullptr);
+    explicit EditableImage(const QString& imgPath, QWidget *parent = nullptr) noexcept;
     ~EditableImage() noexcept override;
 
     [[nodiscard]] QString getImagePath() const noexcept;

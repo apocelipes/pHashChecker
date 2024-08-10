@@ -19,7 +19,7 @@ namespace Utils {
         PebiByte = Byte << 50
     };
 
-    constexpr std::array<BinaryPrefix, 6> prefixes = {
+    constexpr std::array prefixes = {
             BinaryPrefix::Byte,
             BinaryPrefix::KibiByte,
             BinaryPrefix::MibiByte,
@@ -27,7 +27,7 @@ namespace Utils {
             BinaryPrefix::TebiByte,
             BinaryPrefix::PebiByte
     };
-    constexpr std::array<const char *, 6> prefixNames = {
+    constexpr std::array prefixNames = {
             "B",
             "KiB",
             "MiB",
