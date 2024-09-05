@@ -4,6 +4,7 @@
 #include <QFocusFrame>
 #include <QHBoxLayout>
 #include <QPushButton>
+#include <QRandomGenerator>
 #include <QSize>
 #include <QStyle>
 
@@ -22,8 +23,12 @@ struct ImageViewerPrivate {
     void init(const std::vector<std::string> &images, ImageViewer *q_ptr) noexcept;
     void initThumbnailFocusBorder() noexcept
     {
+        static const std::array styles = {
+            QStringLiteral(u"border: 2px solid #e57cdc;"),
+            QStringLiteral(u"border: 2px solid #30d5c8;"),
+        };
         thumbnailFocusBorder = new QFocusFrame{q};
-        thumbnailFocusBorder->setStyleSheet(QStringLiteral(u"border: 2px solid #e57cdc;"));
+        thumbnailFocusBorder->setStyleSheet(styles[QRandomGenerator::global()->generate() & 1]);
     }
 
     [[nodiscard]] unsigned int decrCurrentIndex() noexcept
