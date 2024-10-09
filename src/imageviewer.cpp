@@ -3,6 +3,7 @@
 
 #include <QFocusFrame>
 #include <QHBoxLayout>
+#include <QKeySequence>
 #include <QPushButton>
 #include <QRandomGenerator>
 #include <QSize>
@@ -126,7 +127,10 @@ inline void ImageViewerPrivate::init(const std::vector<std::string> &images, Ima
         auto prevIndex = decrCurrentIndex();
         Q_EMIT q->currentIndexChanged(currentIndex, prevIndex);
     });
+    prevButton->setShortcut(QKeySequence{Qt::Key_Left});
+
     contentLayout->addWidget(imageContent, 0, Qt::AlignCenter);
+
     auto nextButton = createSideControlButton(QStyle::SP_ArrowRight, q);
     contentLayout->addWidget(nextButton, 0, Qt::AlignRight);
     QObject::connect(nextButton, &QPushButton::clicked, q, [this](){
@@ -137,9 +141,11 @@ inline void ImageViewerPrivate::init(const std::vector<std::string> &images, Ima
         Q_EMIT q->currentIndexChanged(newIndex, currentIndex);
         currentIndex = newIndex;
     });
+    nextButton->setShortcut(QKeySequence{Qt::Key_Right});
 
     auto mainLayout = new QVBoxLayout;
     mainLayout->addLayout(contentLayout, 2);
+    mainLayout->addStretch();
     mainLayout->addWidget(imageThumbnailList, 1, Qt::AlignCenter);
     q->setLayout(mainLayout);
 }
