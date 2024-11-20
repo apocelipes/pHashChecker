@@ -14,7 +14,7 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 if (${CMAKE_CXX_COMPILER_ID} MATCHES "Clang" OR ${CMAKE_CXX_COMPILER_ID} MATCHES "GNU")
-    add_compile_options(-Wall -Wextra -fno-rtti -O2)
+    add_compile_options(-Wall -Wextra -fno-rtti -O2 -march=native)
 endif()
 
 include_directories(third-party/CImg
@@ -25,7 +25,7 @@ include_directories(third-party/CImg
     src
 )
 
-add_definitions(-Dcimg_use_heif)
+add_definitions(-Dcimg_use_heif -Dcimg_use_webp)
 
 set(REQUIRED_QT_VERSION 6.5.0)
 find_package(Qt6 ${REQUIRED_QT_VERSION} NO_MODULE REQUIRED COMPONENTS Core Gui Widgets REQUIRED)

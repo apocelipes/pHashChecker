@@ -28,7 +28,17 @@ sudo apt install libheif1 libheif-dev
 sudo pacman -S libheif
 ```
 
-To support WebP images, you need to install `imagemagick`:
+To support WebP images, you need to install `libwebp`:
+
+```bash
+# Ubuntu
+sudo apt install libwebp-dev
+
+# Arch Linux
+sudo pacman -S libwebp
+```
+
+In addition, it's better to install `imagemagick` on your system:
 
 ```bash
 # Ubuntu
