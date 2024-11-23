@@ -14,8 +14,6 @@
 #include <QStyle>
 #include <QUrl>
 
-#include <filesystem>
-
 #include "convertedimage.hpp"
 #include "editableimage.h"
 #include "hashdialog.h"

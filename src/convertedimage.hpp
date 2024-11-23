@@ -3,19 +3,12 @@
 
 #pragma once
 
-#include <memory>
 #include <optional>
 
 #include <QFile>
 #include <QFileInfo>
 #include <QString>
 #include <QStringBuilder>
-
-#include <fcntl.h>
-#include <limits.h>
-#include <string.h>
-#include <sys/stat.h>
-#include <unistd.h>
 
 #include <CImg.h>
 

@@ -5,7 +5,6 @@
 #include <QCompleter>
 #include <QDir>
 #include <QFileDialog>
-#include <QString>
 #include <QProgressBar>
 #include <QFileInfo>
 #include <QFileSystemModel>

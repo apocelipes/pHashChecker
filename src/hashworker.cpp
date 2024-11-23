@@ -2,7 +2,6 @@
 // Copyright (C) 2024 apocelipes
 
 #include <QThread>
-#include <QDebug>
 #include <QReadWriteLock>
 #include <QStringBuilder>
 
