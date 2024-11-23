@@ -57,22 +57,22 @@
 <context>
     <name>HashDialog</name>
     <message>
-        <location filename="../hashdialog.cpp" line="56"/>
+        <location filename="../hashdialog.cpp" line="58"/>
         <source>File Name:</source>
         <translation>文件名:</translation>
     </message>
     <message>
-        <location filename="../hashdialog.cpp" line="58"/>
+        <location filename="../hashdialog.cpp" line="60"/>
         <source>File Size:</source>
         <translation>文件大小:</translation>
     </message>
     <message>
-        <location filename="../hashdialog.cpp" line="81"/>
+        <location filename="../hashdialog.cpp" line="83"/>
         <source>%1 has been copied</source>
         <translation>%1 已复制</translation>
     </message>
     <message>
-        <location filename="../hashdialog.cpp" line="91"/>
+        <location filename="../hashdialog.cpp" line="93"/>
         <source>Image Hash Dialog</source>
         <translation>查看图片哈希值</translation>
     </message>
