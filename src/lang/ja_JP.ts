@@ -49,7 +49,7 @@
         <translation>画像なし</translation>
     </message>
     <message>
-        <location filename="../editableimage.cpp" line="134"/>
+        <location filename="../editableimage.cpp" line="133"/>
         <source>%1&lt;br&gt;size: %2</source>
         <translation>%1&lt;br&gt;サイズ： %2</translation>
     </message>
@@ -289,24 +289,19 @@
         <translation>すべての画像の処理時間の合計を記録します。</translation>
     </message>
     <message>
-        <location filename="../convertedimage.hpp" line="118"/>
-        <source>create converted image failed</source>
-        <translation>画像は転換できませんでした</translation>
-    </message>
-    <message>
-        <location filename="../convertedimage.hpp" line="121"/>
-        <source>call ImageMagick failed:</source>
-        <translation>ImageMagickの呼び出しにエラーが発生しました:</translation>
-    </message>
-    <message>
         <location filename="../thumbnail.cpp" line="50"/>
         <source>Image file does not exist:</source>
         <translation>画像ファイルは存在しません：</translation>
     </message>
     <message>
-        <location filename="../thumbnail.cpp" line="62"/>
+        <location filename="../thumbnail.cpp" line="60"/>
         <source>%1&lt;br&gt;size: %2</source>
         <translation>%1&lt;br&gt;サイズ： %2</translation>
+    </message>
+    <message>
+        <location filename="../convertedimage.hpp" line="51"/>
+        <source>image convert failed:</source>
+        <translation>画像のフォーマット転換は失敗しました：</translation>
     </message>
 </context>
 <context>

@@ -49,7 +49,7 @@
         <translation>无图片</translation>
     </message>
     <message>
-        <location filename="../editableimage.cpp" line="134"/>
+        <location filename="../editableimage.cpp" line="133"/>
         <source>%1&lt;br&gt;size: %2</source>
         <translation>%1&lt;br&gt;大小： %2</translation>
     </message>
@@ -289,24 +289,19 @@
         <translation>计算匹配所有图片所需的时间。</translation>
     </message>
     <message>
-        <location filename="../convertedimage.hpp" line="118"/>
-        <source>create converted image failed</source>
-        <translation>图片转换失败</translation>
-    </message>
-    <message>
-        <location filename="../convertedimage.hpp" line="121"/>
-        <source>call ImageMagick failed:</source>
-        <translation>ImageMagick调用失败:</translation>
-    </message>
-    <message>
         <location filename="../thumbnail.cpp" line="50"/>
         <source>Image file does not exist:</source>
         <translation>图像文件不存在：</translation>
     </message>
     <message>
-        <location filename="../thumbnail.cpp" line="62"/>
+        <location filename="../thumbnail.cpp" line="60"/>
         <source>%1&lt;br&gt;size: %2</source>
         <translation>%1&lt;br&gt;大小： %2</translation>
+    </message>
+    <message>
+        <location filename="../convertedimage.hpp" line="51"/>
+        <source>image convert failed:</source>
+        <translation>图片格式转换失败：</translation>
     </message>
 </context>
 <context>

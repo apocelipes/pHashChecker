@@ -51,14 +51,12 @@ void ThumbnailPrivate::init(Thumbnail *q_ptr) noexcept
         return;
     }
 
-    QPixmap data;
     if (Utils::isFormatNeedConvert(imgPath)) {
         ConvertedImage converted{imgPath, ThumbnailHeight, ThumbnailHeight};
-        data.load(converted.getImagePath());
+        image->setPixmap(QPixmap{converted.getImagePath()});
     } else {
-        data.load(imgPath);
+        image->setPixmap(QPixmap{imgPath}.scaled(ThumbnailWidth, ThumbnailHeight));
     }
-    image->setPixmap(data.scaled(ThumbnailWidth, ThumbnailHeight));
     q->setToolTip(QObject::tr("%1<br>size: %2").arg(imgPath).arg(Utils::sizeFormat(info.size())));
 
     blurEffect = new QGraphicsBlurEffect{q};

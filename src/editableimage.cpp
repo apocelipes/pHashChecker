@@ -124,13 +124,12 @@ void EditableImage::setImagePath(const QString &path) noexcept
         return;
     }
     d->m_path = path;
-    auto newPath = d->m_path;
     if (Utils::isFormatNeedConvert(path)) {
         d->convertedImg.emplace(path, EditableImageFixedWidth, EditableImageFixedHeight, true);
-        newPath = d->convertedImg->getImagePath();
+        setPixmap(QPixmap{d->convertedImg->getImagePath()});
+    } else {
+        setPixmap(QPixmap{d->m_path}.scaled(EditableImageFixedWidth, EditableImageFixedHeight));
     }
-    QPixmap newImg{newPath};
-    setPixmap(newImg.scaled(EditableImageFixedWidth, EditableImageFixedHeight));
     setToolTip(tr("%1<br>size: %2").arg(d->m_path).arg(Utils::sizeFormat(info.size())));
     Q_EMIT pathChanged(d->m_path);
 }
