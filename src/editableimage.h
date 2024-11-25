@@ -4,7 +4,6 @@
 #pragma once
 
 #include <QLabel>
-#include <QPixmap>
 #include <QString>
 
 #include <memory>
@@ -14,20 +13,22 @@ constexpr int EditableImageFixedHeight = 650;
 
 class QMenu;
 class QMouseEvent;
+class QPixmap;
+class QPoint;
 
 class EditableImage : public QLabel
 {
     Q_OBJECT
     Q_PROPERTY(QString imagePath READ getImagePath WRITE setImagePath NOTIFY pathChanged);
 public:
-    explicit EditableImage(const QString& imgPath, QWidget *parent = nullptr) noexcept;
+    explicit EditableImage(const QString &imgPath, QWidget *parent = nullptr) noexcept;
     ~EditableImage() noexcept override;
 
     [[nodiscard]] QString getImagePath() const noexcept;
     void setImagePath(const QString &path) noexcept;
     [[nodiscard]] bool isEmpty() const noexcept;
 
-    void mouseDoubleClickEvent(QMouseEvent* event) override;
+    void mouseDoubleClickEvent(QMouseEvent *event) override;
 
 Q_SIGNALS:
     void doubleClicked();

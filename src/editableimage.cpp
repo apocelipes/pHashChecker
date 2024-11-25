@@ -14,15 +14,15 @@
 #include <QStyle>
 #include <QUrl>
 
-#include "convertedimage.hpp"
 #include "editableimage.h"
 #include "hashdialog.h"
+#include "utils/imageutils.h"
 #include "utils/sizeformat.h"
+#include "utils/utils.h"
 
 struct EditableImagePrivate {
     QMenu *contextMenu = nullptr;
     QString m_path;
-    std::optional<ConvertedImage> convertedImg;
 };
 
 EditableImage::EditableImage(const QString &imgPath, QWidget *parent) noexcept
@@ -117,14 +117,13 @@ void EditableImage::setImagePath(const QString &path) noexcept
     const auto &info = QFileInfo{path};
     if (!info.exists()) {
         clear();
-        d->convertedImg.reset();
         setToolTip(isEmpty() ? tr("There's no image here") : getImagePath());
         return;
     }
     d->m_path = path;
+    //TODO: cache pixmaps?
     if (Utils::isFormatNeedConvert(path)) {
-        d->convertedImg.emplace(path, EditableImageFixedWidth, EditableImageFixedHeight, true);
-        setPixmap(QPixmap{d->convertedImg->getImagePath()});
+        setPixmap(Utils::convertToPixmap(path, EditableImageFixedWidth, EditableImageFixedHeight));
     } else {
         setPixmap(QPixmap{d->m_path}.scaled(EditableImageFixedWidth, EditableImageFixedHeight));
     }
@@ -137,7 +136,7 @@ bool EditableImage::isEmpty() const noexcept
     return d->m_path.isEmpty();
 }
 
-void EditableImage::mouseDoubleClickEvent(QMouseEvent* event)
+void EditableImage::mouseDoubleClickEvent(QMouseEvent *event)
 {
     Q_EMIT doubleClicked();
     event->accept();

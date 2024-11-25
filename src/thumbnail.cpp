@@ -11,9 +11,10 @@
 
 #include <utility>
 
-#include "convertedimage.hpp"
 #include "thumbnail.h"
+#include "utils/imageutils.h"
 #include "utils/sizeformat.h"
+#include "utils/utils.h"
 
 using namespace Qt::Literals::StringLiterals;
 
@@ -52,8 +53,7 @@ void ThumbnailPrivate::init(Thumbnail *q_ptr) noexcept
     }
 
     if (Utils::isFormatNeedConvert(imgPath)) {
-        ConvertedImage converted{imgPath, ThumbnailHeight, ThumbnailHeight};
-        image->setPixmap(QPixmap{converted.getImagePath()});
+        image->setPixmap(Utils::convertToPixmap(imgPath, ThumbnailHeight, ThumbnailHeight));
     } else {
         image->setPixmap(QPixmap{imgPath}.scaled(ThumbnailWidth, ThumbnailHeight));
     }

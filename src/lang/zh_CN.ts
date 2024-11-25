@@ -44,12 +44,12 @@
         <translation>计算hash</translation>
     </message>
     <message>
-        <location filename="../editableimage.cpp" line="121"/>
+        <location filename="../editableimage.cpp" line="120"/>
         <source>There&apos;s no image here</source>
         <translation>无图片</translation>
     </message>
     <message>
-        <location filename="../editableimage.cpp" line="131"/>
+        <location filename="../editableimage.cpp" line="130"/>
         <source>%1&lt;br&gt;size: %2</source>
         <translation>%1&lt;br&gt;大小： %2</translation>
     </message>
@@ -289,7 +289,7 @@
         <translation>计算匹配所有图片所需的时间。</translation>
     </message>
     <message>
-        <location filename="../thumbnail.cpp" line="50"/>
+        <location filename="../thumbnail.cpp" line="51"/>
         <source>Image file does not exist:</source>
         <translation>图像文件不存在：</translation>
     </message>
@@ -299,7 +299,7 @@
         <translation>%1&lt;br&gt;大小： %2</translation>
     </message>
     <message>
-        <location filename="../convertedimage.hpp" line="44"/>
+        <location filename="../utils/imageutils.h" line="16"/>
         <source>image convert failed:</source>
         <translation>图片格式转换失败：</translation>
     </message>
