@@ -80,12 +80,12 @@
 <context>
     <name>HashWorker</name>
     <message>
-        <location filename="../hashworker.cpp" line="22"/>
+        <location filename="../hashworker.cpp" line="23"/>
         <source>thread exit</source>
         <translation>スレッドが終了しました</translation>
     </message>
     <message>
-        <location filename="../hashworker.cpp" line="29"/>
+        <location filename="../hashworker.cpp" line="30"/>
         <source>calculating pHash failed, skip: </source>
         <translation>pHash計算にエラーが発生し該当画像をスキップします： </translation>
     </message>
@@ -208,11 +208,6 @@
 </context>
 <context>
     <name>QObject</name>
-    <message>
-        <location filename="../utils/utils.h" line="47"/>
-        <source>create temporary dir failed</source>
-        <translation>一時ディレクトリの作成が失敗しました</translation>
-    </message>
     <message>
         <location filename="../main.cpp" line="23"/>
         <source>pHashChecker</source>

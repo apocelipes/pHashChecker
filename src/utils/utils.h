@@ -4,16 +4,11 @@
 #pragma once
 
 #include <algorithm>
-#include <array>
-#include <filesystem>
 #include <iterator>
 #include <optional>
 #include <ranges>
-#include <string_view>
 
-#include <QDir>
 #include <QStringBuilder>
-#include <QTemporaryDir>
 
 namespace Utils {
     template<std::ranges::range Container, typename Element>
@@ -37,16 +32,6 @@ namespace Utils {
     [[nodiscard]] inline QString getFileExtension(const QString &filePath) noexcept
     {
         return filePath.section(QChar('.'), -1, -1);
-    }
-
-    // NOTICE: only init once
-    [[nodiscard]] inline QString getTempDirPath() noexcept
-    {
-        static QTemporaryDir temp{QDir::tempPath() % QDir::separator() % QStringLiteral(u"pHashChecker-XXXXXX")};
-        if (!temp.isValid()) [[unlikely]] {
-            qFatal() << QObject::tr("create temporary dir failed");
-        }
-        return temp.path();
     }
 
     [[nodiscard]] inline bool isFormatNeedConvert(const QString &imgPath) noexcept
