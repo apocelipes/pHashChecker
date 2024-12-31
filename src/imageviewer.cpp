@@ -11,7 +11,7 @@
 
 #include "imageviewer.h"
 #include "thumbnail.h"
-#include "utils.h"
+#include "utils/utils.h"
 
 struct ImageViewerPrivate {
     ImageViewer *q = nullptr;

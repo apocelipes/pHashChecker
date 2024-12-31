@@ -22,6 +22,7 @@
 #include "imageviewerdialog.h"
 #include "notificationbar.h"
 #include "stopwatchdialog.h"
+#include "utils/path.h"
 #include "utils/sizeformat.h"
 #include "utils/utils.h"
 
@@ -208,7 +209,7 @@ MainWindow::MainWindow(QWidget *parent) noexcept
                     sameImageResults.emplace(origin, std::vector<std::string>{origin});
                 }
                 sameImageResults[origin].emplace_back(same);
-                qDebug() << QString::fromStdString(origin) % tr(" same with: ") % QString::fromStdString(same);
+                qDebug() << Utils::getAbsPath(QString::fromStdString(origin)) % tr(" same with: ") % Utils::getAbsPath(QString::fromStdString(same));
             });
             pool[id]->start();
         }
@@ -343,10 +344,11 @@ void MainWindow::setImages() noexcept
     }
 
     constexpr auto opts = std::filesystem::directory_options::skip_permission_denied;
+    std::filesystem::current_path(path.toStdString());
     if (settings->isRecursiveSearching()) {
-        fillImages(std::filesystem::recursive_directory_iterator{path.toStdString(), opts}, std::back_inserter(images));
+        fillImages(std::filesystem::recursive_directory_iterator{".", opts}, std::back_inserter(images));
     } else {
-        fillImages(std::filesystem::directory_iterator{path.toStdString(), opts}, std::back_inserter(images));
+        fillImages(std::filesystem::directory_iterator{".", opts}, std::back_inserter(images));
     }
     QCoreApplication::processEvents();
     if (!images.empty()) {

@@ -9,7 +9,7 @@
 
 #include "imageviewerdialog.h"
 #include "imageviewer.h"
-#include "utils.h"
+#include "utils/utils.h"
 
 ImageViewerDialog::ImageViewerDialog(SameImagesContainer sameImageList) noexcept
 {

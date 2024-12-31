@@ -17,6 +17,7 @@
 #include "editableimage.h"
 #include "hashdialog.h"
 #include "utils/imageutils.h"
+#include "utils/path.h"
 #include "utils/sizeformat.h"
 #include "utils/utils.h"
 
@@ -33,7 +34,8 @@ EditableImage::EditableImage(const QString &imgPath, QWidget *parent) noexcept
     setContextMenuPolicy(Qt::CustomContextMenu);
     connect(this, &QWidget::customContextMenuRequested, this, &EditableImage::showContextMenu);
     connect(this, &EditableImage::doubleClicked, [this](){
-        QDesktopServices::openUrl(QUrl::fromLocalFile(getImagePath()));
+        const auto url = QUrl::fromLocalFile(Utils::getAbsPath(getImagePath()));
+        QDesktopServices::openUrl(url);
     });
 }
 
@@ -44,7 +46,8 @@ void EditableImage::initContextMenu() noexcept
     d->contextMenu = new QMenu{this};
     auto openAction = new QAction(style()->standardIcon(QStyle::SP_FileDialogContentsView), tr("open"));
     connect(openAction, &QAction::triggered, this, [this](){
-        QDesktopServices::openUrl(QUrl::fromLocalFile(getImagePath()));
+        const auto url = QUrl::fromLocalFile(Utils::getAbsPath(getImagePath()));
+        QDesktopServices::openUrl(url);
     });
     d->contextMenu->addAction(openAction);
 
@@ -58,26 +61,28 @@ void EditableImage::initContextMenu() noexcept
 
     auto copyPathAction = new QAction(style()->standardIcon(QStyle::SP_FileDialogListView), tr("copy path"));
     connect(copyPathAction, &QAction::triggered, this, [this](){
-        QGuiApplication::clipboard()->setText(getImagePath());
-        Q_EMIT pathCopied(getImagePath());
+        const auto absPath = Utils::getAbsPath(getImagePath());
+        QGuiApplication::clipboard()->setText(absPath);
+        Q_EMIT pathCopied(absPath);
     });
     d->contextMenu->addAction(copyPathAction);
 
     auto moveToTrashAction = new QAction(style()->standardIcon(QStyle::SP_TrashIcon), tr("move to trash"));
     connect(moveToTrashAction, &QAction::triggered, this, [this](){
-        QFile::moveToTrash(getImagePath());
+        QFile::moveToTrash(Utils::getAbsPath(getImagePath()));
         Q_EMIT trashMoved();
     });
     d->contextMenu->addAction(moveToTrashAction);
 
     auto deleteAction = new QAction(style()->standardIcon(QStyle::SP_DialogDiscardButton), tr("delete"));
     connect(deleteAction, &QAction::triggered, this, [this](){
+        const auto absPath = Utils::getAbsPath(getImagePath());
         auto isDelete = QMessageBox::warning(this,
                                              tr("delete this image"),
-                                             tr("do you want to delete %1 ?").arg(d->m_path),
+                                             tr("do you want to delete %1 ?").arg(absPath),
                                              QMessageBox::Ok|QMessageBox::Cancel);
         if (isDelete == QMessageBox::Ok) {
-            QFile::remove(getImagePath());
+            QFile::remove(absPath);
             Q_EMIT deleted();
         }
     });
@@ -117,7 +122,7 @@ void EditableImage::setImagePath(const QString &path) noexcept
     const auto &info = QFileInfo{path};
     if (!info.exists()) {
         clear();
-        setToolTip(isEmpty() ? tr("There's no image here") : getImagePath());
+        setToolTip(isEmpty() ? tr("There's no image here") : Utils::getAbsPath(getImagePath()));
         return;
     }
     d->m_path = path;
@@ -127,7 +132,7 @@ void EditableImage::setImagePath(const QString &path) noexcept
     } else {
         setPixmap(QPixmap{d->m_path}.scaled(EditableImageFixedWidth, EditableImageFixedHeight));
     }
-    setToolTip(tr("%1<br>size: %2").arg(d->m_path).arg(Utils::sizeFormat(info.size())));
+    setToolTip(tr("%1<br>size: %2").arg(Utils::getAbsPath(d->m_path)).arg(Utils::sizeFormat(info.size())));
     Q_EMIT pathChanged(d->m_path);
 }
 

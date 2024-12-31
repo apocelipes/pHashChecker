@@ -15,7 +15,8 @@
 
 #include "hashdialog.h"
 #include "notificationbar.h"
-#include "sizeformat.h"
+#include "utils/path.h"
+#include "utils/sizeformat.h"
 
 namespace {
     constexpr int fileSizeIndex = 1;
@@ -56,7 +57,7 @@ HashDialog::HashDialog(const QString &path, QWidget *parent) noexcept
     table->setEditTriggers(QAbstractItemView::NoEditTriggers);
 
     table->setItem(0, 0, new QTableWidgetItem{tr("File Name:")});
-    table->setItem(0, 1, new QTableWidgetItem{path});
+    table->setItem(0, 1, new QTableWidgetItem{Utils::getAbsPath(path)});
     table->setItem(1, 0, new QTableWidgetItem{tr("File Size:")});
 
     const auto fileSize = static_cast<quint64>(img.size());
