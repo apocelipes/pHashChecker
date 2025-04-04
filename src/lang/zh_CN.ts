@@ -4,52 +4,52 @@
 <context>
     <name>EditableImage</name>
     <message>
-        <location filename="../editableimage.cpp" line="47"/>
+        <location filename="../editableimage.cpp" line="65"/>
         <source>open</source>
         <translation>打开</translation>
     </message>
     <message>
-        <location filename="../editableimage.cpp" line="54"/>
+        <location filename="../editableimage.cpp" line="72"/>
         <source>copy data</source>
         <translation>复制图片</translation>
     </message>
     <message>
-        <location filename="../editableimage.cpp" line="62"/>
+        <location filename="../editableimage.cpp" line="80"/>
         <source>copy path</source>
         <translation>复制图片路径</translation>
     </message>
     <message>
-        <location filename="../editableimage.cpp" line="70"/>
+        <location filename="../editableimage.cpp" line="88"/>
         <source>move to trash</source>
         <translation>移动到回收站</translation>
     </message>
     <message>
-        <location filename="../editableimage.cpp" line="77"/>
+        <location filename="../editableimage.cpp" line="96"/>
         <source>delete</source>
         <translation>删除</translation>
     </message>
     <message>
-        <location filename="../editableimage.cpp" line="81"/>
+        <location filename="../editableimage.cpp" line="100"/>
         <source>delete this image</source>
         <translation>删除图片</translation>
     </message>
     <message>
-        <location filename="../editableimage.cpp" line="82"/>
+        <location filename="../editableimage.cpp" line="101"/>
         <source>do you want to delete %1 ?</source>
         <translation>你确定删除 %1 吗？</translation>
     </message>
     <message>
-        <location filename="../editableimage.cpp" line="91"/>
+        <location filename="../editableimage.cpp" line="111"/>
         <source>hash</source>
         <translation>计算hash</translation>
     </message>
     <message>
-        <location filename="../editableimage.cpp" line="125"/>
+        <location filename="../editableimage.cpp" line="145"/>
         <source>There&apos;s no image here</source>
         <translation>无图片</translation>
     </message>
     <message>
-        <location filename="../editableimage.cpp" line="135"/>
+        <location filename="../editableimage.cpp" line="150"/>
         <source>%1&lt;br&gt;size: %2</source>
         <translation>%1&lt;br&gt;大小： %2</translation>
     </message>

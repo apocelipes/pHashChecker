@@ -14,6 +14,8 @@
 #include <QStyle>
 #include <QUrl>
 
+#include <ankerl/unordered_dense.h>
+
 #include "editableimage.h"
 #include "hashdialog.h"
 #include "utils/imageutils.h"
@@ -24,13 +26,29 @@
 struct EditableImagePrivate {
     QMenu *contextMenu = nullptr;
     QString m_path;
+    ankerl::unordered_dense::map<QString, QPixmap> cache;
+
+    const QPixmap& getCachedPixmap(const QString &path) noexcept {
+        if (!cache.contains(path)) {
+            if (Utils::isFormatNeedConvert(path)) {
+                cache.emplace(std::make_pair(path, Utils::convertToPixmap(path, EditableImageFixedWidth, EditableImageFixedHeight)));
+            } else {
+                cache.emplace(std::make_pair(path, QPixmap{path}.scaled(EditableImageFixedWidth, EditableImageFixedHeight)));
+            }
+        }
+        return cache[path];
+    }
+
+    void removeCachedPixmap(const QString &path) noexcept {
+        cache.erase(path);
+    }
 };
 
 EditableImage::EditableImage(const QString &imgPath, QWidget *parent) noexcept
     : QLabel(parent), d{new EditableImagePrivate}
 {
-    setImagePath(imgPath);
     setFixedSize(EditableImageFixedWidth, EditableImageFixedHeight);
+    setImagePath(imgPath);
     setContextMenuPolicy(Qt::CustomContextMenu);
     connect(this, &QWidget::customContextMenuRequested, this, &EditableImage::showContextMenu);
     connect(this, &EditableImage::doubleClicked, [this](){
@@ -70,6 +88,7 @@ void EditableImage::initContextMenu() noexcept
     auto moveToTrashAction = new QAction(style()->standardIcon(QStyle::SP_TrashIcon), tr("move to trash"));
     connect(moveToTrashAction, &QAction::triggered, this, [this](){
         QFile::moveToTrash(Utils::getAbsPath(getImagePath()));
+        d->removeCachedPixmap(getImagePath());
         Q_EMIT trashMoved();
     });
     d->contextMenu->addAction(moveToTrashAction);
@@ -83,6 +102,7 @@ void EditableImage::initContextMenu() noexcept
                                              QMessageBox::Ok|QMessageBox::Cancel);
         if (isDelete == QMessageBox::Ok) {
             QFile::remove(absPath);
+            d->removeCachedPixmap(getImagePath());
             Q_EMIT deleted();
         }
     });
@@ -126,12 +146,7 @@ void EditableImage::setImagePath(const QString &path) noexcept
         return;
     }
     d->m_path = path;
-    //TODO: cache pixmaps?
-    if (Utils::isFormatNeedConvert(path)) {
-        setPixmap(Utils::convertToPixmap(path, EditableImageFixedWidth, EditableImageFixedHeight));
-    } else {
-        setPixmap(QPixmap{d->m_path}.scaled(EditableImageFixedWidth, EditableImageFixedHeight));
-    }
+    setPixmap(d->getCachedPixmap(path));
     setToolTip(tr("%1<br>size: %2").arg(Utils::getAbsPath(d->m_path)).arg(Utils::sizeFormat(info.size())));
     Q_EMIT pathChanged(d->m_path);
 }

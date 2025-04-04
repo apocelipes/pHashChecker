@@ -373,6 +373,7 @@ void MainWindow::initResultDialog() noexcept
     imageDialog = new ImageViewerDialog{std::move(sameImageResults)};
     sameImageResults = SameImagesContainer{};
     matchHistory.clear();
+    images.clear();
     imageDialog->setModal(true);
     dialogBtn->setEnabled(true);
 }
