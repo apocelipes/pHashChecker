@@ -15,6 +15,7 @@
 #include <cstring>
 #include <filesystem>
 #include <iterator>
+#include <ranges>
 #include <thread>
 
 #include "mainwindow.h"
@@ -24,7 +25,6 @@
 #include "stopwatchdialog.h"
 #include "utils/path.h"
 #include "utils/sizeformat.h"
-#include "utils/utils.h"
 
 #include <string.h> // for POSIX strcasecmp
 

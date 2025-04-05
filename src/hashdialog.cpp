@@ -74,7 +74,7 @@ HashDialog::HashDialog(const QString &path, QWidget *parent) noexcept
     connect(buttons, &QDialogButtonBox::accepted, this, &QDialog::accept);
 
     auto infoBar = NotificationBar::createNotificationBar(NotificationBar::NotificationType::INFO, "", this);
-    connect(table, &QTableWidget::cellDoubleClicked, [table, infoBar](int row, int column) {
+    connect(table, &QTableWidget::cellDoubleClicked, this, [table, infoBar](int row, int column) {
         if (row == fileSizeIndex) [[unlikely]] {
             return;
         }

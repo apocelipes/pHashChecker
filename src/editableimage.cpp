@@ -51,10 +51,13 @@ EditableImage::EditableImage(const QString &imgPath, QWidget *parent) noexcept
     setImagePath(imgPath);
     setContextMenuPolicy(Qt::CustomContextMenu);
     connect(this, &QWidget::customContextMenuRequested, this, &EditableImage::showContextMenu);
-    connect(this, &EditableImage::doubleClicked, [this](){
-        const auto url = QUrl::fromLocalFile(Utils::getAbsPath(getImagePath()));
-        QDesktopServices::openUrl(url);
-    });
+    connect(this, &EditableImage::doubleClicked, this, &EditableImage::openImage);
+}
+
+void EditableImage::openImage() const noexcept
+{
+    const auto url = QUrl::fromLocalFile(Utils::getAbsPath(getImagePath()));
+    QDesktopServices::openUrl(url);
 }
 
 EditableImage::~EditableImage() noexcept = default;
@@ -63,10 +66,7 @@ void EditableImage::initContextMenu() noexcept
 {
     d->contextMenu = new QMenu{this};
     auto openAction = new QAction(style()->standardIcon(QStyle::SP_FileDialogContentsView), tr("open"));
-    connect(openAction, &QAction::triggered, this, [this](){
-        const auto url = QUrl::fromLocalFile(Utils::getAbsPath(getImagePath()));
-        QDesktopServices::openUrl(url);
-    });
+    connect(openAction, &QAction::triggered, this, &EditableImage::openImage);
     d->contextMenu->addAction(openAction);
 
     auto copyAction = new QAction(style()->standardIcon(QStyle::SP_FileDialogListView), tr("copy data"));
@@ -146,8 +146,8 @@ void EditableImage::setImagePath(const QString &path) noexcept
         return;
     }
     d->m_path = path;
-    setPixmap(d->getCachedPixmap(path));
-    setToolTip(tr("%1<br>size: %2").arg(Utils::getAbsPath(d->m_path)).arg(Utils::sizeFormat(info.size())));
+    setPixmap(d->getCachedPixmap(d->m_path));
+    setToolTip(tr("%1<br>size: %2").arg(Utils::getAbsPath(d->m_path), Utils::sizeFormat(info.size())));
     Q_EMIT pathChanged(d->m_path);
 }
 

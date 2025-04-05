@@ -40,6 +40,7 @@ Q_SIGNALS:
 
 private Q_SLOTS:
     void showContextMenu(const QPoint &pos) noexcept;
+    void openImage() const noexcept;
 
 private:
     friend struct EditableImagePrivate;

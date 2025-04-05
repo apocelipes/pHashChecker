@@ -4,7 +4,7 @@
 <context>
     <name>EditableImage</name>
     <message>
-        <location filename="../editableimage.cpp" line="65"/>
+        <location filename="../editableimage.cpp" line="68"/>
         <source>open</source>
         <translation>打开</translation>
     </message>
@@ -93,42 +93,42 @@
 <context>
     <name>ImageViewerDialog</name>
     <message>
-        <location filename="../imageviewerdialog.cpp" line="21"/>
+        <location filename="../imageviewerdialog.cpp" line="22"/>
         <source>Group %1</source>
         <translation>分组 %1</translation>
     </message>
     <message>
-        <location filename="../imageviewerdialog.cpp" line="97"/>
+        <location filename="../imageviewerdialog.cpp" line="98"/>
         <source>target ImageViewer not found</source>
         <translation>未找到目标ImageViewer</translation>
     </message>
     <message>
-        <location filename="../imageviewerdialog.cpp" line="25"/>
+        <location filename="../imageviewerdialog.cpp" line="26"/>
         <source>No data here!</source>
         <translation>无内容！</translation>
     </message>
     <message>
-        <location filename="../imageviewerdialog.cpp" line="38"/>
+        <location filename="../imageviewerdialog.cpp" line="39"/>
         <source>prev</source>
         <translation>上一个</translation>
     </message>
     <message>
-        <location filename="../imageviewerdialog.cpp" line="46"/>
+        <location filename="../imageviewerdialog.cpp" line="47"/>
         <source>ignore this</source>
         <translation>忽略</translation>
     </message>
     <message>
-        <location filename="../imageviewerdialog.cpp" line="58"/>
+        <location filename="../imageviewerdialog.cpp" line="59"/>
         <source>next</source>
         <translation>下一个</translation>
     </message>
     <message>
-        <location filename="../imageviewerdialog.cpp" line="137"/>
+        <location filename="../imageviewerdialog.cpp" line="138"/>
         <source>Check Results: No Results</source>
         <translation>查看结果：无结果</translation>
     </message>
     <message>
-        <location filename="../imageviewerdialog.cpp" line="141"/>
+        <location filename="../imageviewerdialog.cpp" line="142"/>
         <source>Check Results: %1/%2</source>
         <translation>查看图片： %2个中的第%1个</translation>
     </message>

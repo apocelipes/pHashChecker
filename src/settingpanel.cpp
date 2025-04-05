@@ -15,7 +15,7 @@
 using PHashDistance = Utils::PHashDistance;
 
 namespace {
-    const std::array distances = {
+    constexpr std::array distances = {
         PHashDistance::FUZZY,
         PHashDistance::DEFAULT,
         PHashDistance::PRECISE,
@@ -114,7 +114,7 @@ void SettingPanelPrivate::init(SettingPanel *q_ptr) noexcept
         q->setToolTip(getDistanceToolTip(val));
     });
     distanceSlider->setValue(settings.value(pHashDistanceIndexKey, defaultPHashDistanceIndex).toInt());
-    QObject::connect(distanceSlider, &QSlider::valueChanged, [this](int value) {
+    QObject::connect(distanceSlider, &QSlider::valueChanged, valueLabel, [this](int value) {
         valueLabel->setText(getDistanceName(value));
     });
 

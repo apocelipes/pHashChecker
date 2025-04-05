@@ -58,7 +58,7 @@ void ThumbnailPrivate::init(Thumbnail *q_ptr) noexcept
     } else {
         image->setPixmap(QPixmap{imgPath}.scaled(ThumbnailWidth, ThumbnailHeight));
     }
-    q->setToolTip(QObject::tr("%1<br>size: %2").arg(Utils::getAbsPath(imgPath)).arg(Utils::sizeFormat(info.size())));
+    q->setToolTip(QObject::tr("%1<br>size: %2").arg(Utils::getAbsPath(imgPath), Utils::sizeFormat(info.size())));
 
     blurEffect = new QGraphicsBlurEffect{q};
     blurEffect->setBlurRadius(DEFAULT_BLUR_RADIUS);

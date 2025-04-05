@@ -7,9 +7,10 @@
 #include <QVBoxLayout>
 #include <QPushButton>
 
+#include <ranges>
+
 #include "imageviewerdialog.h"
 #include "imageviewer.h"
-#include "utils/utils.h"
 
 ImageViewerDialog::ImageViewerDialog(SameImagesContainer sameImageList) noexcept
 {
@@ -36,7 +37,7 @@ ImageViewerDialog::ImageViewerDialog(SameImagesContainer sameImageList) noexcept
 
     auto buttons = new QDialogButtonBox{this};
     prevBtn = new QPushButton{style()->standardIcon(QStyle::SP_ArrowLeft), tr("prev")};
-    connect(prevBtn, &QPushButton::clicked, [this](){
+    connect(prevBtn, &QPushButton::clicked, this, [this](){
         const auto index = comboBox->currentIndex();
         comboBox->setCurrentIndex(index - 1);
     });
@@ -138,8 +139,5 @@ void ImageViewerDialog::updateTitle() noexcept
         return;
     }
 
-    setWindowTitle(tr("Check Results: %1/%2")
-                   .arg(comboBox->currentIndex() + 1)
-                   .arg(count)
-    );
+    setWindowTitle(tr("Check Results: %1/%2").arg(comboBox->currentIndex() + 1).arg(count));
 }

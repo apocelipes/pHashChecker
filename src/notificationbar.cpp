@@ -81,7 +81,7 @@ void NotificationBarPrivate::init(NotificationBar *q_ptr) noexcept
     textLabel = new QLabel{q};
     textLabel->setTextInteractionFlags(Qt::TextBrowserInteraction);
     closeBtn = new QPushButton{q->style()->standardPixmap(QStyle::SP_DialogCloseButton), "", q};
-    QObject::connect(closeBtn, &QPushButton::clicked, [this](){
+    QObject::connect(closeBtn, &QPushButton::clicked, q, [this](){
         if (isClosing) {
             return;
         }
