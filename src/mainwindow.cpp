@@ -38,6 +38,7 @@ namespace {
             ".avif",
             ".webp",
             ".bmp",
+            ".jxl",
         };
 
         const auto ext = std::strrchr(img.c_str(), '.');

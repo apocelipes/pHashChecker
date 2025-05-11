@@ -36,6 +36,7 @@ namespace Utils {
 
     [[nodiscard]] inline bool isFormatNeedConvert(const QString &imgPath) noexcept
     {
-        return QString::compare(getFileExtension(imgPath), QStringLiteral(u"avif"), Qt::CaseInsensitive) == 0;
+        return QString::compare(getFileExtension(imgPath), QStringLiteral(u"avif"), Qt::CaseInsensitive) == 0
+                    || QString::compare(getFileExtension(imgPath), QStringLiteral(u"jxl"), Qt::CaseInsensitive) == 0;
     }
 }

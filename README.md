@@ -38,6 +38,16 @@ sudo apt install libwebp-dev
 sudo pacman -S libwebp
 ```
 
+To support JPEG XL images, you need to install 'libjxl':
+
+```bash
+# Ubuntu
+sudo apt-get install libjxl-dev
+
+# Arch Linux
+sudo pacman -S libjxl
+```
+
 In addition, it's better to install `imagemagick` on your system:
 
 ```bash
