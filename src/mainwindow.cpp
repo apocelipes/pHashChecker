@@ -18,6 +18,7 @@
 #include <ranges>
 #include <thread>
 
+#include "aboutdialog.h"
 #include "mainwindow.h"
 #include "hashworker.h"
 #include "imageviewerdialog.h"
@@ -276,11 +277,12 @@ MainWindow::MainWindow(QWidget *parent) noexcept
     lineLayout->addWidget(dialogBtn);
     lineLayout->addWidget(pathEdit);
     lineLayout->addWidget(fileDialogBtn);
-    auto aboutQtBtn = new QPushButton{tr("about"), this};
-    connect(aboutQtBtn, &QPushButton::clicked, this, [](){
-        QApplication::aboutQt();
+    auto aboutBtn = new QPushButton{tr("about"), this};
+    connect(aboutBtn, &QPushButton::clicked, this, [](){
+        AboutDialog aboutDialog;
+        aboutDialog.exec();
     });
-    lineLayout->addWidget(aboutQtBtn);
+    lineLayout->addWidget(aboutBtn);
 
     auto mainLayout = new QVBoxLayout;
     mainLayout->addWidget(info);

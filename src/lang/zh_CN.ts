@@ -1,6 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="zh" sourcelanguage="en">
+<TS version="2.1" language="zh_CN" sourcelanguage="en_US">
+<context>
+    <name>AboutDialog</name>
+    <message>
+        <location filename="../aboutdialog.cpp" line="21"/>
+        <source>pHashChecker is a tool written in Qt6 and modern C++ for finding similar images.</source>
+        <translation>pHashChecker是一个基于Qt6和现代C++编写的查找相似图片的工具。</translation>
+    </message>
+    <message>
+        <location filename="../aboutdialog.cpp" line="22"/>
+        <source>&lt;br&gt;Libraries used by this software:</source>
+        <translation>&lt;br&gt;使用的软件和库：</translation>
+    </message>
+    <message>
+        <location filename="../aboutdialog.cpp" line="38"/>
+        <source>About Qt</source>
+        <translation>关于Qt</translation>
+    </message>
+    <message>
+        <location filename="../aboutdialog.cpp" line="60"/>
+        <source>About pHashChecker</source>
+        <translation>关于pHashChecker</translation>
+    </message>
+</context>
 <context>
     <name>EditableImage</name>
     <message>
@@ -136,72 +159,72 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../mainwindow.cpp" line="133"/>
+        <location filename="../mainwindow.cpp" line="134"/>
         <source>entry a directory</source>
         <translation>输入目录</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="146"/>
+        <location filename="../mainwindow.cpp" line="147"/>
         <source>load</source>
         <translation>加载</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="149"/>
+        <location filename="../mainwindow.cpp" line="150"/>
         <source>Ctrl + Enter</source>
         <translation>快捷键: Ctrl + 回车</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="150"/>
+        <location filename="../mainwindow.cpp" line="151"/>
         <source>start</source>
         <translation>开始计算</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="153"/>
+        <location filename="../mainwindow.cpp" line="154"/>
         <source>Ctrl + Shift + R</source>
         <translation>快捷键: Ctrl + Shift + R</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="154"/>
+        <location filename="../mainwindow.cpp" line="155"/>
         <source>show result</source>
         <translation>显示结果</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="156"/>
+        <location filename="../mainwindow.cpp" line="157"/>
         <source>Stopwatch Dialog</source>
         <translation>计算耗时</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="213"/>
+        <location filename="../mainwindow.cpp" line="214"/>
         <source> same with: </source>
         <translation> 相似图片: </translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="233"/>
+        <location filename="../mainwindow.cpp" line="234"/>
         <source>cancel</source>
         <translation>取消</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="257"/>
+        <location filename="../mainwindow.cpp" line="258"/>
         <source>select a directory</source>
         <translation>选择图片目录</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="279"/>
+        <location filename="../mainwindow.cpp" line="280"/>
         <source>about</source>
         <translation>关于</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="342"/>
+        <location filename="../mainwindow.cpp" line="344"/>
         <source> directory does not exist</source>
         <translation> 文件夹不存在</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="361"/>
+        <location filename="../mainwindow.cpp" line="363"/>
         <source>%1 images, total size: %2&lt;br/&gt;Ctrl + Shift + R</source>
         <translation>%1 张图片，总大小： %2&lt;br/&gt;快捷键: Ctrl + Shift + R</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="364"/>
+        <location filename="../mainwindow.cpp" line="366"/>
         <source>no image here</source>
         <translation>目录中没有图片</translation>
     </message>
