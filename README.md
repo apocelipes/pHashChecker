@@ -7,6 +7,10 @@ Make sure you have installed Qt 6.5.0+ in your system.
 ## Install
 
 ```bash
+# for Ubuntu
+sudo apt install qt6-* qtchooser
+qtchooser -install qt6 $(which qmake6)
+
 # building pHashChecker
 git clone --recurse-submodules https://github.com/apocelipes/pHashChecker
 cd pHashChecker
@@ -56,6 +60,15 @@ sudo apt install imagemagick
 
 # Arch Linux
 sudo pacman -S imagemagick
+```
+
+For macOS, you should install homebrew, then run:
+
+```bash
+brew install libpng
+brew install libheif
+brew install qt
+brew install imagemagick
 ```
 
 ## Screenshots

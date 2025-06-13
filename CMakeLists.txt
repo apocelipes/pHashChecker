@@ -30,6 +30,12 @@ include_directories(third-party/CImg
 set(REQUIRED_QT_VERSION 6.5.0)
 find_package(Qt6 ${REQUIRED_QT_VERSION} NO_MODULE REQUIRED COMPONENTS Core Gui Widgets REQUIRED)
 
+if(CMAKE_HOST_SYSTEM_NAME STREQUAL "Darwin")
+    message("On macOS homebrew will be used.")
+    include_directories(/opt/homebrew/include)
+    link_directories(AFTER /opt/homebrew/lib)
+endif()
+
 set(TS_FILES
     ${CMAKE_CURRENT_SOURCE_DIR}/src/lang/zh_CN.ts
     ${CMAKE_CURRENT_SOURCE_DIR}/src/lang/ja_JP.ts)
