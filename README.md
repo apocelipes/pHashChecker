@@ -81,6 +81,8 @@ brew install imagemagick
 
 ![imageViewer](screenshots/hash_dialog.png)
 
+![aboutDialog](screenshots/about_dialog.webp)
+
 ## TODO
 
 - [ ] unit testing

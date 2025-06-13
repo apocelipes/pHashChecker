@@ -5,12 +5,22 @@
 #include <QDialogButtonBox>
 #include <QFormLayout>
 #include <QFrame>
+#include <QHBoxLayout>
 #include <QLabel>
 #include <QPushButton>
 #include <QVBoxLayout>
 
 #include "aboutdialog.h"
 #include "utils/versions.h"
+
+namespace {
+    inline QLabel *createOpenableLabel(const QString &text, QWidget *parent = nullptr) noexcept
+    {
+        auto label = new QLabel{text, parent};
+        label->setOpenExternalLinks(true);
+        return label;
+    }
+}
 
 AboutDialog::AboutDialog(QWidget *parent) noexcept
     : QDialog(parent)
@@ -27,13 +37,34 @@ AboutDialog::AboutDialog(QWidget *parent) noexcept
     libsEnd->setFrameShape(QFrame::HLine);
 
     auto libsForm = new QFormLayout;
-    libsForm->setFormAlignment(Qt::AlignCenter);
-    libsForm->addRow("<a href='https://github.com/apocelipes/pHashChecker'>pHashChecker</a>:", new QLabel{Utils::getPHashCheckerVersion()});
-    libsForm->addRow("<a hrref='https://www.qt.io/'>Qt</a>:", new QLabel{Utils::getQtVersion()});
-    libsForm->addRow("<a href='https://github.com/GreycLab/CImg'>CImg</a>:", new QLabel{Utils::getCImgVersion()});
-    libsForm->addRow("<a href='https://github.com/apocelipes/pHash'>pHash</a>:", new QLabel{Utils::getPHashVersion()});
-    libsForm->addRow("<a href='https://github.com/Morwenn/cpp-sort'>cpp-sort</a>:", new QLabel{Utils::getCppSortVersion()});
-    libsForm->addRow("<a href='https://github.com/martinus/unordered_dense'>unordered_dense</a>:", new QLabel{Utils::getAnkerlUnorderedDenseVersion()});
+    libsForm->setRowWrapPolicy(QFormLayout::DontWrapRows);
+    libsForm->setFieldGrowthPolicy(QFormLayout::FieldsStayAtSizeHint);
+    libsForm->setFormAlignment(Qt::AlignCenter | Qt::AlignTop);
+    libsForm->setLabelAlignment(Qt::AlignRight);
+    libsForm->addRow(
+        createOpenableLabel("<a href='https://github.com/apocelipes/pHashChecker'>pHashChecker</a>:"),
+        new QLabel{Utils::getPHashCheckerVersion()}
+    );
+    libsForm->addRow(
+        createOpenableLabel("<a href='https://www.qt.io/'>Qt</a>:"),
+        new QLabel{Utils::getQtVersion()}
+    );
+    libsForm->addRow(
+        createOpenableLabel("<a href='https://github.com/GreycLab/CImg'>CImg</a>:"),
+        new QLabel{Utils::getCImgVersion()}
+    );
+    libsForm->addRow(
+        createOpenableLabel("<a href='https://github.com/apocelipes/pHash'>pHash</a>:"),
+        new QLabel{Utils::getPHashVersion()}
+    );
+    libsForm->addRow(
+        createOpenableLabel("<a href='https://github.com/Morwenn/cpp-sort'>cpp-sort</a>:"),
+        new QLabel{Utils::getCppSortVersion()}
+    );
+    libsForm->addRow(
+        createOpenableLabel("<a href='https://github.com/martinus/unordered_dense'>unordered_dense</a>:"),
+        new QLabel{Utils::getAnkerlUnorderedDenseVersion()}
+    );
 
     auto aboutQtBtn = new QPushButton{tr("About Qt"), this};
     connect(aboutQtBtn, &QPushButton::clicked, this, [](){
@@ -55,7 +86,10 @@ AboutDialog::AboutDialog(QWidget *parent) noexcept
     mainLayout->addWidget(libsEnd);
     mainLayout->addWidget(copyRightLabel);
     mainLayout->addStretch(1);
-    mainLayout->addWidget(buttons);
+    auto btnLineLayout = new QHBoxLayout;
+    btnLineLayout->addStretch(1);
+    btnLineLayout->addWidget(buttons);
+    mainLayout->addLayout(btnLineLayout);
     setLayout(mainLayout);
     setWindowTitle(tr("About pHashChecker"));
 }
