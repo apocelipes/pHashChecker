@@ -121,7 +121,7 @@
         <translation>グループ %1</translation>
     </message>
     <message>
-        <location filename="../imageviewerdialog.cpp" line="98"/>
+        <location filename="../imageviewerdialog.cpp" line="101"/>
         <source>target ImageViewer not found</source>
         <translation>ターゲットのImageViewerは見つかりませんでした</translation>
     </message>
@@ -146,12 +146,12 @@
         <translation>次へ</translation>
     </message>
     <message>
-        <location filename="../imageviewerdialog.cpp" line="138"/>
+        <location filename="../imageviewerdialog.cpp" line="141"/>
         <source>Check Results: No Results</source>
         <translation>検索結果：空</translation>
     </message>
     <message>
-        <location filename="../imageviewerdialog.cpp" line="142"/>
+        <location filename="../imageviewerdialog.cpp" line="145"/>
         <source>Check Results: %1/%2</source>
         <translation>検索結果：%1/%2</translation>
     </message>

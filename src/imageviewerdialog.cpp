@@ -82,7 +82,10 @@ ImageViewerDialog::ImageViewerDialog(SameImagesContainer sameImageList) noexcept
     mainLayout->addWidget(comboBox, 0, Qt::AlignLeft);
     current->show();
     mainLayout->addWidget(current);
-    mainLayout->addWidget(buttons);
+    auto btnLayout = new QHBoxLayout;
+    btnLayout->addStretch(1);
+    btnLayout->addWidget(buttons);
+    mainLayout->addLayout(btnLayout);
     setLayout(mainLayout);
     updateTitle();
 }
