@@ -15,6 +15,8 @@
 
 class QReadWriteLock;
 
+using MatchHistoryContainer = std::vector<std::pair<ulong64, std::size_t>>;
+
 class HashWorker : public QObject
 {
     Q_OBJECT
@@ -25,7 +27,7 @@ public:
                const std::size_t limit,
                const Utils::PHashDistance distance,
                ContainerType &c,
-               std::vector<std::pair<ulong64, std::size_t>> &matchHistory,
+               MatchHistoryContainer &matchHistory,
                QObject *parent = nullptr) noexcept
         : QObject(parent),
           _start{start},
@@ -39,7 +41,7 @@ public Q_SLOTS:
     void doWork() noexcept;
 
 Q_SIGNALS:
-    void sameImg(std::size_t, std::size_t);
+    void sameImg(std::string_view, std::string_view);
     void doneOneImg();
     void doneAllWork();
 
@@ -48,9 +50,9 @@ private:
     std::size_t _limit{};
     Utils::PHashDistance _similar_distance = Utils::PHashDistance::DEFAULT;
     ContainerType &_images;
-    std::vector<std::pair<ulong64, std::size_t>> &_matchHistory;
+    MatchHistoryContainer &_matchHistory;
 
-    [[nodiscard]] bool checkSameImage(ulong64 a, ulong64 b) noexcept
+    [[nodiscard]] bool checkSameImage(const ulong64 a, const ulong64 b) noexcept
     {
         return ph_hamming_distance(a, b) <= static_cast<int>(_similar_distance);
     }

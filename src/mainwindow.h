@@ -19,6 +19,7 @@
 #include <ankerl/unordered_dense.h>
 #include <cpp-sort/sorters/pdq_sorter.h>
 
+#include "hashworker.h"
 #include "settingpanel.h"
 #include "qstringhasher.hpp"
 #include "widgethelpers.h"
@@ -117,6 +118,6 @@ private:
 
     std::vector<std::string> images;
     SameImagesContainer sameImageResults;
-    std::vector<std::pair<ulong64, std::size_t>> matchHistory;
+    MatchHistoryContainer matchHistory;
     std::vector<std::unique_ptr<QThread>> pool;
 };

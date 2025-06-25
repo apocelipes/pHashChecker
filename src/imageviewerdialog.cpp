@@ -88,6 +88,7 @@ ImageViewerDialog::ImageViewerDialog(SameImagesContainer sameImageList) noexcept
     mainLayout->addLayout(btnLayout);
     setLayout(mainLayout);
     updateTitle();
+    setModal(true);
 }
 
 void ImageViewerDialog::createImageViewer(const QString &name) noexcept

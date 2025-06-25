@@ -3,7 +3,6 @@
 
 #include <QVBoxLayout>
 #include <QCompleter>
-#include <QDir>
 #include <QFileDialog>
 #include <QProgressBar>
 #include <QFileInfo>
@@ -12,7 +11,6 @@
 #include <QKeySequence>
 
 #include <atomic>
-#include <cstring>
 #include <filesystem>
 #include <iterator>
 #include <ranges>
@@ -20,7 +18,6 @@
 
 #include "aboutdialog.h"
 #include "mainwindow.h"
-#include "hashworker.h"
 #include "imageviewerdialog.h"
 #include "notificationbar.h"
 #include "stopwatchdialog.h"
@@ -32,7 +29,7 @@
 namespace {
     [[nodiscard]] inline bool isSupportedImageFormat(const std::string &img) noexcept
     {
-        static const std::array imageExtensions{
+        static constexpr std::array imageExtensions{
             ".jpg",
             ".png",
             ".jpeg",
@@ -203,15 +200,16 @@ MainWindow::MainWindow(QWidget *parent) noexcept
             connect(worker, &HashWorker::doneAllWork, pool[id].get(), &QThread::quit);
             connect(pool[id].get(), &QThread::started, worker, &HashWorker::doWork);
             connect(worker, &HashWorker::doneOneImg, this, &MainWindow::onProgress);
-            connect(worker, &HashWorker::sameImg, this, [this](std::size_t originIndex, std::size_t sameIndex){
-                const auto &origin = images[originIndex];
-                const auto &same = images[sameIndex];
+            connect(worker, &HashWorker::sameImg, this, [this](const std::string_view origin, const std::string_view same){
+                std::string originImg{origin};
+                std::string sameImg{same};
+                qDebug() << Utils::getAbsPath(QString::fromStdString(originImg)) % tr(" same with: ") % Utils::getAbsPath(QString::fromStdString(sameImg));
                 if (!sameImageResults.contains(origin)) {
                     // construct vectors directly with the origin image
-                    sameImageResults.emplace(origin, std::vector<std::string>{origin});
+                    sameImageResults.emplace(origin, std::vector<std::string>{std::move(originImg), std::move(sameImg)});
+                } else {
+                    sameImageResults[origin].emplace_back(std::move(sameImg));
                 }
-                sameImageResults[origin].emplace_back(same);
-                qDebug() << Utils::getAbsPath(QString::fromStdString(origin)) % tr(" same with: ") % Utils::getAbsPath(QString::fromStdString(same));
             });
             pool[id]->start();
         }
@@ -373,11 +371,10 @@ void MainWindow::initResultDialog() noexcept
     if (imageDialog != nullptr) {
         return;
     }
+    matchHistory = MatchHistoryContainer{};
+    images = std::vector<std::string>{};
     imageDialog = new ImageViewerDialog{std::move(sameImageResults)};
     sameImageResults = SameImagesContainer{};
-    matchHistory.clear();
-    images.clear();
-    imageDialog->setModal(true);
     dialogBtn->setEnabled(true);
 }
 
