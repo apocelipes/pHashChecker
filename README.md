@@ -9,6 +9,7 @@ Make sure you have installed Qt 6.5.0+ in your system.
 ```bash
 # for Ubuntu
 sudo apt install qt6-* qtchooser
+export QT_SELECT=qt6
 qtchooser -install qt6 $(which qmake6)
 
 # building pHashChecker

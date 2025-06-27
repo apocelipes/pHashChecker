@@ -87,7 +87,7 @@ inline void ImageViewerPrivate::init(const std::vector<std::string> &images, Ima
 
     for (const auto &img : images) {
         auto thumbnail = new Thumbnail{QString::fromStdString(img), q};
-        QObject::connect(thumbnail, &Thumbnail::clicked, q, [this, thumbnail]() {
+        QObject::connect(thumbnail, &Thumbnail::clicked, q, [this, thumbnail]() noexcept {
             auto index = Utils::indexOf(thumbs, thumbnail);
             if (!index || *index == currentIndex) {
                 return;
@@ -100,7 +100,7 @@ inline void ImageViewerPrivate::init(const std::vector<std::string> &images, Ima
     setDefaultSelection();
 
     imageContent = new EditableImage{thumbs[0]->getImagePath(), q};
-    QObject::connect(q, &ImageViewer::currentIndexChanged, q, [this](unsigned int current, unsigned int prev) {
+    QObject::connect(q, &ImageViewer::currentIndexChanged, q, [this](unsigned int current, unsigned int prev) noexcept {
         thumbnailFocusBorder->setWidget(thumbs[current]);
         thumbs[prev]->showShadow();
         thumbs[current]->hideShadow();
@@ -120,7 +120,7 @@ inline void ImageViewerPrivate::init(const std::vector<std::string> &images, Ima
     auto contentLayout = new QHBoxLayout;
     auto prevButton = createSideControlButton(QStyle::SP_ArrowLeft, q);
     contentLayout->addWidget(prevButton, 0, Qt::AlignLeft);
-    QObject::connect(prevButton, &QPushButton::clicked, q, [this](){
+    QObject::connect(prevButton, &QPushButton::clicked, q, [this]() noexcept {
         if (thumbs.empty()) {
             return;
         }
@@ -133,7 +133,7 @@ inline void ImageViewerPrivate::init(const std::vector<std::string> &images, Ima
 
     auto nextButton = createSideControlButton(QStyle::SP_ArrowRight, q);
     contentLayout->addWidget(nextButton, 0, Qt::AlignRight);
-    QObject::connect(nextButton, &QPushButton::clicked, q, [this](){
+    QObject::connect(nextButton, &QPushButton::clicked, q, [this]() noexcept {
         if (thumbs.empty()) {
             return;
         }

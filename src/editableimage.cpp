@@ -70,7 +70,7 @@ void EditableImage::initContextMenu() noexcept
     d->contextMenu->addAction(openAction);
 
     auto copyAction = new QAction(style()->standardIcon(QStyle::SP_FileDialogListView), tr("copy data"));
-    connect(copyAction, &QAction::triggered, this, [this](){
+    connect(copyAction, &QAction::triggered, this, [this]() noexcept {
         const auto &data = pixmap(Qt::ReturnByValue);
         QGuiApplication::clipboard()->setPixmap(data);
         Q_EMIT dataCopied(data);
@@ -78,7 +78,7 @@ void EditableImage::initContextMenu() noexcept
     d->contextMenu->addAction(copyAction);
 
     auto copyPathAction = new QAction(style()->standardIcon(QStyle::SP_FileDialogListView), tr("copy path"));
-    connect(copyPathAction, &QAction::triggered, this, [this](){
+    connect(copyPathAction, &QAction::triggered, this, [this]() noexcept {
         const auto absPath = Utils::getAbsPath(getImagePath());
         QGuiApplication::clipboard()->setText(absPath);
         Q_EMIT pathCopied(absPath);
@@ -86,7 +86,7 @@ void EditableImage::initContextMenu() noexcept
     d->contextMenu->addAction(copyPathAction);
 
     auto moveToTrashAction = new QAction(style()->standardIcon(QStyle::SP_TrashIcon), tr("move to trash"));
-    connect(moveToTrashAction, &QAction::triggered, this, [this](){
+    connect(moveToTrashAction, &QAction::triggered, this, [this]() noexcept {
         QFile::moveToTrash(Utils::getAbsPath(getImagePath()));
         d->removeCachedPixmap(getImagePath());
         Q_EMIT trashMoved();
@@ -94,12 +94,12 @@ void EditableImage::initContextMenu() noexcept
     d->contextMenu->addAction(moveToTrashAction);
 
     auto deleteAction = new QAction(style()->standardIcon(QStyle::SP_DialogDiscardButton), tr("delete"));
-    connect(deleteAction, &QAction::triggered, this, [this](){
+    connect(deleteAction, &QAction::triggered, this, [this]() noexcept {
         const auto absPath = Utils::getAbsPath(getImagePath());
         auto isDelete = QMessageBox::warning(this,
-                                             tr("delete this image"),
-                                             tr("do you want to delete %1 ?").arg(absPath),
-                                             QMessageBox::Ok|QMessageBox::Cancel);
+                                            tr("delete this image"),
+                                            tr("do you want to delete %1 ?").arg(absPath),
+                                            QMessageBox::Ok|QMessageBox::Cancel);
         if (isDelete == QMessageBox::Ok) {
             QFile::remove(absPath);
             d->removeCachedPixmap(getImagePath());
@@ -109,7 +109,7 @@ void EditableImage::initContextMenu() noexcept
     d->contextMenu->addAction(deleteAction);
 
     auto hashAction = new QAction{style()->standardIcon(QStyle::SP_MessageBoxInformation), tr("hash")};
-    connect(hashAction, &QAction::triggered, this, [this](){
+    connect(hashAction, &QAction::triggered, this, [this]() noexcept {
         HashDialog dialog{getImagePath(), this};
         dialog.exec();
     });

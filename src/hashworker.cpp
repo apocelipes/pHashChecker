@@ -33,7 +33,7 @@ void HashWorker::doWork() noexcept
             continue;
         }
 
-        const auto pred = [this, hash](const auto &item) {
+        const auto pred = [this, hash](const auto &item) noexcept {
             return checkSameImage(hash, item.first);
         };
         matchHistoryLock.lockForRead();

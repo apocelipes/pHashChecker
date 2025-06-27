@@ -110,11 +110,11 @@ void SettingPanelPrivate::init(SettingPanel *q_ptr) noexcept
     distanceSlider->setTickInterval(1);
     distanceSlider->setTickPosition(QSlider::TickPosition::TicksBelow);
     distanceSlider->setMinimumWidth(100);
-    QObject::connect(distanceSlider, &QSlider::valueChanged, q, [this](int val) {
+    QObject::connect(distanceSlider, &QSlider::valueChanged, q, [this](int val) noexcept {
         q->setToolTip(getDistanceToolTip(val));
     });
     distanceSlider->setValue(settings.value(pHashDistanceIndexKey, defaultPHashDistanceIndex).toInt());
-    QObject::connect(distanceSlider, &QSlider::valueChanged, valueLabel, [this](int value) {
+    QObject::connect(distanceSlider, &QSlider::valueChanged, valueLabel, [this](int value) noexcept {
         valueLabel->setText(getDistanceName(value));
     });
 

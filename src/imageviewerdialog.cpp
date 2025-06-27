@@ -37,7 +37,7 @@ ImageViewerDialog::ImageViewerDialog(SameImagesContainer sameImageList) noexcept
 
     auto buttons = new QDialogButtonBox{this};
     prevBtn = new QPushButton{style()->standardIcon(QStyle::SP_ArrowLeft), tr("prev")};
-    connect(prevBtn, &QPushButton::clicked, this, [this](){
+    connect(prevBtn, &QPushButton::clicked, this, [this]() noexcept {
         const auto index = comboBox->currentIndex();
         comboBox->setCurrentIndex(index - 1);
     });
@@ -45,7 +45,7 @@ ImageViewerDialog::ImageViewerDialog(SameImagesContainer sameImageList) noexcept
     buttons->addButton(prevBtn, QDialogButtonBox::ActionRole);
 
     ignoreBtn = new QPushButton{style()->standardIcon(QStyle::SP_BrowserStop), tr("ignore this")};
-    connect(ignoreBtn, &QPushButton::clicked, this, [this](){
+    connect(ignoreBtn, &QPushButton::clicked, this, [this]() noexcept {
         const auto &oldName = comboBox->currentText();
         const auto index = comboBox->currentIndex();
         auto widget = viewers[oldName];
@@ -57,21 +57,21 @@ ImageViewerDialog::ImageViewerDialog(SameImagesContainer sameImageList) noexcept
     buttons->addButton(ignoreBtn, QDialogButtonBox::ActionRole);
 
     nextBtn = new QPushButton{style()->standardIcon(QStyle::SP_ArrowRight), tr("next")};
-    connect(nextBtn, &QPushButton::clicked, comboBox, [this](){
+    connect(nextBtn, &QPushButton::clicked, comboBox, [this]() noexcept {
         const auto index = comboBox->currentIndex();
         comboBox->setCurrentIndex(index + 1);
     });
     buttons->addButton(nextBtn, QDialogButtonBox::ActionRole);
     buttons->addButton(QDialogButtonBox::Ok);
 
-    auto buttonsSetEnable = [this](){
+    auto buttonsSetEnable = [this]() noexcept {
         const auto index = comboBox->currentIndex();
         const auto hasViewer = comboBox->count() != 0;
         prevBtn->setEnabled(hasViewer && index != 0);
         nextBtn->setEnabled(hasViewer && index != comboBox->count() - 1);
         ignoreBtn->setEnabled(hasViewer);
     };
-    connect(comboBox, qOverload<int>(&QComboBox::currentIndexChanged), this, [this, buttonsSetEnable](int){
+    connect(comboBox, qOverload<int>(&QComboBox::currentIndexChanged), this, [this, buttonsSetEnable](int) noexcept {
         setCurrentWidgetByName(comboBox->currentText());
         buttonsSetEnable();
     });
@@ -96,7 +96,7 @@ void ImageViewerDialog::createImageViewer(const QString &name) noexcept
     auto imageView = new ImageViewer{results[name], this};
     results.erase(name);
     imageView->hide();
-    connect(imageView, &ImageViewer::emptied, this, [this, name, imageView](){
+    connect(imageView, &ImageViewer::emptied, this, [this, name, imageView]() noexcept {
         const auto targetIndex = comboBox->findText(name);
         if (targetIndex < 0 || !viewers.contains(name) || viewers[name] != imageView) {
             qWarning() << tr("target ImageViewer not found");

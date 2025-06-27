@@ -81,7 +81,7 @@ void NotificationBarPrivate::init(NotificationBar *q_ptr) noexcept
     textLabel = new QLabel{q};
     textLabel->setTextInteractionFlags(Qt::TextBrowserInteraction);
     closeBtn = new QPushButton{q->style()->standardPixmap(QStyle::SP_DialogCloseButton), "", q};
-    QObject::connect(closeBtn, &QPushButton::clicked, q, [this](){
+    QObject::connect(closeBtn, &QPushButton::clicked, q, [this]() noexcept {
         if (isClosing) {
             return;
         }
@@ -191,7 +191,7 @@ void NotificationBar::showAndHide(int remainMsecs) noexcept
         d->animeGroup->addAnimation(showAnimation);
         d->animeGroup->addPause(remainMsecs);
         d->animeGroup->addAnimation(hideAnimation);
-        connect(hideAnimation, &QAbstractAnimation::stateChanged, this, [this](QAbstractAnimation::State newState, QAbstractAnimation::State) {
+        connect(hideAnimation, &QAbstractAnimation::stateChanged, this, [this](QAbstractAnimation::State newState, QAbstractAnimation::State) noexcept {
             if (newState == QAbstractAnimation::Running) {
                 d->isClosing = true;
             }

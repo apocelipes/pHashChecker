@@ -152,7 +152,7 @@ MainWindow::MainWindow(QWidget *parent) noexcept
     dialogBtn = new QPushButton{tr("show result")};
     dialogBtn->hide();
     timerDialog = new StopwatchDialog{tr("Stopwatch Dialog"), this};
-    connect(pathEdit, &QLineEdit::textChanged, this, [this](const QString &text){
+    connect(pathEdit, &QLineEdit::textChanged, this, [this](const QString &text) noexcept {
         const auto &path = text.trimmed();
         if (path.isEmpty()) {
             loadImgBtn->setEnabled(false);
@@ -166,7 +166,7 @@ MainWindow::MainWindow(QWidget *parent) noexcept
             pathEdit->setCompleter(pathCompleter);
         }
     });
-    connect(pathEdit, &QLineEdit::textEdited, this, [this](const QString &text){
+    connect(pathEdit, &QLineEdit::textEdited, this, [this](const QString &text) noexcept {
         if (text.trimmed().startsWith("~/")) {
             const auto &path = replaceWithHomeDir(text);
             pathEdit->setText(path);
@@ -175,7 +175,7 @@ MainWindow::MainWindow(QWidget *parent) noexcept
         }
     });
     connect(loadImgBtn, &QPushButton::clicked, this, &MainWindow::setImages);
-    connect(startBtn, &QPushButton::clicked, this, [this]() {
+    connect(startBtn, &QPushButton::clicked, this, [this]() noexcept {
         freezeMainGUI(true);
         matchHistory.reserve(images.size());
         bar->setEnabled(true);
@@ -200,7 +200,7 @@ MainWindow::MainWindow(QWidget *parent) noexcept
             connect(worker, &HashWorker::doneAllWork, pool[id].get(), &QThread::quit);
             connect(pool[id].get(), &QThread::started, worker, &HashWorker::doWork);
             connect(worker, &HashWorker::doneOneImg, this, &MainWindow::onProgress);
-            connect(worker, &HashWorker::sameImg, this, [this](const std::string_view origin, const std::string_view same){
+            connect(worker, &HashWorker::sameImg, this, [this](const std::string_view origin, const std::string_view same) noexcept {
                 std::string originImg{origin};
                 std::string sameImg{same};
                 qDebug() << Utils::getAbsPath(QString::fromStdString(originImg)) % tr(" same with: ") % Utils::getAbsPath(QString::fromStdString(sameImg));
@@ -215,11 +215,11 @@ MainWindow::MainWindow(QWidget *parent) noexcept
         }
     });
 
-    connect(dialogBtn, &QPushButton::clicked, this, [this](){
+    connect(dialogBtn, &QPushButton::clicked, this, [this]() noexcept {
         initResultDialog();
         imageDialog->exec();
     });
-    connect(this, &MainWindow::completed, this, [this](){
+    connect(this, &MainWindow::completed, this, [this]() noexcept {
         initResultDialog();
         if (settings->isUseStopwatchDialog()) {
             timerDialog->exec();
@@ -232,7 +232,7 @@ MainWindow::MainWindow(QWidget *parent) noexcept
     cancelButton = new QPushButton{tr("cancel")};
     cancelButton->setCursor(Qt::PointingHandCursor);
     cancelButton->hide();
-    connect(cancelButton, &QPushButton::clicked, this, [this](){
+    connect(cancelButton, &QPushButton::clicked, this, [this]() noexcept {
         cancelButton->setEnabled(false); // quitPool在取消线程时较耗时，防止反复触发
         bar->setEnabled(false);
         quitPool(true);
@@ -255,7 +255,7 @@ MainWindow::MainWindow(QWidget *parent) noexcept
     fileDialog->setModal(true);
     fileDialogBtn = new QPushButton(tr("select a directory"));
     connect(fileDialogBtn, &QPushButton::clicked, fileDialog, &QFileDialog::exec);
-    connect(fileDialog, &QFileDialog::fileSelected, this, [this](const QString &dirName) {
+    connect(fileDialog, &QFileDialog::fileSelected, this, [this](const QString &dirName) noexcept {
         if (dirName.isEmpty() || !QFileInfo::exists(dirName)) [[unlikely]] {
             return;
         }
@@ -276,7 +276,7 @@ MainWindow::MainWindow(QWidget *parent) noexcept
     lineLayout->addWidget(pathEdit);
     lineLayout->addWidget(fileDialogBtn);
     auto aboutBtn = new QPushButton{tr("about"), this};
-    connect(aboutBtn, &QPushButton::clicked, this, [](){
+    connect(aboutBtn, &QPushButton::clicked, this, []() noexcept {
         AboutDialog aboutDialog;
         aboutDialog.exec();
     });

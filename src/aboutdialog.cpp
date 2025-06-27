@@ -67,7 +67,7 @@ AboutDialog::AboutDialog(QWidget *parent) noexcept
     );
 
     auto aboutQtBtn = new QPushButton{tr("About Qt"), this};
-    connect(aboutQtBtn, &QPushButton::clicked, this, [](){
+    connect(aboutQtBtn, &QPushButton::clicked, this, []() noexcept {
         QApplication::aboutQt();
     });
     auto buttons = new QDialogButtonBox;
