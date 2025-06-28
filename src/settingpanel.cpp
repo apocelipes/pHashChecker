@@ -105,7 +105,7 @@ void SettingPanelPrivate::init(SettingPanel *q_ptr) noexcept
     q = q_ptr;
     distanceSlider = new QSlider{Qt::Horizontal, q};
     distanceLabel = new QLabel{QObject::tr("matching accuracy: "), q};
-    valueLabel = new QLabel{getDistanceName(1), q};
+    valueLabel = new QLabel{q};
     distanceSlider->setRange(0, 3);
     distanceSlider->setTickInterval(1);
     distanceSlider->setTickPosition(QSlider::TickPosition::TicksBelow);
@@ -113,10 +113,12 @@ void SettingPanelPrivate::init(SettingPanel *q_ptr) noexcept
     QObject::connect(distanceSlider, &QSlider::valueChanged, q, [this](int val) noexcept {
         q->setToolTip(getDistanceToolTip(val));
     });
-    distanceSlider->setValue(settings.value(pHashDistanceIndexKey, defaultPHashDistanceIndex).toInt());
     QObject::connect(distanceSlider, &QSlider::valueChanged, valueLabel, [this](int value) noexcept {
         valueLabel->setText(getDistanceName(value));
     });
+    const auto distance = settings.value(pHashDistanceIndexKey, defaultPHashDistanceIndex).toInt();
+    distanceSlider->setValue(distance);
+    valueLabel->setText(getDistanceName(distance));
 
     recursiveSearchChecker = new QCheckBox{QObject::tr("recursive searching"), q};
     recursiveSearchChecker->setChecked(settings.value(recursiveSearchKey, defaultRecursiveSearch).toBool());

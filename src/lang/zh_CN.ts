@@ -287,22 +287,22 @@
         <translation>提供最严格的匹配，很少出现误差。</translation>
     </message>
     <message>
-        <location filename="../settingpanel.cpp" line="121"/>
+        <location filename="../settingpanel.cpp" line="123"/>
         <source>recursive searching</source>
         <translation>递归搜索子目录</translation>
     </message>
     <message>
-        <location filename="../settingpanel.cpp" line="123"/>
+        <location filename="../settingpanel.cpp" line="125"/>
         <source>Recursively searches all images in the current directory and its subdirectories.</source>
         <translation>递归搜索当前目录和其子目录中所有的图片。</translation>
     </message>
     <message>
-        <location filename="../settingpanel.cpp" line="125"/>
+        <location filename="../settingpanel.cpp" line="127"/>
         <source>record calculation time</source>
         <translation>启用计时</translation>
     </message>
     <message>
-        <location filename="../settingpanel.cpp" line="126"/>
+        <location filename="../settingpanel.cpp" line="128"/>
         <source>Record the time spent on calculation.</source>
         <translation>计算匹配所有图片所需的时间。</translation>
     </message>
@@ -325,7 +325,7 @@
 <context>
     <name>SettingPanel</name>
     <message>
-        <location filename="../settingpanel.cpp" line="156"/>
+        <location filename="../settingpanel.cpp" line="158"/>
         <source>returning DEFAULT because of invalid value: </source>
         <translation>无效的值，DEFAULT将被返回： </translation>
     </message>

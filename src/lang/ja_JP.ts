@@ -287,22 +287,22 @@
         <translation>もっとも厳しいマッチングを行い、せいかくな結果が提供されています。</translation>
     </message>
     <message>
-        <location filename="../settingpanel.cpp" line="121"/>
+        <location filename="../settingpanel.cpp" line="123"/>
         <source>recursive searching</source>
         <translation>サブディレクトリも併せて検索</translation>
     </message>
     <message>
-        <location filename="../settingpanel.cpp" line="123"/>
+        <location filename="../settingpanel.cpp" line="125"/>
         <source>Recursively searches all images in the current directory and its subdirectories.</source>
         <translation>現在のディレクトリとそのサブディレクトリにあるすべての画像を再帰的に検索します。</translation>
     </message>
     <message>
-        <location filename="../settingpanel.cpp" line="125"/>
+        <location filename="../settingpanel.cpp" line="127"/>
         <source>record calculation time</source>
         <translation>処理の総合時間を記録</translation>
     </message>
     <message>
-        <location filename="../settingpanel.cpp" line="126"/>
+        <location filename="../settingpanel.cpp" line="128"/>
         <source>Record the time spent on calculation.</source>
         <translation>すべての画像の処理時間の合計を記録します。</translation>
     </message>
@@ -325,7 +325,7 @@
 <context>
     <name>SettingPanel</name>
     <message>
-        <location filename="../settingpanel.cpp" line="156"/>
+        <location filename="../settingpanel.cpp" line="158"/>
         <source>returning DEFAULT because of invalid value: </source>
         <translation>未知の値があるため、DEFAULTを返します： </translation>
     </message>
