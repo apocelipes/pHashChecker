@@ -2,12 +2,14 @@
 // Copyright (C) 2025 apocelipes
 
 #include <QApplication>
+#include <QClipboard>
 #include <QDialogButtonBox>
 #include <QFormLayout>
 #include <QFrame>
 #include <QHBoxLayout>
 #include <QLabel>
 #include <QPushButton>
+#include <QStringBuilder>
 #include <QVBoxLayout>
 
 #include "aboutdialog.h"
@@ -70,8 +72,12 @@ AboutDialog::AboutDialog(QWidget *parent) noexcept
     connect(aboutQtBtn, &QPushButton::clicked, this, []() noexcept {
         QApplication::aboutQt();
     });
+    auto copyBtn = new QPushButton{tr("Copy"), this};
+    copyBtn->setToolTip(tr("Copy version information to your clipboard."));
+    connect(copyBtn, &QPushButton::clicked, this, &AboutDialog::copyVersionsToClipboard);
     auto buttons = new QDialogButtonBox;
     buttons->addButton(QDialogButtonBox::Ok);
+    buttons->addButton(copyBtn, QDialogButtonBox::AcceptRole);
     buttons->addButton(aboutQtBtn, QDialogButtonBox::ActionRole);
     connect(buttons, &QDialogButtonBox::accepted, this, &QDialog::accept);
 
@@ -92,4 +98,15 @@ AboutDialog::AboutDialog(QWidget *parent) noexcept
     mainLayout->addLayout(btnLineLayout);
     setLayout(mainLayout);
     setWindowTitle(tr("About pHashChecker"));
+}
+
+void AboutDialog::copyVersionsToClipboard() noexcept
+{
+    QString result = "pHashChecker: " % Utils::getPHashCheckerVersion() % '\n';
+    result += "Qt: " % Utils::getQtVersion() % '\n';
+    result += "CImg: " % Utils::getCImgVersion() % '\n';
+    result += "pHash: " % Utils::getPHashVersion() % '\n';
+    result += "cpp-sort: " % Utils::getCppSortVersion() % '\n';
+    result += "unordered_dense: " % Utils::getAnkerlUnorderedDenseVersion();
+    QGuiApplication::clipboard()->setText(result);
 }

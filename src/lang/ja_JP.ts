@@ -4,22 +4,32 @@
 <context>
     <name>AboutDialog</name>
     <message>
-        <location filename="../aboutdialog.cpp" line="31"/>
+        <location filename="../aboutdialog.cpp" line="33"/>
         <source>pHashChecker is a tool written in Qt6 and modern C++ for finding similar images.</source>
         <translation>pHashCheckerはQt6とモダンC++で書かれた、類似画像を見つけるためのツールです。</translation>
     </message>
     <message>
-        <location filename="../aboutdialog.cpp" line="32"/>
+        <location filename="../aboutdialog.cpp" line="34"/>
         <source>&lt;br&gt;Libraries used by this software:</source>
         <translation>&lt;br&gt;使われているライブラリー：</translation>
     </message>
     <message>
-        <location filename="../aboutdialog.cpp" line="69"/>
+        <location filename="../aboutdialog.cpp" line="71"/>
         <source>About Qt</source>
         <translation>Qtについて</translation>
     </message>
     <message>
-        <location filename="../aboutdialog.cpp" line="94"/>
+        <location filename="../aboutdialog.cpp" line="75"/>
+        <source>Copy</source>
+        <translation>コピー</translation>
+    </message>
+    <message>
+        <location filename="../aboutdialog.cpp" line="76"/>
+        <source>Copy version information to your clipboard.</source>
+        <translation>バージョン情報をクリップボードにコピー。</translation>
+    </message>
+    <message>
+        <location filename="../aboutdialog.cpp" line="100"/>
         <source>About pHashChecker</source>
         <translation>pHashCheckerについて</translation>
     </message>
