@@ -46,8 +46,8 @@ set(PROJECT_SOURCES ${PROJECT_SOURCES} ${CMAKE_CURRENT_BINARY_DIR}/translations.
 
 add_custom_target(update_all_ts_files ALL)
 add_custom_target(create_all_qm_files ALL)
-find_file(LUPDATE_PATH lupdate)
-find_file(LRELEASE_PATH lrelease)
+find_file(LUPDATE_PATH NAMES lupdate lupdate-qt6)
+find_file(LRELEASE_PATH NAMES lrelease lrelease-qt6)
 foreach(TS_FILE ${TS_FILES})
     get_filename_component(I18N_NAME ${TS_FILE} NAME_WE)
     set(TS_TARGET_NAME "update_ts_file_${I18N_NAME}")

@@ -12,6 +12,9 @@ sudo apt install qt6-* qtchooser
 export QT_SELECT=qt6
 qtchooser -install qt6 $(which qmake6)
 
+# for Fedora
+sudo dnf install qt6-* libtiff-devel
+
 # building pHashChecker
 git clone --recurse-submodules https://github.com/apocelipes/pHashChecker
 cd pHashChecker
@@ -31,6 +34,9 @@ sudo apt install libheif1 libheif-dev
 
 # Arch Linux
 sudo pacman -S libheif
+
+# Fedora
+sudo dnf install libheif-devel
 ```
 
 To support WebP images, you need to install `libwebp`:
@@ -41,6 +47,9 @@ sudo apt install libwebp-dev
 
 # Arch Linux
 sudo pacman -S libwebp
+
+# Fedora
+sudo dnf install libwebp-devel
 ```
 
 To support JPEG XL images, you need to install 'libjxl':
@@ -51,6 +60,9 @@ sudo apt-get install libjxl-dev
 
 # Arch Linux
 sudo pacman -S libjxl
+
+# Fedora
+sudo dnf install libjxl-devel
 ```
 
 In addition, it's better to install `imagemagick` on your system:
@@ -61,6 +73,9 @@ sudo apt install imagemagick
 
 # Arch Linux
 sudo pacman -S imagemagick
+
+# Fedora
+sudo dnf install ImageMagick
 ```
 
 For macOS, you should install homebrew, then run:
