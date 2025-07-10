@@ -10,6 +10,7 @@
 #include <QLabel>
 #include <QPushButton>
 #include <QStringBuilder>
+#include <QStyle>
 #include <QVBoxLayout>
 
 #include "aboutdialog.h"
@@ -76,8 +77,14 @@ AboutDialog::AboutDialog(QWidget *parent) noexcept
     copyBtn->setToolTip(tr("Copy version information to your clipboard."));
     connect(copyBtn, &QPushButton::clicked, this, &AboutDialog::copyVersionsToClipboard);
     auto buttons = new QDialogButtonBox;
-    buttons->addButton(QDialogButtonBox::Ok);
-    buttons->addButton(copyBtn, QDialogButtonBox::AcceptRole);
+    const auto buttonsStyle = QDialogButtonBox::ButtonLayout(buttons->style()->styleHint(QStyle::SH_DialogButtonLayout, nullptr, buttons));
+    if (buttonsStyle == QDialogButtonBox::ButtonLayout::KdeLayout) {
+        buttons->addButton(copyBtn, QDialogButtonBox::AcceptRole);
+        buttons->addButton(QDialogButtonBox::Ok);
+    } else {
+        buttons->addButton(QDialogButtonBox::Ok);
+        buttons->addButton(copyBtn, QDialogButtonBox::AcceptRole);
+    }
     buttons->addButton(aboutQtBtn, QDialogButtonBox::ActionRole);
     connect(buttons, &QDialogButtonBox::accepted, this, &QDialog::accept);
 

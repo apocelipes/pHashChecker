@@ -1,6 +1,8 @@
 CMakeLists.txt.user*
 .idea
 cmake-build-debug
+cmake-build-relwithdebinfo
+cmake-build-release
 build
 .vscode
 .DS_Store
