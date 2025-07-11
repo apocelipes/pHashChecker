@@ -42,7 +42,7 @@ void HashWorker::doWork() noexcept
         auto lastInsertIndex = _matchHistory.size();
         if (auto iter = std::ranges::find_if(std::as_const(_matchHistory), pred); iter != _matchHistory.end()) {
             foundSame = true;
-            Q_EMIT sameImg(_images[iter->second], img);
+            Q_EMIT sameImg(iter->second, img);
         }
         matchHistoryLock.unlock();
 
@@ -54,10 +54,10 @@ void HashWorker::doWork() noexcept
         matchHistoryLock.lockForWrite();
         if (auto iter = std::ranges::find_if(std::as_const(_matchHistory) | std::views::drop(lastInsertIndex), pred); iter != _matchHistory.end()) {
             foundSame = true;
-            Q_EMIT sameImg(_images[iter->second], img);
+            Q_EMIT sameImg(iter->second, img);
         }
         if (!foundSame) {
-            _matchHistory.emplace_back(hash, index);
+            _matchHistory.emplace_back(hash, img);
         }
         matchHistoryLock.unlock();
         Q_EMIT doneOneImg();

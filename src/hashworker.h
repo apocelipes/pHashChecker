@@ -15,7 +15,7 @@
 
 class QReadWriteLock;
 
-using MatchHistoryContainer = std::vector<std::pair<ulong64, std::size_t>>;
+using MatchHistoryContainer = std::vector<std::pair<ulong64, std::string_view>>;
 
 class HashWorker : public QObject
 {
