@@ -192,9 +192,9 @@ MainWindow::MainWindow(QWidget *parent) noexcept
         }
         for (std::size_t id = 0, start = 0, limit = getNextLimit(0, 0, nThreads, images.size());
              id < nThreads;
-             ++id, start = limit, limit = getNextLimit(limit, id,nThreads, images.size())) {
+             ++id, start = limit, limit = getNextLimit(limit, id, nThreads, images.size())) {
             // cannot use a QThreadPool because we need an event-loop in our worker functions
-            auto worker = new HashWorker(start, limit, distance, images, matchHistory);
+            auto worker = new HashWorker(distance, std::span{images.begin()+start, limit-start}, matchHistory);
             worker->moveToThread(pool[id].get());
             connect(pool[id].get(), &QThread::finished, worker, &QObject::deleteLater);
             connect(worker, &HashWorker::doneAllWork, pool[id].get(), &QThread::quit);

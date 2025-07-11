@@ -5,6 +5,7 @@
 
 #include <QObject>
 
+#include <span>
 #include <string>
 #include <vector>
 
@@ -21,17 +22,13 @@ class HashWorker : public QObject
 {
     Q_OBJECT
 public:
-    using ContainerType = const std::vector<std::string>;
+    using ContainerType = const std::span<std::string>;
 
-    HashWorker(const std::size_t start,
-               const std::size_t limit,
-               const Utils::PHashDistance distance,
-               ContainerType &c,
+    HashWorker(const Utils::PHashDistance distance,
+               ContainerType c,
                MatchHistoryContainer &matchHistory,
                QObject *parent = nullptr) noexcept
         : QObject(parent),
-          _start{start},
-          _limit{limit},
           _similar_distance{distance},
           _images{c},
           _matchHistory{matchHistory}
@@ -41,15 +38,13 @@ public Q_SLOTS:
     void doWork() noexcept;
 
 Q_SIGNALS:
-    void sameImg(std::string_view, std::string_view);
+    void sameImg(const std::string_view, const std::string_view);
     void doneOneImg();
     void doneAllWork();
 
 private:
-    std::size_t _start{};
-    std::size_t _limit{};
     Utils::PHashDistance _similar_distance = Utils::PHashDistance::DEFAULT;
-    ContainerType &_images;
+    ContainerType _images;
     MatchHistoryContainer &_matchHistory;
 
     [[nodiscard]] bool checkSameImage(const ulong64 a, const ulong64 b) noexcept

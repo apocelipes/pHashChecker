@@ -18,7 +18,7 @@ namespace {
 
 void HashWorker::doWork() noexcept
 {
-    for (std::size_t index = _start; index < _limit; ++index) {
+    for (const auto &image : _images) {
         if (this->thread()->isInterruptionRequested()) {
             qInfo() << tr("thread exit");
             break;
@@ -26,9 +26,9 @@ void HashWorker::doWork() noexcept
 
         ulong64 hash = 0;
         bool foundSame = false;
-        const std::string_view img = _images[index];
-        if (ph_dct_imagehash(_images[index].c_str(), hash) < 0) [[unlikely]] {
-            qWarning() << tr("calculating pHash failed, skip: ") % QString::fromStdString(_images[index]);
+        const std::string_view img = image;
+        if (ph_dct_imagehash(image.c_str(), hash) < 0) [[unlikely]] {
+            qWarning() << tr("calculating pHash failed, skip: ") % QString::fromStdString(image);
             Q_EMIT doneOneImg();
             continue;
         }
