@@ -78,7 +78,9 @@ namespace {
         if (threadID + 1 == maxThreads) {
             return totalItems;
         }
-        return oldLimit+totalItems / maxThreads;
+        const auto avgBatchSize = totalItems / maxThreads;
+        const auto rest = totalItems % maxThreads;
+        return oldLimit + avgBatchSize + static_cast<std::size_t>(threadID < rest);
     }
 
     template <std::ranges::range Container>
