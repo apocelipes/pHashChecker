@@ -5,10 +5,20 @@
 
 #include <QDir>
 
+#include <concepts>
+
 namespace Utils {
-    [[nodiscard]] inline QString getAbsPath(const QString &fileName) noexcept
+    template <typename T>
+    requires std::same_as<QString, T> || std::same_as<std::string, T> || std::same_as<std::string_view, T>
+    [[nodiscard]] inline QString getAbsPath(const T &fileName) noexcept
     {
-        QDir current;
-        return current.cleanPath(current.absoluteFilePath(fileName));
+        const QDir current;
+        if constexpr (std::same_as<std::string, T>) {
+            return QDir::cleanPath(current.absoluteFilePath(QString::fromStdString(fileName)));
+        } else if constexpr (std::same_as<std::string_view, T>) {
+            return QDir::cleanPath(current.absoluteFilePath(QString::fromUtf8(fileName.data(), fileName.size())));
+        } else {
+            return QDir::cleanPath(current.absoluteFilePath(fileName));
+        }
     }
 }

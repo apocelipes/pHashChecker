@@ -113,12 +113,12 @@
 <context>
     <name>HashWorker</name>
     <message>
-        <location filename="../hashworker.cpp" line="23"/>
+        <location filename="../hashworker.cpp" line="24"/>
         <source>thread exit</source>
         <translation>线程退出执行</translation>
     </message>
     <message>
-        <location filename="../hashworker.cpp" line="31"/>
+        <location filename="../hashworker.cpp" line="32"/>
         <source>calculating pHash failed, skip: </source>
         <translation>计算pHash时发生错误，将跳过： </translation>
     </message>
@@ -204,7 +204,7 @@
         <translation>计算耗时</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="208"/>
+        <location filename="../mainwindow.cpp" line="207"/>
         <source> same with: </source>
         <translation> 相似图片: </translation>
     </message>

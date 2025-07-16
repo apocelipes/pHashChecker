@@ -11,6 +11,7 @@
 #include <utility>
 
 #include "hashworker.h"
+#include "path.h"
 
 namespace {
     inline QReadWriteLock matchHistoryLock;
@@ -28,7 +29,7 @@ void HashWorker::doWork() noexcept
         bool foundSame = false;
         const std::string_view img = image;
         if (ph_dct_imagehash(image.c_str(), hash) < 0) [[unlikely]] {
-            qWarning() << tr("calculating pHash failed, skip: ") % QString::fromStdString(image);
+            qWarning() << tr("calculating pHash failed, skip: ") % Utils::getAbsPath(image);
             Q_EMIT doneOneImg();
             continue;
         }

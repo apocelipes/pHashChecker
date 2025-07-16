@@ -203,11 +203,11 @@ MainWindow::MainWindow(QWidget *parent) noexcept
             connect(pool[id].get(), &QThread::started, worker, &HashWorker::doWork);
             connect(worker, &HashWorker::doneOneImg, this, &MainWindow::onProgress);
             connect(worker, &HashWorker::sameImg, this, [this](const std::string_view origin, const std::string_view same) noexcept {
-                std::string originImg{origin};
                 std::string sameImg{same};
-                qDebug() << Utils::getAbsPath(QString::fromStdString(originImg)) % tr(" same with: ") % Utils::getAbsPath(QString::fromStdString(sameImg));
+                qDebug() << Utils::getAbsPath(origin) % tr(" same with: ") % Utils::getAbsPath(sameImg);
                 if (!sameImageResults.contains(origin)) {
                     // construct vectors directly with the origin image
+                    std::string originImg{origin};
                     sameImageResults.emplace(origin, std::vector<std::string>{std::move(originImg), std::move(sameImg)});
                 } else {
                     sameImageResults[origin].emplace_back(std::move(sameImg));

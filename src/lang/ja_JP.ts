@@ -113,12 +113,12 @@
 <context>
     <name>HashWorker</name>
     <message>
-        <location filename="../hashworker.cpp" line="23"/>
+        <location filename="../hashworker.cpp" line="24"/>
         <source>thread exit</source>
         <translation>スレッドが終了しました</translation>
     </message>
     <message>
-        <location filename="../hashworker.cpp" line="31"/>
+        <location filename="../hashworker.cpp" line="32"/>
         <source>calculating pHash failed, skip: </source>
         <translation>pHash計算にエラーが発生し該当画像をスキップします： </translation>
     </message>
@@ -204,7 +204,7 @@
         <translation>経過した時間</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="208"/>
+        <location filename="../mainwindow.cpp" line="207"/>
         <source> same with: </source>
         <translation> と似ている画像は: </translation>
     </message>
