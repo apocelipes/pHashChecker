@@ -88,6 +88,7 @@ ImageViewerDialog::ImageViewerDialog(SameImagesContainer sameImageList) noexcept
     mainLayout->addLayout(btnLayout);
     setLayout(mainLayout);
     updateTitle();
+    setMaximumHeight(750);
     setModal(true);
 }
 

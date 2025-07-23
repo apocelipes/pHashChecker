@@ -9,7 +9,7 @@
 #include <memory>
 
 constexpr int EditableImageFixedWidth = 850;
-constexpr int EditableImageFixedHeight = 650;
+constexpr int EditableImageFixedHeight = 550;
 
 class QMenu;
 class QMouseEvent;
