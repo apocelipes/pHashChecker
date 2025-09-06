@@ -24,7 +24,7 @@ namespace Utils {
         const bool hasAlpha = raw.spectrum() == 4;
         // Currently, it's fast enough, may be not worth to add a cache
         cimg_forXY(raw, x, y) {
-            int alpha = hasAlpha ? static_cast<int>(raw(x, y, 3)) : 255;
+            const int alpha = hasAlpha ? static_cast<int>(raw(x, y, 3)) : 255;
             QColor color{raw(x, y, 0), raw(x, y, 1), raw(x, y, 2), alpha};
             img.setPixelColor(x, y, color);
         }

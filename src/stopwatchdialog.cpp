@@ -10,7 +10,7 @@
 
 #include "stopwatchdialog.h"
 
-#define TIMERDIALOG_TIME_FORMAT QStringLiteral(u"yyyy-MM-dd HH:mm:ss.zzz ddd")
+#define TIMER_DIALOG_TIME_FORMAT QStringLiteral(u"yyyy-MM-dd HH:mm:ss.zzz ddd")
 
 StopwatchDialog::StopwatchDialog(const QString &title, QWidget *parent) noexcept
     : QDialog(parent)
@@ -44,7 +44,7 @@ void StopwatchDialog::start() noexcept
     endLabel->setText(QString{});
     durationLabel->setText(QString{});
     startTime = QDateTime::currentDateTime();
-    startLabel->setText(QLocale().toString(startTime, TIMERDIALOG_TIME_FORMAT));
+    startLabel->setText(QLocale().toString(startTime, TIMER_DIALOG_TIME_FORMAT));
     running = true;
 }
 
@@ -55,7 +55,7 @@ void StopwatchDialog::stop() noexcept
         return;
     }
     endTime = QDateTime::currentDateTime();
-    endLabel->setText(QLocale().toString(endTime, TIMERDIALOG_TIME_FORMAT));
+    endLabel->setText(QLocale().toString(endTime, TIMER_DIALOG_TIME_FORMAT));
     const auto seconds = startTime.secsTo(endTime);
     durationLabel->setText(tr("%1 min %2.%3 seconds").arg(seconds / 60).arg(seconds % 60).arg(startTime.msecsTo(endTime) % 1000));
     running = false;

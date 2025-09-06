@@ -63,10 +63,10 @@ HashDialog::HashDialog(const QString &path, QWidget *parent) noexcept
     const auto fileSize = static_cast<quint64>(img.size());
     table->setItem(1, 1, new QTableWidgetItem{Utils::sizeFormat(fileSize) % QStringLiteral(u" (%1)").arg(fileSize)});
     for (std::size_t i = 0; i < std::size(algorithmNames); ++i) {
-        table->setItem(i+fileSizeIndex+1, 0, new QTableWidgetItem{algorithmNames[i] % QChar(':')});
+        table->setItem(static_cast<int>(i)+fileSizeIndex+1, 0, new QTableWidgetItem{algorithmNames[i] % QChar(':')});
         const QString &hashText = QCryptographicHash::hash(data, hashAlgorithms[i]).toHex();
         QCoreApplication::processEvents();
-        table->setItem(i+fileSizeIndex+1, 1, new QTableWidgetItem{hashText});
+        table->setItem(static_cast<int>(i)+fileSizeIndex+1, 1, new QTableWidgetItem{hashText});
     }
 
     auto buttons = new QDialogButtonBox;

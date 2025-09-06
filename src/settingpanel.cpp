@@ -74,7 +74,7 @@ private:
     [[nodiscard]] static QString getDistanceName(int index) noexcept
     {
         // i18n需要在main函数中运行，因此不能依赖静态成员的初始化
-        static const QString infoes[4] = {
+        static const QString info[4] = {
             QObject::tr("fuzzy"),
             QObject::tr("default"),
             QObject::tr("precise"),
@@ -83,7 +83,7 @@ private:
         if (index >= 4 || index < 0) {
             return QString{};
         }
-        return infoes[index];
+        return info[index];
     }
 
     [[nodiscard]] static QString getDistanceToolTip(int index) noexcept {

@@ -24,27 +24,27 @@ namespace {
 }
 
 namespace Utils {
-    QString getCImgVersion() noexcept {
+    inline QString getCImgVersion() noexcept {
         return semVersion(cimg_version / 100, (cimg_version / 10) % 10, cimg_version % 10);
     }
 
-    QString getCppSortVersion() noexcept {
+    inline QString getCppSortVersion() noexcept {
         return semVersion(CPPSORT_VERSION_MAJOR, CPPSORT_VERSION_MINOR, CPPSORT_VERSION_PATCH);
     }
 
-    QString getPHashVersion() noexcept {
+    inline QString getPHashVersion() noexcept {
         return QString{ph_version()};
     }
 
-    QString getAnkerlUnorderedDenseVersion() noexcept {
+    inline QString getAnkerlUnorderedDenseVersion() noexcept {
         return semVersion(ANKERL_UNORDERED_DENSE_VERSION_MAJOR, ANKERL_UNORDERED_DENSE_VERSION_MINOR, ANKERL_UNORDERED_DENSE_VERSION_PATCH);
     }
 
-    QString getQtVersion() noexcept {
+    inline QString getQtVersion() noexcept {
         return qVersion();
     }
 
-    QString getPHashCheckerVersion() noexcept {
+    inline QString getPHashCheckerVersion() noexcept {
         return semVersion(PHASHCHECKER_VERSION_MAJOR, PHASHCHECKER_VERSION_MINOR, PHASHCHECKER_VERSION_PATCH);
     }
 }

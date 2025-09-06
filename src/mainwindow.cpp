@@ -67,7 +67,7 @@ namespace {
     [[nodiscard]] inline std::size_t getThreadNumber(const Container &contents) noexcept
     {
         std::size_t nThreads = 1;
-        if (int n = QThread::idealThreadCount(); n > 1) {
+        if (const int n = QThread::idealThreadCount(); n > 1) {
             nThreads = static_cast<std::size_t>(n);
         }
         return std::min(std::ranges::size(contents), nThreads);
@@ -155,8 +155,7 @@ MainWindow::MainWindow(QWidget *parent) noexcept
     dialogBtn->hide();
     timerDialog = new StopwatchDialog{tr("Stopwatch Dialog"), this};
     connect(pathEdit, &QLineEdit::textChanged, this, [this](const QString &text) noexcept {
-        const auto &path = text.trimmed();
-        if (path.isEmpty()) {
+        if (const auto &path = text.trimmed(); path.isEmpty()) {
             loadImgBtn->setEnabled(false);
             pathEdit->setCompleter(nullptr);
             disableStartBtn();
@@ -196,7 +195,7 @@ MainWindow::MainWindow(QWidget *parent) noexcept
              id < nThreads;
              ++id, start = limit, limit = getNextLimit(limit, id, nThreads, images.size())) {
             // cannot use a QThreadPool because we need an event-loop in our worker functions
-            auto worker = new HashWorker(distance, std::span{images.begin()+start, limit-start}, matchHistory);
+            auto worker = new HashWorker(distance, std::span{images.begin()+static_cast<ptrdiff_t>(start), limit-start}, matchHistory);
             worker->moveToThread(pool[id].get());
             connect(pool[id].get(), &QThread::finished, worker, &QObject::deleteLater);
             connect(worker, &HashWorker::doneAllWork, pool[id].get(), &QThread::quit);

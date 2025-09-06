@@ -77,7 +77,8 @@ AboutDialog::AboutDialog(QWidget *parent) noexcept
     copyBtn->setToolTip(tr("Copy version information to your clipboard."));
     connect(copyBtn, &QPushButton::clicked, this, &AboutDialog::copyVersionsToClipboard);
     auto buttons = new QDialogButtonBox;
-    const auto buttonsStyle = QDialogButtonBox::ButtonLayout(buttons->style()->styleHint(QStyle::SH_DialogButtonLayout, nullptr, buttons));
+    const auto buttonsStyle = static_cast<QDialogButtonBox::ButtonLayout>(buttons->style()->
+        styleHint(QStyle::SH_DialogButtonLayout, nullptr, buttons));
     if (buttonsStyle == QDialogButtonBox::ButtonLayout::KdeLayout) {
         buttons->addButton(copyBtn, QDialogButtonBox::AcceptRole);
         buttons->addButton(QDialogButtonBox::Ok);

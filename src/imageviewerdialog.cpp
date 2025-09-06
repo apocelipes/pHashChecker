@@ -17,7 +17,7 @@ ImageViewerDialog::ImageViewerDialog(SameImagesContainer sameImageList) noexcept
     mainLayout = new QVBoxLayout;
     comboBox = new QComboBox{this};
     results.reserve(sameImageList.size());
-    unsigned int index = 1u;
+    unsigned int index = 1U;
     for (auto &images : sameImageList | std::views::values) {
         QString name = tr("Group %1").arg(index++);
         comboBox->addItem(name);
@@ -47,10 +47,10 @@ ImageViewerDialog::ImageViewerDialog(SameImagesContainer sameImageList) noexcept
     ignoreBtn = new QPushButton{style()->standardIcon(QStyle::SP_BrowserStop), tr("ignore this")};
     connect(ignoreBtn, &QPushButton::clicked, this, [this]() noexcept {
         const auto &oldName = comboBox->currentText();
-        const auto index = comboBox->currentIndex();
+        const auto comboIdx = comboBox->currentIndex();
         auto widget = viewers[oldName];
         viewers.erase(oldName);
-        comboBox->removeItem(index);
+        comboBox->removeItem(comboIdx);
         setCurrentWidgetByName(comboBox->currentText());
         widget->deleteLater();
     });
@@ -58,17 +58,17 @@ ImageViewerDialog::ImageViewerDialog(SameImagesContainer sameImageList) noexcept
 
     nextBtn = new QPushButton{style()->standardIcon(QStyle::SP_ArrowRight), tr("next")};
     connect(nextBtn, &QPushButton::clicked, comboBox, [this]() noexcept {
-        const auto index = comboBox->currentIndex();
-        comboBox->setCurrentIndex(index + 1);
+        const auto comboIdx = comboBox->currentIndex();
+        comboBox->setCurrentIndex(comboIdx + 1);
     });
     buttons->addButton(nextBtn, QDialogButtonBox::ActionRole);
     buttons->addButton(QDialogButtonBox::Ok);
 
     auto buttonsSetEnable = [this]() noexcept {
-        const auto index = comboBox->currentIndex();
+        const auto comboIdx = comboBox->currentIndex();
         const auto hasViewer = comboBox->count() != 0;
-        prevBtn->setEnabled(hasViewer && index != 0);
-        nextBtn->setEnabled(hasViewer && index != comboBox->count() - 1);
+        prevBtn->setEnabled(hasViewer && comboIdx != 0);
+        nextBtn->setEnabled(hasViewer && comboIdx != comboBox->count() - 1);
         ignoreBtn->setEnabled(hasViewer);
     };
     connect(comboBox, qOverload<int>(&QComboBox::currentIndexChanged), this, [this, buttonsSetEnable](int) noexcept {
@@ -138,7 +138,7 @@ end:
 
 void ImageViewerDialog::updateTitle() noexcept
 {
-    const int count = comboBox->count();
+    const auto count = comboBox->count();
     if (count <= 0) {
         setWindowTitle(tr("Check Results: No Results"));
         return;

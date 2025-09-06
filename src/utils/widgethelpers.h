@@ -4,6 +4,7 @@
 #pragma once
 
 #include <QLayout>
+#include <QWidget>
 
 namespace Utils {
     inline void freezeLayout(QLayout *layout, bool flag) noexcept

@@ -11,5 +11,5 @@ class AboutDialog: public QDialog {
 public:
     explicit AboutDialog(QWidget *parent = nullptr) noexcept;
 private Q_SLOTS:
-    void copyVersionsToClipboard() noexcept;
+    static void copyVersionsToClipboard() noexcept;
 };

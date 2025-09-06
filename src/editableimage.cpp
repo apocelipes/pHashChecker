@@ -123,7 +123,7 @@ void EditableImage::showContextMenu(const QPoint &pos) noexcept
     }
 
     const auto &actions = d->contextMenu->actions();
-    for (auto action : actions) {
+    for (const auto action : actions) {
         action->setEnabled(!isEmpty());
     }
     d->contextMenu->popup(mapToGlobal(pos));

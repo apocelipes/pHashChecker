@@ -41,9 +41,9 @@ namespace Utils {
             return "0.00B";
         }
 
-        std::size_t power = static_cast<std::size_t>(std::floor(std::log(fileSize) / std::log(1024)));
-        const std::size_t prefixsLength = std::size(prefixes);
-        power = power >= prefixsLength ? prefixsLength - 1 : power;
+        auto power = static_cast<std::size_t>(std::floor(std::log(fileSize) / std::log(1024)));
+        constexpr std::size_t prefixesLength = std::size(prefixes);
+        power = power >= prefixesLength ? prefixesLength - 1 : power;
         return QStringLiteral(u"%1").arg(static_cast<double>(fileSize) / static_cast<double>(prefixes[power]), 0, 'f', 2)
                                + prefixNames[power];
     }

@@ -210,8 +210,8 @@ void NotificationBar::hide() noexcept {
 
 NotificationBar *NotificationBar::createInfoBar(QWidget *parent) noexcept
 {
-    const QColor borderColor{64, 158, 255};
-    const QColor bgColor{236, 245, 255, 80};
+    constexpr QColor borderColor{64, 158, 255};
+    constexpr QColor bgColor{236, 245, 255, 80};
     auto bar = new NotificationBar{borderColor, bgColor, parent};
     bar->setIcon(bar->style()->standardIcon(QStyle::SP_MessageBoxInformation));
     return bar;
@@ -219,8 +219,8 @@ NotificationBar *NotificationBar::createInfoBar(QWidget *parent) noexcept
 
 NotificationBar *NotificationBar::createErrorBar(QWidget *parent) noexcept
 {
-    const QColor borderColor{0xf5, 0x6c, 0x6c};
-    const QColor bgColor{254, 240, 240, 80};
+    constexpr QColor borderColor{0xf5, 0x6c, 0x6c};
+    constexpr QColor bgColor{254, 240, 240, 80};
     auto bar = new NotificationBar{borderColor, bgColor, parent};
     bar->setIcon(bar->style()->standardIcon(QStyle::SP_BrowserStop));
     return bar;
@@ -228,8 +228,8 @@ NotificationBar *NotificationBar::createErrorBar(QWidget *parent) noexcept
 
 NotificationBar *NotificationBar::createSuccessBar(QWidget *parent) noexcept
 {
-    const QColor borderColor{0x27, 0xae, 0x60};
-    const QColor bgColor{0xc7, 0xe2, 0xd4};
+    constexpr QColor borderColor{0x27, 0xae, 0x60};
+    constexpr QColor bgColor{0xc7, 0xe2, 0xd4};
     auto bar = new NotificationBar{borderColor, bgColor, parent};
     bar->setIcon(bar->style()->standardIcon(QStyle::SP_DialogApplyButton));
     return bar;

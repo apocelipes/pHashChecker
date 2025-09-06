@@ -17,7 +17,7 @@ int main(int argc, char *argv[])
     if (translator.load(QStringLiteral(u":/") % QLocale().name() % QStringLiteral(u".qm"))) {
         app.installTranslator(&translator);
     }
-    // does not limit qlabel image size, could let to use lots of memories
+    // not limit image size, could let to use lots of memories
     QImageReader::setAllocationLimit(0);
     MainWindow w;
     w.setWindowTitle(QObject::tr("pHashChecker"));

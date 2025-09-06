@@ -57,7 +57,7 @@ struct ImageViewerPrivate {
 
     void removeCurrentImage() noexcept
     {
-        auto rmWidget = thumbs[currentIndex];
+        const auto rmWidget = thumbs[currentIndex];
         imageThumbnailList->layout()->removeWidget(rmWidget);
         thumbs.erase(thumbs.begin() + currentIndex);
         rmWidget->deleteLater();
@@ -88,7 +88,7 @@ inline void ImageViewerPrivate::init(const std::vector<std::string> &images, Ima
     for (const auto &img : images) {
         auto thumbnail = new Thumbnail{QString::fromStdString(img), q};
         QObject::connect(thumbnail, &Thumbnail::clicked, q, [this, thumbnail]() noexcept {
-            auto index = Utils::indexOf(thumbs, thumbnail);
+            const auto index = Utils::indexOf(thumbs, thumbnail);
             if (!index || *index == currentIndex) {
                 return;
             }
@@ -124,7 +124,7 @@ inline void ImageViewerPrivate::init(const std::vector<std::string> &images, Ima
         if (thumbs.empty()) {
             return;
         }
-        auto prevIndex = decrCurrentIndex();
+        const auto prevIndex = decrCurrentIndex();
         Q_EMIT q->currentIndexChanged(currentIndex, prevIndex);
     });
     prevButton->setShortcut(QKeySequence{Qt::Key_Left});
