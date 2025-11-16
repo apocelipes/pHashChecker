@@ -91,6 +91,7 @@ void EditableImage::initContextMenu() noexcept
         d->removeCachedPixmap(getImagePath());
         Q_EMIT trashMoved();
     });
+    //TODO: use supportMoveToTrash to enable this action
     d->contextMenu->addAction(moveToTrashAction);
 
     auto deleteAction = new QAction(style()->standardIcon(QStyle::SP_DialogDiscardButton), tr("delete"));

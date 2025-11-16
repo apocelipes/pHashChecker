@@ -57,32 +57,32 @@
         <translation>移动到回收站</translation>
     </message>
     <message>
-        <location filename="../editableimage.cpp" line="96"/>
+        <location filename="../editableimage.cpp" line="97"/>
         <source>delete</source>
         <translation>删除</translation>
     </message>
     <message>
-        <location filename="../editableimage.cpp" line="100"/>
+        <location filename="../editableimage.cpp" line="101"/>
         <source>delete this image</source>
         <translation>删除图片</translation>
     </message>
     <message>
-        <location filename="../editableimage.cpp" line="101"/>
+        <location filename="../editableimage.cpp" line="102"/>
         <source>do you want to delete %1 ?</source>
         <translation>你确定删除 %1 吗？</translation>
     </message>
     <message>
-        <location filename="../editableimage.cpp" line="111"/>
+        <location filename="../editableimage.cpp" line="112"/>
         <source>hash</source>
         <translation>计算hash</translation>
     </message>
     <message>
-        <location filename="../editableimage.cpp" line="145"/>
+        <location filename="../editableimage.cpp" line="146"/>
         <source>There&apos;s no image here</source>
         <translation>无图片</translation>
     </message>
     <message>
-        <location filename="../editableimage.cpp" line="150"/>
+        <location filename="../editableimage.cpp" line="151"/>
         <source>%1&lt;br&gt;size: %2</source>
         <translation>%1&lt;br&gt;大小： %2</translation>
     </message>
@@ -90,22 +90,27 @@
 <context>
     <name>HashDialog</name>
     <message>
-        <location filename="../hashdialog.cpp" line="59"/>
+        <location filename="../hashdialog.cpp" line="47"/>
+        <source>: open failed</source>
+        <translation>: 文件打开失败</translation>
+    </message>
+    <message>
+        <location filename="../hashdialog.cpp" line="62"/>
         <source>File Name:</source>
         <translation>文件名:</translation>
     </message>
     <message>
-        <location filename="../hashdialog.cpp" line="61"/>
+        <location filename="../hashdialog.cpp" line="64"/>
         <source>File Size:</source>
         <translation>文件大小:</translation>
     </message>
     <message>
-        <location filename="../hashdialog.cpp" line="84"/>
+        <location filename="../hashdialog.cpp" line="87"/>
         <source>%1 has been copied</source>
         <translation>%1 已复制</translation>
     </message>
     <message>
-        <location filename="../hashdialog.cpp" line="94"/>
+        <location filename="../hashdialog.cpp" line="97"/>
         <source>Image Hash Dialog</source>
         <translation>查看图片哈希值</translation>
     </message>

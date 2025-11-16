@@ -1,10 +1,11 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Copyright (C) 2023 apocelipes
+// Copyright (C) 2025 apocelipes
 
 #include <array>
 
 #include <QClipboard>
 #include <QCryptographicHash>
+#include <QDebug>
 #include <QDialogButtonBox>
 #include <QFile>
 #include <QGuiApplication>
@@ -42,7 +43,9 @@ HashDialog::HashDialog(const QString &path, QWidget *parent) noexcept
 {
     setModal(true);
     QFile img{path};
-    img.open(QIODevice::ReadOnly);
+    if (!img.open(QIODevice::ReadOnly)) {
+        qFatal() << path << tr(": open failed");
+    }
     const auto &data = img.readAll();
 
     auto table = new QTableWidget;
