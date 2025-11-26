@@ -12,7 +12,8 @@
 #include "imageviewerdialog.h"
 #include "imageviewer.h"
 
-ImageViewerDialog::ImageViewerDialog(SameImagesContainer sameImageList) noexcept
+ImageViewerDialog::ImageViewerDialog(SameImagesContainer sameImageList, QWidget *parent) noexcept
+    : QDialog{parent}
 {
     mainLayout = new QVBoxLayout;
     comboBox = new QComboBox{this};

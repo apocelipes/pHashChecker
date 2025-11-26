@@ -151,7 +151,7 @@ inline void ImageViewerPrivate::init(const std::vector<std::string> &images, Ima
 }
 
 ImageViewer::ImageViewer(const std::vector<std::string> &images, QWidget *parent) noexcept
-    : QWidget(parent), d{new ImageViewerPrivate}
+    : QWidget(parent), d{std::make_unique<ImageViewerPrivate>()}
 {
     d->init(images, this);
 }

@@ -102,7 +102,7 @@ void NotificationBarPrivate::init(NotificationBar *q_ptr) noexcept
 }
 
 NotificationBar::NotificationBar(const QColor &borderColor, const QColor &bgColor, QWidget *parent) noexcept
-    : QFrame{parent}, d{new NotificationBarPrivate}
+    : QFrame{parent}, d{std::make_unique<NotificationBarPrivate>()}
 {
     setAttribute(Qt::WA_StyledBackground);
     setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Fixed);

@@ -131,42 +131,42 @@
 <context>
     <name>ImageViewerDialog</name>
     <message>
-        <location filename="../imageviewerdialog.cpp" line="22"/>
+        <location filename="../imageviewerdialog.cpp" line="23"/>
         <source>Group %1</source>
         <translation>グループ %1</translation>
     </message>
     <message>
-        <location filename="../imageviewerdialog.cpp" line="103"/>
+        <location filename="../imageviewerdialog.cpp" line="104"/>
         <source>target ImageViewer not found</source>
         <translation>ターゲットのImageViewerは見つかりませんでした</translation>
     </message>
     <message>
-        <location filename="../imageviewerdialog.cpp" line="26"/>
+        <location filename="../imageviewerdialog.cpp" line="27"/>
         <source>No data here!</source>
         <translation>コンテンツはありません！</translation>
     </message>
     <message>
-        <location filename="../imageviewerdialog.cpp" line="39"/>
+        <location filename="../imageviewerdialog.cpp" line="40"/>
         <source>prev</source>
         <translation>前へ</translation>
     </message>
     <message>
-        <location filename="../imageviewerdialog.cpp" line="47"/>
+        <location filename="../imageviewerdialog.cpp" line="48"/>
         <source>ignore this</source>
         <translation>無視</translation>
     </message>
     <message>
-        <location filename="../imageviewerdialog.cpp" line="59"/>
+        <location filename="../imageviewerdialog.cpp" line="60"/>
         <source>next</source>
         <translation>次へ</translation>
     </message>
     <message>
-        <location filename="../imageviewerdialog.cpp" line="143"/>
+        <location filename="../imageviewerdialog.cpp" line="144"/>
         <source>Check Results: No Results</source>
         <translation>検索結果：空</translation>
     </message>
     <message>
-        <location filename="../imageviewerdialog.cpp" line="147"/>
+        <location filename="../imageviewerdialog.cpp" line="148"/>
         <source>Check Results: %1/%2</source>
         <translation>検索結果：%1/%2</translation>
     </message>

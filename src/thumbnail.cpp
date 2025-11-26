@@ -107,7 +107,7 @@ inline void ThumbnailPrivate::initHideShadowAnimation() noexcept
 }
 
 Thumbnail::Thumbnail(QString path, QWidget *parent) noexcept
-    : QWidget(parent), d{new ThumbnailPrivate{std::move(path)}}
+    : QWidget(parent), d{std::make_unique<ThumbnailPrivate>(std::move(path))}
 {
     setFixedSize(ThumbnailWidth, ThumbnailHeight);
     d->init(this);

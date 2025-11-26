@@ -45,7 +45,7 @@ struct EditableImagePrivate {
 };
 
 EditableImage::EditableImage(const QString &imgPath, QWidget *parent) noexcept
-    : QLabel(parent), d{new EditableImagePrivate}
+    : QLabel(parent), d{std::make_unique<EditableImagePrivate>()}
 {
     setFixedSize(EditableImageFixedWidth, EditableImageFixedHeight);
     setImagePath(imgPath);
@@ -65,11 +65,11 @@ EditableImage::~EditableImage() noexcept = default;
 void EditableImage::initContextMenu() noexcept
 {
     d->contextMenu = new QMenu{this};
-    auto openAction = new QAction(style()->standardIcon(QStyle::SP_FileDialogContentsView), tr("open"));
+    auto openAction = new QAction(style()->standardIcon(QStyle::SP_FileDialogContentsView), tr("open"), this);
     connect(openAction, &QAction::triggered, this, &EditableImage::openImage);
     d->contextMenu->addAction(openAction);
 
-    auto copyAction = new QAction(style()->standardIcon(QStyle::SP_FileDialogListView), tr("copy data"));
+    auto copyAction = new QAction(style()->standardIcon(QStyle::SP_FileDialogListView), tr("copy data"), this);
     connect(copyAction, &QAction::triggered, this, [this]() noexcept {
         const auto &data = pixmap(Qt::ReturnByValue);
         QGuiApplication::clipboard()->setPixmap(data);
@@ -77,7 +77,7 @@ void EditableImage::initContextMenu() noexcept
     });
     d->contextMenu->addAction(copyAction);
 
-    auto copyPathAction = new QAction(style()->standardIcon(QStyle::SP_FileDialogListView), tr("copy path"));
+    auto copyPathAction = new QAction(style()->standardIcon(QStyle::SP_FileDialogListView), tr("copy path"), this);
     connect(copyPathAction, &QAction::triggered, this, [this]() noexcept {
         const auto absPath = Utils::getAbsPath(getImagePath());
         QGuiApplication::clipboard()->setText(absPath);
@@ -85,7 +85,7 @@ void EditableImage::initContextMenu() noexcept
     });
     d->contextMenu->addAction(copyPathAction);
 
-    auto moveToTrashAction = new QAction(style()->standardIcon(QStyle::SP_TrashIcon), tr("move to trash"));
+    auto moveToTrashAction = new QAction(style()->standardIcon(QStyle::SP_TrashIcon), tr("move to trash"), this);
     connect(moveToTrashAction, &QAction::triggered, this, [this]() noexcept {
         QFile::moveToTrash(Utils::getAbsPath(getImagePath()));
         d->removeCachedPixmap(getImagePath());
@@ -94,7 +94,7 @@ void EditableImage::initContextMenu() noexcept
     //TODO: use supportMoveToTrash to enable this action
     d->contextMenu->addAction(moveToTrashAction);
 
-    auto deleteAction = new QAction(style()->standardIcon(QStyle::SP_DialogDiscardButton), tr("delete"));
+    auto deleteAction = new QAction(style()->standardIcon(QStyle::SP_DialogDiscardButton), tr("delete"), this);
     connect(deleteAction, &QAction::triggered, this, [this]() noexcept {
         const auto absPath = Utils::getAbsPath(getImagePath());
         auto isDelete = QMessageBox::warning(this,
@@ -109,7 +109,7 @@ void EditableImage::initContextMenu() noexcept
     });
     d->contextMenu->addAction(deleteAction);
 
-    auto hashAction = new QAction{style()->standardIcon(QStyle::SP_MessageBoxInformation), tr("hash")};
+    auto hashAction = new QAction{style()->standardIcon(QStyle::SP_MessageBoxInformation), tr("hash"), this};
     connect(hashAction, &QAction::triggered, this, [this]() noexcept {
         HashDialog dialog{getImagePath(), this};
         dialog.exec();
@@ -123,8 +123,8 @@ void EditableImage::showContextMenu(const QPoint &pos) noexcept
         initContextMenu();
     }
 
-    const auto &actions = d->contextMenu->actions();
-    for (const auto action : actions) {
+    auto actions = d->contextMenu->actions();
+    for (const auto action : std::as_const(actions)) {
         action->setEnabled(!isEmpty());
     }
     d->contextMenu->popup(mapToGlobal(pos));

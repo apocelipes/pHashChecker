@@ -374,7 +374,7 @@ void MainWindow::initResultDialog() noexcept
     }
     matchHistory = MatchHistoryContainer{};
     images = std::vector<std::string>{};
-    imageDialog = new ImageViewerDialog{std::move(sameImageResults)};
+    imageDialog = new ImageViewerDialog{std::move(sameImageResults), this};
     sameImageResults = SameImagesContainer{};
     dialogBtn->setEnabled(true);
 }

@@ -131,42 +131,42 @@
 <context>
     <name>ImageViewerDialog</name>
     <message>
-        <location filename="../imageviewerdialog.cpp" line="22"/>
+        <location filename="../imageviewerdialog.cpp" line="23"/>
         <source>Group %1</source>
         <translation>分组 %1</translation>
     </message>
     <message>
-        <location filename="../imageviewerdialog.cpp" line="103"/>
+        <location filename="../imageviewerdialog.cpp" line="104"/>
         <source>target ImageViewer not found</source>
         <translation>未找到目标ImageViewer</translation>
     </message>
     <message>
-        <location filename="../imageviewerdialog.cpp" line="26"/>
+        <location filename="../imageviewerdialog.cpp" line="27"/>
         <source>No data here!</source>
         <translation>无内容！</translation>
     </message>
     <message>
-        <location filename="../imageviewerdialog.cpp" line="39"/>
+        <location filename="../imageviewerdialog.cpp" line="40"/>
         <source>prev</source>
         <translation>上一个</translation>
     </message>
     <message>
-        <location filename="../imageviewerdialog.cpp" line="47"/>
+        <location filename="../imageviewerdialog.cpp" line="48"/>
         <source>ignore this</source>
         <translation>忽略</translation>
     </message>
     <message>
-        <location filename="../imageviewerdialog.cpp" line="59"/>
+        <location filename="../imageviewerdialog.cpp" line="60"/>
         <source>next</source>
         <translation>下一个</translation>
     </message>
     <message>
-        <location filename="../imageviewerdialog.cpp" line="143"/>
+        <location filename="../imageviewerdialog.cpp" line="144"/>
         <source>Check Results: No Results</source>
         <translation>查看结果：无结果</translation>
     </message>
     <message>
-        <location filename="../imageviewerdialog.cpp" line="147"/>
+        <location filename="../imageviewerdialog.cpp" line="148"/>
         <source>Check Results: %1/%2</source>
         <translation>查看图片： %2个中的第%1个</translation>
     </message>

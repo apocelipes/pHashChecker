@@ -138,7 +138,7 @@ void SettingPanelPrivate::init(SettingPanel *q_ptr) noexcept
 }
 
 SettingPanel::SettingPanel(QWidget *parent) noexcept
-    :QWidget{parent}, d{new SettingPanelPrivate}
+    :QWidget{parent}, d{std::make_unique<SettingPanelPrivate>()}
 {
     d->init(this);
 }
