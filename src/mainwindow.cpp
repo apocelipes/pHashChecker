@@ -11,6 +11,7 @@
 #include <QKeySequence>
 
 #include <atomic>
+#include <exception>
 #include <filesystem>
 #include <iterator>
 #include <ranges>
@@ -56,8 +57,10 @@ namespace {
         { *std::filesystem::end(iter) } -> std::same_as<const std::filesystem::directory_entry&>;
     };
 
-    inline void fillImages(IsDirIterator auto &&dir, std::output_iterator<std::string> auto &&output) noexcept
+    inline void fillImages(IsDirIterator auto &&dir, std::output_iterator<std::string> auto &&output)
     {
+        // This function can throw exceptions since filesystem operations are easily occur errors.
+        // So we show the error messages instead of aborting the whole program.
         auto result = dir | std::views::filter([](const std::filesystem::directory_entry &p) { return p.is_regular_file() && isSupportedImageFormat(p.path().native()); })
                           | std::views::transform([](const std::filesystem::directory_entry &p) { return p.path().string(); });
         std::ranges::copy(result, output); // using c++23's ranges::to is the best way
@@ -321,6 +324,13 @@ void MainWindow::onProgress() noexcept
     Q_EMIT completed();
 }
 
+void MainWindow::showLoadImageError(const QString &errorMessage) noexcept
+{
+    disableStartBtn();
+    info->setText(errorMessage);
+    info->animatedShow();
+}
+
 void MainWindow::setImages() noexcept
 {
     const auto path = replaceWithHomeDir(pathEdit->text()); // maybe unnecessary
@@ -337,20 +347,23 @@ void MainWindow::setImages() noexcept
     images.clear();
     matchHistory.clear();
 
-    info->hide(); // 重写的hide会设置isClosing
+    info->hide();
     if (!QFileInfo::exists(path)) {
-        disableStartBtn();
-        info->setText(path % tr(" directory does not exist"));
-        info->animatedShow();
+        showLoadImageError(path % tr(" directory does not exist"));
         return;
     }
 
-    constexpr auto opts = std::filesystem::directory_options::skip_permission_denied;
-    std::filesystem::current_path(path.toStdString());
-    if (settings->isRecursiveSearching()) {
-        fillImages(std::filesystem::recursive_directory_iterator{".", opts}, std::back_inserter(images));
-    } else {
-        fillImages(std::filesystem::directory_iterator{".", opts}, std::back_inserter(images));
+    try {
+        constexpr auto opts = std::filesystem::directory_options::skip_permission_denied;
+        std::filesystem::current_path(path.toStdString());
+        if (settings->isRecursiveSearching()) {
+            fillImages(std::filesystem::recursive_directory_iterator{".", opts}, std::back_inserter(images));
+        } else {
+            fillImages(std::filesystem::directory_iterator{".", opts}, std::back_inserter(images));
+        }
+    } catch (const std::exception &e) {
+        showLoadImageError(tr("cannot load images: ") % e.what());
+        return;
     }
     QCoreApplication::processEvents();
     if (!images.empty()) {
@@ -361,9 +374,7 @@ void MainWindow::setImages() noexcept
         startBtn->setEnabled(true);
         startBtn->setToolTip(tr("%1 images, total size: %2<br/>Ctrl + Shift + R").arg(images.size()).arg(totalSize));
     } else {
-        disableStartBtn();
-        info->setText(tr("no image here"));
-        info->animatedShow();
+        showLoadImageError(tr("no image here"));
     }
 }
 

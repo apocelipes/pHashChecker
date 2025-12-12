@@ -101,6 +101,8 @@ private:
         startBtn->setToolTip(QString{});
     }
 
+    void showLoadImageError(const QString &errorMessage) noexcept;
+
     QHBoxLayout *lineLayout = nullptr;
     QLineEdit *pathEdit = nullptr;
     QCompleter *pathCompleter = nullptr;
