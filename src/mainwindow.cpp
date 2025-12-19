@@ -14,6 +14,7 @@
 #include <exception>
 #include <filesystem>
 #include <iterator>
+#include <latch>
 #include <ranges>
 #include <thread>
 
@@ -95,27 +96,27 @@ namespace {
         std::atomic_ref<uint64_t> ret{result};
 
         const auto nThreads = getThreadNumber(files);
-        std::vector<std::thread> threads;
+        std::vector<std::jthread> threads;
         threads.reserve(nThreads);
+        std::latch work_done{static_cast<std::ptrdiff_t>(nThreads)};
 
         // Because QThreadPool doesn't support move-only functions until 6.6.0, use STL for back compatibilities
         for (std::size_t id = 0, start = 0, limit = getNextLimit(0, 0, nThreads, files.size());
             id < nThreads;
             ++id, start = limit, limit = getNextLimit(limit, id, nThreads, files.size())) {
-            threads.emplace_back([start, limit, &files, &ret](){
+            threads.emplace_back([files = std::span{files.begin()+static_cast<ptrdiff_t>(start), limit-start}, &ret, &work_done] (){
                 uint64_t size{};
 
-                for (std::size_t i{start}; i < limit; ++i) {
-                    size += std::filesystem::file_size(files[i]);
+                for (const auto &file : files) {
+                    size += std::filesystem::file_size(file);
                 }
 
-                ret.fetch_add(size, std::memory_order_relaxed);
+                [[maybe_unused]] auto _ = ret.fetch_add(size, std::memory_order_relaxed);
+                work_done.count_down();
             });
         }
     
-        for (std::size_t i = 0; i < nThreads; ++i) {
-            threads[i].join();
-        }
+        work_done.wait();
 
         return result;
     }
