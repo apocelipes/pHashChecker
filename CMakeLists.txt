@@ -17,6 +17,12 @@ if (${CMAKE_CXX_COMPILER_ID} MATCHES "Clang" OR ${CMAKE_CXX_COMPILER_ID} MATCHES
     add_compile_options(-Wall -Wextra -O2 -march=native)
 endif()
 
+include(CheckSymbolExists)
+check_symbol_exists(strcasecmp "strings.h" HAVE_STRCASECMP)
+if (HAVE_STRCASECMP)
+    add_definitions(-DHAVE_STRCASECMP=1)
+endif()
+
 add_definitions(-Dcimg_display=0 -Dcimg_use_tiff -Dcimg_use_heif -Dcimg_use_webp -Dcimg_use_png -Dcimg_use_jpeg -Dcimg_use_jxl)
 
 include_directories(third-party/CImg

@@ -26,21 +26,24 @@
 #include "utils/path.h"
 #include "utils/sizeformat.h"
 
-#include <string.h> // for POSIX strcasecmp
+#if defined(HAVE_STRCASECMP)
+#include <strings.h> // for POSIX strcasecmp
+#endif
 
 namespace {
+#if defined(HAVE_STRCASECMP)
+    constexpr std::array imageExtensions{
+        ".jpg",
+        ".png",
+        ".jpeg",
+        ".avif",
+        ".webp",
+        ".bmp",
+        ".jxl",
+    };
+    
     [[nodiscard]] inline bool isSupportedImageFormat(const std::string &img) noexcept
     {
-        static constexpr std::array imageExtensions{
-            ".jpg",
-            ".png",
-            ".jpeg",
-            ".avif",
-            ".webp",
-            ".bmp",
-            ".jxl",
-        };
-
         const auto ext = std::strrchr(img.c_str(), '.');
         if (ext == nullptr) [[unlikely]] {
             return false;
@@ -50,6 +53,29 @@ namespace {
             return strcasecmp(s, ext) == 0;
         });
     }
+#else
+    const std::array imageExtensions{
+        QStringLiteral(u"jpg"),
+        QStringLiteral(u"png"),
+        QStringLiteral(u"jpeg"),
+        QStringLiteral(u"avif"),
+        QStringLiteral(u"webp"),
+        QStringLiteral(u"bmp"),
+        QStringLiteral(u"jxl"),
+    };
+
+    [[nodiscard]] inline bool isSupportedImageFormat(const std::string &img) noexcept
+    {
+        const auto &ext = Utils::getFileExtension(QString::fromStdString(img));
+        if (ext.isEmpty()) [[unlikely]] {
+            return false;
+        }
+
+        return imageExtensions.cend() != std::ranges::find_if(imageExtensions, [&ext](const QString &s) {
+            return QString::compare(s, ext, Qt::CaseInsensitive) == 0;
+        });
+    }
+#endif
 
     template <typename T>
     concept IsDirIterator = requires(T iter) {
