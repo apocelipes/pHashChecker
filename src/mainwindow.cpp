@@ -13,7 +13,6 @@
 #include <atomic>
 #include <exception>
 #include <filesystem>
-#include <iterator>
 #include <latch>
 #include <ranges>
 #include <thread>
@@ -84,13 +83,17 @@ namespace {
         { *std::filesystem::end(iter) } -> std::same_as<const std::filesystem::directory_entry&>;
     };
 
-    inline void fillImages(IsDirIterator auto &&dir, std::output_iterator<std::string> auto &&output)
+    inline auto fillImages(IsDirIterator auto &&dir)
     {
         // This function can throw exceptions since filesystem operations are easily occur errors.
         // So we show the error messages instead of aborting the whole program.
-        auto result = dir | std::views::filter([](const std::filesystem::directory_entry &p) { return p.is_regular_file() && isSupportedImageFormat(p.path().native()); })
-                          | std::views::transform([](const std::filesystem::directory_entry &p) { return p.path().string(); });
-        std::ranges::copy(result, output); // using c++23's ranges::to is the best way
+        return dir | std::views::filter([](const std::filesystem::directory_entry &p) {
+                        return p.is_regular_file() && isSupportedImageFormat(p.path().native());
+                    })
+                    | std::views::transform([](const std::filesystem::directory_entry &p) {
+                        return p.path().string();
+                    })
+                    | std::ranges::to<std::vector<std::string>>();
     }
 
     template <std::ranges::range Container>
@@ -116,7 +119,6 @@ namespace {
     template <std::ranges::range Container>
     [[nodiscard]] inline uint64_t countFilesSize(const Container &files) noexcept
     {
-        // std::atomic_ref<uint64_t> must be lock-free
         static_assert(std::atomic_ref<uint64_t>::is_always_lock_free, "std::atomic_ref<uint64_t> is not lock-free");
         alignas(std::atomic_ref<uint64_t>::required_alignment) uint64_t result{};
         std::atomic_ref<uint64_t> ret{result};
@@ -126,7 +128,6 @@ namespace {
         threads.reserve(nThreads);
         std::latch work_done{static_cast<std::ptrdiff_t>(nThreads)};
 
-        // Because QThreadPool doesn't support move-only functions until 6.6.0, use STL for back compatibilities
         for (std::size_t id = 0, start = 0, limit = getNextLimit(0, 0, nThreads, files.size());
             id < nThreads;
             ++id, start = limit, limit = getNextLimit(limit, id, nThreads, files.size())) {
@@ -370,9 +371,9 @@ void MainWindow::setImages() noexcept
     releaseResultDialog();
     startBtn->setEnabled(false);
     startBtn->show();
-    sameImageResults.clear();
-    images.clear();
-    matchHistory.clear();
+    matchHistory = MatchHistoryContainer{};
+    images = std::vector<std::string>{};
+    sameImageResults = SameImagesContainer{};
 
     info->hide();
     if (!QFileInfo::exists(path)) {
@@ -384,9 +385,9 @@ void MainWindow::setImages() noexcept
         constexpr auto opts = std::filesystem::directory_options::skip_permission_denied;
         std::filesystem::current_path(path.toStdString());
         if (settings->isRecursiveSearching()) {
-            fillImages(std::filesystem::recursive_directory_iterator{".", opts}, std::back_inserter(images));
+            images = fillImages(std::filesystem::recursive_directory_iterator{".", opts});
         } else {
-            fillImages(std::filesystem::directory_iterator{".", opts}, std::back_inserter(images));
+            images = fillImages(std::filesystem::directory_iterator{".", opts});
         }
     } catch (const std::exception &e) {
         showLoadImageError(tr("cannot load images: ") % e.what());

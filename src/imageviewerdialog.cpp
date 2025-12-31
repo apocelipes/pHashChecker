@@ -18,9 +18,8 @@ ImageViewerDialog::ImageViewerDialog(SameImagesContainer sameImageList, QWidget 
     mainLayout = new QVBoxLayout;
     comboBox = new QComboBox{this};
     results.reserve(sameImageList.size());
-    unsigned int index = 1U;
-    for (auto &images : sameImageList | std::views::values) {
-        QString name = tr("Group %1").arg(index++);
+    for (auto [index, images] : std::views::zip(std::views::iota(1), sameImageList | std::views::values)) {
+        QString name = tr("Group %1").arg(index);
         comboBox->addItem(name);
         results.emplace(std::move(name), std::move(images));
     }
