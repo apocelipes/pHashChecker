@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Copyright (C) 2024 apocelipes
+// Copyright (C) 2026 apocelipes
 
 #include <QVBoxLayout>
 #include <QCompleter>
@@ -279,16 +279,14 @@ MainWindow::MainWindow(QWidget *parent) noexcept
         }
     });
 
-    fileDialog = new QFileDialog{this};
-    fileDialog->setOption(QFileDialog::ShowDirsOnly, true);
-    fileDialog->setOption(QFileDialog::ReadOnly, true);
-    fileDialog->setFileMode(QFileDialog::Directory);
-    fileDialog->setDirectory(QDir::homePath());
-    fileDialog->setModal(true);
     fileDialogBtn = new QPushButton(tr("select a directory"));
-    connect(fileDialogBtn, &QPushButton::clicked, fileDialog, &QFileDialog::exec);
-    connect(fileDialog, &QFileDialog::fileSelected, this, [this](const QString &dirName) noexcept {
-        if (dirName.isEmpty() || !QFileInfo::exists(dirName)) [[unlikely]] {
+    connect(fileDialogBtn, &QPushButton::clicked, this, [this]() noexcept {
+        const auto dirName = QFileDialog::getExistingDirectory(this, tr("Choose a Directory"),
+                                                QDir::homePath(),
+                                                QFileDialog::ShowDirsOnly
+                                                | QFileDialog::ReadOnly);
+
+        if (dirName.isEmpty()) {
             return;
         }
 

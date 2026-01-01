@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Copyright (C) 2024 apocelipes
+// Copyright (C) 2026 apocelipes
 
 #pragma once
 
@@ -25,7 +25,6 @@
 #include "widgethelpers.h"
 
 class QCompleter;
-class QFileDialog;
 class QProgressBar;
 
 class ImageViewerDialog;
@@ -111,7 +110,6 @@ private:
     QProgressBar *bar = nullptr;
     QPushButton *cancelButton = nullptr;
     QPushButton *fileDialogBtn = nullptr;
-    QFileDialog *fileDialog = nullptr;
     QPushButton *dialogBtn = nullptr;
     ImageViewerDialog *imageDialog = nullptr;
     NotificationBar *info = nullptr;
