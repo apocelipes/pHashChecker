@@ -86,12 +86,26 @@ void EditableImage::initContextMenu() noexcept
     d->contextMenu->addAction(copyPathAction);
 
     auto moveToTrashAction = new QAction(style()->standardIcon(QStyle::SP_TrashIcon), tr("move to trash"), this);
-    connect(moveToTrashAction, &QAction::triggered, this, [this]() noexcept {
-        QFile::moveToTrash(Utils::getAbsPath(getImagePath()));
-        d->removeCachedPixmap(getImagePath());
-        Q_EMIT trashMoved();
-    });
-    //TODO: use supportMoveToTrash to enable this action
+#if QT_VERSION >= QT_VERSION_CHECK(6, 9, 0)
+    const bool supportMoveToTrash = QFile::supportsMoveToTrash();
+#else
+    const bool supportMoveToTrash{true};
+#endif
+    moveToTrashAction->setEnabled(supportMoveToTrash);
+    if (supportMoveToTrash) {
+        connect(moveToTrashAction, &QAction::triggered, this, [this]() noexcept {
+            if (!QFile::moveToTrash(Utils::getAbsPath(getImagePath()))) {
+                const auto absPath = Utils::getAbsPath(getImagePath());
+                QMessageBox::critical(this,
+                    tr("Moving To Trash Failed"),
+                    tr("Can not move %1 to trash.").arg(absPath),
+                    QMessageBox::Ok);
+                return;
+            }
+            d->removeCachedPixmap(getImagePath());
+            Q_EMIT trashMoved();
+        });
+    }
     d->contextMenu->addAction(moveToTrashAction);
 
     auto deleteAction = new QAction(style()->standardIcon(QStyle::SP_DialogDiscardButton), tr("delete"), this);
@@ -102,7 +116,13 @@ void EditableImage::initContextMenu() noexcept
                                             tr("do you want to delete %1 ?").arg(absPath),
                                             QMessageBox::Ok|QMessageBox::Cancel);
         if (isDelete == QMessageBox::Ok) {
-            QFile::remove(absPath);
+            if (!QFile::remove(absPath)) {
+                QMessageBox::critical(this,
+                    tr("Removing Image Failed"),
+                    tr("Can not remove %1.").arg(absPath),
+                    QMessageBox::Ok);
+                return;
+            }
             d->removeCachedPixmap(getImagePath());
             Q_EMIT deleted();
         }

@@ -57,32 +57,52 @@
         <translation>移动到回收站</translation>
     </message>
     <message>
-        <location filename="../editableimage.cpp" line="97"/>
+        <location filename="../editableimage.cpp" line="100"/>
+        <source>Moving To Trash Failed</source>
+        <translation>无法移动到回收站</translation>
+    </message>
+    <message>
+        <location filename="../editableimage.cpp" line="101"/>
+        <source>Can not move %1 to trash.</source>
+        <translation>无法将%1移动到回收站。</translation>
+    </message>
+    <message>
+        <location filename="../editableimage.cpp" line="111"/>
         <source>delete</source>
         <translation>删除</translation>
     </message>
     <message>
-        <location filename="../editableimage.cpp" line="101"/>
+        <location filename="../editableimage.cpp" line="115"/>
         <source>delete this image</source>
         <translation>删除图片</translation>
     </message>
     <message>
-        <location filename="../editableimage.cpp" line="102"/>
+        <location filename="../editableimage.cpp" line="116"/>
         <source>do you want to delete %1 ?</source>
         <translation>你确定删除 %1 吗？</translation>
     </message>
     <message>
-        <location filename="../editableimage.cpp" line="112"/>
+        <location filename="../editableimage.cpp" line="121"/>
+        <source>Removing Image Failed</source>
+        <translation>无法删除图片</translation>
+    </message>
+    <message>
+        <location filename="../editableimage.cpp" line="122"/>
+        <source>Can not remove %1.</source>
+        <translation>无法删除%1。</translation>
+    </message>
+    <message>
+        <location filename="../editableimage.cpp" line="132"/>
         <source>hash</source>
         <translation>计算hash</translation>
     </message>
     <message>
-        <location filename="../editableimage.cpp" line="146"/>
+        <location filename="../editableimage.cpp" line="166"/>
         <source>There&apos;s no image here</source>
         <translation>无图片</translation>
     </message>
     <message>
-        <location filename="../editableimage.cpp" line="151"/>
+        <location filename="../editableimage.cpp" line="171"/>
         <source>%1&lt;br&gt;size: %2</source>
         <translation>%1&lt;br&gt;大小： %2</translation>
     </message>
