@@ -3,6 +3,7 @@
 
 #pragma once
 
+#include <QLabel>
 #include <QLayout>
 #include <QWidget>
 
@@ -17,5 +18,12 @@ namespace Utils {
                 widget->setEnabled(!flag);
             }
         }
+    }
+
+    [[nodiscard]] inline QLabel *createOpenableLabel(const QString &text, QWidget *parent = nullptr) noexcept
+    {
+        auto label = new QLabel{text, parent};
+        label->setOpenExternalLinks(true);
+        return label;
     }
 }

@@ -3,65 +3,36 @@
 
 #include <QDebug>
 #include <QThread>
-#include <QReadWriteLock>
-#include <QStringBuilder>
-
-#include <algorithm>
-#include <ranges>
-#include <utility>
 
 #include "hashworker.h"
 #include "path.h"
 
-namespace {
-    inline QReadWriteLock matchHistoryLock;
-}
+constexpr unsigned int batchSize = 32;
 
 void HashWorker::doWork() noexcept
 {
-    for (const auto &image : _images) {
-        if (this->thread()->isInterruptionRequested()) {
-            qInfo() << tr("thread exit");
+    auto batchCount = 0u;
+    QThread* myThread = QThread::currentThread();
+    for (std::size_t idx = _startIndex; idx < _endIndex; ++idx) {
+        if (myThread->isInterruptionRequested()) {
+            qInfo() << tr("HashWorker thread exit");
             break;
         }
 
         ulong64 hash = 0;
-        bool foundSame = false;
-        const std::string_view img = image;
-        if (ph_dct_imagehash(image.c_str(), hash) < 0) [[unlikely]] {
-            qWarning() << tr("calculating pHash failed, skip: ") % Utils::getAbsPath(image);
-            Q_EMIT doneOneImg();
-            continue;
+        if (ph_dct_imagehash(_images[idx].c_str(), hash) < 0) [[unlikely]] {
+            qWarning() << tr("calculating pHash failed, skip: ") % Utils::getAbsPath(_images[idx]);
+            goto end;
         }
 
-        const auto pred = [this, hash](const auto &item) noexcept {
-            return checkSameImage(hash, item.first);
-        };
-        matchHistoryLock.lockForRead();
-        // 获得读锁后即为最新的size
-        // 在获取读锁之前取得size，size可能会在读锁阻塞期间被更新，导致已经进入hashes的数据被重复比较
-        auto lastInsertIndex = _matchHistory.size();
-        if (auto iter = std::ranges::find_if(std::as_const(_matchHistory), pred); iter != _matchHistory.end()) {
-            foundSame = true;
-            Q_EMIT sameImg(iter->second, img);
+        _matchHistory[idx] = hash;
+        end:
+        batchCount = (batchCount + 1) & (batchSize - 1);
+        if (batchCount == 0) {
+            Q_EMIT doneBatch(batchSize);
+        } else if (idx == _endIndex - 1) {
+            Q_EMIT doneBatch(static_cast<int>(batchCount));
         }
-        matchHistoryLock.unlock();
-
-        if (foundSame) {
-            Q_EMIT doneOneImg();
-            continue;
-        }
-
-        matchHistoryLock.lockForWrite();
-        if (auto iter = std::ranges::find_if(std::as_const(_matchHistory) | std::views::drop(lastInsertIndex), pred); iter != _matchHistory.end()) {
-            foundSame = true;
-            Q_EMIT sameImg(iter->second, img);
-        }
-        if (!foundSame) {
-            _matchHistory.emplace_back(hash, img);
-        }
-        matchHistoryLock.unlock();
-        Q_EMIT doneOneImg();
     }
 
     Q_EMIT doneAllWork();

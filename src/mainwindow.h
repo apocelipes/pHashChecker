@@ -19,10 +19,10 @@
 #include <ankerl/unordered_dense.h>
 #include <cpp-sort/sorters/pdq_sorter.h>
 
-#include "hashworker.h"
 #include "settingpanel.h"
 #include "qstringhasher.hpp"
 #include "widgethelpers.h"
+#include "utils/types.h"
 
 class QCompleter;
 class QProgressBar;
@@ -45,13 +45,14 @@ Q_SIGNALS:
 
 public Q_SLOTS:
     void setImages() noexcept;
-    void onProgress() noexcept;
+    void onHashingProgress(int) noexcept;
+    void onSearchingProgress(int) noexcept;
 
 private:
     void initResultDialog() noexcept;
     void releaseResultDialog() noexcept;
 
-    void quitPool(bool cancelAllThread = false) noexcept
+    void quitPool(const bool cancelAllThread = false) noexcept
     {
         using namespace std::chrono_literals;
         for (const auto &thread : pool) {
@@ -107,6 +108,7 @@ private:
     QCompleter *pathCompleter = nullptr;
     QPushButton *loadImgBtn = nullptr;
     QPushButton *startBtn = nullptr;
+    QLabel *progressLabel = nullptr;
     QProgressBar *bar = nullptr;
     QPushButton *cancelButton = nullptr;
     QPushButton *fileDialogBtn = nullptr;
@@ -118,6 +120,6 @@ private:
 
     std::vector<std::string> images;
     SameImagesContainer sameImageResults;
-    MatchHistoryContainer matchHistory;
+    PHashContainer pHashes;
     std::vector<std::unique_ptr<QThread>> pool;
 };

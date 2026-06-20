@@ -21,6 +21,8 @@
 #include "mainwindow.h"
 #include "imageviewerdialog.h"
 #include "notificationbar.h"
+#include "hashworker.h"
+#include "searchworker.h"
 #include "stopwatchdialog.h"
 #include "utils/path.h"
 #include "utils/sizeformat.h"
@@ -40,7 +42,7 @@ namespace {
         ".bmp",
         ".jxl",
     };
-    
+
     [[nodiscard]] inline bool isSupportedImageFormat(const std::string &img) noexcept
     {
         const auto ext = std::strrchr(img.c_str(), '.');
@@ -142,7 +144,7 @@ namespace {
                 work_done.count_down();
             });
         }
-    
+
         work_done.wait();
 
         return result;
@@ -209,7 +211,10 @@ MainWindow::MainWindow(QWidget *parent) noexcept
     connect(loadImgBtn, &QPushButton::clicked, this, &MainWindow::setImages);
     connect(startBtn, &QPushButton::clicked, this, [this]() noexcept {
         freezeMainGUI(true);
-        matchHistory.reserve(images.size());
+        pHashes.resize(images.size());
+        progressLabel->setEnabled(true);
+        progressLabel->setText(tr("Hashing:"));
+        progressLabel->show();
         bar->setEnabled(true);
         bar->show();
         bar->setValue(0);
@@ -218,7 +223,6 @@ MainWindow::MainWindow(QWidget *parent) noexcept
 
         const auto nThreads = getThreadNumber(images);
         init_pool(nThreads);
-        const auto distance = settings->getSimilarDistance();
         if (settings->isUseStopwatchDialog()) {
             timerDialog->start();
         }
@@ -226,23 +230,12 @@ MainWindow::MainWindow(QWidget *parent) noexcept
              id < nThreads;
              ++id, start = limit, limit = getNextLimit(limit, id, nThreads, images.size())) {
             // cannot use a QThreadPool because we need an event-loop in our worker functions
-            auto worker = new HashWorker(distance, std::span{images.begin()+static_cast<ptrdiff_t>(start), limit-start}, matchHistory);
+            auto worker = new HashWorker(images, start, limit, pHashes);
             worker->moveToThread(pool[id].get());
             connect(pool[id].get(), &QThread::finished, worker, &QObject::deleteLater);
             connect(worker, &HashWorker::doneAllWork, pool[id].get(), &QThread::quit);
             connect(pool[id].get(), &QThread::started, worker, &HashWorker::doWork);
-            connect(worker, &HashWorker::doneOneImg, this, &MainWindow::onProgress);
-            connect(worker, &HashWorker::sameImg, this, [this](const std::string_view origin, const std::string_view same) noexcept {
-                std::string sameImg{same};
-                qDebug() << Utils::getAbsPath(origin) % tr(" same with: ") % Utils::getAbsPath(sameImg);
-                if (!sameImageResults.contains(origin)) {
-                    // construct vectors directly with the origin image
-                    std::string originImg{origin};
-                    sameImageResults.emplace(origin, std::vector<std::string>{std::move(originImg), std::move(sameImg)});
-                } else {
-                    sameImageResults[origin].emplace_back(std::move(sameImg));
-                }
-            });
+            connect(worker, &HashWorker::doneBatch, this, &MainWindow::onHashingProgress);
             pool[id]->start();
         }
     });
@@ -260,18 +253,35 @@ MainWindow::MainWindow(QWidget *parent) noexcept
     });
 
     bar = new QProgressBar;
+    bar->setTextVisible(true);
+    bar->setStyleSheet(
+    "QProgressBar {"
+    "    border: 1px solid transparent;"
+    "    border-radius: 6px;"
+    "    text-align: center;"
+    "    padding: 0px;"
+    "}"
+    "QProgressBar::chunk {"
+    "    border-radius: 6px;"
+    "    margin: 0px;"
+    "    background-color: #2ECC71;"
+    "}");
     bar->hide();
+    progressLabel = new QLabel;
+    progressLabel->hide();
     cancelButton = new QPushButton{tr("cancel")};
     cancelButton->setCursor(Qt::PointingHandCursor);
     cancelButton->hide();
     connect(cancelButton, &QPushButton::clicked, this, [this]() noexcept {
         cancelButton->setEnabled(false); // quitPool在取消线程时较耗时，防止反复触发
         bar->setEnabled(false);
+        progressLabel->setEnabled(false);
         quitPool(true);
         // wait for all threads to exit before cleaning up, otherwise data races will occur
-        matchHistory.clear();
+        pHashes.clear();
         sameImageResults.clear();
         freezeMainGUI(false);
+        progressLabel->hide();
         bar->hide();
         cancelButton->hide();
         if (settings->isUseStopwatchDialog()) {
@@ -320,6 +330,7 @@ MainWindow::MainWindow(QWidget *parent) noexcept
     settingLayout->addStretch(1);
     mainLayout->addLayout(settingLayout);
     auto progressLayout = new QHBoxLayout;
+    progressLayout->addWidget(progressLabel);
     progressLayout->addWidget(bar);
     progressLayout->addWidget(cancelButton);
     mainLayout->addLayout(progressLayout);
@@ -327,18 +338,54 @@ MainWindow::MainWindow(QWidget *parent) noexcept
     pathEdit->setFocus();
 }
 
-void MainWindow::onProgress() noexcept
+void MainWindow::onHashingProgress(int batchCount) noexcept
 {
     const auto value = bar->value();
-    bar->setValue(value + 1);
-    if (bar->value() != bar->maximum()) [[likely]] {
+    bar->setValue(value + batchCount);
+    if (bar->value() < bar->maximum()) [[likely]] {
         return;
     }
 
+    quitPool();
+    progressLabel->setText(tr("Searching:"));
+    bar->setValue(0);
+
+    const auto distance = settings->getSimilarDistance();
+    auto searchingThread = pool[0].get();
+    auto searchingWorker = new SearchWorker{distance, pHashes};
+    searchingWorker->moveToThread(searchingThread);
+    connect(searchingWorker, &SearchWorker::sameImg, this, [this](const unsigned int originIdx, const unsigned int sameIdx) noexcept {
+        std::string origin{images[originIdx]};
+        std::string sameImg{images[sameIdx]};
+        qDebug() << Utils::getAbsPath(origin) % tr(" same with: ") % Utils::getAbsPath(sameImg);
+        if (!sameImageResults.contains(origin)) {
+            // construct vectors directly with the origin image
+            std::string originImg{origin};
+            sameImageResults.emplace(origin, std::vector<std::string>{std::move(originImg), std::move(sameImg)});
+        } else {
+            sameImageResults[origin].emplace_back(std::move(sameImg));
+        }
+    });
+    connect(searchingThread, &QThread::finished, searchingWorker, &SearchWorker::deleteLater);
+    connect(searchingWorker, &SearchWorker::doneAllWork, searchingThread, &QThread::quit);
+    connect(searchingThread, &QThread::started, searchingWorker, &SearchWorker::doWork);
+    connect(searchingWorker, &SearchWorker::doneBatch, this, &MainWindow::onSearchingProgress);
+    searchingThread->start();
+}
+
+void MainWindow::onSearchingProgress(int batchCount) noexcept
+{
+    const auto value = bar->value();
+    bar->setValue(value + batchCount);
+    if (bar->value() < bar->maximum()) [[likely]] {
+        return;
+    }
+
+    quitPool();
     freezeMainGUI(false);
     // should click load button first
     disableStartBtn();
-    quitPool();
+    progressLabel->hide();
     bar->hide();
     cancelButton->hide();
     dialogBtn->show();
@@ -369,7 +416,7 @@ void MainWindow::setImages() noexcept
     releaseResultDialog();
     startBtn->setEnabled(false);
     startBtn->show();
-    matchHistory = MatchHistoryContainer{};
+    pHashes = PHashContainer{};
     images = std::vector<std::string>{};
     sameImageResults = SameImagesContainer{};
 
@@ -409,7 +456,7 @@ void MainWindow::initResultDialog() noexcept
     if (imageDialog != nullptr) {
         return;
     }
-    matchHistory = MatchHistoryContainer{};
+    pHashes = PHashContainer{};
     images = std::vector<std::string>{};
     imageDialog = new ImageViewerDialog{std::move(sameImageResults), this};
     sameImageResults = SameImagesContainer{};

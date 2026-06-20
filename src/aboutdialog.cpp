@@ -7,23 +7,14 @@
 #include <QFormLayout>
 #include <QFrame>
 #include <QHBoxLayout>
-#include <QLabel>
 #include <QPushButton>
 #include <QStringBuilder>
 #include <QStyle>
 #include <QVBoxLayout>
 
 #include "aboutdialog.h"
+#include "utils/widgethelpers.h"
 #include "utils/versions.h"
-
-namespace {
-    inline QLabel *createOpenableLabel(const QString &text, QWidget *parent = nullptr) noexcept
-    {
-        auto label = new QLabel{text, parent};
-        label->setOpenExternalLinks(true);
-        return label;
-    }
-}
 
 AboutDialog::AboutDialog(QWidget *parent) noexcept
     : QDialog(parent)
@@ -45,28 +36,32 @@ AboutDialog::AboutDialog(QWidget *parent) noexcept
     libsForm->setFormAlignment(Qt::AlignCenter | Qt::AlignTop);
     libsForm->setLabelAlignment(Qt::AlignRight);
     libsForm->addRow(
-        createOpenableLabel("<a href='https://github.com/apocelipes/pHashChecker'>pHashChecker</a>:"),
+        Utils::createOpenableLabel("<a href='https://github.com/apocelipes/pHashChecker'>pHashChecker</a>:"),
         new QLabel{Utils::getPHashCheckerVersion()}
     );
     libsForm->addRow(
-        createOpenableLabel("<a href='https://www.qt.io/'>Qt</a>:"),
+        Utils::createOpenableLabel("<a href='https://www.qt.io/'>Qt</a>:"),
         new QLabel{Utils::getQtVersion()}
     );
     libsForm->addRow(
-        createOpenableLabel("<a href='https://github.com/GreycLab/CImg'>CImg</a>:"),
+        Utils::createOpenableLabel("<a href='https://github.com/GreycLab/CImg'>CImg</a>:"),
         new QLabel{Utils::getCImgVersion()}
     );
     libsForm->addRow(
-        createOpenableLabel("<a href='https://github.com/apocelipes/pHash'>pHash</a>:"),
+        Utils::createOpenableLabel("<a href='https://github.com/apocelipes/pHash'>pHash</a>:"),
         new QLabel{Utils::getPHashVersion()}
     );
     libsForm->addRow(
-        createOpenableLabel("<a href='https://github.com/Morwenn/cpp-sort'>cpp-sort</a>:"),
+        Utils::createOpenableLabel("<a href='https://github.com/Morwenn/cpp-sort'>cpp-sort</a>:"),
         new QLabel{Utils::getCppSortVersion()}
     );
     libsForm->addRow(
-        createOpenableLabel("<a href='https://github.com/martinus/unordered_dense'>unordered_dense</a>:"),
+        Utils::createOpenableLabel("<a href='https://github.com/martinus/unordered_dense'>unordered_dense</a>:"),
         new QLabel{Utils::getAnkerlUnorderedDenseVersion()}
+    );
+    libsForm->addRow(
+        Utils::createOpenableLabel("<a href='https://github.com/boostorg/dynamic_bitset'>Boost.DynamicBitset</a>:"),
+        new QLabel{Utils::getBoostDynamicBitsetVersion()}
     );
 
     auto aboutQtBtn = new QPushButton{tr("About Qt"), this};
@@ -89,7 +84,7 @@ AboutDialog::AboutDialog(QWidget *parent) noexcept
     buttons->addButton(aboutQtBtn, QDialogButtonBox::ActionRole);
     connect(buttons, &QDialogButtonBox::accepted, this, &QDialog::accept);
 
-    auto copyRightLabel = new QLabel{QStringLiteral(u"© 2021-2025 apocelipes, under GPLv3"), this};
+    auto copyRightLabel = new QLabel{QStringLiteral(u"© 2021-2026 apocelipes, under GPLv3"), this};
 
     auto mainLayout = new QVBoxLayout;
     mainLayout->addWidget(titleLabel);
@@ -115,6 +110,7 @@ void AboutDialog::copyVersionsToClipboard() noexcept
     result += "CImg: " % Utils::getCImgVersion() % '\n';
     result += "pHash: " % Utils::getPHashVersion() % '\n';
     result += "cpp-sort: " % Utils::getCppSortVersion() % '\n';
-    result += "unordered_dense: " % Utils::getAnkerlUnorderedDenseVersion();
+    result += "unordered_dense: " % Utils::getAnkerlUnorderedDenseVersion() % '\n';
+    result += "Boost.DynamicBitset: " % Utils::getBoostDynamicBitsetVersion();
     QGuiApplication::clipboard()->setText(result);
 }

@@ -44,6 +44,11 @@ namespace Utils {
         return qVersion();
     }
 
+    inline QString getBoostDynamicBitsetVersion() noexcept {
+        // The standalone Boost module does not contain code to retrieve version information.
+        return QStringLiteral(u"1.91.0");
+    }
+
     inline QString getPHashCheckerVersion() noexcept {
         return semVersion(PHASHCHECKER_VERSION_MAJOR, PHASHCHECKER_VERSION_MINOR, PHASHCHECKER_VERSION_PATCH);
     }
