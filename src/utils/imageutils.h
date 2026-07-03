@@ -4,6 +4,7 @@
 #pragma once
 
 #include <QFileInfo>
+#include <QImage>
 #include <QPixmap>
 
 #include <CImg.h>
@@ -21,12 +22,31 @@ namespace Utils {
         raw.load(srcPath.toStdString().c_str());
         raw.resize(width, height);
         QImage img{width, height, QImage::Format_ARGB32_Premultiplied};
-        const bool hasAlpha = raw.spectrum() == 4;
-        // Currently, it's fast enough, may be not worth to add a cache
-        cimg_forXY(raw, x, y) {
-            const int alpha = hasAlpha ? static_cast<int>(raw(x, y, 3)) : 255;
-            QColor color{raw(x, y, 0), raw(x, y, 1), raw(x, y, 2), alpha};
-            img.setPixelColor(x, y, color);
+        const int spectrum = raw.spectrum();
+        const uchar *red = raw.data(0, 0, 0, 0);
+        const uchar *green = spectrum >= 3 ? raw.data(0, 0, 0, 1) : red;
+        const uchar *blue = spectrum >= 3 ? raw.data(0, 0, 0, 2) : red;
+        const uchar *alpha = spectrum >= 4 ? raw.data(0, 0, 0, 3)
+                           : spectrum == 2 ? raw.data(0, 0, 0, 1)
+                                           : nullptr;
+        if (alpha != nullptr) {
+            for (int y = 0; y < height; ++y) {
+                auto line = reinterpret_cast<QRgb *>(img.scanLine(y));
+                const auto rowOffset = static_cast<qsizetype>(y) * width;
+                for (int x = 0; x < width; ++x) {
+                    const qsizetype idx = rowOffset + x;
+                    line[x] = qPremultiply(qRgba(red[idx], green[idx], blue[idx], static_cast<int>(alpha[idx])));
+                }
+            }
+        } else {
+            for (int y = 0; y < height; ++y) {
+                auto line = reinterpret_cast<QRgb *>(img.scanLine(y));
+                const auto rowOffset = static_cast<qsizetype>(y) * width;
+                for (int x = 0; x < width; ++x) {
+                    const qsizetype idx = rowOffset + x;
+                    line[x] = qPremultiply(qRgba(red[idx], green[idx], blue[idx], 255));
+                }
+            }
         }
         return QPixmap::fromImage(std::move(img));
     }

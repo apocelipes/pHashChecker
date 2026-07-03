@@ -372,7 +372,7 @@
         <translation>%1&lt;br&gt;サイズ： %2</translation>
     </message>
     <message>
-        <location filename="../utils/imageutils.h" line="16"/>
+        <location filename="../utils/imageutils.h" line="17"/>
         <source>image convert failed:</source>
         <translation>画像のフォーマット転換は失敗しました：</translation>
     </message>
