@@ -8,6 +8,7 @@
 
 #include <QtGlobal>
 #include <QString>
+#include <QStringBuilder>
 
 namespace Utils {
     enum class BinaryPrefix: qint64 {
@@ -27,13 +28,13 @@ namespace Utils {
             BinaryPrefix::TebiByte,
             BinaryPrefix::PebiByte
     };
-    constexpr std::array prefixNames = {
-            "B",
-            "KiB",
-            "MiB",
-            "GiB",
-            "TiB",
-            "PiB"
+    const std::array prefixNames = {
+            QStringLiteral(u"B"),
+            QStringLiteral(u"KiB"),
+            QStringLiteral(u"MiB"),
+            QStringLiteral(u"GiB"),
+            QStringLiteral(u"TiB"),
+            QStringLiteral(u"PiB")
     };
 
     [[nodiscard]] inline QString sizeFormat(const quint64 fileSize) noexcept {
@@ -45,6 +46,6 @@ namespace Utils {
         constexpr std::size_t prefixesLength = std::size(prefixes);
         power = power >= prefixesLength ? prefixesLength - 1 : power;
         return QStringLiteral(u"%1").arg(static_cast<double>(fileSize) / static_cast<double>(prefixes[power]), 0, 'f', 2)
-                               + prefixNames[power];
+                               % prefixNames[power];
     }
 }

@@ -59,7 +59,7 @@ struct SettingPanelPrivate
     void init(SettingPanel *q_ptr) noexcept;
 
     SettingPanelPrivate() noexcept
-    : settings{"apocelipes", "pHashChecker"}
+    : settings{QStringLiteral(u"apocelipes"), QStringLiteral(u"pHashChecker")}
     {}
 
     ~SettingPanelPrivate() noexcept

@@ -105,12 +105,12 @@ AboutDialog::AboutDialog(QWidget *parent) noexcept
 
 void AboutDialog::copyVersionsToClipboard() noexcept
 {
-    QString result = "pHashChecker: " % Utils::getPHashCheckerVersion() % '\n';
-    result += "Qt: " % Utils::getQtVersion() % '\n';
-    result += "CImg: " % Utils::getCImgVersion() % '\n';
-    result += "pHash: " % Utils::getPHashVersion() % '\n';
-    result += "cpp-sort: " % Utils::getCppSortVersion() % '\n';
-    result += "unordered_dense: " % Utils::getAnkerlUnorderedDenseVersion() % '\n';
-    result += "Boost.DynamicBitset: " % Utils::getBoostDynamicBitsetVersion();
+    QString result = QStringLiteral(u"pHashChecker: ") % Utils::getPHashCheckerVersion() % '\n';
+    result += QStringLiteral(u"Qt: ") % Utils::getQtVersion() % '\n';
+    result += QStringLiteral(u"CImg: ") % Utils::getCImgVersion() % '\n';
+    result += QStringLiteral(u"pHash: ") % Utils::getPHashVersion() % '\n';
+    result += QStringLiteral(u"cpp-sort: ") % Utils::getCppSortVersion() % '\n';
+    result += QStringLiteral(u"unordered_dense: ") % Utils::getAnkerlUnorderedDenseVersion() % '\n';
+    result += QStringLiteral(u"Boost.DynamicBitset: ") % Utils::getBoostDynamicBitsetVersion();
     QGuiApplication::clipboard()->setText(result);
 }

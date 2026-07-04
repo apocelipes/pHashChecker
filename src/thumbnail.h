@@ -19,14 +19,15 @@ public:
 
     [[nodiscard]] QString getImagePath() const noexcept;
 
-    void mouseReleaseEvent(QMouseEvent *event) override;
-
 Q_SIGNALS:
     void clicked();
 
 public Q_SLOTS:
     void showShadow() noexcept;
     void hideShadow() noexcept;
+
+protected:
+    void mouseReleaseEvent(QMouseEvent *event) override;
 
 private:
     friend struct ThumbnailPrivate;

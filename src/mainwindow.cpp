@@ -152,7 +152,7 @@ namespace {
 
     [[nodiscard]] inline QString replaceWithHomeDir(const QString &text) noexcept
     {
-        static const auto &shellHomeDirPattern = QRegularExpression{"^~/"};
+        static const auto &shellHomeDirPattern = QRegularExpression{QStringLiteral(u"^~/")};
         return text.trimmed().replace(shellHomeDirPattern, QDir::homePath()+'/');
     }
 }
@@ -201,7 +201,7 @@ MainWindow::MainWindow(QWidget *parent) noexcept
         }
     });
     connect(pathEdit, &QLineEdit::textEdited, this, [this](const QString &text) noexcept {
-        if (text.trimmed().startsWith("~/")) {
+        if (text.trimmed().startsWith(QStringLiteral(u"~/"))) {
             const auto &path = replaceWithHomeDir(text);
             pathEdit->setText(path);
             pathCompleter->setCompletionPrefix(path);

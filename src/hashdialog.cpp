@@ -29,12 +29,12 @@ namespace {
             QCryptographicHash::Sha3_512,
     };
 
-    constexpr std::array algorithmNames = {
-            "MD5",
-            "SHA-256",
-            "SHA-512",
-            "SHA3-256",
-            "SHA3-512",
+    const std::array algorithmNames = {
+            QStringLiteral(u"MD5"),
+            QStringLiteral(u"SHA-256"),
+            QStringLiteral(u"SHA-512"),
+            QStringLiteral(u"SHA3-256"),
+            QStringLiteral(u"SHA3-512"),
     };
 }
 
