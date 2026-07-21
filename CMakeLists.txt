@@ -37,10 +37,22 @@ include_directories(third-party/CImg
 set(REQUIRED_QT_VERSION 6.5.0)
 find_package(Qt6 ${REQUIRED_QT_VERSION} NO_MODULE REQUIRED COMPONENTS Core Gui Widgets REQUIRED)
 
-if(CMAKE_HOST_SYSTEM_NAME STREQUAL "Darwin")
-    message("On macOS homebrew will be used.")
-    include_directories(/opt/homebrew/include)
-    link_directories(AFTER /opt/homebrew/lib)
+find_package(PNG REQUIRED)
+find_package(JPEG REQUIRED)
+find_package(TIFF REQUIRED)
+find_package(WebP REQUIRED)
+find_package(libheif CONFIG REQUIRED)
+
+find_package(libjxl CONFIG QUIET)
+
+if(libjxl_FOUND)
+    message(STATUS "Found libjxl via CMake Config")
+    set(JXL_TARGET libjxl::libjxl)
+else()
+    find_package(PkgConfig REQUIRED)
+    pkg_check_modules(JXL REQUIRED IMPORTED_TARGET libjxl)
+    set(JXL_TARGET PkgConfig::JXL)
+    message(STATUS "Found libjxl via pkg-config")
 endif()
 
 set(TS_FILES
@@ -83,7 +95,15 @@ add_executable(pHashChecker
 
 add_dependencies(${PROJECT_NAME} create_all_qm_files)
 
-target_link_libraries(pHashChecker PRIVATE Qt6::Core Qt6::Gui Qt6::Widgets pHash)
+target_include_directories(pHashChecker PRIVATE
+        ${WebP_INCLUDE_DIRS}
+        ${JXL_INCLUDE_DIRS}
+        ${HEIF_INCLUDE_DIRS}
+        ${PNG_INCLUDE_DIRS}
+        ${JPEG_INCLUDE_DIR}
+        ${ZLIB_INCLUDE_DIRS}
+)
+target_link_libraries(pHashChecker PRIVATE Qt6::Core Qt6::Gui Qt6::Widgets pHash PNG::PNG JPEG::JPEG TIFF::TIFF WebP::webp ${JXL_TARGET} heif)
 
 include(CheckIPOSupported)
 check_ipo_supported(RESULT ipo_supported OUTPUT output LANGUAGES CXX)

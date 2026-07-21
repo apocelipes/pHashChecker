@@ -81,6 +81,7 @@ sudo dnf install ImageMagick
 For macOS, you should install homebrew, then run:
 
 ```bash
+brew install pkg-config
 brew install libpng
 brew install libheif
 brew install qt
