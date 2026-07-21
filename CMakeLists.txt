@@ -25,6 +25,12 @@ endif()
 
 add_definitions(-Dcimg_display=0 -Dcimg_use_tiff -Dcimg_use_heif -Dcimg_use_webp -Dcimg_use_png -Dcimg_use_jpeg -Dcimg_use_jxl)
 
+if (CMAKE_C_COMPILER_ID STREQUAL "GNU" OR CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+    if (CMAKE_SYSTEM_PROCESSOR MATCHES "^(aarch64|arm64)$")
+        add_compile_definitions(DYNAMIC_BITSET_NO_LIBPOPCNT)
+    endif()
+endif()
+
 include_directories(third-party/CImg
     third-party/pHash/src
     third-party/unordered_dense/include
