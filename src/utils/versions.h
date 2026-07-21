@@ -10,6 +10,7 @@
 #include <cpp-sort/version.h>
 #include <pHash.h>
 #include <ankerl/unordered_dense.h>
+#include <sul/dynamic_bitset.hpp>
 
 #define PHASHCHECKER_VERSION_MAJOR 0
 #define PHASHCHECKER_VERSION_MINOR 1
@@ -44,9 +45,12 @@ namespace Utils {
         return qVersion();
     }
 
-    inline QString getBoostDynamicBitsetVersion() noexcept {
-        // The standalone Boost module does not contain code to retrieve version information.
-        return QStringLiteral(u"1.91.0");
+    inline QString getLibpopcntVersion() noexcept {
+        return QStringLiteral(u"4.2");
+    }
+
+    inline QString getSulDynamicBitsetVersion() noexcept {
+        return semVersion(SUL_DYNAMIC_BITSET_VERSION_MAJOR, SUL_DYNAMIC_BITSET_VERSION_MINOR, SUL_DYNAMIC_BITSET_VERSION_PATCH);
     }
 
     inline QString getPHashCheckerVersion() noexcept {

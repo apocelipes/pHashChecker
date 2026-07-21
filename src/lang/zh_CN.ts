@@ -14,22 +14,22 @@
         <translation>&lt;br&gt;使用的软件和库：</translation>
     </message>
     <message>
-        <location filename="../aboutdialog.cpp" line="67"/>
+        <location filename="../aboutdialog.cpp" line="71"/>
         <source>About Qt</source>
         <translation>关于Qt</translation>
     </message>
     <message>
-        <location filename="../aboutdialog.cpp" line="71"/>
+        <location filename="../aboutdialog.cpp" line="75"/>
         <source>Copy</source>
         <translation>复制</translation>
     </message>
     <message>
-        <location filename="../aboutdialog.cpp" line="72"/>
+        <location filename="../aboutdialog.cpp" line="76"/>
         <source>Copy version information to your clipboard.</source>
         <translation>将版本信息复制到剪贴板。</translation>
     </message>
     <message>
-        <location filename="../aboutdialog.cpp" line="103"/>
+        <location filename="../aboutdialog.cpp" line="107"/>
         <source>About pHashChecker</source>
         <translation>关于pHashChecker</translation>
     </message>

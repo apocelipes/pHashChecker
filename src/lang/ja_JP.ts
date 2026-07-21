@@ -14,22 +14,22 @@
         <translation>&lt;br&gt;使われているライブラリー：</translation>
     </message>
     <message>
-        <location filename="../aboutdialog.cpp" line="67"/>
+        <location filename="../aboutdialog.cpp" line="71"/>
         <source>About Qt</source>
         <translation>Qtについて</translation>
     </message>
     <message>
-        <location filename="../aboutdialog.cpp" line="71"/>
+        <location filename="../aboutdialog.cpp" line="75"/>
         <source>Copy</source>
         <translation>コピー</translation>
     </message>
     <message>
-        <location filename="../aboutdialog.cpp" line="72"/>
+        <location filename="../aboutdialog.cpp" line="76"/>
         <source>Copy version information to your clipboard.</source>
         <translation>バージョン情報をクリップボードにコピー。</translation>
     </message>
     <message>
-        <location filename="../aboutdialog.cpp" line="103"/>
+        <location filename="../aboutdialog.cpp" line="107"/>
         <source>About pHashChecker</source>
         <translation>pHashCheckerについて</translation>
     </message>

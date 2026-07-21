@@ -10,6 +10,9 @@
 [submodule "third-party/cpp-sort"]
 	path = third-party/cpp-sort
 	url = https://github.com/Morwenn/cpp-sort
+[submodule "third-party/libpopcnt"]
+	path = third-party/libpopcnt
+	url = https://github.com/kimwalisch/libpopcnt
 [submodule "third-party/dynamic_bitset"]
 	path = third-party/dynamic_bitset
-	url = https://github.com/boostorg/dynamic_bitset
+	url = https://github.com/pinam45/dynamic_bitset

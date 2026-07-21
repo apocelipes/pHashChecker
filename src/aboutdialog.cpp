@@ -60,8 +60,12 @@ AboutDialog::AboutDialog(QWidget *parent) noexcept
         new QLabel{Utils::getAnkerlUnorderedDenseVersion()}
     );
     libsForm->addRow(
-        Utils::createOpenableLabel("<a href='https://github.com/boostorg/dynamic_bitset'>Boost.DynamicBitset</a>:"),
-        new QLabel{Utils::getBoostDynamicBitsetVersion()}
+        Utils::createOpenableLabel("<a href='https://github.com/kimwalisch/libpopcnt'>libpopcnt</a>:"),
+        new QLabel{Utils::getLibpopcntVersion()}
+    );
+    libsForm->addRow(
+        Utils::createOpenableLabel("<a href='https://github.com/pinam45/dynamic_bitset'>dynamic_bitset</a>:"),
+        new QLabel{Utils::getSulDynamicBitsetVersion()}
     );
 
     auto aboutQtBtn = new QPushButton{tr("About Qt"), this};
@@ -111,6 +115,7 @@ void AboutDialog::copyVersionsToClipboard() noexcept
     result += QStringLiteral(u"pHash: ") % Utils::getPHashVersion() % '\n';
     result += QStringLiteral(u"cpp-sort: ") % Utils::getCppSortVersion() % '\n';
     result += QStringLiteral(u"unordered_dense: ") % Utils::getAnkerlUnorderedDenseVersion() % '\n';
-    result += QStringLiteral(u"Boost.DynamicBitset: ") % Utils::getBoostDynamicBitsetVersion();
+    result += QStringLiteral(u"libpopcnt: ") % Utils::getLibpopcntVersion() % '\n';
+    result += QStringLiteral(u"dynamic_bitset: ") % Utils::getSulDynamicBitsetVersion();
     QGuiApplication::clipboard()->setText(result);
 }

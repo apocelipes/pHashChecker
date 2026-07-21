@@ -3,7 +3,7 @@
 #include <QDebug>
 #include <QThread>
 
-#include <boost/dynamic_bitset/dynamic_bitset.hpp>
+#include <sul/dynamic_bitset.hpp>
 
 #include "searchworker.h"
 
@@ -13,7 +13,7 @@ constexpr unsigned int batchSize = 1024;
 
 void SearchWorker::doWork() noexcept
 {
-    auto flags = boost::dynamic_bitset(_hashes.size());
+    auto flags = sul::dynamic_bitset(_hashes.size());
     QThread* myThread = QThread::currentThread();
 
     for (auto i = 0u; i < _hashes.size(); ++i) {
@@ -22,12 +22,12 @@ void SearchWorker::doWork() noexcept
             break;
         }
 
-        if (!flags[i]) {
+        if (!flags.test(i)) {
             const auto originHash = _hashes[i];
             // we never go back, so not really need set every bit
             // flags.set(i);
             for (auto j = i+1; j < _hashes.size(); j++) {
-                if (flags[j]) {
+                if (flags.test(j)) {
                     continue;
                 }
                 if (checkSameImage(originHash, _hashes[j])) {
