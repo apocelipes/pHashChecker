@@ -131,8 +131,9 @@ void EditableImage::initContextMenu() noexcept
 
     auto hashAction = new QAction{style()->standardIcon(QStyle::SP_MessageBoxInformation), tr("hash"), this};
     connect(hashAction, &QAction::triggered, this, [this]() noexcept {
-        HashDialog dialog{getImagePath(), this};
-        dialog.exec();
+        const auto dialog = new HashDialog{getImagePath(), this};
+        dialog->setAttribute(Qt::WA_DeleteOnClose);
+        dialog->open();
     });
     d->contextMenu->addAction(hashAction);
 }

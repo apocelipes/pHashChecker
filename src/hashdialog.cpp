@@ -68,7 +68,6 @@ HashDialog::HashDialog(const QString &path, QWidget *parent) noexcept
     for (std::size_t i = 0; i < std::size(algorithmNames); ++i) {
         table->setItem(static_cast<int>(i)+fileSizeIndex+1, 0, new QTableWidgetItem{algorithmNames[i] % QChar(':')});
         const QString &hashText = QCryptographicHash::hash(data, hashAlgorithms[i]).toHex();
-        QCoreApplication::processEvents();
         table->setItem(static_cast<int>(i)+fileSizeIndex+1, 1, new QTableWidgetItem{hashText});
     }
 

@@ -97,12 +97,12 @@
         <translation>ハッシュ</translation>
     </message>
     <message>
-        <location filename="../editableimage.cpp" line="166"/>
+        <location filename="../editableimage.cpp" line="167"/>
         <source>There&apos;s no image here</source>
         <translation>画像なし</translation>
     </message>
     <message>
-        <location filename="../editableimage.cpp" line="171"/>
+        <location filename="../editableimage.cpp" line="172"/>
         <source>%1&lt;br&gt;size: %2</source>
         <translation>%1&lt;br&gt;サイズ： %2</translation>
     </message>
@@ -125,12 +125,12 @@
         <translation>サイズ:</translation>
     </message>
     <message>
-        <location filename="../hashdialog.cpp" line="87"/>
+        <location filename="../hashdialog.cpp" line="86"/>
         <source>%1 has been copied</source>
         <translation>%1 コピーされました</translation>
     </message>
     <message>
-        <location filename="../hashdialog.cpp" line="97"/>
+        <location filename="../hashdialog.cpp" line="96"/>
         <source>Image Hash Dialog</source>
         <translation>Image Hash Dialog</translation>
     </message>
@@ -381,6 +381,7 @@
     <name>SearchWorker</name>
     <message>
         <location filename="../searchworker.cpp" line="21"/>
+        <location filename="../searchworker.cpp" line="35"/>
         <source>SearchWorker thread exit</source>
         <translation>SearchWorkerスレッドが終了しました</translation>
     </message>

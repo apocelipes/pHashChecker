@@ -31,6 +31,10 @@ void SearchWorker::doWork() noexcept
                     continue;
                 }
                 if (checkSameImage(originHash, _hashes[j])) {
+                    if (myThread->isInterruptionRequested()) [[unlikely]] {
+                        qInfo() << tr("SearchWorker thread exit");
+                        goto end;
+                    }
                     flags.set(j);
                     Q_EMIT sameImg(i, j);
                 }
@@ -44,5 +48,6 @@ void SearchWorker::doWork() noexcept
         }
     }
 
+end:
     Q_EMIT doneAllWork();
 }

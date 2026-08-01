@@ -60,8 +60,11 @@ private:
                 thread->requestInterruption();
             }
             thread->quit();
-            thread->wait(3s);
-            QCoreApplication::processEvents();
+        }
+        for (const auto &thread : pool) {
+            // It's better to not use a timeout for safety.
+            // However, I also don't want the program hangs forever, so we wait for 5s, it's enough for the threads.
+            thread->wait(5s);
         }
     }
 
